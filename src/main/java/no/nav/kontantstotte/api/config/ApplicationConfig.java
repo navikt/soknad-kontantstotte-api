@@ -15,16 +15,19 @@ public class ApplicationConfig {
     ServletWebServerFactory servletWebServerFactory() {
 
         JettyServletWebServerFactory serverFactory = new JettyServletWebServerFactory();
+
         serverFactory.setPort(8080);
 
         return serverFactory;
-
     }
 
     @Bean
     ServletRegistrationBean<?> jerseyServlet() {
+
         ServletRegistrationBean<?> jerseyServletRegistration = new ServletRegistrationBean<>(new ServletContainer());
+
         jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, RestConfiguration.class.getName());
+
         return jerseyServletRegistration;
     }
 

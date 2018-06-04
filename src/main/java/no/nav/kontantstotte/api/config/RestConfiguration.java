@@ -7,7 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class RestConfiguration extends ResourceConfig {
 
 
-    RestConfiguration() {
+    public RestConfiguration() {
 
         register(JacksonFeature.class);
 
