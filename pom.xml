@@ -61,6 +61,12 @@
             <artifactId>oidc-spring-support</artifactId>
             <version>${oidc-spring-support.version}</version>
         </dependency>
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>oidc-spring-test</artifactId>
+            <version>${oidc-spring-support.version}</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- javax -->
         <dependency>

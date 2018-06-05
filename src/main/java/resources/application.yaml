@@ -1,0 +1,6 @@
+no.nav.security.oidc:
+  issuers: kontantstotte
+  issuer.selvbetjening:
+    discoveryurl: <Hentes fra fasit>
+    acceptedaudience: <Hentes fra fasit>
+    cookie_name: kontantstotte_idtoken
