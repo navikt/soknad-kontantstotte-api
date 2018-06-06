@@ -1,0 +1,27 @@
+name: soknad-kontantstotte-api
+image: repo.adeo.no:5443/soknad/kontantstotte-api
+replicas:
+  min: 2
+  max: 2
+  cpuThresholdPercentage: 50
+prometheus:
+  enabled: true
+  path: /soknad-kontantstotte-api/actuator/prometheus
+port: 8080
+healthcheck:
+  liveness:
+    initialDelay: 60
+    path: /soknad-kontantstotte-api/status/isAlive
+  readiness:
+    initialDelay: 60
+    path: /soknad-kontantstotte-api/status/isAlive
+fasitResources:
+  used:
+  - alias: aad_b2c_clientid
+    resourceType: credential
+    propertyMap:
+      username: NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_ACCEPTEDAUDIENCE
+  - alias: aad_b2c_discovery
+    resourceType: baseurl
+    propertyMap:
+      url: NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_DISCOVERYURL
