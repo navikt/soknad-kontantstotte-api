@@ -17,6 +17,7 @@
 
     <properties>
         <oidc-spring-support.version>0.2.4</oidc-spring-support.version>
+        <commons-lang3.version>3.7</commons-lang3.version>
     </properties>
 
     <build>
@@ -50,6 +51,11 @@
                 <version>1</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -109,6 +115,11 @@
 
         <!-- Spring -->
 
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-spring4</artifactId>
+        </dependency>
+
         <!-- Jersey -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -160,6 +171,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
 
         <!-- Test -->

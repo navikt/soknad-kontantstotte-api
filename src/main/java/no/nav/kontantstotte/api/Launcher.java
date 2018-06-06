@@ -5,6 +5,7 @@ import no.nav.security.spring.oidc.validation.api.EnableOIDCTokenValidation;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableOIDCTokenValidation(ignore = "org.springframework")
