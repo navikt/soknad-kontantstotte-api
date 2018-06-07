@@ -12,8 +12,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.inject.hk2.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
@@ -27,6 +32,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Provider
 @ProtectedWithClaims(issuer = "")
 public class OidcJerseyRequestFilter implements ContainerRequestFilter {
@@ -34,6 +40,8 @@ public class OidcJerseyRequestFilter implements ContainerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(OidcJerseyRequestFilter.class);
 
     private final ResourceInfo resourceInfo;
+
+    private final HttpServletRequest servletRequest;
 
     private final OIDCRequestContextHolder contextHolder;
 
@@ -43,8 +51,10 @@ public class OidcJerseyRequestFilter implements ContainerRequestFilter {
     @Inject
     public OidcJerseyRequestFilter(
             @Context ResourceInfo resourceInfo,
+            @Context HttpServletRequest servletRequest,
             OIDCRequestContextHolder contextHolder) {
         this.contextHolder = contextHolder;
+        this.servletRequest = servletRequest;
 
         /*if (enableOIDCTokenValidation != null) {
             ignoreConfig = enableOIDCTokenValidation.getStringArray("ignore");
@@ -56,7 +66,7 @@ public class OidcJerseyRequestFilter implements ContainerRequestFilter {
             // nothing explicitly configured to be ignored, intercept everything
             ignoreConfig = new String[0];
         }*/
-        this.resourceInfo = null;
+        this.resourceInfo = resourceInfo;
     }
 
     @Override
@@ -67,6 +77,8 @@ public class OidcJerseyRequestFilter implements ContainerRequestFilter {
         OIDCValidationContext validationContext = (OIDCValidationContext) contextHolder
                 .getRequestAttribute(OIDCConstants.OIDC_VALIDATION_CONTEXT);
 
+        // Consider putting it on threadlocal
+        // OIDCValidationContext validationContext = (OIDCValidationContext) servletRequest.getAttribute(OIDCConstants.OIDC_VALIDATION_CONTEXT);
 
             /*HandlerMethod handlerMethod = (HandlerMethod) handler;
             if (shouldIgnore(handlerMethod.getBean())) {
@@ -91,8 +103,7 @@ public class OidcJerseyRequestFilter implements ContainerRequestFilter {
             }
         }
 
-        Method method = resourceInfo.getResourceMethod();
-        Class<?> declaringClass = method.getDeclaringClass();
+        Class<?> declaringClass = resourceInfo.getResourceClass();
         if (declaringClass.isAnnotationPresent(Unprotected.class)) {
             logger.debug("method " + resourceInfo.getResourceMethod() + " marked @Unprotected throug annotation on class");
             return;

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-
 @Path("status")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class StatusResource {
