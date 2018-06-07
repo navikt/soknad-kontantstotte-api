@@ -4,6 +4,8 @@ import no.nav.security.spring.oidc.validation.api.ProtectedWithClaims;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 
 @Path("status")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
