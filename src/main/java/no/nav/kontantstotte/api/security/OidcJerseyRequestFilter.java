@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.api.sec;
+package no.nav.kontantstotte.api.security;
 
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.context.OIDCClaims;
@@ -9,7 +9,6 @@ import no.nav.security.spring.oidc.validation.api.ProtectedWithClaims;
 import no.nav.security.spring.oidc.validation.api.Unprotected;
 import no.nav.security.spring.oidc.validation.interceptor.OIDCUnauthorizedException;
 import org.apache.commons.lang3.StringUtils;
-import org.glassfish.jersey.inject.hk2.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,14 +17,9 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Provider
 @ProtectedWithClaims(issuer = "")
