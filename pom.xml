@@ -18,6 +18,8 @@
     <properties>
         <oidc-spring-support.version>0.2.4</oidc-spring-support.version>
         <commons-lang3.version>3.7</commons-lang3.version>
+        <jersey-lokal.version>2.26</jersey-lokal.version>
+        <spring.version>4.3.17.RELEASE</spring.version>
     </properties>
 
     <build>
@@ -116,53 +118,47 @@
 
         <!-- Spring -->
 
-        <dependency>
-            <groupId>org.glassfish.jersey.ext</groupId>
-            <artifactId>jersey-spring3</artifactId>
-            <version>2.25.1</version>
-        </dependency>
-
         <!-- Jersey -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
-            <version>2.25.1</version>
+            <version>${jersey-lokal.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>
-            <version>2.25.1</version>
+            <version>${jersey-lokal.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
-            <version>2.25.1</version>
+            <version>${jersey-lokal.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
-            <version>2.25.1</version>
+            <version>${jersey-lokal.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-server</artifactId>
-            <version>2.25.1</version>
+            <version>${jersey-lokal.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-common</artifactId>
-            <version>2.25.1</version>
+            <version>${jersey-lokal.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.25.1</version>
+            <version>${jersey-lokal.version}</version>
         </dependency>
 
         <!-- Logging -->
@@ -235,23 +231,23 @@
         <dependency>
             <groupId>org.glassfish.jersey.test-framework</groupId>
             <artifactId>jersey-test-framework-core</artifactId>
-            <version>2.25.1</version>
+            <version>${jersey-lokal.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.test-framework.providers</groupId>
             <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
-            <version>2.25.1</version>
+            <version>${jersey-lokal.version}</version>
             <scope>test</scope>
         </dependency>
 
-        <dependency>
+   <!--     <dependency>
             <groupId>org.glassfish.jersey.bundles.repackaged</groupId>
             <artifactId>jersey-guava</artifactId>
             <version>2.25.1</version>
             <scope>test</scope>
-        </dependency>
+        </dependency> -->
 
     </dependencies>
 
