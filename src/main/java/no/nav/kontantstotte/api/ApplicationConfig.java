@@ -1,5 +1,6 @@
-package no.nav.kontantstotte.api.config;
+package no.nav.kontantstotte.api;
 
+import no.nav.kontantstotte.api.config.RestConfiguration;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
 import no.nav.security.spring.oidc.SpringOIDCRequestContextHolder;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
@@ -57,7 +58,7 @@ public class ApplicationConfig {
 //    }
 
     @Bean
-    ServletRegistrationBean<?> jerseyServlet() {
+    ServletRegistrationBean<?> jerseyServletRegistration() {
 
         ServletRegistrationBean<?> jerseyServletRegistration = new ServletRegistrationBean<>(new ServletContainer());
 
