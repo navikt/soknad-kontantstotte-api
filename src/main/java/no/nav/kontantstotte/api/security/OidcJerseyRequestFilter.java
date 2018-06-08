@@ -26,6 +26,7 @@ import javax.ws.rs.ext.Provider;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+@Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Provider
 @ProtectedWithClaims(issuer = "")
