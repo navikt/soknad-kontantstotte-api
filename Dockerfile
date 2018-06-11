@@ -4,3 +4,4 @@ ARG version
 ARG app_name
 
 COPY target/$app_name-$version.jar "/app/app.jar"
+RUN chmod +x /build.sh
