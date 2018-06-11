@@ -4,7 +4,6 @@ import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.context.OIDCClaims;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
 import no.nav.security.oidc.context.OIDCValidationContext;
-import no.nav.security.spring.oidc.EnableOIDCTokenValidationConfiguration;
 import no.nav.security.spring.oidc.validation.api.Protected;
 import no.nav.security.spring.oidc.validation.api.ProtectedWithClaims;
 import no.nav.security.spring.oidc.validation.api.Unprotected;
@@ -12,11 +11,9 @@ import no.nav.security.spring.oidc.validation.interceptor.OIDCUnauthorizedExcept
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +25,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -70,8 +66,6 @@ public class OidcJerseyRequestFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext containerRequestContext) {
-
-        logger.error("T E S T");
 
         OIDCValidationContext validationContext = (OIDCValidationContext) contextHolder
                 .getRequestAttribute(OIDCConstants.OIDC_VALIDATION_CONTEXT);
@@ -156,11 +150,12 @@ public class OidcJerseyRequestFilter implements ContainerRequestFilter {
                         "could not find token for issuer '%s' in validation context. check your configuration.",
                         issuer));
                 throw new WebApplicationException("Authorization token not authorized", Response.Status.UNAUTHORIZED);
-//                throw new OIDCUnauthorizedException("Authorization token not authorized");
+                //throw new OIDCUnauthorizedException("Authorization token not authorized");
             }
             if (!containsRequiredClaims(tokenClaims, claims)) {
                 logger.error("token does not contain all annotated claims");
-                throw new OIDCUnauthorizedException("Authorization token not authorized");
+                throw new WebApplicationException("Authorization token not authorized", Response.Status.FORBIDDEN);
+                //throw new OIDCUnauthorizedException("Authorization token not authorized");
             }
         }
     }
