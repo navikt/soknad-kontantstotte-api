@@ -1,8 +1,8 @@
 name: soknad-kontantstotte-api
-image: repo.adeo.no:5443/soknad/kontantstotte-api
+image: repo.adeo.no:5443/soknad/soknad-kontantstotte-api
 replicas:
   min: 2
-  max: 2
+  max: 4
   cpuThresholdPercentage: 50
 prometheus:
   enabled: true
@@ -25,3 +25,5 @@ fasitResources:
     resourceType: baseurl
     propertyMap:
       url: NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_DISCOVERYURL
+  - alias: appres.cms
+    resourceType: baseUrl
