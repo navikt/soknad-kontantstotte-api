@@ -18,13 +18,6 @@ Gyldige OPTIONS:
 # Default verdier
 PROJECT_ROOT="$( cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-: '
-IMAGE_NAME="soknad-kontantstotte-api"
-DOCKER_REGISTRY="docker.adeo.no:5000"
-DOCKER_REPOSITORY="soknad"
-TAG="${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/${IMAGE_NAME}:${versjon}"
-'
-
 # Hent ut argumenter
 for arg in "$@"
 do
@@ -65,22 +58,6 @@ function revert_version() {
 function publish() {
     mvn deploy --batch-mode -DskipTests
 }
-
-: '
-function build_container() {
-    docker build \
-        --tag ${TAG} \
-        .
-}
-
-function publish_container() {
-    docker push ${TAG} # Pusher siste bygg til soknad-builder:$VERSJON
-}
-
-function create_version_file() {
-    echo ${versjon} > VERSION
-}
-'
 
 go_to_project_root
 set_version
