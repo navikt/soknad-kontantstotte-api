@@ -1,6 +1,4 @@
 FROM navikt/java:8
 
-ARG version
-ARG app_name
-
+ADD ./VERSION /app/VERSION
 COPY target/soknad-api.jar "/app/app.jar"
