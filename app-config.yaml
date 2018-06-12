@@ -4,10 +4,10 @@ replicas:
   min: 2
   max: 4
   cpuThresholdPercentage: 50
+port: 8080
 prometheus:
   enabled: true
   path: /soknad-kontantstotte-api/actuator/prometheus
-port: 8080
 healthcheck:
   liveness:
     initialDelay: 60
