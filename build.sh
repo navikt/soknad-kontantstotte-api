@@ -12,17 +12,16 @@ Bruk:
 
 Gyldige OPTIONS:
     -h  | --help        - printer denne hjelpeteksten
-    --publish           - publiserer docker imaget
+    --publish           - publiserer dockerimaget
 "
 
 
-
 # Default verdier
-versjon=${versjon:="unversioned"}
+v=${versjon}
 IMAGE_NAME="soknad-kontantstotte-api"
 DOCKER_REGISTRY="repo.adeo.no:5443"
 DOCKER_REPOSITORY="soknad"
-TAG="${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/${IMAGE_NAME}:${versjon}"
+TAG="${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/${IMAGE_NAME}:${v:="unversioned"}"
 BUILDER_IMAGE="repo.adeo.no:5443/soknad/soknad-docker-builder:0.1.1"
 
 
@@ -81,5 +80,9 @@ create_version_file
 build_container
 
 if [[ $PUBLISH ]]; then
-    publish_container
+    if [ -z ${versjon+x} ]; then
+        echo "versjon er ikke satt - publiserer ikke!"
+        exit 1;
+        else publish_container;
+    fi
 fi
