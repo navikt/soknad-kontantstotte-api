@@ -1,7 +1,4 @@
-FROM navikt/java:8
+FROM docker.adeo.no:5000/soknad/soknad-builder:1.2.0 AS builder
+ADD / /workspace
 
-ARG version
-ARG app_name
-
-COPY target/$app_name-$version.jar "/app/app.jar"
-RUN chmod +x /build.sh
+RUN /workspace/build.sh
