@@ -62,5 +62,5 @@ function publish() {
 go_to_project_root
 set_version
 build_backend
-publish
-revert_version
+#publish
+#revert_version
