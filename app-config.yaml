@@ -18,7 +18,7 @@ healthcheck:
 fasitResources:
   used:
   - alias: SOKNADKSAPI_PROPERTIES
-      resourceType: applicationProperties
+    resourceType: applicationProperties
   - alias: aad_b2c_clientid
     resourceType: credential
     propertyMap:
