@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <oidc-spring-support.version>0.2.4</oidc-spring-support.version>
+        <oidc-support.version>0.2.5-SNAPSHOT</oidc-support.version>
         <commons-lang3.version>3.7</commons-lang3.version>
     </properties>
 
@@ -32,14 +32,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--<dependency>-->
-                <!--<groupId>no.nav.sbl</groupId>-->
-                <!--<artifactId>bom</artifactId>-->
-                <!--<version>2018.04.06.10.32</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
-
         </dependencies>
     </dependencyManagement>
 
@@ -48,13 +40,13 @@
         <!-- Interne avhengigheter -->
         <dependency>
             <groupId>no.nav.security</groupId>
-            <artifactId>oidc-spring-support</artifactId>
-            <version>${oidc-spring-support.version}</version>
+            <artifactId>oidc-jersey-support</artifactId>
+            <version>${oidc-support.version}</version>
         </dependency>
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>oidc-spring-test</artifactId>
-            <version>${oidc-spring-support.version}</version>
+            <version>${oidc-support.version}</version>
             <scope>test</scope>
         </dependency>
 
