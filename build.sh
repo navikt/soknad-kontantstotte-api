@@ -5,62 +5,84 @@
 set -e
 
 # Usage string
-usage="Script som bygger prosjektet og publiserer til nexus
-
-Om environment-variabelen 'versjon' er satt, vil den erstatte versjonen som ligger i pom.xml.
+usage="Script som bygger prosjektet
 
 Bruk:
 ./$(basename "$0") OPTIONS
+
 Gyldige OPTIONS:
     -h  | --help        - printer denne hjelpeteksten
+    --publish           - publiserer dockerimaget
 "
 
+
 # Default verdier
-PROJECT_ROOT="$( cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )"
+v=${versjon}
+IMAGE_NAME="soknad-kontantstotte-api"
+DOCKER_REGISTRY="repo.adeo.no:5443"
+DOCKER_REPOSITORY="soknad"
+TAG="${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/${IMAGE_NAME}:${v:="unversioned"}"
+BUILDER_IMAGE="repo.adeo.no:5443/soknad/soknad-docker-builder:0.1.1"
+
 
 # Hent ut argumenter
 for arg in "$@"
 do
 case $arg in
     -h|--help)
-    echo "$usage" >&2
-    exit 1
-    ;;
+        echo "$usage" >&2
+        exit 1
+        ;;
+    --publish)
+        PUBLISH=true
+        ;;
     *) # ukjent argument
-    printf "Ukjent argument: %s\n" "$1" >&2
-    echo ""
-    echo "$usage" >&2
-    exit 1
+        printf "Ukjent argument: %s\n" "$1" >&2
+        echo ""
+        echo "$usage" >&2
+        exit 1
     ;;
 esac
 done
 
-function go_to_project_root() {
-    cd $PROJECT_ROOT
+
+function build_command {
+    docker run \
+        --rm \
+        --volume $(pwd):/var/workspace \
+        --volume /var/run/docker.sock:/var/run/docker.sock \
+        $BUILDER_IMAGE \
+        "$@"
 }
 
-function build_backend() {
-    mvn clean verify dependency:tree help:effective-pom --batch-mode -U
+
+function build_target {
+    build_command mvn clean verify
 }
 
-function set_version() {
-    if [[ ${versjon+x}  ]]; then
-        mvn versions:set -U -DnewVersion=${versjon}
+
+function build_container {
+    docker build \
+        --tag ${TAG} \
+        .
+}
+
+function create_version_file {
+    echo ${versjon} > VERSION
+}
+
+function publish_container() {
+    docker push ${TAG}
+}
+
+build_target
+create_version_file
+build_container
+
+if [[ $PUBLISH ]]; then
+    if [ -z ${versjon+x} ]; then
+        echo "versjon er ikke satt - publiserer ikke!"
+        exit 1;
+        else publish_container;
     fi
-}
-
-function revert_version() {
-        if [[ ${versjon+x}  ]]; then
-        mvn versions:revert
-    fi
-}
-
-function publish() {
-    mvn deploy --batch-mode -DskipTests
-}
-
-go_to_project_root
-set_version
-build_backend
-#publish
-#revert_version
+fi

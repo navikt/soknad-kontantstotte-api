@@ -1,4 +1,4 @@
-FROM docker.adeo.no:5000/soknad/soknad-builder:1.2.0 AS builder
-ADD / /workspace
+FROM navikt/java:8
 
-RUN /workspace/build.sh
+ADD ./VERSION /app/VERSION
+COPY ./target/soknad-kontantstotte-api.jar "/app/app.jar"
