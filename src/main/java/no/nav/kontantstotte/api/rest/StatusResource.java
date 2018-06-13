@@ -11,11 +11,11 @@ import javax.ws.rs.core.StreamingOutput;
 
 @Component
 @Path("status")
+@ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class StatusResource {
 
     @GET
     @Path("ping")
-    @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
     public String ping() {
         return "pong";
     }
