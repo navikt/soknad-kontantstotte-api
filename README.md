@@ -5,7 +5,7 @@ For å kjøre opp løsningen lokalt:
 
 ### Fra kommandolinje:
 ```
-mvn package && java -jar target/soknad-api.jar
+mvn package && java -jar target/soknad-kontantstotte-api.jar
 ```
 
 ### Fra IntelliJ
