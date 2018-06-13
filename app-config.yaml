@@ -17,8 +17,6 @@ healthcheck:
     path: /soknad-kontantstotte-api/status/isAlive
 fasitResources:
   used:
-  - alias: SOKNADKSAPI_PROPERTIES
-    resourceType: applicationProperties
   - alias: aad_b2c_clientid
     resourceType: credential
     propertyMap:
