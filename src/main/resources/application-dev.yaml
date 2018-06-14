@@ -1,8 +1,10 @@
 spring.autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
-
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
      discoveryurl: http://metadata
      accepted_audience: aud-localhost
      cookie_name: localhost-idtoken
+server:
+  servlet:
+    context-path: /soknad-kontantstotte-api

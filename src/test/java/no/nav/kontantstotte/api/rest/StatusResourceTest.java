@@ -32,7 +32,7 @@ public class StatusResourceTest {
     @Test
     public void skalGi200MedGyldigToken() {
 
-        WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port);
+        WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + "/soknad-kontantstotte-api");
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT("12345678911");
         Response response = target.path("/status/ping")
                 .request()
@@ -44,7 +44,7 @@ public class StatusResourceTest {
 
     @Test
     public void skalGi401UtenToken() {
-        WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port);
+        WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + "/soknad-kontantstotte-api");
         Response response = target.path("/status/ping")
                 .request()
                 .get();
