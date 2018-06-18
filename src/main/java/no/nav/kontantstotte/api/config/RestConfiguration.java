@@ -15,19 +15,10 @@ public class RestConfiguration extends ResourceConfig {
 
     public RestConfiguration() {
 
-//        packages("no.nav.kontantstotte");
         register(JacksonFeature.class);
         register(StatusResource.class);
         register(OidcJerseyRequestFilter.class);
-
-//        register(new AbstractBinder() {
-//
-//            @Override
-//            protected void configure() {
-//                bind(SpringOIDCRequestContextHolder.class).to(OIDCRequestContextHolder.class).to(Singleton.class);
-//            }
-//
-//        });
+        register(CORSResponseFilter.class);
     }
 
 }

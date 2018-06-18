@@ -23,5 +23,7 @@ public class StatusResource {
     @GET
     @Path("isAlive")
     @Unprotected
-    public String isAlive() { return "Ok"; }
+    public String isAlive() {
+        return "Ok";
+    }
 }
