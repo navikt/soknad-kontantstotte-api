@@ -12,7 +12,7 @@ import static java.util.Arrays.asList;
 @Provider
 public class CORSResponseFilter implements ContainerResponseFilter {
 
-    private static final List<String> ALLOWED_ORIGINS = asList("https://soknad-kontantstotte.nais.oera-q.local",
+    private static final List<String> ALLOWED_ORIGINS = asList("https://soknad-kontantstotte-*.nais.oera-q.local",
             "https://soknad-kontantstotte-q.nav.no",
             "https://soknad-kontantstotte.nav.no");
 
