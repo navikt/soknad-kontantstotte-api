@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.config;
 
+import no.nav.kontantstotte.api.rest.LocalResource;
 import no.nav.kontantstotte.api.rest.StatusResource;
 import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -12,6 +13,7 @@ public class RestConfiguration extends ResourceConfig {
 
         register(JacksonFeature.class);
         register(StatusResource.class);
+        register(LocalResource.class);
         register(OidcContainerRequestFilter.class);
 
     }

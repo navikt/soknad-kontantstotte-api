@@ -8,11 +8,12 @@ For å kjøre opp løsningen lokalt:
 
 ### Fra kommandolinje:
 ```
-mvn package && java -jar target/soknad-kontantstotte-api.jar
+mvn package && java -jar target/soknad-kontantstotte-api.jar -Dspring.profiles.active=dev
 ```
 
 ### Fra IntelliJ
-Kjør [main-metoden](src/test/java/no/nav/kontantstotte/api/TestLauncher.java)
+Kjør [main-metoden](src/test/java/no/nav/kontantstotte/api/TestLauncher.java). Her må man sette VM Options til `-Dspring.profiles.active=dev`
+eller lage en ny spring boot run-config med profile `dev`.
 
 ### Via dockerimaget
 
