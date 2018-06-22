@@ -1,3 +1,6 @@
+soknad-kontantstotte-api
+========================
+Backend for ny [kontantstøtte-søknad](https://github.com/navikt/soknad-kontantstotte)
 
 ## Lokalt oppsett
 
