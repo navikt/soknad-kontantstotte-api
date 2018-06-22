@@ -12,10 +12,10 @@ import static java.util.Arrays.asList;
 @Provider
 public class CORSResponseFilter implements ContainerResponseFilter {
 
-    private static final List<String> ALLOWED_ORIGINS = asList("https://soknad-kontantstotte-t6.nais.oera-q.local",
+    private static final List<String> ALLOWED_ORIGINS = asList(
+            "https://soknad-kontantstotte-t.nav.no",
             "https://soknad-kontantstotte-q.nav.no",
             "https://soknad-kontantstotte.nav.no");
-            //"http://localhost:8000");
 
     @Override
     public void filter(ContainerRequestContext request, ContainerResponseContext response) {
