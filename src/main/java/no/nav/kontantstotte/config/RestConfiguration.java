@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.config;
 
-import no.nav.kontantstotte.api.config.CORSResponseFilter;
+import no.nav.kontantstotte.api.filter.CORSResponseFilter;
 import no.nav.kontantstotte.api.rest.StatusResource;
 import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;

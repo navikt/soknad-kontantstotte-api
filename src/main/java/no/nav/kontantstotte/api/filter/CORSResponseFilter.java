@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.api.config;
+package no.nav.kontantstotte.api.filter;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
