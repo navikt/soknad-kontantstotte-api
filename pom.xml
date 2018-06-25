@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <oidc-support.version>0.2.5</oidc-support.version>
+        <oidc-support.version>0.2.6-SNAPSHOT</oidc-support.version>
         <commons-lang3.version>3.7</commons-lang3.version>
     </properties>
 
@@ -45,7 +45,7 @@
         </dependency>
         <dependency>
             <groupId>no.nav.security</groupId>
-            <artifactId>oidc-spring-test</artifactId>
+            <artifactId>oidc-test-support</artifactId>
             <version>${oidc-support.version}</version>
             <scope>test</scope>
         </dependency>

@@ -1,12 +1,9 @@
 package no.nav.kontantstotte.api.rest;
 
 import com.nimbusds.jwt.SignedJWT;
-import com.nimbusds.oauth2.sdk.ResponseType;
-import no.nav.kontantstotte.api.Launcher;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.security.oidc.OIDCConstants;
-import no.nav.security.spring.oidc.test.JwtTokenGenerator;
-import no.nav.security.spring.oidc.test.TokenGeneratorConfiguration;
+import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
@@ -25,7 +21,7 @@ import static org.hamcrest.core.Is.is;
 
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = { ApplicationConfig.class, TokenGeneratorConfiguration.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = ApplicationConfig.class)
 public class StatusResourceTest {
 
     @Value("${local.server.port}")
