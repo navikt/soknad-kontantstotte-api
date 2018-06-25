@@ -11,3 +11,4 @@ no.nav.security.oidc:
     discoveryurl: <Hentes fra fasit>
     acceptedaudience: <Hentes fra fasit>
     cookie_name: selvbetjening_idtoken
+logging.level.no.nav.security.oidc: debug
