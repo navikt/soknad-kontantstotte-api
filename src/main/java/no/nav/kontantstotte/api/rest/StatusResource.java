@@ -61,7 +61,9 @@ public class StatusResource {
     @GET
     @Path("isAlive")
     @Unprotected
-    public String isAlive() { return "Ok"; }
+    public String isAlive() {
+        return "Ok";
+    }
 }
 
 // https://github.com/navikt/token-support/tree/master/oidc-spring-test

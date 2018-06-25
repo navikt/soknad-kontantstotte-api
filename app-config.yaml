@@ -12,6 +12,8 @@ healthcheck:
   readiness:
     initialDelay: 60
     path: /soknad-kontantstotte-api/status/isAlive
+ingress:
+  enabled: true
 fasitResources:
   used:
   - alias: aad_b2c_clientid

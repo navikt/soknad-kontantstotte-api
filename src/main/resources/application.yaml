@@ -10,4 +10,4 @@ no.nav.security.oidc:
   issuer.selvbetjening:
     discoveryurl: <Hentes fra fasit>
     acceptedaudience: <Hentes fra fasit>
-    cookie_name: selvbetjening_idtoken
+    cookie_name: selvbetjening-idtoken
