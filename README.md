@@ -6,25 +6,9 @@ Backend for ny [kontantstøtte-søknad](https://github.com/navikt/soknad-kontant
 
 For å kjøre opp løsningen lokalt:
 
-### Fra kommandolinje:
-```
-mvn package && java -jar target/soknad-kontantstotte-api.jar
-```
-
-### Fra IntelliJ
 Kjør [main-metoden](src/test/java/no/nav/kontantstotte/api/TestLauncher.java)
 
-### Via dockerimaget
-
-Erstatt `unversioned` med versjonen du ønsker å kjøre eller bygg unversioned-taggen ved å kjøre `docker build .`
-
-```
-docker login repo.adeo.no:5443
-docker run -p 8080:8080 repo.adeo.no:5443/soknad/soknad-kontantstotte-api:unversioned
-```
-
-Kommandoen tilgjengeliggjør serveren på localhost:8080
-
+Lokal innlogging gjøre ved å kalle cookie-endepunktet til ```no.nav.security.oidc.test.support.jersey.TestTokenGeneratorResource```
 
 ## Bygging og publisering
 
