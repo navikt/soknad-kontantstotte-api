@@ -3,7 +3,6 @@ package no.nav.kontantstotte.api;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
-import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.boot.SpringApplication;
