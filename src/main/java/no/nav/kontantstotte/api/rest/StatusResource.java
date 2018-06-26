@@ -65,5 +65,3 @@ public class StatusResource {
         return "Ok";
     }
 }
-
-// https://github.com/navikt/token-support/tree/master/oidc-spring-test
