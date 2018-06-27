@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.config;
 
 import no.nav.kontantstotte.api.filter.CORSResponseFilter;
+import no.nav.kontantstotte.api.rest.BarnResource;
 import no.nav.kontantstotte.api.rest.StatusResource;
 import no.nav.kontantstotte.api.rest.TeksterResource;
 import no.nav.kontantstotte.api.rest.exceptionmapper.WebApplicationExceptionMapper;
@@ -17,6 +18,7 @@ public class RestConfiguration extends ResourceConfig {
         // Resources
         register(StatusResource.class);
         register(TeksterResource.class);
+        register(BarnResource.class);
         // Filters
         register(CORSResponseFilter.class);
         register(OidcContainerRequestFilter.class);
