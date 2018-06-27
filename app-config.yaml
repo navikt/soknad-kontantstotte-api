@@ -8,10 +8,10 @@ port: 8080
 healthcheck:
   liveness:
     initialDelay: 60
-    path: /soknad-kontantstotte-api/status/isAlive
+    path: /api/status/isAlive
   readiness:
     initialDelay: 60
-    path: /soknad-kontantstotte-api/status/isAlive
+    path: /api/status/isAlive
 ingress:
   enabled: true
 fasitResources:
