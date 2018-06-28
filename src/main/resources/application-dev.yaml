@@ -1,4 +1,3 @@
-spring.autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
