@@ -8,6 +8,7 @@ spring:
   jersey:
     servlet:
       load-on-startup: 1
+    application-path: "/api"
 
 management:
    endpoints.web.exposure.include: '*'
