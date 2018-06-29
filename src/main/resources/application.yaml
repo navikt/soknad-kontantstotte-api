@@ -1,19 +1,10 @@
+spring.autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 server:
   servlet:
-    path: /
-
-spring:
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
-  jersey:
-    servlet:
-      load-on-startup: 1
-
+    context-path: /api
 management:
    endpoints.web.exposure.include: '*'
-
 http.proxy: http://webproxy-nais.nav.no:8088
-
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:

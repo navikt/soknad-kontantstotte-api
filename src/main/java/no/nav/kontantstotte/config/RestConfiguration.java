@@ -9,9 +9,6 @@ import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import javax.ws.rs.ApplicationPath;
-
-@ApplicationPath("/api")
 public class RestConfiguration extends ResourceConfig {
 
 
