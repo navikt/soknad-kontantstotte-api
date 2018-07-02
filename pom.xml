@@ -91,6 +91,13 @@
             <!--</exclusions>-->
         <!--</dependency>-->
 
+        <!-- additional jersey dependencies -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.26</version>
+        </dependency>
+
         <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
