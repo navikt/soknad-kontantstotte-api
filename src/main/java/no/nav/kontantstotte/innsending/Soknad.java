@@ -4,7 +4,18 @@ import java.time.LocalDateTime;
 
 public class Soknad {
 
-    public String soker;
     public LocalDateTime innsendingTimestamp;
+    public SokerKrav sokerKrav;
+    public Familieforhold familieforhold;
+    public Barnehageplass barnehageplass;
+    public Arbeidsforhold arbeidsforhold;
+    public AnnenForelder annenForelder;
 
+    public Soknad() {
+        sokerKrav = new SokerKrav();
+        familieforhold = new Familieforhold();
+        barnehageplass = new Barnehageplass();
+        arbeidsforhold = new Arbeidsforhold();
+        annenForelder = new AnnenForelder();
+    }
 }
