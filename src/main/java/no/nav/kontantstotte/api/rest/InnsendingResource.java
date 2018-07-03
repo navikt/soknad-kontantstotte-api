@@ -21,6 +21,6 @@ public class InnsendingResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
         soknad.innsendingTimestamp = now();
-
+        System.out.println(soknad.barn);
     }
 }
