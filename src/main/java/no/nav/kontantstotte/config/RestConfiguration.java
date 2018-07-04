@@ -8,7 +8,6 @@ import no.nav.kontantstotte.api.rest.TeksterResource;
 import no.nav.kontantstotte.api.rest.exceptionmapper.WebApplicationExceptionMapper;
 import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.ws.rs.ApplicationPath;
@@ -20,7 +19,6 @@ public class RestConfiguration extends ResourceConfig {
     public RestConfiguration() {
 
         register(JacksonFeature.class);
-        register(MultiPartFeature.class);
         // Resources
         register(StatusResource.class);
         register(TeksterResource.class);
