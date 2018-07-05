@@ -3,19 +3,22 @@ package no.nav.kontantstotte.config;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
-import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
+import org.springframework.web.context.request.RequestContextListener;
 
 import javax.servlet.DispatcherType;
 import java.net.MalformedURLException;
@@ -42,8 +45,18 @@ public class ApplicationConfig implements EnvironmentAware {
     }
 
     @Bean
-    public ResourceConfig jerseyConfig() {
-        return new RestConfiguration();
+    public RequestContextListener requestContextListener() {
+        return new RequestContextListener();
+    }
+
+    @Bean
+    ServletRegistrationBean<?> jerseyServletRegistration() {
+
+        ServletRegistrationBean<?> jerseyServletRegistration = new ServletRegistrationBean<>(new ServletContainer());
+
+        jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, RestConfiguration.class.getName());
+
+        return jerseyServletRegistration;
     }
 
     @Bean

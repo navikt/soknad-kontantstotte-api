@@ -3,7 +3,6 @@ package no.nav.kontantstotte.api;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.boot.SpringApplication;
@@ -38,7 +37,12 @@ public class TestLauncher {
 
     @Bean
     @Primary
-    public ResourceConfig jerseyConfig() {
-        return new TestRestConfiguration();
+    ServletRegistrationBean<?> jerseyServletRegistration() {
+
+        ServletRegistrationBean<?> jerseyServletRegistration = new ServletRegistrationBean<>(new ServletContainer());
+
+        jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, TestRestConfiguration.class.getName());
+
+        return jerseyServletRegistration;
     }
 }

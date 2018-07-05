@@ -28,7 +28,7 @@ public class StatusResourceTest {
     @Value("${local.server.port}")
     private int port;
 
-    @Value("${spring.jersey.application-path}")
+    @Value("${server.servlet.context-path:}")
     private String contextPath;
 
     @Test
