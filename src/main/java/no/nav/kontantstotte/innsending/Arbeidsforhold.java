@@ -7,7 +7,19 @@ public class Arbeidsforhold {
     public String arbeiderIUtlandetEllerKontinentalsokkel;
     public String mottarKontantstotteFraAnnetEOS;
     public String mottarYtelserFraUtlandet;
-    public Optional<String> arbeiderIUtlandetEllerKontinentalsokkelForklaring;
-    public Optional<String> mottarKontantstotteFraAnnetEOSForklaring;
-    public Optional<String> mottarYtelserFraUtlandetForklaring;
+    public String arbeiderIUtlandetEllerKontinentalsokkelForklaring;
+    public String mottarKontantstotteFraAnnetEOSForklaring;
+    public String mottarYtelserFraUtlandetForklaring;
+
+    public Optional<String> getArbeiderIUtlandetEllerKontinentalsokkelForklaring() {
+        return Optional.ofNullable(arbeiderIUtlandetEllerKontinentalsokkelForklaring);
+    }
+
+    public Optional<String> getMottarKontantstotteFraAnnetEOSForklaring() {
+        return Optional.ofNullable(mottarKontantstotteFraAnnetEOSForklaring);
+    }
+
+    public Optional<String> getMottarYtelserFraUtlandetForklaring() {
+        return Optional.ofNullable(mottarYtelserFraUtlandetForklaring);
+    }
 }

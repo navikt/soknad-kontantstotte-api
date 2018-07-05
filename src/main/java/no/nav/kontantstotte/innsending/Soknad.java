@@ -10,4 +10,12 @@ public class Soknad {
     public Barnehageplass barnehageplass;
     public Arbeidsforhold arbeidsforhold;
     public Barn barn;
+
+    public Soknad() {
+        this.sokerKrav = new SokerKrav();
+        this.familieforhold = new Familieforhold();
+        this.barnehageplass = new Barnehageplass();
+        this.arbeidsforhold = new Arbeidsforhold();
+        this.barn = new Barn();
+    }
 }

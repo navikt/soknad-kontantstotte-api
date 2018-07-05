@@ -7,9 +7,21 @@ import java.util.Optional;
 public class Barnehageplass {
     public String harBarnehageplass;
     @JsonAlias({"jaKommune", "jaSkalSlutteKommune", "neiHarFaattKommune"})
-    public Optional<String> kommune;
+    public String kommune;
     @JsonAlias({"jaAntallTimer", "jaSkalSlutteAntallTimer"})
-    public Optional<String> antallTimer;
+    public String antallTimer;
     @JsonAlias({"jaFraDato", "jaSkalSlutteFraDato", "neiHarFaattPlassFraDato"})
-    public Optional<String> fraDato;
+    public String fraDato;
+
+    public Optional<String> getKommune() {
+        return Optional.ofNullable(kommune);
+    }
+
+    public Optional<String> getAntallTimer() {
+        return Optional.ofNullable(antallTimer);
+    }
+
+    public Optional<String> getFraDato() {
+        return Optional.ofNullable(fraDato);
+    }
 }

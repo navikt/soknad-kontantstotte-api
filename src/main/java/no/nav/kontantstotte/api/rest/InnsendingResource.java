@@ -18,7 +18,8 @@ public class InnsendingResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void sendInnSoknad(Soknad soknad) {
+    public Soknad sendInnSoknad(Soknad soknad) {
         soknad.innsendingTimestamp = now();
+        return soknad;
     }
 }
