@@ -2,11 +2,10 @@ package no.nav.kontantstotte.api.rest;
 
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.security.oidc.api.ProtectedWithClaims;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import static java.time.LocalDateTime.now;
@@ -17,8 +16,8 @@ import static java.time.LocalDateTime.now;
 public class InnsendingResource {
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Soknad sendInnSoknad(Soknad soknad) {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Soknad sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
         soknad.innsendingTimestamp = now();
         return soknad;
     }

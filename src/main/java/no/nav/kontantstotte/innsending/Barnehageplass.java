@@ -6,11 +6,8 @@ import java.util.Optional;
 
 public class Barnehageplass {
     public String harBarnehageplass;
-    @JsonAlias({"jaKommune", "jaSkalSlutteKommune", "neiHarFaattKommune"})
     public String kommune;
-    @JsonAlias({"jaAntallTimer", "jaSkalSlutteAntallTimer"})
     public String antallTimer;
-    @JsonAlias({"jaFraDato", "jaSkalSlutteFraDato", "neiHarFaattPlassFraDato"})
     public String fraDato;
 
     public Optional<String> getKommune() {
