@@ -38,6 +38,8 @@ public class InnsendingResourceTest {
     private String contextPath;
 
 
+    // TODO: I denne testen deserialiseres søknaden til null - dette skjer ikke i browser, dvs at noe er galt med hvordan FormDataMultiPart-objektet er bygd opp.
+    // Må fikses, hvis ikke får man NullpointerException.
     @Test
     @Ignore
     public void testInnsendingAvSoknad() {
@@ -48,7 +50,7 @@ public class InnsendingResourceTest {
 
         FormDataMultiPart mp = new FormDataMultiPart();
         FormDataBodyPart soknadForm = new FormDataBodyPart("soknad", testSoknadJson());
-        mp.bodyPart(soknadForm);
+        mp.bodyPart(soknadForm, MediaType.APPLICATION_JSON_TYPE);
 
         Response response = target.path("/sendinn")
                 .request()
