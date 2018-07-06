@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.api.rest;
 
-import no.nav.security.oidc.api.Unprotected;
+import no.nav.security.oidc.api.ProtectedWithClaims;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.net.URI;
 @Component
 @Produces(MediaType.APPLICATION_JSON)
 @Path("person")
-@Unprotected
+@ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class PersonResource {
 
     @Value("${apikeys.key:x-nav-apiKey}")
