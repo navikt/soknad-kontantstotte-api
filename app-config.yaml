@@ -1,3 +1,4 @@
+#jeg vil ikke ha hjelp fra pus
 name: soknad-kontantstotte-api
 image: repo.adeo.no:5443/soknad/soknad-kontantstotte-api
 replicas:
