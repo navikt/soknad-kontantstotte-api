@@ -2,7 +2,7 @@ package no.nav.kontantstotte.api.rest;
 
 import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.config.ApplicationConfig;
-import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.kontantstotte.pdf.PdfService;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
@@ -46,6 +46,12 @@ public class InnsendingResourceTest {
                 .invoke();
 
         assertThat(response.getStatus(), is(equalTo(Response.Status.OK.getStatusCode())));
+    }
+
+    @Test
+    public void testPdfGenerering() {
+        PdfService pdfService = new PdfService();
+        pdfService.genererPdf();
     }
 
     private String testSoknadJson() {
