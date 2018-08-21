@@ -19,6 +19,11 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
@@ -51,7 +56,26 @@ public class InnsendingResourceTest {
     @Test
     public void testPdfGenerering() {
         PdfService pdfService = new PdfService();
-        pdfService.genererPdf();
+        String html = pdfService.genererHtmlForPdf();
+
+        WebTarget target = ClientBuilder.newClient().target("http://localhost:8080/");
+        SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT("12345678911");
+        Response response = target.path("api/convert")
+                .request()
+                .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
+                .buildPost(Entity.entity(html, MediaType.TEXT_HTML)).invoke();
+
+        assertThat(response.getStatus(), is(equalTo(Response.Status.OK.getStatusCode())));
+
+        try {
+            new File("/Users/martineenger/nav/soknad-kontantstotte-api/TEST.pdf");
+            OutputStream out = new FileOutputStream("/Users/martineenger/nav/soknad-kontantstotte-api/TEST.pdf");
+            byte[] in = response.readEntity(byte[].class);
+            out.write(in);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String testSoknadJson() {

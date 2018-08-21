@@ -20,8 +20,7 @@ class React {
             nashornScriptEngine.eval(read("static/react-dom-server.js"));
             nashornScriptEngine.eval(read("static/react-dom.js"));
 
-            String utranspilert = readFromFile("jsx/SoknadPdf.js");
-            bindings.put("inputFil", utranspilert);
+            bindings.put("inputFil", readFromFile("jsx/SoknadPdf.jsx"));
             String transpilert = (String) nashornScriptEngine.eval("Babel.transform(inputFil, { presets: ['react'] }).code", bindings);
             nashornScriptEngine.eval(transpilert);
         } catch (ScriptException | IOException e) {
