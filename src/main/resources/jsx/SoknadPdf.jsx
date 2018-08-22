@@ -1,15 +1,17 @@
-var SoknadPdf = function () {
+var SoknadPdf = function (soknad) {
     return (
         <div>
             <h1>Søknad om kontantstøtte</h1>
-            <p>Dette er en React-komponent!</p>
+            <SokerKrav sokerKrav={soknad.sokerKrav} />
+            <Barn barn={soknad.barn} />
+            <Barnehageplass barnehageplass={soknad.barnehageplass} />
+            <Arbeidsforhold />
         </div>
     );
 };
 
-
-function hentHTMLStringForOppsummering() {
-    var komponent = ReactDOMServer.renderToStaticMarkup(SoknadPdf());
+function hentHTMLStringForOppsummering(soknad) {
+    var komponent = ReactDOMServer.renderToStaticMarkup(SoknadPdf(soknad));
     return '<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/>' +
             hentStyleHeader() +
         '</head><body>' + komponent + '</body></html>';

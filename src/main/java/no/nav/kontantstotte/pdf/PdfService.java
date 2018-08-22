@@ -1,5 +1,7 @@
 package no.nav.kontantstotte.pdf;
 
+import no.nav.kontantstotte.innsending.Soknad;
+
 public class PdfService {
 
     React react;
@@ -8,11 +10,10 @@ public class PdfService {
         this.react = new React();
     }
 
-    public String genererHtmlForPdf() {
+    public String genererHtmlForPdf(Soknad soknad) {
 
-        String html = react.renderHTMLForPdf();
+        String html = react.renderHTMLForPdf(soknad);
         //gjør kall til soknad-pdf-generator for å hente pdf
-        System.out.println(html);
 
         /*
         //TODO sett opp authorization header

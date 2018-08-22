@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.pdf;
 
 import jdk.nashorn.api.scripting.NashornScriptEngine;
+import no.nav.kontantstotte.innsending.Soknad;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -14,27 +15,42 @@ class React {
                 new ScriptEngineManager().getEngineByName("nashorn");
         try {
             SimpleBindings bindings = new SimpleBindings();
-            nashornScriptEngine.eval(read("static/nashorn-polyfill.js"));
-            nashornScriptEngine.eval(read("static/babel.js"), bindings);
-            nashornScriptEngine.eval(read("static/react.js"));
-            nashornScriptEngine.eval(read("static/react-dom-server.js"));
-            nashornScriptEngine.eval(read("static/react-dom.js"));
+            nashornScriptEngine.eval(read("static/polyfills/nashorn-polyfill.js"));
+            nashornScriptEngine.eval(read("static/polyfills/babel.js"), bindings);
+            nashornScriptEngine.eval(read("static/vendor-react/react.js"));
+            nashornScriptEngine.eval(read("static/vendor-react/react-dom-server.js"));
+            nashornScriptEngine.eval(read("static/vendor-react/react-dom.js"));
 
-            bindings.put("inputFil", readFromFile("jsx/SoknadPdf.jsx"));
-            String transpilert = (String) nashornScriptEngine.eval("Babel.transform(inputFil, { presets: ['react'] }).code", bindings);
-            nashornScriptEngine.eval(transpilert);
+            evaluateReactComponents(nashornScriptEngine, bindings);
         } catch (ScriptException | IOException e) {
             throw new RuntimeException(e);
         }
         return nashornScriptEngine;
     });
 
-    public String renderHTMLForPdf() {
+    private void evaluateReactComponents(NashornScriptEngine nashorn, SimpleBindings bindings) throws ScriptException, IOException {
+        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/SokerKrav.jsx");
+        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Barn.jsx");
+        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Barnehageplass.jsx");
+        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Arbeidsforhold.jsx");
+        evaluerReactKomponent(nashorn, bindings, "jsx/SoknadPdf.jsx");
+    }
+
+    private NashornScriptEngine evaluerReactKomponent(NashornScriptEngine nashorn, SimpleBindings bindings, String filnavn) throws ScriptException, IOException {
+        bindings.put("fil", readFromFile(filnavn));
+
+        String transpilert = (String) nashorn
+                .eval("Babel.transform(fil, { presets: ['react'] }).code", bindings);
+        nashorn.eval(transpilert);
+        return nashorn;
+    }
+
+    public String renderHTMLForPdf(Soknad soknad) {
         try {
-            Object html = engineHolder.get().invokeFunction("hentHTMLStringForOppsummering");
+            Object html = engineHolder.get().invokeFunction("hentHTMLStringForOppsummering", soknad);
             return String.valueOf(html);
         } catch (ScriptException | NoSuchMethodException e) {
-            throw new IllegalStateException("Klarte ikke rendre react-komponent", e);
+            throw new IllegalStateException("Klarte ikke rendre vendor-react-komponent", e);
         }
     }
 
