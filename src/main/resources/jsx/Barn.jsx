@@ -1,3 +1,5 @@
+// TODO: Beregne alder fra fødselsdato
+
 var Barn = React.createClass({
     render: function () {
         return (

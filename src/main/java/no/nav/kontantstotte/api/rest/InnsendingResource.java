@@ -37,7 +37,7 @@ public class InnsendingResource {
 
         WebTarget target = ClientBuilder.newClient()
                 .register(OidcClientRequestFilter.class)
-                .target("http://localhost:8080/");
+                .target("http://localhost:8081/");
 
         Response response = target.path("api/convert")
                 .request()
@@ -45,6 +45,8 @@ public class InnsendingResource {
                 .invoke();
 
         System.out.println("Response status PDF-kall:" + response.getStatus());
+
+        // TODO: Send pdf videre til proxy i stedet for å skrive til fil
 
         try {
             new File("/Users/martineenger/nav/soknad-kontantstotte-api/TEST.pdf");
