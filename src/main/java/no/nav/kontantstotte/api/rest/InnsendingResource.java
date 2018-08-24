@@ -40,7 +40,7 @@ public class InnsendingResource {
     @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}")
     private String proxyApiKey;
 
-    @Value("${SOKNAD_PDF_GENERATOR_API_URL}")
+    @Value("${SOKNAD_PDF_GENERATOR_URL}")
     private URI pdfGeneratorServiceUri;
 
 
