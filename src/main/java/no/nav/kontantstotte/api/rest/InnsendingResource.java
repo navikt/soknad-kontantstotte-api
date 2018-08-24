@@ -4,7 +4,9 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.pdf.PdfService;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestPart;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -28,8 +30,8 @@ import static java.time.LocalDateTime.now;
 public class InnsendingResource {
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Soknad sendInnSoknad(Soknad soknad) {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Soknad sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
         soknad.innsendingTimestamp = now();
 
         PdfService pdfService = new PdfService();
@@ -57,6 +59,7 @@ public class InnsendingResource {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         return soknad;
     }

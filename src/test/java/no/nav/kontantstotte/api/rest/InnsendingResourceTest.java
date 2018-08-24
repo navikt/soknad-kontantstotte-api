@@ -6,6 +6,7 @@ import no.nav.kontantstotte.pdf.PdfService;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,7 @@ public class InnsendingResourceTest {
     private String contextPath;
 
     @Test
+    @Ignore
     public void testInnsendingAvSoknad() {
         WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT("12345678911");
