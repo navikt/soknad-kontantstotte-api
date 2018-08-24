@@ -21,8 +21,5 @@ public class SoknadDto {
     String getFnr() {
         return fnr;
     }
-
-
-
 }
 

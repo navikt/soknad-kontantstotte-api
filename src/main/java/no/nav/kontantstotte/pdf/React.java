@@ -32,6 +32,7 @@ class React {
         nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/SokerKrav.jsx");
         nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Barn.jsx");
         nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Barnehageplass.jsx");
+        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Familieforhold.jsx");
         nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Arbeidsforhold.jsx");
         evaluerReactKomponent(nashorn, bindings, "jsx/SoknadPdf.jsx");
     }

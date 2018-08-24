@@ -4,6 +4,7 @@ var SoknadPdf = function (soknad) {
             <h1>Søknad om kontantstøtte</h1>
             <SokerKrav kravTilSoker={soknad.kravTilSoker} />
             <Barn mineBarn={soknad.mineBarn} />
+            <Familieforhold familieforhold={soknad.familieforhold} />
             <Barnehageplass barnehageplass={soknad.barnehageplass} />
             <Arbeidsforhold />
         </div>

@@ -50,7 +50,7 @@ public class InnsendingResource {
         soknad.innsendingTimestamp = now();
 
         PdfService pdfService = new PdfService();
-        String html = pdfService.genererHtmlForPdf(soknad);
+        String htmlSoknad = pdfService.genererHtmlForPdf(soknad);
 
         WebTarget target = ClientBuilder.newClient()
                 .register(OidcClientRequestFilter.class)
@@ -58,29 +58,42 @@ public class InnsendingResource {
 
         Response response = target.path("convert")
                 .request()
-                .buildPost(Entity.entity(html, MediaType.TEXT_HTML))
+                .buildPost(Entity.entity(htmlSoknad, MediaType.TEXT_HTML))
                 .invoke();
 
         System.out.println("Response status PDF-kall:" + response.getStatus());
 
-        // TODO: Send pdf videre til proxy i stedet for å skrive til fil
+        boolean skrivTilFil = true;
+        try {
+            byte[] byteSoknad = response.readEntity(byte[].class);
 
-        byte[] in = response.readEntity(byte[].class);
+            // Benytter dummy fnr til vi får på plass fnr integrasjon.
+            SoknadDto soknadDto = new SoknadDto("10108000398", byteSoknad);
 
-        SoknadDto soknadDto = new SoknadDto("10108000398", in);
+            WebTarget sendSoknadPdf = ClientBuilder.newClient()
+                    .register(OidcClientRequestFilter.class)
+                    .target(proxyServiceUri);
 
-        WebTarget sendSoknadPdf = ClientBuilder.newClient()
-                .register(OidcClientRequestFilter.class)
-                .target(proxyServiceUri);
+            Response sendSoknadReq = sendSoknadPdf.path("soknad")
+                    .request()
+                    .header(key, proxyApiKey)
+                    .buildPost(Entity.entity(soknadDto, MediaType.APPLICATION_JSON))
+                    .invoke();
 
-        Response sendSoknadReq = sendSoknadPdf.path("soknad")
-                .request()
-                .header(key, proxyApiKey)
-                .buildPost(Entity.entity(soknadDto, MediaType.APPLICATION_JSON))
-                .invoke();
+            System.out.println("Response status send PDF:" + sendSoknadReq.getStatus() + ", " + sendSoknadReq.getLocation() + ", " + sendSoknadReq);
 
-        System.out.println("Response status send PDF:" + sendSoknadReq.getStatus() + ", " + sendSoknadReq.getLocation() + ", " + sendSoknadReq);
 
+            // Ved deploy må filskriving deaktiveres
+            if (skrivTilFil) {
+                new File("/Users/henninghakonsen/nav/soknad-kontantstotte-api/TEST.pdf");
+                OutputStream out = new FileOutputStream("/Users/henninghakonsen/nav/soknad-kontantstotte-api/TEST.pdf");
+
+                out.write(byteSoknad);
+                out.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return soknad;
     }
