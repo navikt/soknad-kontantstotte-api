@@ -2,8 +2,8 @@ var SoknadPdf = function (soknad) {
     return (
         <div>
             <h1>Søknad om kontantstøtte</h1>
-            <SokerKrav sokerKrav={soknad.sokerKrav} />
-            <Barn barn={soknad.barn} />
+            <SokerKrav kravTilSoker={soknad.kravTilSoker} />
+            <Barn mineBarn={soknad.mineBarn} />
             <Barnehageplass barnehageplass={soknad.barnehageplass} />
             <Arbeidsforhold />
         </div>

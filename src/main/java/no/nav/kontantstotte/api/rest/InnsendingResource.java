@@ -51,8 +51,8 @@ public class InnsendingResource {
         // TODO: Send pdf videre til proxy i stedet for å skrive til fil
 
         try {
-            new File("/Users/martineenger/nav/soknad-kontantstotte-api/TEST.pdf");
-            OutputStream out = new FileOutputStream("/Users/martineenger/nav/soknad-kontantstotte-api/TEST.pdf");
+            new File("/Users/henninghakonsen/nav/soknad-kontantstotte-api/TEST.pdf");
+            OutputStream out = new FileOutputStream("/Users/henninghakonsen/nav/soknad-kontantstotte-api/TEST.pdf");
             byte[] in = response.readEntity(byte[].class);
             out.write(in);
             out.close();

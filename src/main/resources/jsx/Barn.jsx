@@ -6,7 +6,7 @@ var Barn = React.createClass({
             <div>
                 <h3>Opplysninger om barnet eller barna</h3>
                 <ul>
-                    <li>{this.props.barn.navn}, {this.props.barn.fodselsdato}</li>
+                    <li>{this.props.mineBarn.navn}, {this.props.mineBarn.fodselsdato}</li>
                 </ul>
             </div>
         );
