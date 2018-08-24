@@ -65,29 +65,21 @@ public class InnsendingResource {
 
         // TODO: Send pdf videre til proxy i stedet for å skrive til fil
 
-        try {
-            new File("/Users/henninghakonsen/nav/soknad-kontantstotte-api/TEST.pdf");
-            OutputStream out = new FileOutputStream("/Users/henninghakonsen/nav/soknad-kontantstotte-api/TEST.pdf");
-            byte[] in = response.readEntity(byte[].class);
+        byte[] in = response.readEntity(byte[].class);
 
-            SoknadDto soknadDto = new SoknadDto("10108000398", in);
+        SoknadDto soknadDto = new SoknadDto("10108000398", in);
 
-            WebTarget sendSoknadPdf = ClientBuilder.newClient()
-                    .register(OidcClientRequestFilter.class)
-                    .target(proxyServiceUri);
+        WebTarget sendSoknadPdf = ClientBuilder.newClient()
+                .register(OidcClientRequestFilter.class)
+                .target(proxyServiceUri);
 
-            Response sendSoknadReq = sendSoknadPdf.path("soknad")
-                    .request()
-                    .header(key, proxyApiKey)
-                    .buildPost(Entity.entity(soknadDto, MediaType.APPLICATION_JSON))
-                    .invoke();
+        Response sendSoknadReq = sendSoknadPdf.path("soknad")
+                .request()
+                .header(key, proxyApiKey)
+                .buildPost(Entity.entity(soknadDto, MediaType.APPLICATION_JSON))
+                .invoke();
 
-            System.out.println("Response status send PDF:" + sendSoknadReq.getStatus() + ", " + sendSoknadReq.getLocation() + ", " + sendSoknadReq);
-            //out.write(in);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Response status send PDF:" + sendSoknadReq.getStatus() + ", " + sendSoknadReq.getLocation() + ", " + sendSoknadReq);
 
 
         return soknad;
