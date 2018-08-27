@@ -11,15 +11,15 @@ public class Arbeidsforhold {
     public String mottarKontantstotteFraAnnetEOSForklaring;
     public String mottarYtelserFraUtlandetForklaring;
 
-    public Optional<String> getArbeiderIUtlandetEllerKontinentalsokkelForklaring() {
-        return Optional.ofNullable(arbeiderIUtlandetEllerKontinentalsokkelForklaring);
+    public String getArbeiderIUtlandetEllerKontinentalsokkelForklaring() {
+        return arbeiderIUtlandetEllerKontinentalsokkelForklaring;
     }
 
-    public Optional<String> getMottarKontantstotteFraAnnetEOSForklaring() {
-        return Optional.ofNullable(mottarKontantstotteFraAnnetEOSForklaring);
+    public String getMottarKontantstotteFraAnnetEOSForklaring() {
+        return mottarKontantstotteFraAnnetEOSForklaring;
     }
 
-    public Optional<String> getMottarYtelserFraUtlandetForklaring() {
-        return Optional.ofNullable(mottarYtelserFraUtlandetForklaring);
+    public String getMottarYtelserFraUtlandetForklaring() {
+        return mottarYtelserFraUtlandetForklaring;
     }
 }

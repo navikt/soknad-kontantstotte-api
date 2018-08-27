@@ -11,11 +11,11 @@ public class Familieforhold {
     public String annenForelderFodselsnummer;
     public String annenForelderYrkesaktivINorgeEOSIMinstFemAar;
 
-    public Optional<String> getAnnenForelderNavn() {
-        return Optional.ofNullable(annenForelderNavn);
+    public String getAnnenForelderNavn() {
+        return annenForelderNavn;
     }
-    public Optional<String> getAnnenForelderFodselsnummer() {
-        return Optional.ofNullable(annenForelderNavn);
+    public String getAnnenForelderFodselsnummer() {
+        return annenForelderFodselsnummer;
     }
     public Optional<String> getAnnenForelderYrkesaktivINorgeEOSMinstFemAar() {
         return Optional.ofNullable(annenForelderYrkesaktivINorgeEOSIMinstFemAar);

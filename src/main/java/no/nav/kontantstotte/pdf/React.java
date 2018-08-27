@@ -34,6 +34,8 @@ class React {
         nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Barnehageplass.jsx");
         nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Familieforhold.jsx");
         nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Arbeidsforhold.jsx");
+        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/OppsummeringsListeElement.jsx");
+        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/PersonaliaOgBarnOppsummering.jsx");
         evaluerReactKomponent(nashorn, bindings, "jsx/SoknadPdf.jsx");
     }
 
@@ -51,7 +53,7 @@ class React {
             Object html = engineHolder.get().invokeFunction("hentHTMLStringForOppsummering", soknad);
             return String.valueOf(html);
         } catch (ScriptException | NoSuchMethodException e) {
-            throw new IllegalStateException("Klarte ikke rendre vendor-react-komponent", e);
+            throw new IllegalStateException("Klarte ikke rendre react-komponent", e);
         }
     }
 

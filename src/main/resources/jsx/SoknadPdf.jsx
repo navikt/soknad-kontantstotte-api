@@ -2,11 +2,12 @@ var SoknadPdf = function (soknad) {
     return (
         <div>
             <h1>Søknad om kontantstøtte</h1>
+            <PersonaliaOgBarnOppsummering person={soknad.person} barn={soknad.mineBarn} />
             <SokerKrav kravTilSoker={soknad.kravTilSoker} />
             <Barn mineBarn={soknad.mineBarn} />
             <Familieforhold familieforhold={soknad.familieforhold} />
             <Barnehageplass barnehageplass={soknad.barnehageplass} />
-            <Arbeidsforhold />
+            <Arbeidsforhold arbeidsforhold={soknad.arbeidsforhold} />
         </div>
     );
 };
