@@ -1,5 +1,3 @@
-// Todo: Her må det inn verdier
-
 var Arbeidsforhold = React.createClass({
     render: function () {
         return (
