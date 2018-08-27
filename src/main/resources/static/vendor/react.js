@@ -29,13 +29,13 @@
 
         assign(React, {
             // ReactDOM
-            findDOMNode: deprecated('findDOMNode', 'ReactDOM', 'vendor-react-dom', ReactDOM, ReactDOM.findDOMNode),
-            render: deprecated('render', 'ReactDOM', 'vendor-react-dom', ReactDOM, ReactDOM.render),
-            unmountComponentAtNode: deprecated('unmountComponentAtNode', 'ReactDOM', 'vendor-react-dom', ReactDOM, ReactDOM.unmountComponentAtNode),
+            findDOMNode: deprecated('findDOMNode', 'ReactDOM', 'vendor-dom', ReactDOM, ReactDOM.findDOMNode),
+            render: deprecated('render', 'ReactDOM', 'vendor-dom', ReactDOM, ReactDOM.render),
+            unmountComponentAtNode: deprecated('unmountComponentAtNode', 'ReactDOM', 'vendor-dom', ReactDOM, ReactDOM.unmountComponentAtNode),
 
             // ReactDOMServer
-            renderToString: deprecated('renderToString', 'ReactDOMServer', 'vendor-react-dom/server', ReactDOMServer, ReactDOMServer.renderToString),
-            renderToStaticMarkup: deprecated('renderToStaticMarkup', 'ReactDOMServer', 'vendor-react-dom/server', ReactDOMServer, ReactDOMServer.renderToStaticMarkup)
+            renderToString: deprecated('renderToString', 'ReactDOMServer', 'vendor-dom/server', ReactDOMServer, ReactDOMServer.renderToString),
+            renderToStaticMarkup: deprecated('renderToStaticMarkup', 'ReactDOMServer', 'vendor-dom/server', ReactDOMServer, ReactDOMServer.renderToStaticMarkup)
         });
 
         React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
@@ -4573,7 +4573,7 @@
             /**
              * Invoked before the component receives new props.
              *
-             * Use this as an opportunity to vendor-react to a prop transition by updating the
+             * Use this as an opportunity to vendor to a prop transition by updating the
              * state using `this.setState`. Current props are accessed via `this.props`.
              *
              *   componentWillReceiveProps: function(nextProps, nextContext) {
@@ -5054,7 +5054,7 @@
                     // by mocks to assert on what gets mounted.
 
                     if ("development" !== 'production') {
-                        "development" !== 'production' ? warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/vendor-react-legacyfactory') : undefined;
+                        "development" !== 'production' ? warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/vendor-legacyfactory') : undefined;
                     }
 
                     // Wire up auto-binding
@@ -5238,7 +5238,7 @@
                 getDOMNode: ['getDOMNode', 'Use ReactDOM.findDOMNode(component) instead.'],
                 isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
                 replaceProps: ['replaceProps', 'Instead, call render again at the top level.'],
-                replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/vendor-react/issues/3236).'],
+                replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/vendor/issues/3236).'],
                 setProps: ['setProps', 'Instead, call render again at the top level.']
             };
             var defineDeprecationWarning = function (methodName, info) {
@@ -6145,7 +6145,7 @@
                 if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined') {
                     // If we're in Chrome or Firefox, provide a download link if not installed.
                     if (navigator.userAgent.indexOf('Chrome') > -1 && navigator.userAgent.indexOf('Edge') === -1 || navigator.userAgent.indexOf('Firefox') > -1) {
-                        console.debug('Download the React DevTools for a better development experience: ' + 'https://fb.me/vendor-react-devtools');
+                        console.debug('Download the React DevTools for a better development experience: ' + 'https://fb.me/vendor-devtools');
                     }
                 }
 
@@ -6164,7 +6164,7 @@
 
                 for (var i = 0; i < expectedFeatures.length; i++) {
                     if (!expectedFeatures[i]) {
-                        console.error('One or more ES5 shim/shams expected by React are not available: ' + 'https://fb.me/vendor-react-warning-polyfills');
+                        console.error('One or more ES5 shim/shams expected by React are not available: ' + 'https://fb.me/vendor-warning-polyfills');
                         break;
                     }
                 }
@@ -6428,7 +6428,7 @@
             }
             if (props.dangerouslySetInnerHTML != null) {
                 !(props.children == null) ? "development" !== 'production' ? invariant(false, 'Can only set one of `children` or `props.dangerouslySetInnerHTML`.') : invariant(false) : undefined;
-                !(typeof props.dangerouslySetInnerHTML === 'object' && HTML in props.dangerouslySetInnerHTML) ? "development" !== 'production' ? invariant(false, '`props.dangerouslySetInnerHTML` must be in the form `{__html: ...}`. ' + 'Please visit https://fb.me/vendor-react-invariant-dangerously-set-inner-html ' + 'for more information.') : invariant(false) : undefined;
+                !(typeof props.dangerouslySetInnerHTML === 'object' && HTML in props.dangerouslySetInnerHTML) ? "development" !== 'production' ? invariant(false, '`props.dangerouslySetInnerHTML` must be in the form `{__html: ...}`. ' + 'Please visit https://fb.me/vendor-invariant-dangerously-set-inner-html ' + 'for more information.') : invariant(false) : undefined;
             }
             if ("development" !== 'production') {
                 "development" !== 'production' ? warning(props.innerHTML == null, 'Directly setting property `innerHTML` is not permitted. ' + 'For more information, lookup documentation on `dangerouslySetInnerHTML`.') : undefined;
@@ -9343,7 +9343,7 @@
 
             var addenda = {
                 parentOrOwner: addendum,
-                url: ' See https://fb.me/vendor-react-warning-keys for more information.',
+                url: ' See https://fb.me/vendor-warning-keys for more information.',
                 childOwner: null
             };
 
@@ -9692,7 +9692,7 @@
                 var fakeNode = document.createElement('react');
                 ReactErrorUtils.invokeGuardedCallback = function (name, func, a, b) {
                     var boundFunc = func.bind(null, a, b);
-                    var evtType = 'vendor-react-' + name;
+                    var evtType = 'vendor-' + name;
                     fakeNode.addEventListener(evtType, boundFunc, false);
                     var evt = document.createEvent('Event');
                     evt.initEvent(evtType, false, false);
@@ -10019,7 +10019,7 @@
 
         /**
          * @ReactInputSelection: React input selection module. Based on Selection.js,
-         * but modified to be suitable for vendor-react and has a couple of bug fixes (doesn't
+         * but modified to be suitable for vendor and has a couple of bug fixes (doesn't
          * assume buttons have range selections allowed).
          * Input selection module for React.
          */
@@ -10563,7 +10563,7 @@
         var TAG_END = /\/?>/;
 
         var ReactMarkupChecksum = {
-            CHECKSUM_ATTR_NAME: 'data-vendor-react-checksum',
+            CHECKSUM_ATTR_NAME: 'data-vendor-checksum',
 
             /**
              * @param {string} markup Markup string
@@ -12252,7 +12252,7 @@
              * @internal
              */
             addComponentAsRefTo: function (component, ref, owner) {
-                !ReactOwner.isValidOwner(owner) ? "development" !== 'production' ? invariant(false, 'addComponentAsRefTo(...): Only a ReactOwner can have refs. You might ' + 'be adding a ref to a component that was not created inside a component\'s ' + '`render` method, or you have multiple copies of React loaded ' + '(details: https://fb.me/vendor-react-refs-must-have-owner).') : invariant(false) : undefined;
+                !ReactOwner.isValidOwner(owner) ? "development" !== 'production' ? invariant(false, 'addComponentAsRefTo(...): Only a ReactOwner can have refs. You might ' + 'be adding a ref to a component that was not created inside a component\'s ' + '`render` method, or you have multiple copies of React loaded ' + '(details: https://fb.me/vendor-refs-must-have-owner).') : invariant(false) : undefined;
                 owner.attachRef(ref, component);
             },
 
@@ -12266,7 +12266,7 @@
              * @internal
              */
             removeComponentAsRefFrom: function (component, ref, owner) {
-                !ReactOwner.isValidOwner(owner) ? "development" !== 'production' ? invariant(false, 'removeComponentAsRefFrom(...): Only a ReactOwner can have refs. You might ' + 'be removing a ref to a component that was not created inside a component\'s ' + '`render` method, or you have multiple copies of React loaded ' + '(details: https://fb.me/vendor-react-refs-must-have-owner).') : invariant(false) : undefined;
+                !ReactOwner.isValidOwner(owner) ? "development" !== 'production' ? invariant(false, 'removeComponentAsRefFrom(...): Only a ReactOwner can have refs. You might ' + 'be removing a ref to a component that was not created inside a component\'s ' + '`render` method, or you have multiple copies of React loaded ' + '(details: https://fb.me/vendor-refs-must-have-owner).') : invariant(false) : undefined;
                 // Check that `component` is still the current ref because we do not want to
                 // detach the ref if another component stole it.
                 if (owner.getPublicInstance().refs[ref] === component.getPublicInstance()) {
@@ -14996,7 +14996,7 @@
                 this.defaultPrevented = true;
                 var event = this.nativeEvent;
                 if ("development" !== 'production') {
-                    "development" !== 'production' ? warning(event, 'This synthetic event is reused for performance reasons. If you\'re ' + 'seeing this, you\'re calling `preventDefault` on a ' + 'released/nullified synthetic event. This is a no-op. See ' + 'https://fb.me/vendor-react-event-pooling for more information.') : undefined;
+                    "development" !== 'production' ? warning(event, 'This synthetic event is reused for performance reasons. If you\'re ' + 'seeing this, you\'re calling `preventDefault` on a ' + 'released/nullified synthetic event. This is a no-op. See ' + 'https://fb.me/vendor-event-pooling for more information.') : undefined;
                 }
                 if (!event) {
                     return;
@@ -15013,7 +15013,7 @@
             stopPropagation: function () {
                 var event = this.nativeEvent;
                 if ("development" !== 'production') {
-                    "development" !== 'production' ? warning(event, 'This synthetic event is reused for performance reasons. If you\'re ' + 'seeing this, you\'re calling `stopPropagation` on a ' + 'released/nullified synthetic event. This is a no-op. See ' + 'https://fb.me/vendor-react-event-pooling for more information.') : undefined;
+                    "development" !== 'production' ? warning(event, 'This synthetic event is reused for performance reasons. If you\'re ' + 'seeing this, you\'re calling `stopPropagation` on a ' + 'released/nullified synthetic event. This is a no-op. See ' + 'https://fb.me/vendor-event-pooling for more information.') : undefined;
                 }
                 if (!event) {
                     return;

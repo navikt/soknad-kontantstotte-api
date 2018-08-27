@@ -16,39 +16,38 @@ class React {
         try {
             SimpleBindings bindings = new SimpleBindings();
             nashornScriptEngine.eval(read("static/polyfills/nashorn-polyfill.js"));
-            nashornScriptEngine.eval(read("static/polyfills/babel.js"), bindings);
-            nashornScriptEngine.eval(read("static/vendor-react/react.js"));
-            nashornScriptEngine.eval(read("static/vendor-react/react-dom-server.js"));
-            nashornScriptEngine.eval(read("static/vendor-react/react-dom.js"));
+            nashornScriptEngine.eval(read("static/vendor/babel.js"), bindings);
+            nashornScriptEngine.eval(read("static/vendor/react.js"));
+            nashornScriptEngine.eval(read("static/vendor/react-dom-server.js"));
+            nashornScriptEngine.eval(read("static/vendor/react-dom.js"));
 
-            evaluateReactComponents(nashornScriptEngine, bindings);
+            evaluerPdfKomponenter(nashornScriptEngine, bindings);
         } catch (ScriptException | IOException e) {
             throw new RuntimeException(e);
         }
         return nashornScriptEngine;
     });
 
-    private void evaluateReactComponents(NashornScriptEngine nashorn, SimpleBindings bindings) throws ScriptException, IOException {
-        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/SokerKrav.jsx");
-        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Barn.jsx");
-        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Barnehageplass.jsx");
-        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Familieforhold.jsx");
-        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/Arbeidsforhold.jsx");
-        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/OppsummeringsListeElement.jsx");
-        nashorn = evaluerReactKomponent(nashorn, bindings, "jsx/PersonaliaOgBarnOppsummering.jsx");
+    private void evaluerPdfKomponenter(NashornScriptEngine nashorn, SimpleBindings bindings) throws ScriptException, IOException {
+        evaluerReactKomponent(nashorn, bindings, "jsx/SokerKrav.jsx");
+        evaluerReactKomponent(nashorn, bindings, "jsx/Barn.jsx");
+        evaluerReactKomponent(nashorn, bindings, "jsx/Barnehageplass.jsx");
+        evaluerReactKomponent(nashorn, bindings, "jsx/Familieforhold.jsx");
+        evaluerReactKomponent(nashorn, bindings, "jsx/Arbeidsforhold.jsx");
+        evaluerReactKomponent(nashorn, bindings, "jsx/OppsummeringsListeElement.jsx");
+        evaluerReactKomponent(nashorn, bindings, "jsx/PersonaliaOgBarnOppsummering.jsx");
         evaluerReactKomponent(nashorn, bindings, "jsx/SoknadPdf.jsx");
     }
 
-    private NashornScriptEngine evaluerReactKomponent(NashornScriptEngine nashorn, SimpleBindings bindings, String filnavn) throws ScriptException, IOException {
+    private void evaluerReactKomponent(NashornScriptEngine nashorn, SimpleBindings bindings, String filnavn) throws ScriptException, IOException {
         bindings.put("fil", readFromFile(filnavn));
 
         String transpilert = (String) nashorn
                 .eval("Babel.transform(fil, { presets: ['react'] }).code", bindings);
         nashorn.eval(transpilert);
-        return nashorn;
     }
 
-    public String renderHTMLForPdf(Soknad soknad) {
+    String renderHTMLForPdf(Soknad soknad) {
         try {
             Object html = engineHolder.get().invokeFunction("hentHTMLStringForOppsummering", soknad);
             return String.valueOf(html);

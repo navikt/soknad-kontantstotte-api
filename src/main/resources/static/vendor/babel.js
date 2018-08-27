@@ -5349,7 +5349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    "message": ""
 	  },
 	  "jsxPragma": {
-	    "message": "use the `pragma` option in the `vendor-react-jsx` plugin . Check out http://babeljs.io/docs/plugins/transform-vendor-react-jsx/"
+	    "message": "use the `pragma` option in the `vendor-jsx` plugin . Check out http://babeljs.io/docs/plugins/transform-vendor-jsx/"
 	  },
 
 	  "loose": {
@@ -5362,7 +5362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    "message": "Use the corresponding module transform plugin in the `plugins` option. Check out http://babeljs.io/docs/plugins/#modules"
 	  },
 	  "nonStandard": {
-	    "message": "Use the `vendor-react-jsx` and `flow-strip-types` plugins to support JSX and Flow. Also check out the vendor-react preset http://babeljs.io/docs/plugins/preset-vendor-react/"
+	    "message": "Use the `vendor-jsx` and `flow-strip-types` plugins to support JSX and Flow. Also check out the vendor preset http://babeljs.io/docs/plugins/preset-vendor/"
 	  },
 	  "optional": {
 	    "message": "Put the specific transforms you want in the `plugins` option"
@@ -27727,7 +27727,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  // is webkit? http://stackoverflow.com/a/16459606/376773
-	  // document is undefined in vendor-react-native: https://github.com/facebook/react-native/pull/1632
+	  // document is undefined in vendor-native: https://github.com/facebook/react-native/pull/1632
 	  return typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance ||
 	  // is firebug? http://stackoverflow.com/a/398120/376773
 	  typeof window !== 'undefined' && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
@@ -36593,7 +36593,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	helpers.typeof = (0, _babelTemplate2.default)("\n  (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\")\n    ? function (obj) { return typeof obj; }\n    : function (obj) {\n        return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype\n          ? \"symbol\"\n          : typeof obj;\n      };\n");
 
-	helpers.jsx = (0, _babelTemplate2.default)("\n  (function () {\n    var REACT_ELEMENT_TYPE = (typeof Symbol === \"function\" && Symbol.for && Symbol.for(\"vendor-react.element\")) || 0xeac7;\n\n    return function createRawReactElement (type, props, key, children) {\n      var defaultProps = type && type.defaultProps;\n      var childrenLength = arguments.length - 3;\n\n      if (!props && childrenLength !== 0) {\n        // If we're going to assign props.children, we create a new object now\n        // to avoid mutating defaultProps.\n        props = {};\n      }\n      if (props && defaultProps) {\n        for (var propName in defaultProps) {\n          if (props[propName] === void 0) {\n            props[propName] = defaultProps[propName];\n          }\n        }\n      } else if (!props) {\n        props = defaultProps || {};\n      }\n\n      if (childrenLength === 1) {\n        props.children = children;\n      } else if (childrenLength > 1) {\n        var childArray = Array(childrenLength);\n        for (var i = 0; i < childrenLength; i++) {\n          childArray[i] = arguments[i + 3];\n        }\n        props.children = childArray;\n      }\n\n      return {\n        $$typeof: REACT_ELEMENT_TYPE,\n        type: type,\n        key: key === undefined ? null : '' + key,\n        ref: null,\n        props: props,\n        _owner: null,\n      };\n    };\n\n  })()\n");
+	helpers.jsx = (0, _babelTemplate2.default)("\n  (function () {\n    var REACT_ELEMENT_TYPE = (typeof Symbol === \"function\" && Symbol.for && Symbol.for(\"vendor.element\")) || 0xeac7;\n\n    return function createRawReactElement (type, props, key, children) {\n      var defaultProps = type && type.defaultProps;\n      var childrenLength = arguments.length - 3;\n\n      if (!props && childrenLength !== 0) {\n        // If we're going to assign props.children, we create a new object now\n        // to avoid mutating defaultProps.\n        props = {};\n      }\n      if (props && defaultProps) {\n        for (var propName in defaultProps) {\n          if (props[propName] === void 0) {\n            props[propName] = defaultProps[propName];\n          }\n        }\n      } else if (!props) {\n        props = defaultProps || {};\n      }\n\n      if (childrenLength === 1) {\n        props.children = children;\n      } else if (childrenLength > 1) {\n        var childArray = Array(childrenLength);\n        for (var i = 0; i < childrenLength; i++) {\n          childArray[i] = arguments[i + 3];\n        }\n        props.children = childArray;\n      }\n\n      return {\n        $$typeof: REACT_ELEMENT_TYPE,\n        type: type,\n        key: key === undefined ? null : '' + key,\n        ref: null,\n        props: props,\n        _owner: null,\n      };\n    };\n\n  })()\n");
 
 	helpers.asyncIterator = (0, _babelTemplate2.default)("\n  (function (iterable) {\n    if (typeof Symbol === \"function\") {\n      if (Symbol.asyncIterator) {\n        var method = iterable[Symbol.asyncIterator];\n        if (method != null) return method.call(iterable);\n      }\n      if (Symbol.iterator) {\n        return iterable[Symbol.iterator]();\n      }\n    }\n    throw new TypeError(\"Object is not async iterable\");\n  })\n");
 
@@ -38637,7 +38637,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var useBuiltIns = file.opts.useBuiltIns || false;
 	    if (typeof useBuiltIns !== "boolean") {
-	      throw new Error("transform-vendor-react-jsx currently only accepts a boolean option for " + "useBuiltIns (defaults to false)");
+	      throw new Error("transform-vendor-jsx currently only accepts a boolean option for " + "useBuiltIns (defaults to false)");
 	    }
 
 	    function pushProps() {
