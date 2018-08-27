@@ -72,8 +72,8 @@ public class PdfService {
 
     private void skrivTilFil(byte[] soknad) {
         try {
-            new File("/Users/henninghakonsen/nav/soknad-kontantstotte-api/TEST.pdf");
-            OutputStream out = new FileOutputStream("/Users/henninghakonsen/nav/soknad-kontantstotte-api/TEST.pdf");
+            new File("/tmp/soknad-kontantstotte-api/TEST.pdf");
+            OutputStream out = new FileOutputStream("/tmp/TEST.pdf");
             out.write(soknad);
             out.close();
         } catch (IOException e) {
