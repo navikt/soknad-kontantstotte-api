@@ -6,7 +6,6 @@ var PersonaliaOgBarnOppsummering = React.createClass({
                 <p>{this.props.barn.navn}</p>
                 <p>{'Fødselsnummer: ' + this.props.barn.fodselsdato}</p>
                 <h4>Av forelder:</h4>
-                <p>{this.props.person.navn}</p>
                 <p>{'Fødselsnummer: ' + this.props.person.fnr}</p>
             </div>
         )

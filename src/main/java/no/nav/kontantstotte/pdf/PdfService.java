@@ -54,8 +54,7 @@ public class PdfService {
 
         byte[] byteSoknad = response.readEntity(byte[].class);
 
-        // Benytter dummy fnr til vi får på plass fnr integrasjon.
-        SoknadDto soknadDto = new SoknadDto("10108000398", byteSoknad);
+        SoknadDto soknadDto = new SoknadDto(soknad.person.fnr, byteSoknad);
 
         WebTarget sendSoknadPdf = ClientBuilder.newClient()
                 .register(OidcClientRequestFilter.class)
@@ -72,7 +71,7 @@ public class PdfService {
 
     private void skrivTilFil(byte[] soknad) {
         try {
-            new File("/tmp/soknad-kontantstotte-api/TEST.pdf");
+            new File("/tmp/TEST.pdf");
             OutputStream out = new FileOutputStream("/tmp/TEST.pdf");
             out.write(soknad);
             out.close();

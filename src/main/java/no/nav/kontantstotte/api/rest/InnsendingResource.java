@@ -4,7 +4,9 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.SoknadDto;
 import no.nav.kontantstotte.pdf.PdfService;
 import no.nav.security.oidc.api.ProtectedWithClaims;
+import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
+import no.nav.security.oidc.jaxrs.OidcRequestContext;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -32,13 +34,22 @@ import static java.time.LocalDateTime.now;
 @Path("sendinn")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class InnsendingResource {
+
     @Inject
     private PdfService pdfService;
+
+    private static final String SELVBETJENING = "selvbetjening";
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Soknad sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
         soknad.innsendingTimestamp = now();
+        soknad.person.fnr = hentFnrFraToken();
         return pdfService.genererOgSendPdf(soknad);
+    }
+
+    private static String hentFnrFraToken() {
+        OIDCValidationContext context = OidcRequestContext.getHolder().getOIDCValidationContext();
+        return context.getClaims(SELVBETJENING).getClaimSet().getSubject();
     }
 }
