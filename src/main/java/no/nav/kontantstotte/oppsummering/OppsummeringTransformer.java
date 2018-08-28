@@ -1,14 +1,13 @@
-package no.nav.kontantstotte.pdf;
+package no.nav.kontantstotte.oppsummering;
 
 import jdk.nashorn.api.scripting.NashornScriptEngine;
-import no.nav.kontantstotte.innsending.Soknad;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 import java.io.*;
 
-class React {
+public class OppsummeringTransformer {
 
     private ThreadLocal<NashornScriptEngine> engineHolder = ThreadLocal.withInitial(() -> {
         NashornScriptEngine nashornScriptEngine = (NashornScriptEngine)
@@ -47,15 +46,6 @@ class React {
         nashorn.eval(transpilert);
     }
 
-    String renderHTMLForPdf(Soknad soknad) {
-        try {
-            Object html = engineHolder.get().invokeFunction("hentHTMLStringForOppsummering", soknad);
-            return String.valueOf(html);
-        } catch (ScriptException | NoSuchMethodException e) {
-            throw new IllegalStateException("Klarte ikke rendre react-komponent", e);
-        }
-    }
-
     private Reader read(String path) {
         InputStream in = getClass().getClassLoader().getResourceAsStream(path);
         return new InputStreamReader(in);
@@ -70,5 +60,14 @@ class React {
         }
         reader.close();
         return targetString;
+    }
+
+    public String renderHTMLForPdf(Soknad soknad) {
+        try {
+            Object html = engineHolder.get().invokeFunction("hentHTMLStringForOppsummering", soknad);
+            return String.valueOf(html);
+        } catch (ScriptException | NoSuchMethodException e) {
+            throw new IllegalStateException("Klarte ikke rendre react-komponent", e);
+        }
     }
 }

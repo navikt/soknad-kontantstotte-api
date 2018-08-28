@@ -1,6 +1,9 @@
 package no.nav.kontantstotte.config;
 
-import no.nav.kontantstotte.pdf.PdfService;
+import no.nav.kontantstotte.oppsummering.OppsummeringTransformer;
+import no.nav.kontantstotte.service.InnsendingService;
+import no.nav.kontantstotte.service.PdfService;
+import no.nav.kontantstotte.service.PersonService;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
@@ -95,6 +98,15 @@ public class ApplicationConfig implements EnvironmentAware {
     public PdfService pdfServiceRetriever() {
         return new PdfService();
     }
+
+    @Bean
+    public InnsendingService innsendingServiceRetriever() { return new InnsendingService(); }
+
+    @Bean
+    public PersonService personServiceRetriever() { return new PersonService(); }
+
+    @Bean
+    public OppsummeringTransformer oppsummeringTransformerRetriever() { return new OppsummeringTransformer(); }
 
     private URL getConfiguredProxy() {
         String proxyParameterName = env.getProperty("http.proxy.parametername", "http.proxy");

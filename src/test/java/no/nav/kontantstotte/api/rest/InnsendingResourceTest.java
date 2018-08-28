@@ -2,7 +2,6 @@ package no.nav.kontantstotte.api.rest;
 
 import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.config.ApplicationConfig;
-import no.nav.kontantstotte.pdf.PdfService;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
