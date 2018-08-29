@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.innsending;
+package no.nav.kontantstotte.oppsummering;
 
 public class SokerKrav {
     public String boddINorgeSisteFemAar;

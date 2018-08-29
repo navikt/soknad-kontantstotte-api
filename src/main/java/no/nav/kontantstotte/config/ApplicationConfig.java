@@ -1,6 +1,9 @@
 package no.nav.kontantstotte.config;
 
-import no.nav.kontantstotte.pdf.PdfService;
+import no.nav.kontantstotte.oppsummering.OppsummeringTransformer;
+import no.nav.kontantstotte.service.InnsendingService;
+import no.nav.kontantstotte.service.PdfService;
+import no.nav.kontantstotte.service.PersonService;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
@@ -17,6 +20,7 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.web.context.request.RequestContextListener;
@@ -27,6 +31,7 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
+@Import({ServiceConfiguration.class})
 @ComponentScan({"no.nav.kontantstotte.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 public class ApplicationConfig implements EnvironmentAware {
@@ -92,9 +97,7 @@ public class ApplicationConfig implements EnvironmentAware {
     }
 
     @Bean
-    public PdfService pdfServiceRetriever() {
-        return new PdfService();
-    }
+    public OppsummeringTransformer oppsummeringTransformerRetriever() { return new OppsummeringTransformer(); }
 
     private URL getConfiguredProxy() {
         String proxyParameterName = env.getProperty("http.proxy.parametername", "http.proxy");
