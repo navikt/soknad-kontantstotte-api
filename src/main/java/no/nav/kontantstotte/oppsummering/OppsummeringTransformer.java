@@ -9,7 +9,13 @@ import java.io.*;
 
 public class OppsummeringTransformer {
 
-    private ThreadLocal<NashornScriptEngine> engineHolder = ThreadLocal.withInitial(() -> {
+    private NashornScriptEngine engineHolder;
+
+    public OppsummeringTransformer() {
+        this.engineHolder = getandInitializeEngineHolder();
+    }
+
+    private NashornScriptEngine getandInitializeEngineHolder() {
         NashornScriptEngine nashornScriptEngine = (NashornScriptEngine)
                 new ScriptEngineManager().getEngineByName("nashorn");
         try {
@@ -25,7 +31,7 @@ public class OppsummeringTransformer {
             throw new RuntimeException(e);
         }
         return nashornScriptEngine;
-    });
+    }
 
     private void evaluerPdfKomponenter(NashornScriptEngine nashorn, SimpleBindings bindings) throws ScriptException, IOException {
         evaluerReactKomponent(nashorn, bindings, "jsx/SokerKrav.jsx");
@@ -64,7 +70,7 @@ public class OppsummeringTransformer {
 
     public String renderHTMLForPdf(Soknad soknad) {
         try {
-            Object html = engineHolder.get().invokeFunction("hentHTMLStringForOppsummering", soknad);
+            Object html = engineHolder.invokeFunction("hentHTMLStringForOppsummering", soknad);
             return String.valueOf(html);
         } catch (ScriptException | NoSuchMethodException e) {
             throw new IllegalStateException("Klarte ikke rendre react-komponent", e);
