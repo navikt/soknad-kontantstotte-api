@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.config;
 
+import no.nav.kontantstotte.pdf.PdfService;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
@@ -88,6 +89,11 @@ public class ApplicationConfig implements EnvironmentAware {
         resourceRetriever.setProxyUrl(getConfiguredProxy());
         resourceRetriever.setUsePlainTextForHttps(Boolean.parseBoolean(env.getProperty("https.plaintext", "false")));
         return resourceRetriever;
+    }
+
+    @Bean
+    public PdfService pdfServiceRetriever() {
+        return new PdfService();
     }
 
     private URL getConfiguredProxy() {

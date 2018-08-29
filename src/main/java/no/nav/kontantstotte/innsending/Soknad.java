@@ -5,17 +5,19 @@ import java.time.LocalDateTime;
 public class Soknad {
 
     public LocalDateTime innsendingTimestamp;
-    public SokerKrav sokerKrav;
+    public Person person;
+    public SokerKrav kravTilSoker;
     public Familieforhold familieforhold;
     public Barnehageplass barnehageplass;
     public Arbeidsforhold arbeidsforhold;
-    public Barn barn;
+    public Barn mineBarn;
 
     public Soknad() {
-        this.sokerKrav = new SokerKrav();
+        this.person = new Person();
+        this.kravTilSoker = new SokerKrav();
         this.familieforhold = new Familieforhold();
         this.barnehageplass = new Barnehageplass();
         this.arbeidsforhold = new Arbeidsforhold();
-        this.barn = new Barn();
+        this.mineBarn = new Barn();
     }
 }
