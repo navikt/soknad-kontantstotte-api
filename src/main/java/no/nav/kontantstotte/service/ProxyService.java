@@ -18,7 +18,7 @@ abstract class ProxyService {
     @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}")
     String proxyApiKey;
 
-    public WebTarget proxyTarget() {
+    WebTarget proxyTarget() {
         return ClientBuilder.newClient()
                 .register(OidcClientRequestFilter.class)
                 .target(proxyServiceUri);

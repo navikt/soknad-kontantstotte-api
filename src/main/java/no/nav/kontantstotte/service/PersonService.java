@@ -4,11 +4,10 @@ public class PersonService extends ProxyService {
 
     public String hentPerson() {
 
-        String response = proxyTarget()
+        return proxyTarget()
                 .path("person")
                 .request()
                 .header(key, proxyApiKey)
                 .get(String.class);
-        return response;
     }
 }

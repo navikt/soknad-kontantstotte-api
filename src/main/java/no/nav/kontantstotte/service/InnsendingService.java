@@ -10,12 +10,10 @@ public class InnsendingService extends ProxyService {
 
     public Response sendInnSoknad(SoknadDto soknadDto) {
 
-        Response innsendingResponse = proxyTarget().path("soknad")
+        return proxyTarget().path("soknad")
                 .request()
                 .header(key, proxyApiKey)
                 .buildPost(Entity.entity(soknadDto, MediaType.APPLICATION_JSON))
                 .invoke();
-
-        return innsendingResponse;
     }
 }
