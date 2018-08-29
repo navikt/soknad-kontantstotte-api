@@ -25,11 +25,11 @@ import static java.time.LocalDateTime.now;
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class InnsendingResource {
 
-    private PdfService pdfService;
+    private final PdfService pdfService;
 
-    private InnsendingService innsendingService;
+    private final InnsendingService innsendingService;
 
-    private OppsummeringTransformer oppsummeringTransformer;
+    private final OppsummeringTransformer oppsummeringTransformer;
 
     private static final String SELVBETJENING = "selvbetjening";
 

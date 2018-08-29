@@ -15,8 +15,12 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public InnsendingService innsendingServiceRetriever() { return new InnsendingService(); }
+    public InnsendingService innsendingServiceRetriever() {
+        return new InnsendingService();
+    }
 
     @Bean
-    public PersonService personServiceRetriever() { return new PersonService(); }
+    public PersonService personServiceRetriever() {
+        return new PersonService();
+    }
 }
