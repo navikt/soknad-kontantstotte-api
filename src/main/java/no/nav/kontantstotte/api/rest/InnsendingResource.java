@@ -22,19 +22,23 @@ import static java.time.LocalDateTime.now;
 
 @Component
 @Path("sendinn")
-@ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
+@ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class InnsendingResource {
 
-    @Inject
     private PdfService pdfService;
 
-    @Inject
     private InnsendingService innsendingService;
 
-    @Inject
     private OppsummeringTransformer oppsummeringTransformer;
 
     private static final String SELVBETJENING = "selvbetjening";
+
+    @Inject
+    public InnsendingResource(PdfService pdfService, InnsendingService innsendingService, OppsummeringTransformer oppsummeringTransformer) {
+        this.pdfService = pdfService;
+        this.innsendingService = innsendingService;
+        this.oppsummeringTransformer = oppsummeringTransformer;
+    }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)

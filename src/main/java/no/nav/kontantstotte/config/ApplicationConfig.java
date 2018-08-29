@@ -20,6 +20,7 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.web.context.request.RequestContextListener;
@@ -30,6 +31,7 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
+@Import({ServiceConfiguration.class})
 @ComponentScan({"no.nav.kontantstotte.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 public class ApplicationConfig implements EnvironmentAware {
@@ -93,17 +95,6 @@ public class ApplicationConfig implements EnvironmentAware {
         resourceRetriever.setUsePlainTextForHttps(Boolean.parseBoolean(env.getProperty("https.plaintext", "false")));
         return resourceRetriever;
     }
-
-    @Bean
-    public PdfService pdfServiceRetriever() {
-        return new PdfService();
-    }
-
-    @Bean
-    public InnsendingService innsendingServiceRetriever() { return new InnsendingService(); }
-
-    @Bean
-    public PersonService personServiceRetriever() { return new PersonService(); }
 
     @Bean
     public OppsummeringTransformer oppsummeringTransformerRetriever() { return new OppsummeringTransformer(); }
