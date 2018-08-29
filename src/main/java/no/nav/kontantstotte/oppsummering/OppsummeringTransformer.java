@@ -21,7 +21,7 @@ public class OppsummeringTransformer {
         try {
             SimpleBindings bindings = new SimpleBindings();
             nashornScriptEngine.eval(read("static/polyfills/nashorn-polyfill.js"));
-            nashornScriptEngine.eval(read("static/vendor/babel.js"), bindings);
+            //nashornScriptEngine.eval(read("static/vendor/babel.js"), bindings);
             nashornScriptEngine.eval(read("static/vendor/react.js"));
             nashornScriptEngine.eval(read("static/vendor/react-dom-server.js"));
             nashornScriptEngine.eval(read("static/vendor/react-dom.js"));
@@ -34,6 +34,17 @@ public class OppsummeringTransformer {
     }
 
     private void evaluerPdfKomponenter(NashornScriptEngine nashorn, SimpleBindings bindings) throws ScriptException, IOException {
+
+        nashorn.eval(read("jsx-transpilert/SokerKrav.jsx"));
+        nashorn.eval(read("jsx-transpilert/Barn.jsx"));
+        nashorn.eval(read("jsx-transpilert/Barnehageplass.jsx"));
+        nashorn.eval(read("jsx-transpilert/Familieforhold.jsx"));
+        nashorn.eval(read("jsx-transpilert/Arbeidsforhold.jsx"));
+        nashorn.eval(read("jsx-transpilert/OppsummeringsListeElement.jsx"));
+        nashorn.eval(read("jsx-transpilert/PersonaliaOgBarnOppsummering.jsx"));
+        nashorn.eval(read("jsx-transpilert/SoknadPdf.jsx"));
+
+        /*
         evaluerReactKomponent(nashorn, bindings, "jsx/SokerKrav.jsx");
         evaluerReactKomponent(nashorn, bindings, "jsx/Barn.jsx");
         evaluerReactKomponent(nashorn, bindings, "jsx/Barnehageplass.jsx");
@@ -42,6 +53,7 @@ public class OppsummeringTransformer {
         evaluerReactKomponent(nashorn, bindings, "jsx/OppsummeringsListeElement.jsx");
         evaluerReactKomponent(nashorn, bindings, "jsx/PersonaliaOgBarnOppsummering.jsx");
         evaluerReactKomponent(nashorn, bindings, "jsx/SoknadPdf.jsx");
+        */
     }
 
     private void evaluerReactKomponent(NashornScriptEngine nashorn, SimpleBindings bindings, String filnavn) throws ScriptException, IOException {
@@ -74,6 +86,16 @@ public class OppsummeringTransformer {
             return String.valueOf(html);
         } catch (ScriptException | NoSuchMethodException e) {
             throw new IllegalStateException("Klarte ikke rendre react-komponent", e);
+        }
+    }
+
+    private void skrivTilFil(String transpilert, String filnavn) {
+        try {
+            PrintWriter out = new PrintWriter("/Users/martineenger/nav/soknad-kontantstotte-api/src/main/resources/jsx-transpilert" + filnavn);
+            out.write(transpilert);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
