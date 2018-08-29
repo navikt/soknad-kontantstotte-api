@@ -11,3 +11,7 @@ no.nav.security.oidc:
     discoveryurl: <Hentes fra fasit>
     acceptedaudience: <Hentes fra fasit>
     cookie_name: selvbetjening-idtoken
+logging:
+  level:
+    no.nav.pdf: DEBUG
+    org.glassfish: INFO
