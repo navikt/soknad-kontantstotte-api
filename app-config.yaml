@@ -18,6 +18,9 @@ healthcheck:
     path: /api/status/isAlive
 ingress:
   enabled: true
+prometheus:
+  enabled: true
+  path: /actuator/prometheus
 fasitResources:
   used:
 # Appdynamics
