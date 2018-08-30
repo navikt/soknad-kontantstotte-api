@@ -13,5 +13,5 @@ no.nav.security.oidc:
     cookie_name: selvbetjening-idtoken
 logging:
   level:
-    no.nav.pdf: DEBUG
+    no.nav.pdf: INFO
     org.glassfish: INFO
