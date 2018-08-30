@@ -1,11 +1,14 @@
-#jeg vil ikke ha hjelp fra pus
 name: soknad-kontantstotte-api
+team: team-soknad
 image: repo.adeo.no:5443/soknad/soknad-kontantstotte-api
 replicas:
   min: 2
   max: 4
   cpuThresholdPercentage: 50
 port: 8080
+resources:
+  limits:
+    cpu: 3
 healthcheck:
   liveness:
     initialDelay: 60
@@ -17,6 +20,9 @@ ingress:
   enabled: true
 fasitResources:
   used:
+# Appdynamics
+  - alias: appdynamics
+    resourceType: applicationproperties
   - alias: aad_b2c_clientid
     resourceType: credential
     propertyMap:
