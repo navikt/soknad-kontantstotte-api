@@ -17,6 +17,7 @@
 
     <properties>
         <oidc-support.version>0.2.6</oidc-support.version>
+        <common-java-modules.version>2018.08.17.12.35</common-java-modules.version>
         <commons-lang3.version>3.7</commons-lang3.version>
     </properties>
 
@@ -48,6 +49,18 @@
             <artifactId>oidc-test-support</artifactId>
             <version>${oidc-support.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>no.nav.sbl</groupId>
+            <artifactId>rest</artifactId>
+            <version>${common-java-modules.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 

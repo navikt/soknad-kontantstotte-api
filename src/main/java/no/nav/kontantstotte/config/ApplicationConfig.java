@@ -1,9 +1,8 @@
 package no.nav.kontantstotte.config;
 
 import no.nav.kontantstotte.oppsummering.OppsummeringTransformer;
-import no.nav.kontantstotte.service.InnsendingService;
-import no.nav.kontantstotte.service.PdfService;
-import no.nav.kontantstotte.service.PersonService;
+import no.nav.kontantstotte.service.ServiceConfiguration;
+import no.nav.log.LogFilter;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
@@ -21,7 +20,6 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.web.context.request.RequestContextListener;
 
@@ -76,6 +74,15 @@ public class ApplicationConfig implements EnvironmentAware {
     }
 
     @Bean
+    public FilterRegistrationBean<LogFilter> logFilter() {
+        log.info("Registering LogFilter filter");
+        final FilterRegistrationBean<LogFilter> filterRegistration = new FilterRegistrationBean<>();
+        filterRegistration.setFilter(new LogFilter());
+        filterRegistration.setOrder(1);
+        return filterRegistration;
+    }
+
+    @Bean
     public FilterRegistrationBean<JaxrsOIDCTokenValidationFilter> oidcTokenValidationFilterBean(JaxrsOIDCTokenValidationFilter validationFilter) {
         log.info("Registering validation filter");
         final FilterRegistrationBean<JaxrsOIDCTokenValidationFilter> filterRegistration = new FilterRegistrationBean<>();
@@ -84,7 +91,7 @@ public class ApplicationConfig implements EnvironmentAware {
         filterRegistration
                 .setDispatcherTypes(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ASYNC));
         filterRegistration.setAsyncSupported(true);
-        filterRegistration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        filterRegistration.setOrder(2);
         return filterRegistration;
     }
 
