@@ -11,10 +11,10 @@ resources:
     cpu: 3
 healthcheck:
   liveness:
-    initialDelay: 60
+    initialDelay: 20
     path: /api/status/isAlive
   readiness:
-    initialDelay: 60
+    initialDelay: 20
     path: /api/status/isAlive
 ingress:
   enabled: true
