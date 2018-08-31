@@ -3,7 +3,8 @@ server:
   servlet:
     context-path: /api
 management:
-   endpoints.web.exposure.include: '*'
+   endpoints.web.exposure.include: info, health, metrics, prometheus
+   metrics.export.prometheus.enabled: true
 http.proxy: http://webproxy-nais.nav.no:8088
 no.nav.security.oidc:
   issuers: selvbetjening
@@ -13,5 +14,6 @@ no.nav.security.oidc:
     cookie_name: selvbetjening-idtoken
 logging:
   level:
-    no.nav.pdf: INFO
+    org.springframework: INFO
     org.glassfish: INFO
+    no.nav: INFO
