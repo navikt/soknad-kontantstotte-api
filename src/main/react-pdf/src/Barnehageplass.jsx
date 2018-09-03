@@ -1,6 +1,6 @@
-var Barnehageplass = React.createClass({
-    render: function () {
-        var BarnehageplassVerdier = {
+
+const Barnehageplass = (props) => {
+        const BarnehageplassVerdier = {
             Nei: 'Nei',
             NeiHarFaatt: 'NeiHarFaatt',
             Ja: 'Ja',
@@ -8,9 +8,9 @@ var Barnehageplass = React.createClass({
             Ubesvart: 'Ubesvart',
         };
 
-        var header = <h3>Opplysning om barnehage:</h3>;
+        const header = <h3>Opplysning om barnehage:</h3>;
 
-        switch (this.props.barnehageplass.harBarnehageplass) {
+        switch (props.barnehageplass.harBarnehageplass) {
             case BarnehageplassVerdier.Ja:
                 return (
                     <div>
@@ -20,11 +20,11 @@ var Barnehageplass = React.createClass({
                                 tekst={'Barnet har barnehageplass'}
                             >
                                 <h4>Dato:</h4>
-                                <p>{this.props.barnehageplass.dato}</p>
+                                <p>{props.barnehageplass.dato}</p>
                                 <h4>Barnehageplass i kommunen:</h4>
-                                <p>{this.props.barnehageplass.kommune}</p>
+                                <p>{props.barnehageplass.kommune}</p>
                                 <h4>Antall timer:</h4>
-                                <p>{this.props.barnehageplass.antallTimer}</p>
+                                <p>{props.barnehageplass.antallTimer}</p>
                             </OppsummeringsListeElement>
                         </ul>
                     </div>
@@ -38,11 +38,11 @@ var Barnehageplass = React.createClass({
                                 tekst={'Barnet går i barnehagen, men skal slutte'}
                             >
                                 <h4>Dato:</h4>
-                                <p>{this.props.barnehageplass.dato}</p>
+                                <p>{props.barnehageplass.dato}</p>
                                 <h4>Barnehageplass i kommunen:</h4>
-                                <p>{this.props.barnehageplass.kommune}</p>
+                                <p>{props.barnehageplass.kommune}</p>
                                 <h4>Antall timer:</h4>
-                                <p>{this.props.barnehageplass.antallTimer}</p>
+                                <p>{props.barnehageplass.antallTimer}</p>
                             </OppsummeringsListeElement>
                         </ul>
                     </div>
@@ -56,9 +56,9 @@ var Barnehageplass = React.createClass({
                                 tekst={'Barnet har fått barnehageplass, men ikke begynt enda'}
                             >
                                 <h4>Dato:</h4>
-                                <p>{this.props.barnehageplass.dato}</p>
+                                <p>{props.barnehageplass.dato}</p>
                                 <h4>Barnehageplass i kommunen:</h4>
-                                <p>{this.props.barnehageplass.kommune}</p>
+                                <p>{props.barnehageplass.kommune}</p>
                             </OppsummeringsListeElement>
                         </ul>
                     </div>
@@ -77,5 +77,4 @@ var Barnehageplass = React.createClass({
             default:
                 return <div/>;
         }
-    }
-});
+};

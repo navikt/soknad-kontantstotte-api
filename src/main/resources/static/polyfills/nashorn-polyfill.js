@@ -1,6 +1,7 @@
 var global = this;
 
 var console = {};
+var process = {env:{}};
 console.debug = print;
 console.warn = print;
 console.log = print;

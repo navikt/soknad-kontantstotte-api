@@ -30,13 +30,16 @@ public class PdfService {
                 .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
                 .invoke();
 
-        return response.readEntity(byte[].class);
+        byte[] soknad = response.readEntity(byte[].class);
+        skrivTilFil(soknad);
+
+        return soknad;
     }
 
     private void skrivTilFil(byte[] soknad) {
         try {
-            new File("/tmp/TEST.pdf");
-            OutputStream out = new FileOutputStream("/tmp/TEST.pdf");
+            new File("/Users/martineenger/nav/soknad-kontantstotte-api/TEST.pdf");
+            OutputStream out = new FileOutputStream("/Users/martineenger/nav/soknad-kontantstotte-api/TEST.pdf");
             out.write(soknad);
             out.close();
         } catch (IOException e) {
