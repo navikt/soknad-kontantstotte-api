@@ -86,10 +86,6 @@ var SokerKrav = function SokerKrav(props) {
 };
 "use strict";
 
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -122,28 +118,28 @@ function (_React$Component) {
   _createClass(SoknadPdf, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement("h1", null, "S\xF8knad om kontantst\xF8tte"), _react.default.createElement(PersonaliaOgBarnOppsummering, {
+      return React.createElement("div", null, React.createElement("h1", null, "S\xF8knad om kontantst\xF8tte"), React.createElement(PersonaliaOgBarnOppsummering, {
         person: this.props.soknad.person,
         barn: this.props.soknad.mineBarn
-      }), _react.default.createElement(SokerKrav, {
+      }), React.createElement(SokerKrav, {
         kravTilSoker: this.props.soknad.kravTilSoker
-      }), _react.default.createElement(Barn, {
+      }), React.createElement(Barn, {
         mineBarn: this.props.soknad.mineBarn
-      }), _react.default.createElement(Familieforhold, {
+      }), React.createElement(Familieforhold, {
         familieforhold: this.props.soknad.familieforhold
-      }), _react.default.createElement(Barnehageplass, {
+      }), React.createElement(Barnehageplass, {
         barnehageplass: this.props.soknad.barnehageplass
-      }), _react.default.createElement(Arbeidsforhold, {
+      }), React.createElement(Arbeidsforhold, {
         arbeidsforhold: this.props.soknad.arbeidsforhold
       }));
     }
   }]);
 
   return SoknadPdf;
-}(_react.default.Component);
+}(React.Component);
 
 function hentHTMLStringForOppsummering(soknad) {
-  var komponent = ReactDOMServer.renderToStaticMarkup(_react.default.createElement(SoknadPdf, {
+  var komponent = ReactDOMServer.renderToStaticMarkup(React.createElement(SoknadPdf, {
     soknad: soknad
   }));
   return '<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/>' + hentStyleHeader() + '</head><body>' + komponent + '</body></html>';
@@ -156,16 +152,3 @@ function hentStyleHeader() {
         body    { font-family: ArialSystem, sans-serif; font-size: 10pt; line-height: 1.4em; margin: 0; color: #3e3832; } \
     </style>';
 }
-"use strict";
-
-var _server = _interopRequireDefault(require("react-dom/server"));
-
-var _SoknadPdf = _interopRequireDefault(require("./SoknadPdf"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var renderApp = function renderApp(soknad) {
-  _server.default.renderToStaticMarkup(React.render(React.createElement(_SoknadPdf.default, {
-    soknad: soknad
-  }), document.getElementById('app')));
-};
