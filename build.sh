@@ -57,10 +57,11 @@ function build_command {
 }
 
 function build_pdf_template {
+    CURRENT_DIR=$(pwd)
     cd src/main/resources/react-pdf/
     build_command npm install
     build_command npx babel src --out-file dist/bundle.js --presets=@babel/preset-env,@babel/preset-react
-    cd ../../../../
+    cd $CURRENT_DIR
 }
 
 function build_target {
