@@ -116,12 +116,7 @@
         </dependency>
 
         <!-- Utils -->
-        <dependency>
-            <groupId>com.coveo</groupId>
-            <artifactId>nashorn-commonjs-modules</artifactId>
-            <version>1.0.9</version>
-        </dependency>
-
+        
         <!-- Test -->
 
         <dependency>

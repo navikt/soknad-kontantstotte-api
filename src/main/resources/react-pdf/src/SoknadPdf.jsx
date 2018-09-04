@@ -1,5 +1,3 @@
-import React from 'react';
-
 class SoknadPdf extends React.Component {
     render () {
         return (

@@ -1,4 +1,3 @@
-
 const Barnehageplass = (props) => {
         const BarnehageplassVerdier = {
             Nei: 'Nei',

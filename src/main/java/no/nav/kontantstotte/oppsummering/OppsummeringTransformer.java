@@ -1,7 +1,5 @@
 package no.nav.kontantstotte.oppsummering;
 
-import com.coveo.nashorn_modules.Require;
-import com.coveo.nashorn_modules.ResourceFolder;
 import jdk.nashorn.api.scripting.NashornScriptEngine;
 
 import javax.script.ScriptEngineManager;
@@ -20,13 +18,9 @@ public class OppsummeringTransformer {
         NashornScriptEngine nashornScriptEngine = (NashornScriptEngine)
                 new ScriptEngineManager().getEngineByName("nashorn");
         try {
-            ResourceFolder resourceFolder = ResourceFolder.create(getClass().getClassLoader(), "react-pdf/", "UTF-8");
-            Require.enable(nashornScriptEngine, resourceFolder);
-
             nashornScriptEngine.eval(read("static/polyfills/nashorn-polyfill.js"));
-            //nashornScriptEngine.eval(read("dist/react.js"));
-            //nashornScriptEngine.eval(read("static/vendor/react-dom-server.js"));
-            //nashornScriptEngine.eval(read("static/vendor/react-dom.js"));
+            nashornScriptEngine.eval(read("react-pdf/node_modules/react/umd/react.production.min.js"));
+            nashornScriptEngine.eval(read("react-pdf/node_modules/react-dom/umd/react-dom-server.browser.production.min.js"));
 
             evaluerPdfKomponenter(nashornScriptEngine);
         } catch (ScriptException e) {
@@ -36,16 +30,6 @@ public class OppsummeringTransformer {
     }
 
     private void evaluerPdfKomponenter(NashornScriptEngine nashorn) throws ScriptException {
-
-        /*nashorn.eval(read("jsx-transpilert/SokerKrav.jsx"));
-        nashorn.eval(read("jsx-transpilert/Barn.jsx"));
-        nashorn.eval(read("jsx-transpilert/Barnehageplass.jsx"));
-        nashorn.eval(read("jsx-transpilert/Familieforhold.jsx"));
-        nashorn.eval(read("dist/Arbeidsforhold.js"));
-        nashorn.eval(read("dist/OppsummeringsListeElement.js"));
-        nashorn.eval(read("jsx-transpilert/PersonaliaOgBarnOppsummering.jsx"));
-        nashorn.eval(read("dist/SoknadPdf.js"));*/
-
         nashorn.eval(read("react-pdf/dist/bundle.js"));
     }
 

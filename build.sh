@@ -51,10 +51,17 @@ function build_command {
         --rm \
         --volume $(pwd):/var/workspace \
         --volume /var/run/docker.sock:/var/run/docker.sock \
+        --env NPM_TOKEN=${NPM_AUTH} \
         $BUILDER_IMAGE \
         "$@"
 }
 
+function build_pdf_template {
+    cd src/main/resources/react-pdf/
+    build_command npm install
+    build_command npx babel src --out-file dist/bundle.js --presets=@babel/preset-env,@babel/preset-react
+    cd ../../../../
+}
 
 function build_target {
     build_command mvn clean verify
@@ -75,6 +82,7 @@ function publish_container() {
     docker push ${TAG}
 }
 
+build_pdf_template
 build_target
 create_version_file
 build_container
