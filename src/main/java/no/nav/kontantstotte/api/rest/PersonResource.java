@@ -18,15 +18,6 @@ import java.net.URI;
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class PersonResource {
 
-    @Value("${apikeys.key:x-nav-apiKey}")
-    private String key;
-
-    @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}")
-    private URI proxyServiceUri;
-
-    @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}")
-    private String proxyApiKey;
-
     private final PersonService personService;
 
     @Inject

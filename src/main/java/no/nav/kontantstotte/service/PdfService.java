@@ -1,11 +1,7 @@
 package no.nav.kontantstotte.service;
 
-import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
-import org.springframework.beans.factory.annotation.Value;
-
-import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
@@ -16,16 +12,20 @@ import java.net.URI;
 
 public class PdfService {
 
-    @Value("${SOKNAD_PDF_GENERATOR_URL}")
     private URI pdfGeneratorServiceUri;
+
+    private final Client client;
+
+    public PdfService(Client client, URI pdfGeneratorServiceUri) {
+        this.client = client;
+        this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
+    }
 
     public byte[] genererPdf(String oppsummeringHtml) {
 
-        WebTarget target = ClientBuilder.newClient()
-                .register(OidcClientRequestFilter.class)
-                .target(pdfGeneratorServiceUri);
-
-        Response response = target.path("convert")
+        Response response = client
+                .target(pdfGeneratorServiceUri)
+                .path("convert")
                 .request()
                 .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
                 .invoke();
