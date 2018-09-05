@@ -1,7 +1,7 @@
 var global = this;
 
 var console = {};
-var process = {env:{}};
+var process = {env:{NODE_ENV:"production"}};
 console.debug = print;
 console.warn = print;
 console.log = print;
