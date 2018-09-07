@@ -4,6 +4,9 @@
 # Stop scriptet om en kommando feiler
 set -e
 
+# Enabler extglob, for å kunne bruke parantesoperator i rm
+shopt -s extglob
+
 # Usage string
 usage="Script som bygger prosjektet
 
@@ -58,10 +61,22 @@ function build_command {
 
 function build_pdf_template {
     CURRENT_DIR=$(pwd)
+
     cd src/main/resources/react-pdf/
-    mkdir dist
+    mkdir -p dist
+
+    BABEL_PRESETS=@babel/preset-env,@babel/preset-react
+    BABEL_PLUGINS=@babel/plugin-transform-react-constant-elements,@babel/plugin-transform-react-inline-elements
+
+    echo "Run npm"
     build_command npm install
-    build_command npx babel src --out-file dist/bundle.js --presets=@babel/preset-env,@babel/preset-react
+
+    echo "Run babel"
+    build_command npx babel src --out-file dist/bundle.js --presets=$BABEL_PRESETS --plugins=$BABEL_PLUGINS
+
+    echo "Remove all node modules except react & dom"
+    rm -rf node_modules/!(react|react-dom)
+
     cd $CURRENT_DIR
 }
 
