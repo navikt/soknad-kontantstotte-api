@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.api.rest;
 
+import no.nav.kontantstotte.tekst.TekstProvider;
 import no.nav.security.oidc.api.Unprotected;
 import org.springframework.stereotype.Component;
 
@@ -8,12 +9,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static java.util.ResourceBundle.getBundle;
 import static java.util.function.Function.identity;
@@ -25,25 +31,20 @@ import static java.util.stream.Collectors.toMap;
 @Unprotected
 public class TeksterResource {
 
-    private static final String BUNDLE_NAME = "tekster";
+    private static final String DEFAULT_BUNDLE_NAME = "tekster";
 
-    private static final String[] VALID_LANGUAGES = { "nb", "nn" };
+    private static final String[] DEFAULT_VALID_LANGUAGES = { "nb", "nn" };
 
-    private final Map<String, Map<String, String>> properties;
+    private final TekstProvider tekstProvider;
 
     public TeksterResource() {
-
-        Function<ResourceBundle, Map<String, String>> bundleToMap = bundle -> bundle.keySet().stream()
-                .collect(toMap(identity(), bundle::getString));
-
-        properties = Arrays.stream(VALID_LANGUAGES)
-                .map(language -> getBundle(BUNDLE_NAME, new Locale(language)))
-                .collect(toMap(bundle -> bundle.getLocale().getLanguage(), bundleToMap));
+        this.tekstProvider = new TekstProvider(DEFAULT_BUNDLE_NAME, DEFAULT_VALID_LANGUAGES);
     }
 
     @GET
     @Path("{language}")
-    public Map<String, String> tekster(@PathParam("language") String language) {
-        return properties.get(language);
+    public Map<String, String> tekster(@PathParam("language") String sprak) {
+        return tekstProvider.hentTekster(sprak);
     }
+
 }
