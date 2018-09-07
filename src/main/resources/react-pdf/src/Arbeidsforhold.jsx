@@ -2,41 +2,39 @@ const Arbeidsforhold = (props) => {
         return (
             <div>
                 <h3>Opplysninger om arbeidsforhold og andre ytelser</h3>
-                <ul>
-                    <OppsummeringsListeElement tekst={
-                        props.arbeidsforhold.mottarYtelserFraUtlandet === 'JA'
-                        ? 'Jeg eller barnets andre forelder mottar ytelser fra utlandet'
-                        : 'Ingen av foreldrene mottar andre ytelser fra utlandet'} children={
-                            props.arbeidsforhold.mottarYtelserFraUtlandet === 'JA' && (
-                                <div>
-                                    <h4>Tilleggsinformasjon:</h4>
-                                    <p>{props.arbeidsforhold.mottarYtelserFraUtlandetForklaring}</p>
-                                </div>
-                            )
-                        } />
-                    <OppsummeringsListeElement tekst={
-                        props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkel === 'JA'
-                            ? 'Jeg eller barnets andre forelder jobber på utenlandsk kontinentalsokkel'
-                            : 'Ingen av foreldrene jobber på utenlandsk kontinentalsokkel'} children={
-                        props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkel === 'JA' && (
-                            <div>
-                                <h4>Tilleggsinformasjon:</h4>
-                                <p>{props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkelForklaring}</p>
-                            </div>
-                        )
-                    } />
-                    <OppsummeringsListeElement tekst={
-                        props.arbeidsforhold.mottarKontantstotteFraAnnetEOS === 'JA'
-                            ? 'Jeg eller barnets andre forelder mottar kontantstøtte fra et EØS-land'
-                            : 'Ingen av foreldrene mottar kontantstøtte fra et EØS-land'} children={
-                        props.arbeidsforhold.mottarKontantstotteFraAnnetEOS === 'JA' && (
-                            <div>
-                                <h4>Tilleggsinformasjon:</h4>
-                                <p>{props.arbeidsforhold.mottarKontantstotteFraAnnetEOSForklaring}</p>
-                            </div>
-                        )
-                    } />
-                </ul>
+
+                <OppsummeringsElement
+                    sporsmal={'Mottar du eller den andre av barnets forelder ytelser fra utlandet?'}
+                    svar={props.arbeidsforhold.mottarYtelserFraUtlandet}
+                />
+                {props.arbeidsforhold.mottarYtelserFraUtlandet === 'JA' &&
+                    <OppsummeringsElement
+                        sporsmal={'Tilleggsinformasjon:'}
+                        svar={props.arbeidsforhold.mottarYtelserFraUtlandetForklaring}
+                    />
+                }
+
+                <OppsummeringsElement
+                    sporsmal={'Arbeider du eller den andre av barnets forelder i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?'}
+                    svar={props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkel}
+                />
+                {props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkel === 'JA' &&
+                <OppsummeringsElement
+                    sporsmal={'Tilleggsinformasjon:'}
+                    svar={props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkelForklaring}
+                />
+                }
+
+                <OppsummeringsElement
+                    sporsmal={'Mottar du eller den andre av barnets forelder ytelser fra utlandet?'}
+                    svar={props.arbeidsforhold.mottarKontantstotteFraAnnetEOS}
+                />
+                {props.arbeidsforhold.mottarKontantstotteFraAnnetEOS === 'JA' &&
+                <OppsummeringsElement
+                    sporsmal={'Tilleggsinformasjon:'}
+                    svar={props.arbeidsforhold.mottarKontantstotteFraAnnetEOSForklaring}
+                />
+                }
             </div>
         );
 };

@@ -2,19 +2,32 @@ const Familieforhold = (props) => {
         return (
             <div>
                 <h3>Opplysning om familieforhold:</h3>
-                <ul>
-                    <li>Har foreldrene delt bosted: {props.familieforhold.borForeldreneSammenMedBarnet}</li>
-                    {props.familieforhold.borForeldreneSammenMedBarnet === 'JA' &&
-                        <OppsummeringsListeElement
-                            tekst={'Jeg bor sammen med den andre forelderen'}
-                        >
-                            <h4>Navnet til den andre forelderen:</h4>
-                            <p>{props.familieforhold.annenForelderNavn}</p>
-                            <h4>Fodselsnummeret til den andre forelderen:</h4>
-                            <p>{props.familieforhold.annenForelderFodselsnummer}</p>
-                        </OppsummeringsListeElement>
-                    }
-                </ul>
+
+                <OppsummeringsElement
+                    sporsmal={'Bor begge foreldrene med barnet?'}
+                    svar={props.familieforhold.borForeldreneSammenMedBarnet}
+                />
+
+                {props.familieforhold.borForeldreneSammenMedBarnet === 'JA' &&
+                    <>
+                        <OppsummeringsElement sporsmal={'Navnet til den andre forelderen:'} svar={props.familieforhold.annenForelderNavn} />
+                        <OppsummeringsElement
+                        sporsmal={'Navnet til den andre forelderen:'}
+                        svar={props.familieforhold.annenForelderFodselsnummer}
+                        />
+                        <OppsummeringsElement
+                            sporsmal={'Har barnets andre forelder bodd eller vært yrkesaktiv i Norge eller et annet EØS-land i minst 5 år?'}
+                            svar={props.familieforhold.annenForelderYrkesaktivINorgeEOSIMinstFemAar}
+                        />
+                    </>
+                }
+
+                {props.familieforhold.borForeldreneSammenMedBarnet === 'NEI' &&
+                    <OppsummeringsElement
+                        sporsmal={'Er det avklart delt bosted for barnet?'}
+                        svar={props.familieforhold.erAvklartDeltBosted}
+                    />
+                }
             </div>
         );
 };

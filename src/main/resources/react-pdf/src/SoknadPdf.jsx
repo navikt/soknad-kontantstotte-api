@@ -1,18 +1,16 @@
-class SoknadPdf extends React.Component {
-    render () {
-        return (
-            <div>
-                <h1>Søknad om kontantstøtte</h1>
-                <PersonaliaOgBarnOppsummering person={this.props.soknad.person} barn={this.props.soknad.mineBarn}/>
-                <SokerKrav kravTilSoker={this.props.soknad.kravTilSoker}/>
-                <Barn mineBarn={this.props.soknad.mineBarn}/>
-                <Familieforhold familieforhold={this.props.soknad.familieforhold}/>
-                <Barnehageplass barnehageplass={this.props.soknad.barnehageplass}/>
-                <Arbeidsforhold arbeidsforhold={this.props.soknad.arbeidsforhold}/>
-            </div>
-        );
-    }
-}
+const SoknadPdf = (props) => {
+    return (
+        <div>
+            <h1>Søknad om kontantstøtte</h1>
+            <Personalia person={props.soknad.person} />
+            <SokerKrav kravTilSoker={props.soknad.kravTilSoker}/>
+            <Barn mineBarn={props.soknad.mineBarn}/>
+            <Familieforhold familieforhold={props.soknad.familieforhold}/>
+            <Barnehageplass barnehageplass={props.soknad.barnehageplass}/>
+            <Arbeidsforhold arbeidsforhold={props.soknad.arbeidsforhold}/>
+        </div>
+    );
+};
 
 function hentHTMLStringForOppsummering(soknad) {
     var komponent = ReactDOMServer.renderToStaticMarkup(<SoknadPdf soknad={soknad} />);
