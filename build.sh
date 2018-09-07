@@ -75,6 +75,7 @@ function build_pdf_template {
     build_command npx babel src --out-file dist/bundle.js --presets=$BABEL_PRESETS --plugins=$BABEL_PLUGINS
 
     echo "Remove all node modules except react & dom"
+    chmod -R 777 node_modules/*
     rm -rf node_modules/!(react|react-dom)
 
     cd $CURRENT_DIR
