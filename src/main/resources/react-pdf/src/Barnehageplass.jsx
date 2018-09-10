@@ -3,8 +3,8 @@ const Barnehageplass = (props) => {
     const dateString = date.getDay() + "." + date.getMonth() + "." + date.getFullYear();
 
     return (
-        <div>
-            <h3>{props.tekster['barnehageplass.tittel']}</h3>
+        <Bolk>
+            <h3>{props.tekster['barnehageplass.tittel'].toUpperCase()}</h3>
             <OppsummeringsElement
                 sporsmal={props.tekster['barnehageplass.sporsmal']}
                 svar={props.barnehageplass.harBarnehageplass}
@@ -29,6 +29,6 @@ const Barnehageplass = (props) => {
                     svar={props.barnehageplass.antallTimer}
                 />
             }
-        </div>
+        </Bolk>
     )
 };

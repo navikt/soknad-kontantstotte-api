@@ -1,7 +1,7 @@
 const Arbeidsforhold = (props) => {
         return (
-            <div>
-                <h3>{props.tekster['arbeidsforhold.tittel']}</h3>
+            <Bolk>
+                <h3>{props.tekster['arbeidsforhold.tittel'].toUpperCase()}</h3>
 
                 <OppsummeringsElement
                     sporsmal={props.tekster['arbeidsforhold.mottarYtelserFraUtlandet.sporsmal']}
@@ -35,7 +35,7 @@ const Arbeidsforhold = (props) => {
                     svar={props.arbeidsforhold.mottarKontantstotteFraAnnetEOSForklaring}
                 />
                 }
-            </div>
+            </Bolk>
         );
 };
 

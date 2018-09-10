@@ -6,7 +6,7 @@ const wrapper = {
 
 const SideTittel = {
     backgroundColor:'#c1b5d0',
-    margin:'20px 0 40px 0',
+    margin:'20px 0 20px 0',
     padding: '20px 0 20px 0',
     textAlign: 'center'
 };
@@ -15,7 +15,7 @@ const SoknadPdf = (props) => {
     return (
         <div style={wrapper}>
             <div style={SideTittel}>
-                <h1>{props.tekster['kontantstotte.tittel']}</h1>
+                <h1>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
             </div>
 
             <Personalia person={props.soknad.person} tekster={props.tekster}/>

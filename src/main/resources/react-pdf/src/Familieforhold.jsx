@@ -1,7 +1,7 @@
 const Familieforhold = (props) => {
     return (
-        <div>
-            <h3>{props.tekster['barnehageplass.harFaattPlassDato']}</h3>
+        <Bolk>
+            <h3>{props.tekster['familieforhold.tittel'].toUpperCase()}</h3>
 
             <OppsummeringsElement
                 sporsmal={props.tekster['familieforhold.borForeldreneSammenMedBarnet.sporsmal']}
@@ -31,6 +31,6 @@ const Familieforhold = (props) => {
                     svar={props.familieforhold.erAvklartDeltBosted}
                 />
             }
-        </div>
+        </Bolk>
     );
 };
