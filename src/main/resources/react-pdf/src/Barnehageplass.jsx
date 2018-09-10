@@ -4,21 +4,30 @@ const Barnehageplass = (props) => {
 
     return (
         <div>
-            <h3>Opplysning om barnehage</h3>
-            <OppsummeringsElement sporsmal={'Har barnet barnehageplass?'} svar={props.barnehageplass.harBarnehageplass}/>
+            <h3>{props.tekster['barnehageplass.tittel']}</h3>
+            <OppsummeringsElement
+                sporsmal={props.tekster['barnehageplass.sporsmal']}
+                svar={props.barnehageplass.harBarnehageplass}
+            />
 
             {props.barnehageplass.harBarnehageplass !== 'Nei' &&
                 <>
                     <OppsummeringsElement
-                        sporsmal={'Fra hvilken dato har barnet barnehageplass?'}
+                        sporsmal={props.tekster['barnehageplass.harFaattPlassDato']}
                         svar={dateString}
                     />
-                    <OppsummeringsElement sporsmal={'Hvilken kommune har barnet barnehageplass?'} svar={props.barnehageplass.kommune} />
+                    <OppsummeringsElement
+                        sporsmal={props.tekster['barnehageplass.kommune']}
+                        svar={props.barnehageplass.kommune}
+                    />
                 </>
             }
 
             {props.barnehageplass.harBarnehageplass.indexOf('Ja') > -1 &&
-                <OppsummeringsElement sporsmal={'Hvor mange timer går barnet i barnehagen?'} svar={props.barnehageplass.antallTimer} />
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.antallTimer']}
+                    svar={props.barnehageplass.antallTimer}
+                />
             }
         </div>
     )

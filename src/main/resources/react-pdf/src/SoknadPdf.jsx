@@ -15,21 +15,21 @@ const SoknadPdf = (props) => {
     return (
         <div style={wrapper}>
             <div style={SideTittel}>
-                <h1>Søknad om kontantstøtte</h1>
+                <h1>{props.tekster['kontantstotte.tittel']}</h1>
             </div>
 
-            <Personalia person={props.soknad.person} />
-            <SokerKrav kravTilSoker={props.soknad.kravTilSoker}/>
-            <Barn mineBarn={props.soknad.mineBarn}/>
-            <Familieforhold familieforhold={props.soknad.familieforhold}/>
-            <Barnehageplass barnehageplass={props.soknad.barnehageplass}/>
-            <Arbeidsforhold arbeidsforhold={props.soknad.arbeidsforhold}/>
+            <Personalia person={props.soknad.person} tekster={props.tekster}/>
+            <SokerKrav kravTilSoker={props.soknad.kravTilSoker} tekster={props.tekster}/>
+            <Barn mineBarn={props.soknad.mineBarn} tekster={props.tekster}/>
+            <Familieforhold familieforhold={props.soknad.familieforhold} tekster={props.tekster}/>
+            <Barnehageplass barnehageplass={props.soknad.barnehageplass} tekster={props.tekster}/>
+            <Arbeidsforhold arbeidsforhold={props.soknad.arbeidsforhold} tekster={props.tekster}/>
         </div>
     );
 };
 
-function hentHTMLStringForOppsummering(soknad) {
-    var komponent = ReactDOMServer.renderToStaticMarkup(<SoknadPdf soknad={soknad} />);
+function hentHTMLStringForOppsummering(soknad, tekster) {
+    var komponent = ReactDOMServer.renderToStaticMarkup(<SoknadPdf soknad={soknad} tekster={tekster}/>);
     const template = `
         <html>
             <head>

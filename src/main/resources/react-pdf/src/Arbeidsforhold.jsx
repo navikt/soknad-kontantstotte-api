@@ -1,37 +1,37 @@
 const Arbeidsforhold = (props) => {
         return (
             <div>
-                <h3>Opplysninger om arbeidsforhold og andre ytelser</h3>
+                <h3>{props.tekster['arbeidsforhold.tittel']}</h3>
 
                 <OppsummeringsElement
-                    sporsmal={'Mottar du eller den andre av barnets forelder ytelser fra utlandet?'}
+                    sporsmal={props.tekster['arbeidsforhold.mottarYtelserFraUtlandet.sporsmal']}
                     svar={props.arbeidsforhold.mottarYtelserFraUtlandet}
                 />
                 {props.arbeidsforhold.mottarYtelserFraUtlandet === 'JA' &&
                     <OppsummeringsElement
-                        sporsmal={'Tilleggsinformasjon:'}
+                        sporsmal={props.tekster['oppsummering.arbeidsforhold.tilleggsinformasjon.label']}
                         svar={props.arbeidsforhold.mottarYtelserFraUtlandetForklaring}
                     />
                 }
 
                 <OppsummeringsElement
-                    sporsmal={'Arbeider du eller den andre av barnets forelder i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?'}
+                    sporsmal={props.tekster['arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkel.sporsmal']}
                     svar={props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkel}
                 />
                 {props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkel === 'JA' &&
                 <OppsummeringsElement
-                    sporsmal={'Tilleggsinformasjon:'}
+                    sporsmal={props.tekster['oppsummering.arbeidsforhold.tilleggsinformasjon.label']}
                     svar={props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkelForklaring}
                 />
                 }
 
                 <OppsummeringsElement
-                    sporsmal={'Mottar du eller den andre av barnets forelder ytelser fra utlandet?'}
+                    sporsmal={props.tekster['arbeidsforhold.mottarYtelserFraUtlandet.sporsmal']}
                     svar={props.arbeidsforhold.mottarKontantstotteFraAnnetEOS}
                 />
                 {props.arbeidsforhold.mottarKontantstotteFraAnnetEOS === 'JA' &&
                 <OppsummeringsElement
-                    sporsmal={'Tilleggsinformasjon:'}
+                    sporsmal={props.tekster['oppsummering.arbeidsforhold.tilleggsinformasjon.label']}
                     svar={props.arbeidsforhold.mottarKontantstotteFraAnnetEOSForklaring}
                 />
                 }

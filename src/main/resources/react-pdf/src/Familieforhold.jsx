@@ -1,33 +1,36 @@
 const Familieforhold = (props) => {
-        return (
-            <div>
-                <h3>Opplysning om familieforhold:</h3>
+    return (
+        <div>
+            <h3>{props.tekster['barnehageplass.harFaattPlassDato']}</h3>
 
-                <OppsummeringsElement
-                    sporsmal={'Bor begge foreldrene med barnet?'}
-                    svar={props.familieforhold.borForeldreneSammenMedBarnet}
-                />
+            <OppsummeringsElement
+                sporsmal={props.tekster['familieforhold.borForeldreneSammenMedBarnet.sporsmal']}
+                svar={props.familieforhold.borForeldreneSammenMedBarnet}
+            />
 
-                {props.familieforhold.borForeldreneSammenMedBarnet === 'JA' &&
-                    <>
-                        <OppsummeringsElement sporsmal={'Navnet til den andre forelderen:'} svar={props.familieforhold.annenForelderNavn} />
-                        <OppsummeringsElement
-                        sporsmal={'Navnet til den andre forelderen:'}
-                        svar={props.familieforhold.annenForelderFodselsnummer}
-                        />
-                        <OppsummeringsElement
-                            sporsmal={'Har barnets andre forelder bodd eller vært yrkesaktiv i Norge eller et annet EØS-land i minst 5 år?'}
-                            svar={props.familieforhold.annenForelderYrkesaktivINorgeEOSIMinstFemAar}
-                        />
-                    </>
-                }
-
-                {props.familieforhold.borForeldreneSammenMedBarnet === 'NEI' &&
+            {props.familieforhold.borForeldreneSammenMedBarnet === 'JA' &&
+                <>
                     <OppsummeringsElement
-                        sporsmal={'Er det avklart delt bosted for barnet?'}
-                        svar={props.familieforhold.erAvklartDeltBosted}
+                        sporsmal={props.tekster['oppsummering.familieforhold.annenForelderNavn.label']}
+                        svar={props.familieforhold.annenForelderNavn}
                     />
-                }
-            </div>
-        );
+                    <OppsummeringsElement
+                    sporsmal={props.tekster['oppsummering.familieforhold.annenForelderFodselsnummer.label']}
+                    svar={props.familieforhold.annenForelderFodselsnummer}
+                    />
+                    <OppsummeringsElement
+                        sporsmal={props.tekster['familieforhold.annenForelderYrkesaktivINorgeEOSIMinstFemAar.sporsmal']}
+                        svar={props.familieforhold.annenForelderYrkesaktivINorgeEOSIMinstFemAar}
+                    />
+                </>
+            }
+
+            {props.familieforhold.borForeldreneSammenMedBarnet === 'NEI' &&
+                <OppsummeringsElement
+                    sporsmal={props.tekster['familieforhold.erAvklartDeltBosted.sporsmal']}
+                    svar={props.familieforhold.erAvklartDeltBosted}
+                />
+            }
+        </div>
+    );
 };
