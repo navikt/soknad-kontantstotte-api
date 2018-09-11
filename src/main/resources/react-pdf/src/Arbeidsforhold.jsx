@@ -1,7 +1,7 @@
 const Arbeidsforhold = (props) => {
         return (
             <Bolk>
-                <h3>{props.tekster['arbeidsforhold.tittel'].toUpperCase()}</h3>
+                <h3 style={Uppercase}>{props.tekster['arbeidsforhold.tittel']}</h3>
 
                 <OppsummeringsElement
                     sporsmal={props.tekster['arbeidsforhold.mottarYtelserFraUtlandet.sporsmal']}

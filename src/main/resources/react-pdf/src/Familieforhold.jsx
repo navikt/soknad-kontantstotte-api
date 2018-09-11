@@ -1,7 +1,7 @@
 const Familieforhold = (props) => {
     return (
         <Bolk>
-            <h3>{props.tekster['familieforhold.tittel'].toUpperCase()}</h3>
+            <h3 style={Uppercase}>{props.tekster['familieforhold.tittel']}</h3>
 
             <OppsummeringsElement
                 sporsmal={props.tekster['familieforhold.borForeldreneSammenMedBarnet.sporsmal']}

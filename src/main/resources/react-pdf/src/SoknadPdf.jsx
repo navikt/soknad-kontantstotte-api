@@ -11,11 +11,15 @@ const SideTittel = {
     textAlign: 'center'
 };
 
+const Uppercase = {
+    textTransform: 'uppercase'
+}
+
 const SoknadPdf = (props) => {
     return (
         <div style={wrapper}>
             <div style={SideTittel}>
-                <h1>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
+                <h1 style={Uppercase}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
             </div>
 
             <Personalia person={props.soknad.person} tekster={props.tekster}/>
