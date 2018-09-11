@@ -5,6 +5,8 @@ import jdk.nashorn.api.scripting.NashornScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.util.Properties;
 
 public class OppsummeringTransformer {
 
@@ -40,9 +42,17 @@ public class OppsummeringTransformer {
 
     public String renderHTMLForPdf(Soknad soknad) {
         try {
-            Object html = engineHolder.invokeFunction("hentHTMLStringForOppsummering", soknad);
+            Properties prop = new Properties();
+            prop.load(
+                new InputStreamReader(
+                        new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/tekster.properties"),
+                        Charset.forName("UTF-8")
+                )
+            );
+
+            Object html = engineHolder.invokeFunction("hentHTMLStringForOppsummering", soknad, prop);
             return String.valueOf(html);
-        } catch (ScriptException | NoSuchMethodException e) {
+        } catch (ScriptException | NoSuchMethodException | IOException e) {
             throw new IllegalStateException("Klarte ikke rendre react-komponent", e);
         }
     }
