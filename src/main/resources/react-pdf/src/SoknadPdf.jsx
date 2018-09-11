@@ -1,27 +1,45 @@
-class SoknadPdf extends React.Component {
-    render () {
-        return (
-            <div>
-                <h1>Søknad om kontantstøtte</h1>
-                <PersonaliaOgBarnOppsummering person={this.props.soknad.person} barn={this.props.soknad.mineBarn}/>
-                <SokerKrav kravTilSoker={this.props.soknad.kravTilSoker}/>
-                <Barn mineBarn={this.props.soknad.mineBarn}/>
-                <Familieforhold familieforhold={this.props.soknad.familieforhold}/>
-                <Barnehageplass barnehageplass={this.props.soknad.barnehageplass}/>
-                <Arbeidsforhold arbeidsforhold={this.props.soknad.arbeidsforhold}/>
-            </div>
-        );
-    }
+const wrapper = {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column'
+};
+
+const SideTittel = {
+    backgroundColor:'#c1b5d0',
+    margin:'20px 0 20px 0',
+    padding: '20px 0 20px 0',
+    textAlign: 'center'
+};
+
+const Uppercase = {
+    textTransform: 'uppercase'
 }
 
-function hentHTMLStringForOppsummering(soknad) {
-    var komponent = ReactDOMServer.renderToStaticMarkup(<SoknadPdf soknad={soknad} />);
+const SoknadPdf = (props) => {
+    return (
+        <div style={wrapper}>
+            <div style={SideTittel}>
+                <h1 style={Uppercase}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
+            </div>
+
+            <Personalia person={props.soknad.person} tekster={props.tekster}/>
+            <SokerKrav kravTilSoker={props.soknad.kravTilSoker} tekster={props.tekster}/>
+            <Barn mineBarn={props.soknad.mineBarn} tekster={props.tekster}/>
+            <Familieforhold familieforhold={props.soknad.familieforhold} tekster={props.tekster}/>
+            <Barnehageplass barnehageplass={props.soknad.barnehageplass} tekster={props.tekster}/>
+            <Arbeidsforhold arbeidsforhold={props.soknad.arbeidsforhold} tekster={props.tekster}/>
+        </div>
+    );
+};
+
+function hentHTMLStringForOppsummering(soknad, tekster) {
+    var komponent = ReactDOMServer.renderToStaticMarkup(<SoknadPdf soknad={soknad} tekster={tekster}/>);
     const template = `
         <html>
             <head>
             <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
             <style type="text/css"> 
-                @page:first { margin: 12mm 2cm 2.5cm; } 
+                @page   { margin: 12mm 1cm 2.5cm; } 
                 *       { box-sizing: border-box; } 
                 body    { font-family: ArialSystem, sans-serif; font-size: 10pt; line-height: 1.4em; margin: 0; color: #3e3832; } 
             </style>
