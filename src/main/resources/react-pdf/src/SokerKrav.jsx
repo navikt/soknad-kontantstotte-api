@@ -1,5 +1,4 @@
-var SokerKrav = React.createClass({
-    render: function () {
+const SokerKrav = (props) => {
         return (
             <div>
                 <h3>Kravene av elektronisk søknad</h3>
@@ -25,5 +24,4 @@ var SokerKrav = React.createClass({
                 </ul>
             </div>
         );
-    }
-});
+};

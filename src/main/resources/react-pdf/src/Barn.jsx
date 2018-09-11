@@ -1,14 +1,12 @@
-var Barn = React.createClass({
-    render: function () {
+const Barn = (props) => {
         return (
             <div>
                 <h3>Opplysninger om barnet eller barna</h3>
                 <ul>
                     <OppsummeringsListeElement
-                        tekst={this.props.mineBarn.navn + ', ' + this.props.mineBarn.fodselsdato}
+                        tekst={props.mineBarn.navn + ', ' + props.mineBarn.fodselsdato}
                     />
                 </ul>
             </div>
         );
-    }
-});
+};

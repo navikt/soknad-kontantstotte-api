@@ -31,12 +31,13 @@ public class PdfService {
                 .invoke();
 
         return response.readEntity(byte[].class);
+
     }
 
     private void skrivTilFil(byte[] soknad) {
         try {
-            new File("/tmp/TEST.pdf");
-            OutputStream out = new FileOutputStream("/tmp/TEST.pdf");
+            new File(System.getProperty("user.dir") + "/TEST.pdf");
+            OutputStream out = new FileOutputStream(System.getProperty("user.dir") + "/TEST.pdf");
             out.write(soknad);
             out.close();
         } catch (IOException e) {
