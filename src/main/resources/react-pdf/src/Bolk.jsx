@@ -1,5 +1,6 @@
 const topBorder = {
-    borderTop: '1px solid black'
+    borderTop: '1px solid black',
+    pageBreakInside: 'avoid'
 };
 
 const Bolk = (props) => {
