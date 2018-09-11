@@ -23,7 +23,8 @@ const Barnehageplass = (props) => {
                 </>
             }
 
-            {props.barnehageplass.harBarnehageplass.indexOf('Ja') > -1 &&
+            {
+                (props.barnehageplass.harBarnehageplass === 'Ja' || props.barnehageplass.harBarnehageplass === 'JaSkalSlutte') &&
                 <OppsummeringsElement
                     sporsmal={props.tekster['barnehageplass.antallTimer']}
                     svar={props.barnehageplass.antallTimer}
