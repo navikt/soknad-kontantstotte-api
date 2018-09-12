@@ -4,6 +4,9 @@
 # Stop scriptet om en kommando feiler
 set -e
 
+# Enabler extglob, for å kunne bruke parantesoperator i rm
+shopt -s extglob
+
 # Usage string
 usage="Script som bygger prosjektet
 
@@ -51,10 +54,28 @@ function build_command {
         --rm \
         --volume $(pwd):/var/workspace \
         --volume /var/run/docker.sock:/var/run/docker.sock \
+        --env NPM_TOKEN=${NPM_AUTH} \
         $BUILDER_IMAGE \
         "$@"
 }
 
+function build_pdf_template {
+    CURRENT_DIR=$(pwd)
+
+    cd src/main/resources/react-pdf/
+    mkdir -p dist
+
+    BABEL_PRESETS=@babel/preset-env,@babel/preset-react
+    BABEL_PLUGINS=@babel/plugin-transform-react-constant-elements,@babel/plugin-transform-react-inline-elements
+
+    echo "Run npm"
+    build_command npm install
+
+    echo "Run babel"
+    build_command npx babel src --out-file dist/bundle.js --presets=$BABEL_PRESETS --plugins=$BABEL_PLUGINS
+
+    cd $CURRENT_DIR
+}
 
 function build_target {
     build_command mvn clean verify
@@ -75,6 +96,7 @@ function publish_container() {
     docker push ${TAG}
 }
 
+build_pdf_template
 build_target
 create_version_file
 build_container
