@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 /**
  * Kan erstattes med mekanismer i Java 9 når det oppgraderes
  */
-class Utf8Control extends ResourceBundle.Control {
+public class Utf8Control extends ResourceBundle.Control {
 
     /**
      * Siden ResourceBundle.Control ikke er lar oss velge charset, og newBundle ikke lar seg extende, så må
