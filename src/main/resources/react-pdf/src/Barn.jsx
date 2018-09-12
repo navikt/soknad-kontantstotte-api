@@ -1,12 +1,8 @@
 const Barn = (props) => {
         return (
-            <div>
-                <h3>Opplysninger om barnet eller barna</h3>
-                <ul>
-                    <OppsummeringsListeElement
-                        tekst={props.mineBarn.navn + ', ' + props.mineBarn.fodselsdato}
-                    />
-                </ul>
-            </div>
+            <Bolk>
+                <h3 style={Uppercase}>{props.tekster['barn.tittel']}</h3>
+                <OppsummeringsElement svar={props.mineBarn.navn + " - " + props.mineBarn.fodselsdato} />
+            </Bolk>
         );
 };
