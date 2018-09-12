@@ -5,8 +5,12 @@ import jdk.nashorn.api.scripting.NashornScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.util.Properties;
+import java.util.*;
+import java.util.function.Function;
+
+import static java.util.ResourceBundle.getBundle;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 public class OppsummeringTransformer {
 
@@ -42,17 +46,15 @@ public class OppsummeringTransformer {
 
     public String renderHTMLForPdf(Soknad soknad) {
         try {
-            Properties prop = new Properties();
-            prop.load(
-                new InputStreamReader(
-                        new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/tekster.properties"),
-                        Charset.forName("UTF-8")
-                )
-            );
+            Function<ResourceBundle, Map<String, String>> bundleToMap = bundle -> bundle.keySet().stream()
+                    .collect(toMap(identity(), bundle::getString));
 
-            Object html = engineHolder.invokeFunction("hentHTMLStringForOppsummering", soknad, prop);
+            ResourceBundle teksterBundle = getBundle("tekster");
+            Map<String,String> teksterMap = bundleToMap.apply(teksterBundle);
+
+            Object html = engineHolder.invokeFunction("hentHTMLStringForOppsummering", soknad, teksterMap);
             return String.valueOf(html);
-        } catch (ScriptException | NoSuchMethodException | IOException e) {
+        } catch (ScriptException | NoSuchMethodException e) {
             throw new IllegalStateException("Klarte ikke rendre react-komponent", e);
         }
     }
