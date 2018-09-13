@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.oppsummering;
 
 import jdk.nashorn.api.scripting.NashornScriptEngine;
+import no.nav.kontantstotte.tekst.Utf8Control;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -49,7 +50,7 @@ public class OppsummeringTransformer {
             Function<ResourceBundle, Map<String, String>> bundleToMap = bundle -> bundle.keySet().stream()
                     .collect(toMap(identity(), bundle::getString));
 
-            ResourceBundle teksterBundle = getBundle("tekster");
+            ResourceBundle teksterBundle = getBundle("tekster", new Locale(soknad.sprak), new Utf8Control());
             Map<String,String> teksterMap = bundleToMap.apply(teksterBundle);
 
             Object html = engineHolder.invokeFunction("hentHTMLStringForOppsummering", soknad, teksterMap);

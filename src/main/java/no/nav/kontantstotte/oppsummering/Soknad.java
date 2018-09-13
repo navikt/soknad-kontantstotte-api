@@ -11,6 +11,7 @@ public class Soknad {
     public Barnehageplass barnehageplass;
     public Arbeidsforhold arbeidsforhold;
     public Barn mineBarn;
+    public String sprak;
 
     public Soknad() {
         this.person = new Person();
