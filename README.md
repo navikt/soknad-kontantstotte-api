@@ -10,7 +10,7 @@ For å kjøre opp løsningen lokalt, start [TestLauncher](src/test/java/no/nav/k
 eller lage en ny spring boot run-config med profile `dev`.
 
 
-Lokal innlogging gjøre ved å kalle cookie-endepunktet til ```no.nav.security.oidc.test.support.jersey.TestTokenGeneratorResource```
+Lokal innlogging gjøre ved å kalle cookie-endepunktet til ```no.nav.security.oidc.test.support.jersey.TestTokenGeneratorResource``` som er http://localhost:8080/api/local/cookie
 
 ## Bygging og publisering
 
@@ -18,6 +18,7 @@ For å bygge imaget, kjør `sh build.sh`. Se `sh build.sh --help` for alternativ
 
 ## Se PDF lokalt
 
+- Start soknad-pdf-generator lokalt
 - I [PDFService](src/main/java/no/nav/kontantstotte/service/PdfService.java) legg til `skrivTilFil(response.readEntity(byte[].class));` før funksjonen returnerer
 - Kjør `cd src/main/resources/react-pdf/` i terminalen
 - Kjør  `npm i` også `npx babel src --out-file dist/bundle.js --presets=@babel/preset-env,@babel/preset-react`
