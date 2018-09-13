@@ -4,32 +4,16 @@ const Barnehageplass = (props) => {
 
     return (
         <Bolk>
-            <h3 style={Uppercase}>{props.tekster['barnehageplass.tittel']}</h3>
+            <h3 style={Uppercase}>{props.tekster['oppsummering.barnehageplass.tittel']}</h3>
             <OppsummeringsElement
-                sporsmal={props.tekster['barnehageplass.sporsmal']}
+                sporsmal={props.tekster['oppsummering.barnehageplass.harBarnehageplass']}
                 svar={props.barnehageplass.harBarnehageplass}
             />
 
-            {props.barnehageplass.harBarnehageplass !== 'Nei' &&
-                <>
-                    <OppsummeringsElement
-                        sporsmal={props.tekster['barnehageplass.harFaattPlassDato']}
-                        svar={dateString}
-                    />
-                    <OppsummeringsElement
-                        sporsmal={props.tekster['barnehageplass.kommune']}
-                        svar={props.barnehageplass.kommune}
-                    />
-                </>
-            }
-
-            {
-                (props.barnehageplass.harBarnehageplass === 'Ja' || props.barnehageplass.harBarnehageplass === 'JaSkalSlutte') &&
-                <OppsummeringsElement
-                    sporsmal={props.tekster['barnehageplass.antallTimer']}
-                    svar={props.barnehageplass.antallTimer}
-                />
-            }
+            <OppsummeringsElement
+                sporsmal={props.tekster['barnehageplass.barnBarnehageplassStatus']}
+                svar={props.tekster['barnehageplass.'.concat(props.barnehageplass.barnBarnehageplassStatus)]}
+            />
         </Bolk>
     )
 };
