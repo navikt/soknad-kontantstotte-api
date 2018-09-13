@@ -18,18 +18,7 @@ const Familieforhold = (props) => {
                     sporsmal={props.tekster['oppsummering.familieforhold.annenForelderFodselsnummer.label']}
                     svar={props.familieforhold.annenForelderFodselsnummer}
                     />
-                    <OppsummeringsElement
-                        sporsmal={props.tekster['familieforhold.annenForelderYrkesaktivINorgeEOSIMinstFemAar.sporsmal']}
-                        svar={props.familieforhold.annenForelderYrkesaktivINorgeEOSIMinstFemAar}
-                    />
                 </>
-            }
-
-            {props.familieforhold.borForeldreneSammenMedBarnet === 'NEI' &&
-                <OppsummeringsElement
-                    sporsmal={props.tekster['familieforhold.erAvklartDeltBosted.sporsmal']}
-                    svar={props.familieforhold.erAvklartDeltBosted}
-                />
             }
         </Bolk>
     );

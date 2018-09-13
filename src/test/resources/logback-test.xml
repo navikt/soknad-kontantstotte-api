@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="ROOT_LOG_LEVEL" value="INFO"/>
+
+    <include resource="logback-default-without-abac.xml"/>
+
+    <appender name="stdout_json_with_filter"  class="no.nav.log.MaskingAppender">
+        <appender name="stdout_json_masked_with_filter" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        </appender>
+    </appender>
+    <appender name="stdout_simple" class="ch.qos.logback.core.ConsoleAppender">
+
+        <encoder>
+            <pattern>${loggingPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <root >
+        <!-- nais+local -->
+        <appender-ref ref="stdout_simple"/>
+    </root>
+
+</configuration>
