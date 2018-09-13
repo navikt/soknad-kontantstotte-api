@@ -2,3 +2,5 @@
 target/
 .idea
 VERSION
+src/main/resources/react-pdf/dist/
+src/main/resources/react-pdf/node_modules/
