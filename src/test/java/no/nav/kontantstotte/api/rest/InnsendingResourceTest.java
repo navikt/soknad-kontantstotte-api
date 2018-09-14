@@ -54,7 +54,7 @@ public class InnsendingResourceTest {
                 " \"barn\": {\"navn\": \"Baby Mockface\"}, " +
                 "\"barnehageplass\": {}, " +
                 "\"familieforhold\": {}, " +
-                "\"sokerKrav\": {\"boddINorgeSisteFemAar\": \"JA\", \"borSammenMedBarnet\": \"JA\", \"skalBoMedBarnetINorgeNesteTolvMaaneder\": \"JA\"}}";
+                "\"sokerKrav\": {\"boddEllerJobbetINorgeSisteFemAar\": \"JA\", \"borSammenMedBarnet\": \"JA\", \"skalBoMedBarnetINorgeNesteTolvMaaneder\": \"JA\"}}";
     }
 
 }

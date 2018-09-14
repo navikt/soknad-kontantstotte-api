@@ -1,18 +1,14 @@
-const SokerKrav = (props) => {
-        return (
-            <div>
-                <h3>Kravene av elektronisk søknad</h3>
-                <ul>
-                    <OppsummeringsListeElement
-                        tekst={'Jeg har bodd eller vært yrkesaktiv i Norge i minst fem år'}
-                    />
-                    <OppsummeringsListeElement
-                        tekst={'Jeg bor sammen med barnet'}
-                    />
-                    <OppsummeringsListeElement
-                        tekst={'Jeg og barnet skal bo i Norge de neste 12 månedene'}
-                    />
-                </ul>
-            </div>
-        );
+const SokerKrav = props => {
+    return (
+        <Bolk>
+            <h3 style={Uppercase}>{props.tekster['sokerkrav.tittel']}</h3>
+            <OppsummeringsElement svar={props.tekster['oppsummering.kravtilsoker.norskStatsborger']}/>
+            <OppsummeringsElement svar={props.tekster['oppsummering.kravtilsoker.boddEllerJobbetINorgeSisteFemAar']}/>
+            <OppsummeringsElement svar={props.tekster['oppsummering.kravtilsoker.borSammenMedBarnet']}/>
+            <OppsummeringsElement svar={props.tekster['oppsummering.kravtilsoker.barnIkkeHjemme']}/>
+            <OppsummeringsElement svar={props.tekster['oppsummering.kravtilsoker.ikkeAvtaltDeltBosted']}/>
+            <OppsummeringsElement
+                svar={props.tekster['oppsummering.kravtilsoker.skalBoMedBarnetINorgeNesteTolvMaaneder']}/>
+        </Bolk>
+    )
 };

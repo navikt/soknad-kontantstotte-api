@@ -1,10 +1,17 @@
 package no.nav.kontantstotte.oppsummering;
 
 import jdk.nashorn.api.scripting.NashornScriptEngine;
+import no.nav.kontantstotte.tekst.Utf8Control;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.*;
+import java.util.*;
+import java.util.function.Function;
+
+import static java.util.ResourceBundle.getBundle;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 public class OppsummeringTransformer {
 
@@ -40,7 +47,13 @@ public class OppsummeringTransformer {
 
     public String renderHTMLForPdf(Soknad soknad) {
         try {
-            Object html = engineHolder.invokeFunction("hentHTMLStringForOppsummering", soknad);
+            Function<ResourceBundle, Map<String, String>> bundleToMap = bundle -> bundle.keySet().stream()
+                    .collect(toMap(identity(), bundle::getString));
+
+            ResourceBundle teksterBundle = getBundle("tekster", new Locale(soknad.sprak), new Utf8Control());
+            Map<String,String> teksterMap = bundleToMap.apply(teksterBundle);
+
+            Object html = engineHolder.invokeFunction("hentHTMLStringForOppsummering", soknad, teksterMap);
             return String.valueOf(html);
         } catch (ScriptException | NoSuchMethodException e) {
             throw new IllegalStateException("Klarte ikke rendre react-komponent", e);
