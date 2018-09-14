@@ -13,7 +13,7 @@ const SideTittel = {
 
 const Uppercase = {
     textTransform: 'uppercase'
-}
+};
 
 const SoknadPdf = (props) => {
     return (
@@ -28,6 +28,7 @@ const SoknadPdf = (props) => {
             <Familieforhold familieforhold={props.soknad.familieforhold} tekster={props.tekster}/>
             <Barnehageplass barnehageplass={props.soknad.barnehageplass} tekster={props.tekster}/>
             <Arbeidsforhold arbeidsforhold={props.soknad.arbeidsforhold} tekster={props.tekster}/>
+            <UtenlandskYtelser familieforhold={props.soknad.familieforhold} utenlandskYtelser={props.soknad.utenlandskYtelser} tekster={props.tekster}/>
         </div>
     );
 };
