@@ -30,8 +30,7 @@ public class PdfService {
                 .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
                 .invoke();
 
-        skrivTilFil(response.readEntity(byte[].class));
-        return null;
+        return response.readEntity(byte[].class);
 
     }
 
