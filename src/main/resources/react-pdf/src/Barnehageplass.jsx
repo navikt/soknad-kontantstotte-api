@@ -59,6 +59,24 @@ const Barnehageplass = (props) => {
                     />
                 </>
             }
+
+
+            {props.barnehageplass.barnBarnehageplassStatus === BarnehageplassStatus.SKAL_SLUTTE_I_BARNEHAGE &&
+            <>
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.skalSlutteIBarnehage.dato.sporsmal']}
+                    svar={props.barnehageplass.skalSlutteIBarnehageDato}
+                />
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.skalSlutteIBarnehage.kommune.sporsmal']}
+                    svar={props.barnehageplass.skalSlutteIBarnehageKommune}
+                />
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.skalSlutteIBarnehage.antallTimer.sporsmal']}
+                    svar={props.barnehageplass.skalSlutteIBarnehageAntallTimer}
+                />
+            </>
+            }
         </Bolk>
     )
 };
