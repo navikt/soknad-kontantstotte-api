@@ -34,6 +34,23 @@ const Barnehageplass = (props) => {
                 sporsmal={props.tekster['barnehageplass.barnBarnehageplassStatus']}
                 svar={props.tekster[barnBarnehageplassStatusKey]}
             />
+
+            {props.barnehageplass.barnBarnehageplassStatus === 'harBarnehageplass' &&
+            <>
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.harBarnehageplass.antallTimer.sporsmal']}
+                    svar={props.barnehageplass.harBarnehageplassAntallTimer}
+                />
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.harBarnehageplass.dato.sporsmal']}
+                    svar={props.barnehageplass.harBarnehageplassDato}
+                />
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.harBarnehageplass.kommune.sporsmal']}
+                    svar={props.barnehageplass.harBarnehageplassKommune}
+                />
+            </>
+            }
         </Bolk>
     )
 };
