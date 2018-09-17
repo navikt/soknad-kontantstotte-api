@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode development"
+    "build": "webpack --mode development",
+    "local": "npx babel src --out-file dist/bundle.js --presets=@babel/preset-env,@babel/preset-react"
   },
   "keywords": [],
   "author": "",
