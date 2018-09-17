@@ -28,7 +28,7 @@ const SoknadPdf = (props) => {
             <Familieforhold familieforhold={props.soknad.familieforhold} tekster={props.tekster}/>
             <Barnehageplass barnehageplass={props.soknad.barnehageplass} tekster={props.tekster}/>
             <Arbeidsforhold arbeidsforhold={props.soknad.arbeidsforhold} tekster={props.tekster}/>
-            <UtenlandskYtelser familieforhold={props.soknad.familieforhold} utenlandskYtelser={props.soknad.utenlandskYtelser} tekster={props.tekster}/>
+            <UtenlandskeYtelser familieforhold={props.soknad.familieforhold} utenlandskeYtelser={props.soknad.utenlandskeYtelser} tekster={props.tekster}/>
         </div>
     );
 };

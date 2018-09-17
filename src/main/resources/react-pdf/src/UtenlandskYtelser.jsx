@@ -1,17 +1,17 @@
-const UtenlandskYtelser = (props) => {
+const UtenlandskeYtelser = (props) => {
     return (
         <Bolk>
-            <h3 style={Uppercase}>{props.tekster['utenlandskYtelser.tittel']}</h3>
+            <h3 style={Uppercase}>{props.tekster['utenlandskeYtelser.tittel']}</h3>
 
             <div>
                 <OppsummeringsElement
-                    sporsmal={props.tekster['utenlandskYtelser.mottarYtelserFraUtland.sporsmal']}
-                    svar={props.utenlandskYtelser.mottarYtelserFraUtland}
+                    sporsmal={props.tekster['utenlandskeYtelser.mottarYtelserFraUtland.sporsmal']}
+                    svar={props.utenlandskeYtelser.mottarYtelserFraUtland}
                 />
-                {props.utenlandskYtelser.mottarYtelserFraUtlandForklaring !== '' &&
+                {props.utenlandskeYtelser.mottarYtelserFraUtlandForklaring !== '' &&
                     <OppsummeringsElement
-                        sporsmal={props.tekster['oppsummering.utenlandskYtelser.forklaring.label']}
-                        svar={props.utenlandskYtelser.mottarYtelserFraUtlandForklaring}
+                        sporsmal={props.tekster['oppsummering.utenlandskeYtelser.forklaring.label']}
+                        svar={props.utenlandskeYtelser.mottarYtelserFraUtlandForklaring}
                     />
                 }
             </div>
@@ -19,14 +19,14 @@ const UtenlandskYtelser = (props) => {
             {props.familieforhold.borForeldreneSammenMedBarnet === 'JA' &&
                 <div>
                     <OppsummeringsElement
-                        sporsmal={props.tekster['oppsummering.utenlandskYtelser.mottarAnnenForelderYtelserFraUtland']}
-                        svar={props.utenlandskYtelser.mottarAnnenForelderYtelserFraUtland}
+                        sporsmal={props.tekster['oppsummering.utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland']}
+                        svar={props.utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland}
                     />
 
-                    {props.utenlandskYtelser.mottarAnnenForelderYtelserFraUtlandForklaring !== '' &&
+                    {props.utenlandskeYtelser.mottarAnnenForelderYtelserFraUtlandForklaring !== '' &&
                         <OppsummeringsElement
-                            sporsmal={props.tekster['oppsummering.utenlandskYtelser.forklaring.label']}
-                            svar={props.utenlandskYtelser.mottarAnnenForelderYtelserFraUtlandForklaring}
+                            sporsmal={props.tekster['oppsummering.utenlandskeYtelser.forklaring.label']}
+                            svar={props.utenlandskeYtelser.mottarAnnenForelderYtelserFraUtlandForklaring}
                         />
                     }
                 </div>

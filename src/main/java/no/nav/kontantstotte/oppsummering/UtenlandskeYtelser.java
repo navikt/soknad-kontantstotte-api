@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.oppsummering;
 
-public class UtenlandskYtelser {
+public class UtenlandskeYtelser {
     public String mottarYtelserFraUtland;
     public String mottarYtelserFraUtlandForklaring;
     public String mottarAnnenForelderYtelserFraUtland;
