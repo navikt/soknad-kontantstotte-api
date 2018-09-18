@@ -4,20 +4,28 @@ const Barnehageplass = (props) => {
 
     let barnBarnehageplassStatusKey = 'Ubesvart';
 
+    const BarnehageplassStatus = {
+        GAR_IKKE_I_BARNEHAGE : 'garIkkeIBarnehage',
+        HAR_BARNEHAGEPLASS : 'harBarnehageplass',
+        HAR_SLUTTET_I_BARNEHAGE : 'harSluttetIBarnehage',
+        SKAL_BEGYNNE_I_BARNEHAGE : 'skalBegynneIBarnehage',
+        SKAL_SLUTTE_I_BARNEHAGE : 'skalSlutteIBarnehage',
+    };
+
     switch (props.barnehageplass.barnBarnehageplassStatus) {
-        case 'garIkkeIBarnehage':
+        case BarnehageplassStatus.GAR_IKKE_I_BARNEHAGE:
             barnBarnehageplassStatusKey = 'barnehageplass.garIkkeIBarnehage';
             break;
-        case 'harBarnehageplass':
+        case BarnehageplassStatus.HAR_BARNEHAGEPLASS:
             barnBarnehageplassStatusKey = 'barnehageplass.harBarnehageplass';
             break;
-        case 'harSluttetIBarnehage':
+        case BarnehageplassStatus.HAR_SLUTTET_I_BARNEHAGE:
             barnBarnehageplassStatusKey = 'barnehageplass.harSluttetIBarnehage';
             break;
-        case 'skalBegynneIBarnehage':
+        case BarnehageplassStatus.SKAL_BEGYNNE_I_BARNEHAGE:
             barnBarnehageplassStatusKey = 'barnehageplass.skalBegynneIBarnehage';
             break;
-        case 'skalSlutteIBarnehage':
+        case BarnehageplassStatus.SKAL_SLUTTE_I_BARNEHAGE:
             barnBarnehageplassStatusKey = 'barnehageplass.skalSlutteIBarnehage';
             break;
     }
@@ -35,7 +43,24 @@ const Barnehageplass = (props) => {
                 svar={props.tekster[barnBarnehageplassStatusKey]}
             />
 
-            {props.barnehageplass.barnBarnehageplassStatus === 'harBarnehageplass' &&
+            {props.barnehageplass.barnBarnehageplassStatus === BarnehageplassStatus.HAR_SLUTTET_I_BARNEHAGE &&
+                <>
+                    <OppsummeringsElement
+                        sporsmal={props.tekster['barnehageplass.harSluttetIBarnehage.dato.sporsmal']}
+                        svar={props.barnehageplass.harSluttetIBarnehageDato}
+                    />
+                    <OppsummeringsElement
+                        sporsmal={props.tekster['barnehageplass.harSluttetIBarnehage.kommune.sporsmal']}
+                        svar={props.barnehageplass.harSluttetIBarnehageKommune}
+                    />
+                    <OppsummeringsElement
+                        sporsmal={props.tekster['barnehageplass.harSluttetIBarnehage.antallTimer.sporsmal']}
+                        svar={props.barnehageplass.harSluttetIBarnehageAntallTimer}
+                    />
+                </>
+            }
+
+            {props.barnehageplass.barnBarnehageplassStatus === BarnehageplassStatus.HAR_BARNEHAGEPLASS &&
             <>
                 <OppsummeringsElement
                     sporsmal={props.tekster['barnehageplass.harBarnehageplass.antallTimer.sporsmal']}
