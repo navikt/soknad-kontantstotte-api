@@ -22,7 +22,7 @@ For å bygge imaget, kjør `sh build.sh`. Se `sh build.sh --help` for alternativ
 - I [PDFService](src/main/java/no/nav/kontantstotte/service/PdfService.java) legg til `skrivTilFil(response.readEntity(byte[].class));` før funksjonen returnerer
 - Kjør `cd src/main/resources/react-pdf/` i terminalen
 - Kjør  `npm i` 
-- Kjør `npm local`
+- Kjør `npm run local`
 - Kjør opp TestLauncher som normalt.
 
-For hver endring i koden må man kjøre `npm local` og restarte launcheren for å få med alle endringene.
+For hver endring i koden må man kjøre `npm run local` og restarte launcheren for å få med alle endringene.

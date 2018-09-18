@@ -7,6 +7,12 @@ const UtenlandskKontantstotte = (props) => {
                     sporsmal={props.tekster['utenlandskKontantstotte.mottarKontantstotteFraUtlandet.sporsmal']}
                     svar={props.utenlandskKontantstotte.mottarKontantstotteFraUtlandet}
                 />
+                {props.utenlandskKontantstotte.mottarKontantstotteFraUtlandet === 'JA' &&
+                        <OppsummeringsElement
+                            sporsmal={props.tekster['utenlandskKontantstotte.mottarKontantstotteFraUtlandet.tilleggsinfo.sporsmal']}
+                            svar={props.utenlandskKontantstotte.mottarKontantstotteFraUtlandetTilleggsinfo}
+                        />
+                }
             </Bolk>
         );
 };
