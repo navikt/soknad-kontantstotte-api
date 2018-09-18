@@ -12,6 +12,7 @@ public class Soknad {
     public Arbeidsforhold arbeidsforhold;
     public UtenlandskKontantstotte utenlandskKontantstotte;
     public Barn mineBarn;
+    public UtenlandskeYtelser utenlandskeYtelser;
     public String sprak;
 
     public Soknad() {
@@ -20,6 +21,7 @@ public class Soknad {
         this.familieforhold = new Familieforhold();
         this.barnehageplass = new Barnehageplass();
         this.arbeidsforhold = new Arbeidsforhold();
+        this.utenlandskeYtelser = new UtenlandskeYtelser();
         this.utenlandskKontantstotte = new UtenlandskKontantstotte();
         this.mineBarn = new Barn();
     }
