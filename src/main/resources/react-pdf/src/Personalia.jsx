@@ -7,7 +7,7 @@ const spacing = {
 const Personalia = (props) => {
     return (
         <div style={spacing}>
-            <h2>{props.person.fnr}</h2>
+            <span>{props.person.fnr}</span>
         </div>
     );
 };
