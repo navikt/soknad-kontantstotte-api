@@ -1,5 +1,7 @@
 package no.nav.kontantstotte.oppsummering;
 
+import no.nav.kontantstotte.oppsummering.bolk.*;
+
 import java.time.LocalDateTime;
 
 public class Soknad {
@@ -12,6 +14,7 @@ public class Soknad {
     public Arbeidsforhold arbeidsforhold;
     public Barn mineBarn;
     public UtenlandskeYtelser utenlandskeYtelser;
+    public Oppsummering oppsummering;
     public String sprak;
 
     public Soknad() {
@@ -21,6 +24,11 @@ public class Soknad {
         this.barnehageplass = new Barnehageplass();
         this.arbeidsforhold = new Arbeidsforhold();
         this.utenlandskeYtelser = new UtenlandskeYtelser();
+        this.oppsummering = new Oppsummering();
         this.mineBarn = new Barn();
+    }
+
+    public boolean erGyldig() {
+        return this.oppsummering.erGyldig();
     }
 }

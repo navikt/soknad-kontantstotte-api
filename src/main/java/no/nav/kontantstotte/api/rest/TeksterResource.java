@@ -9,21 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-import java.util.*;
-import java.util.function.Function;
-
-import static java.util.ResourceBundle.getBundle;
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toMap;
+import java.util.Map;
 
 @Component
 @Produces(MediaType.APPLICATION_JSON)
