@@ -1,14 +1,22 @@
 const wrapper = {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column'
+    maxWidth: '90%',
 };
 
 const SideTittel = {
-    backgroundColor:'#c1b5d0',
-    margin:'20px 0 20px 0',
-    padding: '20px 0 20px 0',
-    textAlign: 'center'
+    container: {
+        backgroundColor: '#c1b5d0',
+        height: '60px',
+    },
+    tittel: {
+        textTransform: 'uppercase',
+        textAlign: 'center',
+    },
+    ikon: {
+        position: 'relative',
+        float: 'left',
+        paddingTop: '18px',
+        paddingLeft: '30px',
+    },
 };
 
 const Uppercase = {
@@ -18,8 +26,9 @@ const Uppercase = {
 const SoknadPdf = (props) => {
     return (
         <div style={wrapper}>
-            <div style={SideTittel}>
-                <h1 style={Uppercase}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
+            <div style={SideTittel.container} >
+                <NavIkon style={SideTittel.ikon} />
+                <h1 style={SideTittel.tittel}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
             </div>
 
             <Personalia person={props.soknad.person} tekster={props.tekster}/>

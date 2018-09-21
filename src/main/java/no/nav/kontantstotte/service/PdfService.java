@@ -23,6 +23,7 @@ public class PdfService {
 
     public byte[] genererPdf(String oppsummeringHtml) {
 
+        // Når vi kan ta i bruk pdfgen må vi endre mediatype til "text/html; charset=utf-8"
         Response response = client
                 .target(pdfGeneratorServiceUri)
                 .path("convert")

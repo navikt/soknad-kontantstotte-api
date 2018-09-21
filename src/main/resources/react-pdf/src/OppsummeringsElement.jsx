@@ -1,7 +1,6 @@
 const style = {
     tekst: {
         whiteSpace: 'pre-wrap',
-        wordBreak: 'break-word',
     }
 };
 
