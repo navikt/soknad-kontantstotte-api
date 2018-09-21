@@ -1,7 +1,5 @@
 package no.nav.kontantstotte.service;
 
-import no.nav.kontantstotte.oppsummering.SoknadDto;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
