@@ -1,4 +1,4 @@
-const Bekreftelse = (props) => {
+const Oppsummering = (props) => {
     return (
         <Bolk>
             <h4>{props.tekster['oppsummering.bekreftelse.label']}</h4>
