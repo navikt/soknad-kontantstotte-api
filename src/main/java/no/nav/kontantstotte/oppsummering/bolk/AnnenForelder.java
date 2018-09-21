@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.oppsummering;
+package no.nav.kontantstotte.oppsummering.bolk;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
