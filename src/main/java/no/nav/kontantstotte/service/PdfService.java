@@ -13,10 +13,11 @@ import java.net.URI;
 public class PdfService {
 
     private URI pdfGeneratorServiceUri;
+    private URI pdfgenServiceUri;
 
     private final Client client;
 
-    public PdfService(Client client, URI pdfGeneratorServiceUri) {
+    public PdfService(Client client, URI pdfGeneratorServiceUri, URI pdfgenServiceUri) {
         this.client = client;
         this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
     }
@@ -28,10 +29,11 @@ public class PdfService {
                 .target(pdfGeneratorServiceUri)
                 .path("convert")
                 .request()
-                .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
+                .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
                 .invoke();
 
-        return response.readEntity(byte[].class);
+        skrivTilFil(response.readEntity(byte[].class));
+        return null;
 
     }
 

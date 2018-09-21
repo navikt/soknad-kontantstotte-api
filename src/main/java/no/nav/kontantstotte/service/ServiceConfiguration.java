@@ -50,9 +50,10 @@ public class ServiceConfiguration {
     @Bean
     public PdfService pdfServiceRetriever(
             @Named("client") Client client,
-            @Value("${SOKNAD_PDF_GENERATOR_URL}") URI target) {
+            @Value("${SOKNAD_PDF_GENERATOR_URL}") URI pdfGeneratorTarget,
+            @Value("${SOKNAD_PDF_GENERATOR_URL}") URI pdfgenTarget) {
 
-        return new PdfService(client, target);
+        return new PdfService(client, pdfGeneratorTarget, pdfgenTarget);
     }
 
     @Bean

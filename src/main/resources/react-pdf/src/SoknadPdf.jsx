@@ -12,10 +12,10 @@ const SideTittel = {
         textAlign: 'center',
     },
     ikon: {
-        position: 'relative',
         float: 'left',
-        paddingTop: '18px',
-        paddingLeft: '30px',
+        position: 'relative',
+        //paddingTop: '18px',
+        //paddingLeft: '30px',
     },
 };
 
