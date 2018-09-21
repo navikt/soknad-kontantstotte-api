@@ -60,6 +60,40 @@ const Barnehageplass = (props) => {
                 </>
             }
 
+            {props.barnehageplass.barnBarnehageplassStatus === BarnehageplassStatus.SKAL_SLUTTE_I_BARNEHAGE &&
+            <>
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.skalSlutteIBarnehage.dato.sporsmal']}
+                    svar={props.barnehageplass.skalSlutteIBarnehageDato}
+                />
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.skalSlutteIBarnehage.kommune.sporsmal']}
+                    svar={props.barnehageplass.skalSlutteIBarnehageKommune}
+                />
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.skalSlutteIBarnehage.antallTimer.sporsmal']}
+                    svar={props.barnehageplass.skalSlutteIBarnehageAntallTimer}
+                />
+            </>
+            }
+
+            {props.barnehageplass.barnBarnehageplassStatus === BarnehageplassStatus.SKAL_BEGYNNE_I_BARNEHAGE &&
+            <>
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.skalBegynneIBarnehage.dato.sporsmal']}
+                    svar={props.barnehageplass.skalBegynneIBarnehageDato}
+                />
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.skalBegynneIBarnehage.kommune.sporsmal']}
+                    svar={props.barnehageplass.skalBegynneIBarnehageKommune}
+                />
+                <OppsummeringsElement
+                    sporsmal={props.tekster['barnehageplass.skalBegynneIBarnehage.antallTimer.sporsmal']}
+                    svar={props.barnehageplass.skalBegynneIBarnehageAntallTimer}
+                />
+            </>
+            }
+
             {props.barnehageplass.barnBarnehageplassStatus === BarnehageplassStatus.HAR_BARNEHAGEPLASS &&
             <>
                 <OppsummeringsElement
