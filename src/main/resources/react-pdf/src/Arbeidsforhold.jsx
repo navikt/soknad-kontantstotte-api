@@ -24,17 +24,6 @@ const Arbeidsforhold = (props) => {
                     svar={props.arbeidsforhold.arbeiderIUtlandetEllerKontinentalsokkelForklaring}
                 />
                 }
-
-                <OppsummeringsElement
-                    sporsmal={props.tekster['arbeidsforhold.mottarYtelserFraUtlandet.sporsmal']}
-                    svar={props.arbeidsforhold.mottarKontantstotteFraAnnetEOS}
-                />
-                {props.arbeidsforhold.mottarKontantstotteFraAnnetEOS === 'JA' &&
-                <OppsummeringsElement
-                    sporsmal={props.tekster['oppsummering.arbeidsforhold.tilleggsinformasjon.label']}
-                    svar={props.arbeidsforhold.mottarKontantstotteFraAnnetEOSForklaring}
-                />
-                }
             </Bolk>
         );
 };
