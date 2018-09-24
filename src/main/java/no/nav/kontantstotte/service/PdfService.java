@@ -1,5 +1,8 @@
 package no.nav.kontantstotte.service;
 
+import no.finn.unleash.Unleash;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -9,31 +12,44 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 public class PdfService {
+    public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
 
     private URI pdfGeneratorServiceUri;
     private URI pdfgenServiceUri;
 
     private final Client client;
 
+    @Autowired
+    private Unleash unleash;
+
     public PdfService(Client client, URI pdfGeneratorServiceUri, URI pdfgenServiceUri) {
         this.client = client;
         this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
+        this.pdfgenServiceUri = pdfgenServiceUri;
     }
 
     public byte[] genererPdf(String oppsummeringHtml) {
+        Response response;
+        if (unleash.isEnabled(BRUK_PDFGEN)) {
+            response = client
+                    .target(pdfgenServiceUri)
+                    .path("v1/genpdf/html/kontantstotte")
+                    .request()
+                    .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
+                    .invoke();
+        } else {
+            response = client
+                    .target(pdfGeneratorServiceUri)
+                    .path("convert")
+                    .request()
+                    .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML_TYPE))
+                    .invoke();
+        }
 
-        // Når vi kan ta i bruk pdfgen må vi endre mediatype til "text/html; charset=utf-8"
-        Response response = client
-                .target(pdfGeneratorServiceUri)
-                .path("convert")
-                .request()
-                .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
-                .invoke();
-
-        skrivTilFil(response.readEntity(byte[].class));
-        return null;
+        response.readEntity(byte[].class);
 
     }
 

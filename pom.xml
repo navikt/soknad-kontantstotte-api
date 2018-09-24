@@ -19,6 +19,7 @@
         <oidc-support.version>0.2.6</oidc-support.version>
         <common-java-modules.version>2018.08.17.12.35</common-java-modules.version>
         <commons-lang3.version>3.7</commons-lang3.version>
+        <unleash.version>3.1.0</unleash.version>
     </properties>
 
     <build>
@@ -61,6 +62,12 @@
                     <artifactId>android-json</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>no.finn.unleash</groupId>
+            <artifactId>unleash-client-java</artifactId>
+            <version>${unleash.version}</version>
         </dependency>
 
 

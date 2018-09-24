@@ -12,10 +12,12 @@ const SideTittel = {
         textAlign: 'center',
     },
     ikon: {
+        height: '32.25px',
+        width: '50px',
+        display: 'inline-block',
         float: 'left',
-        position: 'relative',
-        //paddingTop: '18px',
-        //paddingLeft: '30px',
+        paddingTop: '13.875px',
+        paddingLeft: '20px',
     },
 };
 
@@ -27,7 +29,9 @@ const SoknadPdf = (props) => {
     return (
         <div style={wrapper}>
             <div style={SideTittel.container} >
-                <NavIkon style={SideTittel.ikon} />
+                <div style={SideTittel.ikon}>
+                    <NavIkon />
+                </div>
                 <h1 style={SideTittel.tittel}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
             </div>
 
