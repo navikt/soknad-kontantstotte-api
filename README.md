@@ -19,7 +19,7 @@ For å bygge imaget, kjør `sh build.sh`. Se `sh build.sh --help` for alternativ
 ## Se PDF lokalt
 
 - Start soknad-pdf-generator lokalt
-- I [PDFService](src/main/java/no/nav/kontantstotte/service/PdfService.java) legg til `skrivTilFil(response.readEntity(byte[].class));` før funksjonen returnerer
+- I [PDFService](src/main/java/no/nav/kontantstotte/person/PdfService.java) legg til `skrivTilFil(response.readEntity(byte[].class));` før funksjonen returnerer
 - Kjør `cd src/main/resources/react-pdf/` i terminalen
 - Kjør  `npm i` 
 - Kjør `npm run local`

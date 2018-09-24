@@ -1,15 +1,15 @@
-package no.nav.kontantstotte.service;
+package no.nav.kontantstotte.oppsummering.innsending;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SoknadDto {
+class SoknadDto {
     @JsonProperty
     private final byte[] pdf;
 
     @JsonProperty
     private final String fnr;
 
-    public SoknadDto(String fnr, byte[] pdf) {
+    SoknadDto(String fnr, byte[] pdf) {
         this.fnr = fnr;
         this.pdf = pdf;
     }

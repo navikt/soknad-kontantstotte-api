@@ -1,4 +1,6 @@
-package no.nav.kontantstotte.service;
+package no.nav.kontantstotte.oppsummering.innsending;
+
+import no.nav.kontantstotte.oppsummering.Soknad;
 
 import no.finn.unleash.Unleash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,42 +15,49 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 
-public class PdfService {
+class PdfService {
     public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
+
+    @Autowired
+    private Unleash unleash;
 
     private URI pdfGeneratorUri;
     private URI pdfSvgSupportGeneratorUrl;
 
     private final Client client;
 
-    @Autowired
-    private Unleash unleash;
+    private final OppsummeringTransformer oppsummeringTransformer;
 
-    public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl) {
+    public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl, OppsummeringTransformer oppsummeringTransformer) {
         this.client = client;
         this.pdfGeneratorUri = pdfGeneratorUri;
         this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
+        this.oppsummeringTransformer = oppsummeringTransformer;
     }
 
-    public byte[] genererPdf(String oppsummeringHtml) {
-        Response response;
+    public byte[] genererPdf(Soknad soknad) {
+
+        String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
+
         if (unleash.isEnabled(BRUK_PDFGEN)) {
-            response = client
+            return client
                     .target(pdfSvgSupportGeneratorUrl)
                     .path("v1/genpdf/html/kontantstotte")
                     .request()
                     .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
-                    .invoke();
+                    .invoke()
+                    .readEntity(byte[].class);
         } else {
-            response = client
+            return client
                     .target(pdfGeneratorUri)
                     .path("convert")
                     .request()
                     .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
-                    .invoke();
+                    .invoke()
+                    .readEntity(byte[].class);
         }
 
-        return response.readEntity(byte[].class);
+
     }
 
     private void skrivTilFil(byte[] soknad) {

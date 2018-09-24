@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.service;
+package no.nav.kontantstotte.person;
 
 import javax.ws.rs.client.Client;
 import java.net.URI;

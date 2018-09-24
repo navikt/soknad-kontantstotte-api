@@ -1,8 +1,8 @@
 package no.nav.kontantstotte.config;
 
 import no.nav.kontantstotte.config.toggle.FeatureToggleConfig;
-import no.nav.kontantstotte.oppsummering.OppsummeringTransformer;
-import no.nav.kontantstotte.service.ServiceConfiguration;
+import no.nav.kontantstotte.oppsummering.innsending.InnsendingConfiguration;
+import no.nav.kontantstotte.person.PersonConfiguration;
 import no.nav.log.LogFilter;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
-@Import({FeatureToggleConfig.class, ServiceConfiguration.class})
+@Import({FeatureToggleConfig.class, InnsendingConfiguration.class, PersonConfiguration.class})
 @ComponentScan({"no.nav.kontantstotte.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 public class ApplicationConfig implements EnvironmentAware {
@@ -103,9 +103,6 @@ public class ApplicationConfig implements EnvironmentAware {
         resourceRetriever.setUsePlainTextForHttps(Boolean.parseBoolean(env.getProperty("https.plaintext", "false")));
         return resourceRetriever;
     }
-
-    @Bean
-    public OppsummeringTransformer oppsummeringTransformerRetriever() { return new OppsummeringTransformer(); }
 
     private URL getConfiguredProxy() {
         String proxyParameterName = env.getProperty("http.proxy.parametername", "http.proxy");

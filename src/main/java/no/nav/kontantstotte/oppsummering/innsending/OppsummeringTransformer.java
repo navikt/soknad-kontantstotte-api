@@ -1,6 +1,7 @@
-package no.nav.kontantstotte.oppsummering;
+package no.nav.kontantstotte.oppsummering.innsending;
 
 import jdk.nashorn.api.scripting.NashornScriptEngine;
+import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.tekst.Utf8Control;
 
 import javax.script.ScriptEngineManager;
@@ -13,11 +14,11 @@ import static java.util.ResourceBundle.getBundle;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-public class OppsummeringTransformer {
+class OppsummeringTransformer {
 
     private NashornScriptEngine engineHolder;
 
-    public OppsummeringTransformer() {
+    OppsummeringTransformer() {
         this.engineHolder = getandInitializeEngineHolder();
     }
 
@@ -45,7 +46,7 @@ public class OppsummeringTransformer {
         return new InputStreamReader(in);
     }
 
-    public String renderHTMLForPdf(Soknad soknad) {
+    String renderHTMLForPdf(Soknad soknad) {
         try {
             Function<ResourceBundle, Map<String, String>> bundleToMap = bundle -> bundle.keySet().stream()
                     .collect(toMap(identity(), bundle::getString));

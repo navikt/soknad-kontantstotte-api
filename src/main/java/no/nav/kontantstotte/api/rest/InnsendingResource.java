@@ -1,13 +1,8 @@
 package no.nav.kontantstotte.api.rest;
 
-import no.nav.kontantstotte.oppsummering.OppsummeringTransformer;
+import no.nav.kontantstotte.oppsummering.InnsendingService;
 import no.nav.kontantstotte.oppsummering.Soknad;
-import no.nav.kontantstotte.service.SoknadDto;
-import no.nav.kontantstotte.service.InnsendingService;
-import no.nav.kontantstotte.service.PdfService;
 import no.nav.security.oidc.api.ProtectedWithClaims;
-import no.nav.security.oidc.context.OIDCValidationContext;
-import no.nav.security.oidc.jaxrs.OidcRequestContext;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,42 +23,25 @@ import static java.time.LocalDateTime.now;
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class InnsendingResource {
 
-    private final PdfService pdfService;
-
     private final InnsendingService innsendingService;
-
-    private final OppsummeringTransformer oppsummeringTransformer;
-
-    private static final String SELVBETJENING = "selvbetjening";
 
     private final Logger logger = LoggerFactory.getLogger(InnsendingResource.class);
 
     @Inject
-    public InnsendingResource(PdfService pdfService, InnsendingService innsendingService, OppsummeringTransformer oppsummeringTransformer) {
-        this.pdfService = pdfService;
+    public InnsendingResource(InnsendingService innsendingService) {
         this.innsendingService = innsendingService;
-        this.oppsummeringTransformer = oppsummeringTransformer;
     }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
         soknad.innsendingTimestamp = now();
-        soknad.person.fnr = hentFnrFraToken();
 
-        if(soknad.erGyldig()) {
-            String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
-            byte[] soknadPdf = pdfService.genererPdf(oppsummeringHtml);
-            SoknadDto soknadDto = new SoknadDto(soknad.person.fnr, soknadPdf);
-            return innsendingService.sendInnSoknad(soknadDto);
-        } else {
+        if (!soknad.erGyldig()) {
             logger.warn("Noen har forsøkt å sende inn en ugyldig søknad.");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-    }
 
-    private static String hentFnrFraToken() {
-        OIDCValidationContext context = OidcRequestContext.getHolder().getOIDCValidationContext();
-        return context.getClaims(SELVBETJENING).getClaimSet().getSubject();
+        return innsendingService.sendInnSoknad(soknad);
     }
 }

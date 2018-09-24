@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.service;
+package no.nav.kontantstotte.client;
 
 import no.nav.sbl.rest.RestUtils;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
@@ -7,19 +7,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import java.net.URI;
 
 @Configuration
-public class ServiceConfiguration {
+public class RestClientConfigration {
 
     @Value("${apikeys.key:x-nav-apiKey}")
-    String key;
+    private String key;
 
     @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}")
-    String proxyApiKey;
+    private String proxyApiKey;
 
     @Bean(name = "client")
     public Client client() {
@@ -47,27 +45,4 @@ public class ServiceConfiguration {
         return new ProxyHeaderRequestFilter(key, proxyApiKey);
     }
 
-    @Bean
-    public PdfService pdfServiceRetriever(
-            @Named("client") Client client,
-            @Value("${SOKNAD_PDF_GENERATOR_URL}") URI pdfGeneratorUrl,
-            @Value("${SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl) {
-
-        return new PdfService(client, pdfGeneratorUrl, pdfSvgSupportGeneratorUrl);
-    }
-
-    @Bean
-    public InnsendingService innsendingServiceRetriever(
-            @Named("proxyClient") Client client,
-            @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI target) {
-        return new InnsendingService(client, target);
-    }
-
-    @Bean
-    public PersonService personServiceRetriever(
-            @Named("proxyClient") Client client,
-            @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI target
-    ) {
-        return new PersonService(client, target);
-    }
 }
