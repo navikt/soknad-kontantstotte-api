@@ -50,6 +50,7 @@ public class InnsendingResource {
     public Response sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
         soknad.innsendingTimestamp = now();
         soknad.person.fnr = hentFnrFraToken();
+        logger.warn("sendInnSoknad");
         if(soknad.erGyldig()) {
             String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
             byte[] soknadPdf = pdfService.genererPdf(oppsummeringHtml);
