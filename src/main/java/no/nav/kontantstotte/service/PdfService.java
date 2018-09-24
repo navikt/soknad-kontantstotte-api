@@ -49,8 +49,7 @@ public class PdfService {
                     .invoke();
         }
 
-        response.readEntity(byte[].class);
-
+        return response.readEntity(byte[].class);
     }
 
     private void skrivTilFil(byte[] soknad) {
