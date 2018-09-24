@@ -14,6 +14,7 @@ public class Soknad {
     public Arbeidsforhold arbeidsforhold;
     public UtenlandskKontantstotte utenlandskKontantstotte;
     public Barn mineBarn;
+    public TilknytningTilUtland tilknytningTilUtland;
     public UtenlandskeYtelser utenlandskeYtelser;
     public Oppsummering oppsummering;
     public String sprak;
@@ -28,6 +29,7 @@ public class Soknad {
         this.oppsummering = new Oppsummering();
         this.utenlandskKontantstotte = new UtenlandskKontantstotte();
         this.mineBarn = new Barn();
+        this.tilknytningTilUtland = new TilknytningTilUtland();
     }
 
     public boolean erGyldig() {
