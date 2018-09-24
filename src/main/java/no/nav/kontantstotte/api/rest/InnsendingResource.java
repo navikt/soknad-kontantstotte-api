@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.api.rest;
 
+import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.OppsummeringTransformer;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.service.SoknadDto;
@@ -11,6 +12,7 @@ import no.nav.security.oidc.jaxrs.OidcRequestContext;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -38,6 +40,9 @@ public class InnsendingResource {
 
     private final Logger logger = LoggerFactory.getLogger(InnsendingResource.class);
 
+    @Autowired
+    private Unleash unleash;
+
     @Inject
     public InnsendingResource(PdfService pdfService, InnsendingService innsendingService, OppsummeringTransformer oppsummeringTransformer) {
         this.pdfService = pdfService;
@@ -51,6 +56,8 @@ public class InnsendingResource {
         soknad.innsendingTimestamp = now();
         soknad.person.fnr = hentFnrFraToken();
         logger.warn("sendInnSoknad" + ", " + soknad.erGyldig());
+        logger.warn(String.valueOf(unleash.getFeatureToggleNames()));
+        logger.warn(String.valueOf(unleash));
         if(soknad.erGyldig()) {
             String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
             logger.warn(oppsummeringHtml);
