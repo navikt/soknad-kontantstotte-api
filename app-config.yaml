@@ -10,8 +10,9 @@ resources:
   limits:
     memory: 512Mi
     cpu: 3
-  requests: # App is guaranteed the requested resources and  will be scheduled on nodes with at least this amount of resources available
-    memory: 256Mi
+    memory: 768Mi
+  requests:
+    memory: 512Mi
 healthcheck:
   liveness:
     initialDelay: 20
