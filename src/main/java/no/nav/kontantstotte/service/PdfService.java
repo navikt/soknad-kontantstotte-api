@@ -25,14 +25,10 @@ public class PdfService {
     @Autowired
     private Unleash unleash;
 
-    public PdfService(Client client, URI pdfGeneratorServiceUri) {
+    public PdfService(Client client, URI pdfGeneratorServiceUri, URI pdfgenServiceUri) {
         this.client = client;
         this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
-        try {
-            PdfService.pdfgenServiceUri = new URI("http://pdf-gen/api");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        this.pdfgenServiceUri = pdfgenServiceUri;
     }
 
     public byte[] genererPdf(String oppsummeringHtml) {
