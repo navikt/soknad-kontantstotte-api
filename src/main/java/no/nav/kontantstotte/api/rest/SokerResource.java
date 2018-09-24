@@ -1,13 +1,11 @@
 package no.nav.kontantstotte.api.rest;
 
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
-import no.nav.kontantstotte.service.PersonService;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;

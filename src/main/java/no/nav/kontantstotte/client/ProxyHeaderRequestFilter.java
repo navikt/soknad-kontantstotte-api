@@ -1,10 +1,10 @@
-package no.nav.kontantstotte.service;
+package no.nav.kontantstotte.client;
 
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
 import java.io.IOException;
 
-public class ProxyHeaderRequestFilter implements ClientRequestFilter {
+class ProxyHeaderRequestFilter implements ClientRequestFilter {
 
     private final String key;
 
