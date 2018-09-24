@@ -8,7 +8,6 @@ replicas:
 port: 8080
 resources:
   limits:
-    memory: 512Mi
     cpu: 3
     memory: 768Mi
   requests:
@@ -44,6 +43,8 @@ fasitResources:
   - alias: appres.cms
     resourceType: baseUrl
   - alias: soknad-kontantstotte-proxy-api
+    resourceType: restservice
+  - alias: pdf-gen-svg
     resourceType: restservice
   - alias: soknad-pdf-generator
     resourceType: restservice

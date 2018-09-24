@@ -1,7 +1,10 @@
 package no.nav.kontantstotte.oppsummering;
 
 import jdk.nashorn.api.scripting.NashornScriptEngine;
+import no.nav.kontantstotte.api.rest.InnsendingResource;
 import no.nav.kontantstotte.tekst.Utf8Control;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -14,7 +17,7 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public class OppsummeringTransformer {
-
+    private final Logger logger = LoggerFactory.getLogger(OppsummeringTransformer.class);
     private NashornScriptEngine engineHolder;
 
     public OppsummeringTransformer() {
@@ -53,7 +56,9 @@ public class OppsummeringTransformer {
             ResourceBundle teksterBundle = getBundle("tekster", new Locale(soknad.sprak), new Utf8Control());
             Map<String,String> teksterMap = bundleToMap.apply(teksterBundle);
 
+            logger.warn(soknad.toString());
             Object html = engineHolder.invokeFunction("hentHTMLStringForOppsummering", soknad, teksterMap);
+            logger.warn(String.valueOf(html));
             return String.valueOf(html);
         } catch (ScriptException | NoSuchMethodException e) {
             throw new IllegalStateException("Klarte ikke rendre react-komponent", e);

@@ -22,21 +22,17 @@ public class PdfService {
     public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
 
     private URI pdfGeneratorServiceUri;
-    private static URI pdfgenServiceUri;
+    private URI pdfgenServiceUri;
 
     private final Client client;
 
     @Autowired
     private Unleash unleash;
 
-    public PdfService(Client client, URI pdfGeneratorServiceUri) {
+    public PdfService(Client client, URI pdfGeneratorServiceUri, URI pdfgenServiceUri) {
         this.client = client;
         this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
-        try {
-            PdfService.pdfgenServiceUri = new URI("http://pdf-gen/api");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        this.pdfgenServiceUri = pdfgenServiceUri;//new URI("http://pdf-gen/api");
     }
 
     public byte[] genererPdf(String oppsummeringHtml) {
