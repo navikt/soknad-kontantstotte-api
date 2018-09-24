@@ -11,7 +11,7 @@ public class Soknad {
     public SokerKrav kravTilSoker;
     public Familieforhold familieforhold;
     public Barnehageplass barnehageplass;
-    public Arbeidsforhold arbeidsforhold;
+    public ArbeidIUtlandet arbeidIUtlandet;
     public UtenlandskKontantstotte utenlandskKontantstotte;
     public Barn mineBarn;
     public TilknytningTilUtland tilknytningTilUtland;
@@ -24,7 +24,7 @@ public class Soknad {
         this.kravTilSoker = new SokerKrav();
         this.familieforhold = new Familieforhold();
         this.barnehageplass = new Barnehageplass();
-        this.arbeidsforhold = new Arbeidsforhold();
+        this.arbeidIUtlandet = new ArbeidIUtlandet();
         this.utenlandskeYtelser = new UtenlandskeYtelser();
         this.oppsummering = new Oppsummering();
         this.utenlandskKontantstotte = new UtenlandskKontantstotte();

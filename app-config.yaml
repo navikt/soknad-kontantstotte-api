@@ -9,6 +9,9 @@ port: 8080
 resources:
   limits:
     cpu: 3
+    memory: 768Mi
+  requests:
+    memory: 512Mi
 healthcheck:
   liveness:
     initialDelay: 20
