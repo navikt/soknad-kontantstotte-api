@@ -1,5 +1,7 @@
 package no.nav.kontantstotte.api;
 
+import no.finn.unleash.FakeUnleash;
+import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
@@ -14,6 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+
+import static no.nav.kontantstotte.service.PdfService.BRUK_PDFGEN_LOCAL;
 
 @SpringBootApplication
 @ComponentScan({ "no.nav.kontantstotte.api" })
@@ -33,6 +37,13 @@ public class TestLauncher {
     @Primary
     OIDCResourceRetriever overrideOidcResourceRetriever(){
         return new FileResourceRetriever("/metadata.json", "/jwkset.json");
+    }
+
+    @Bean
+    Unleash fakeUnleash() {
+        FakeUnleash unleash = new FakeUnleash();
+        unleash.enable( BRUK_PDFGEN_LOCAL );
+        return unleash;
     }
 
     @Bean
