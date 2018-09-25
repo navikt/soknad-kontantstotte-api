@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 
 public class ByEnvironmentStrategyTest {
@@ -20,9 +20,21 @@ public class ByEnvironmentStrategyTest {
     @Test
     public void testIsEnabled() {
         Map<String, String> parameters = ImmutableMap.of("miljø", "t6, q0, p");
+
+        assertThat(byEnvironmentStrategy.isEnabled(parameters)).isTrue();
+    }
+
+    @Test
+    public void testEmptyParameters() {
         Map<String, String> emptyParameters = ImmutableMap.of();
 
-        assertTrue(byEnvironmentStrategy.isEnabled(parameters));
-        assertFalse(byEnvironmentStrategy.isEnabled(emptyParameters));
+        assertThat(byEnvironmentStrategy.isEnabled(emptyParameters)).isFalse();
+    }
+
+    @Test
+    public void testNotInEnvironment() {
+        Map<String, String> parameters = ImmutableMap.of("miljø", "q0, p");
+
+        assertThat(byEnvironmentStrategy.isEnabled(parameters)).isFalse();
     }
 }
