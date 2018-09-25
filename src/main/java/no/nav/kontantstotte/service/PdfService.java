@@ -18,7 +18,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class PdfService {
-    private final Logger logger = LoggerFactory.getLogger(PdfService.class);
     public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
     public static final String BRUK_PDFGEN_LOCAL = "kontantstotte.pdfgen_local";
 
@@ -43,9 +42,6 @@ public class PdfService {
     }
 
     public byte[] genererPdf(String oppsummeringHtml) {
-        logger.warn(pdfGeneratorServiceUri + ", " + pdfgenServiceUri);
-        logger.warn(oppsummeringHtml.substring(0, 20));
-
         Response response;
         if (unleash.isEnabled(BRUK_PDFGEN_LOCAL)) {
             response = client
@@ -70,10 +66,7 @@ public class PdfService {
                     .invoke();
         }
 
-        logger.warn(response.toString());
-
         return response.readEntity(byte[].class);
-
     }
 
     private void skrivTilFil(byte[] soknad) {
