@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
 import static no.nav.kontantstotte.service.PdfService.BRUK_PDFGEN;
+import static no.nav.kontantstotte.service.PdfService.BRUK_PDFGEN_LOCAL;
 
 @SpringBootApplication
 @ComponentScan({ "no.nav.kontantstotte.api" })
@@ -42,7 +43,7 @@ public class TestLauncher {
     @Bean
     Unleash fakeUnleash() {
         FakeUnleash unleash = new FakeUnleash();
-        unleash.enable( BRUK_PDFGEN );
+        unleash.enable( BRUK_PDFGEN_LOCAL );
 
         return unleash;
     }

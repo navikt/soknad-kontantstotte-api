@@ -20,20 +20,23 @@ import java.net.URISyntaxException;
 public class PdfService {
     private static final Logger log = LoggerFactory.getLogger(PdfService.class);
     public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
+    public static final String BRUK_PDFGEN_LOCAL = "kontantstotte.pdfgen_local";
 
     private URI pdfGeneratorServiceUri;
     private URI pdfgenServiceUri;
+    private URI pdfgenServiceUriLocal;
 
     private final Client client;
 
     @Autowired
     private Unleash unleash;
 
-    public PdfService(Client client, URI pdfGeneratorServiceUri, URI pdfgenServiceUri) {
+    public PdfService(Client client, URI pdfGeneratorServiceUri) {
         this.client = client;
         this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
         try {
-            this.pdfgenServiceUri = new URI("http://pdf-gen/api");//pdfgenServiceUri;//
+            this.pdfgenServiceUri = new URI("http://pdf-gen/api");
+            this.pdfgenServiceUriLocal = new URI("http://localhost:8082/api");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -45,7 +48,14 @@ public class PdfService {
         log.warn(String.valueOf(unleash.getFeatureToggleNames()));
 
         Response response;
-        if (unleash.isEnabled(BRUK_PDFGEN)) {
+        if (unleash.isEnabled(BRUK_PDFGEN_LOCAL)) {
+            response = client
+                    .target(pdfgenServiceUriLocal)
+                    .path("v1/genpdf/html/kontantstotte")
+                    .request()
+                    .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
+                    .invoke();
+        } else if (unleash.isEnabled(BRUK_PDFGEN)) {
             response = client
                     .target(pdfgenServiceUri)
                     .path("v1/genpdf/html/kontantstotte")
@@ -57,7 +67,7 @@ public class PdfService {
                     .target(pdfGeneratorServiceUri)
                     .path("convert")
                     .request()
-                    .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML_TYPE))
+                    .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
                     .invoke();
         }
 
