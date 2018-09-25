@@ -43,6 +43,7 @@ public class TestLauncher {
     Unleash fakeUnleash() {
         FakeUnleash unleash = new FakeUnleash();
         unleash.enable( BRUK_PDFGEN );
+
         return unleash;
     }
 

@@ -32,7 +32,11 @@ public class PdfService {
     public PdfService(Client client, URI pdfGeneratorServiceUri, URI pdfgenServiceUri) {
         this.client = client;
         this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
-        this.pdfgenServiceUri = pdfgenServiceUri;//new URI("http://pdf-gen/api");
+        try {
+            this.pdfgenServiceUri = new URI("http://pdf-gen/api");//pdfgenServiceUri;//
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     public byte[] genererPdf(String oppsummeringHtml) {
