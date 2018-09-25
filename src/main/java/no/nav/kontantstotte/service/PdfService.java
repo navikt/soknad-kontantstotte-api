@@ -16,32 +16,32 @@ import java.net.URI;
 public class PdfService {
     public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
 
-    private URI pdfGeneratorServiceUri;
-    private URI pdfGenServiceUri;
+    private URI pdfGeneratorUri;
+    private URI pdfSvgSupportGeneratorUrl;
 
     private final Client client;
 
     @Autowired
     private Unleash unleash;
 
-    public PdfService(Client client, URI pdfGeneratorServiceUri, URI pdfGenServiceUri) {
+    public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl) {
         this.client = client;
-        this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
-        this.pdfGenServiceUri = pdfGenServiceUri;
+        this.pdfGeneratorUri = pdfGeneratorUri;
+        this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
     }
 
     public byte[] genererPdf(String oppsummeringHtml) {
         Response response;
         if (unleash.isEnabled(BRUK_PDFGEN)) {
             response = client
-                    .target(pdfGenServiceUri)
+                    .target(pdfSvgSupportGeneratorUrl)
                     .path("v1/genpdf/html/kontantstotte")
                     .request()
                     .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
                     .invoke();
         } else {
             response = client
-                    .target(pdfGeneratorServiceUri)
+                    .target(pdfGeneratorUri)
                     .path("convert")
                     .request()
                     .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
