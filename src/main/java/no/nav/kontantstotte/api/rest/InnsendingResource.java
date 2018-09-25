@@ -40,9 +40,6 @@ public class InnsendingResource {
 
     private final Logger logger = LoggerFactory.getLogger(InnsendingResource.class);
 
-    @Autowired
-    private Unleash unleash;
-
     @Inject
     public InnsendingResource(PdfService pdfService, InnsendingService innsendingService, OppsummeringTransformer oppsummeringTransformer) {
         this.pdfService = pdfService;
@@ -56,8 +53,6 @@ public class InnsendingResource {
         soknad.innsendingTimestamp = now();
         soknad.person.fnr = hentFnrFraToken();
         logger.warn("sendInnSoknad" + ", " + soknad.erGyldig());
-        logger.warn(String.valueOf(unleash.getFeatureToggleNames()));
-        logger.warn(String.valueOf(unleash));
         if(soknad.erGyldig()) {
             String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
             logger.warn(oppsummeringHtml);

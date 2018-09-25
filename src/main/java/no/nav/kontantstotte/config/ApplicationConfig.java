@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.config;
 
-import no.nav.kontantstotte.config.toggle.FeatureToggleConfig;
 import no.nav.kontantstotte.oppsummering.OppsummeringTransformer;
 import no.nav.kontantstotte.service.ServiceConfiguration;
 import no.nav.log.LogFilter;
@@ -30,7 +29,7 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
-@Import({FeatureToggleConfig.class, ServiceConfiguration.class})
+@Import({ServiceConfiguration.class})
 @ComponentScan({"no.nav.kontantstotte.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 public class ApplicationConfig implements EnvironmentAware {

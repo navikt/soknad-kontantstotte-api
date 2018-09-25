@@ -1,14 +1,10 @@
 package no.nav.kontantstotte.service;
 
-import no.finn.unleash.Unleash;
-import no.nav.kontantstotte.config.ApplicationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,9 +24,6 @@ public class PdfService {
 
     private final Client client;
 
-    @Autowired
-    private Unleash unleash;
-
     public PdfService(Client client, URI pdfGeneratorServiceUri) {
         this.client = client;
         this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
@@ -45,10 +38,14 @@ public class PdfService {
     public byte[] genererPdf(String oppsummeringHtml) {
         log.warn(pdfGeneratorServiceUri.toString());
         log.warn(pdfgenServiceUri.toString());
-        log.warn(String.valueOf(unleash.getFeatureToggleNames()));
 
-        Response response;
-        if (unleash.isEnabled(BRUK_PDFGEN_LOCAL)) {
+        Response response = client
+                .target(pdfgenServiceUri)
+                .path("v1/genpdf/html/kontantstotte")
+                .request()
+                .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
+                .invoke();
+        /*if (unleash.isEnabled(BRUK_PDFGEN_LOCAL)) {
             response = client
                     .target(pdfgenServiceUriLocal)
                     .path("v1/genpdf/html/kontantstotte")
@@ -69,7 +66,7 @@ public class PdfService {
                     .request()
                     .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
                     .invoke();
-        }
+        }*/
 
         log.warn(response.toString());
 
