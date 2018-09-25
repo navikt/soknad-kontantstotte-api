@@ -5,3 +5,6 @@ no.nav.security.oidc:
      discoveryurl: http://metadata
      accepted_audience: aud-localhost
      cookie_name: localhost-idtoken
+
+UNLEASH_API_URL: http://localhost
+APP_NAME: soknad-kontantstotte-api
