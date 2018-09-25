@@ -4,6 +4,8 @@ import no.nav.kontantstotte.oppsummering.bolk.*;
 
 import java.time.LocalDateTime;
 
+import static java.time.LocalDateTime.now;
+
 public class Soknad {
 
     public LocalDateTime innsendingTimestamp;
@@ -34,5 +36,9 @@ public class Soknad {
 
     public boolean erGyldig() {
         return this.oppsummering.erGyldig();
+    }
+
+    public void markerInnsendingsTidspunkt() {
+        innsendingTimestamp = now();
     }
 }

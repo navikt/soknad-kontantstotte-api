@@ -16,8 +16,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static java.time.LocalDateTime.now;
-
 @Component
 @Path("sendinn")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
@@ -35,7 +33,7 @@ public class InnsendingResource {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
-        soknad.innsendingTimestamp = now();
+        soknad.markerInnsendingsTidspunkt();
 
         if (!soknad.erGyldig()) {
             logger.warn("Noen har forsøkt å sende inn en ugyldig søknad.");
