@@ -30,7 +30,7 @@ const SoknadPdf = (props) => {
         <div style={wrapper}>
             <div style={container} >
                 <div style={ikon}>
-                    <NavIkon />
+                    TEKST
                 </div>
                 <h1 style={tittel}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
             </div>
