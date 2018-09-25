@@ -1,9 +1,6 @@
 package no.nav.kontantstotte.service;
 
 import no.finn.unleash.Unleash;
-import no.nav.kontantstotte.api.rest.InnsendingResource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.client.Client;
@@ -15,44 +12,29 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 public class PdfService {
     public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
-    public static final String BRUK_PDFGEN_LOCAL = "kontantstotte.pdfgen_local";
 
     private URI pdfGeneratorServiceUri;
-    private URI pdfgenServiceUri;
-    private URI pdfgenServiceUriLocal;
+    private URI pdfGenServiceUri;
 
     private final Client client;
 
     @Autowired
     private Unleash unleash;
 
-    public PdfService(Client client, URI pdfGeneratorServiceUri) {
+    public PdfService(Client client, URI pdfGeneratorServiceUri, URI pdfGenServiceUri) {
         this.client = client;
         this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
-        try {
-            this.pdfgenServiceUri = new URI("http://pdf-gen.default/api");
-            this.pdfgenServiceUriLocal = new URI("http://localhost:8082/api");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        this.pdfGenServiceUri = pdfGenServiceUri;
     }
 
     public byte[] genererPdf(String oppsummeringHtml) {
         Response response;
-        if (unleash.isEnabled(BRUK_PDFGEN_LOCAL)) {
+        if (unleash.isEnabled(BRUK_PDFGEN)) {
             response = client
-                    .target(pdfgenServiceUriLocal)
-                    .path("v1/genpdf/html/kontantstotte")
-                    .request()
-                    .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
-                    .invoke();
-        } else if (unleash.isEnabled(BRUK_PDFGEN)) {
-            response = client
-                    .target(pdfgenServiceUri)
+                    .target(pdfGenServiceUri)
                     .path("v1/genpdf/html/kontantstotte")
                     .request()
                     .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
