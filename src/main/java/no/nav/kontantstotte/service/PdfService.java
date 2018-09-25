@@ -27,7 +27,7 @@ public class PdfService {
         this.client = client;
         this.pdfGeneratorServiceUri = pdfGeneratorServiceUri;
         try {
-            this.pdfgenServiceUri = new URI("http://pdf-gen-default/api");
+            this.pdfgenServiceUri = new URI("http://pdf-gen.default/api");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
