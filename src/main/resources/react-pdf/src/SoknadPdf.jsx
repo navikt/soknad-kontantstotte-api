@@ -28,10 +28,9 @@ const Uppercase = {
 const SoknadPdf = (props) => {
     return (
         <div style={wrapper}>
+            <NavIkon />
+
             <div style={container} >
-                <div style={ikon}>
-                    <NavIkon />
-                </div>
                 <h1 style={tittel}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
             </div>
 
