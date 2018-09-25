@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
 public class FeatureToggleConfig {
     private static final String APP_NAME_PROPERTY_NAME = "${APP_NAME}";
     private static final String UNLEASH_API_URL_PROPERTY_NAME = "${UNLEASH_API_URL}";
-    public static final String FASIT_ENVIRONMENT_NAME = "${FASIT_ENVIRONMENT_NAME}";
+    private static final String FASIT_ENVIRONMENT_NAME = "${FASIT_ENVIRONMENT_NAME}";
 
     @Bean
     public Unleash unleash(
@@ -26,11 +26,17 @@ public class FeatureToggleConfig {
                 .appName(appName)
                 .unleashAPI(unleashApiUrl)
                 .build();
+
         return new DefaultUnleash(config, strategies);
     }
 
     @Bean
     public Strategy isNotProd(@Value(FASIT_ENVIRONMENT_NAME) String env){
         return new IsNotProdStrategy(env);
+    }
+
+    @Bean
+    public Strategy byEnvironment(@Value(FASIT_ENVIRONMENT_NAME) String env){
+        return new ByEnvironmentStrategy(env);
     }
 }
