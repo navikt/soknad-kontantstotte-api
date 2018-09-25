@@ -8,3 +8,6 @@ no.nav.security.oidc:
 
 UNLEASH_API_URL: http://localhost
 APP_NAME: soknad-kontantstotte-api
+
+SOKNAD_PDF_GENERATOR_URL: http://localhost:8082/api
+SOKNAD_PDF_GEN_URL: http://localhost:8082/api
