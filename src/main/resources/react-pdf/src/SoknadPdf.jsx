@@ -42,7 +42,7 @@ function hentHTMLStringForOppsummering(soknad, tekster) {
             <style type="text/css"> 
                 @page   { margin: 12mm 1cm 2.5cm; } 
                 *       { box-sizing: border-box; } 
-                body    { font-family: Source Sans Pro, sans-serif; font-size: 10pt; line-height: 1.4em; margin: 0; color: #3e3832; } 
+                body    { font-family: ArialSystem, sans-serif; font-size: 10pt; line-height: 1.4em; margin: 0; color: #3e3832; } 
             </style>
             </head>
             <body>
