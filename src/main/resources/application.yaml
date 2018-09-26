@@ -17,3 +17,5 @@ logging:
     org.springframework: INFO
     org.glassfish: INFO
     no.nav: INFO
+
+SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://pdf-gen.default/api
