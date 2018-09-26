@@ -1,12 +1,24 @@
 const wrapper = {
-    alignItems: 'center',
+    padding: '0 5%',
 };
 
-const SideTittel = {
-    backgroundColor:'#c1b5d0',
-    margin:'20px 0 20px 0',
-    padding: '20px 0 20px 0',
-    textAlign: 'center'
+const container = {
+    backgroundColor: '#c1b5d0',
+    height: '60px',
+};
+
+const tittel = {
+    textTransform: 'uppercase',
+    textAlign: 'center',
+};
+
+const ikon = {
+    height: '32.25px',
+    width: '50px',
+    display: 'inline-block',
+    float: 'left',
+    paddingTop: '13.875px',
+    paddingLeft: '20px',
 };
 
 const Uppercase = {
@@ -16,8 +28,12 @@ const Uppercase = {
 const SoknadPdf = (props) => {
     return (
         <div style={wrapper}>
-            <div style={SideTittel}>
-                <h1 style={Uppercase}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
+
+            <div style={container} >
+                <div style={ikon}>
+                    <NavIkon />
+                </div>
+                <h1 style={tittel}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
             </div>
 
             <Personalia person={props.soknad.person} tekster={props.tekster}/>
