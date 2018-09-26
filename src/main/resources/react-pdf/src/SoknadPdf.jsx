@@ -31,7 +31,7 @@ const SoknadPdf = (props) => {
 
             <div style={container} >
                 <div style={ikon}>
-                    <NavIkon />
+                    <Test />
                 </div>
                 <h1 style={tittel}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
             </div>
