@@ -67,5 +67,5 @@ function hentHTMLStringForOppsummering(soknad, tekster) {
         </html>
 `;
 
-    return template
+    return template.toString();
 }
