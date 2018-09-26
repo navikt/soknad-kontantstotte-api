@@ -50,7 +50,7 @@ const SoknadPdf = (props) => {
 };
 
 function hentHTMLStringForOppsummering(soknad, tekster) {
-    var komponent = ReactDOMServer.renderToStaticMarkup(<SoknadPdf soknad={soknad} tekster={tekster}/>);
+    var komponent = ReactDOMServer.renderToStaticMarkup(<SoknadPdf soknad={soknad} tekster={tekster}/>).toString();
     const template = `
         <html>
             <head>
