@@ -2,6 +2,7 @@ package no.nav.kontantstotte.api.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.xpath.internal.Arg;
 import no.nav.kontantstotte.oppsummering.InnsendingService;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import org.glassfish.jersey.client.ClientConfig;
@@ -12,21 +13,23 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.context.support.StaticApplicationContext;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
+import java.time.LocalDateTime;
+
+import static java.time.LocalDateTime.now;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class InnsendingResourceTest extends JerseyTest {
 
@@ -50,7 +53,29 @@ public class InnsendingResourceTest extends JerseyTest {
     }
 
     @Test
-    public void at_innsending_av_soknad_er_gir_400_uten_bekreftelse() throws JsonProcessingException {
+    public void at_soknad_markeres_med_innsendingstidspunkt() throws JsonProcessingException {
+        when(innsendingService.sendInnSoknad(any(Soknad.class)))
+                .thenReturn(Response.ok().build());
+
+        Soknad soknadMedBekreftelse = new Soknad();
+        soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+
+        target().path("sendinn")
+                .request()
+                .post(Entity.entity(multipart(soknadMedBekreftelse), MULTIPART_FORM_DATA_TYPE));
+
+        ArgumentCaptor<Soknad> captor = ArgumentCaptor.forClass(Soknad.class);
+        verify(innsendingService).sendInnSoknad(captor.capture());
+
+        assertThat(captor.getValue().innsendingTimestamp).isBefore(now());
+        assertThat(captor.getValue().innsendingTimestamp).isAfter(now().minusMinutes(5));
+
+
+
+    }
+
+    @Test
+    public void at_innsending_av_soknad_er_gir_400_ved_manglende_bekreftelse() throws JsonProcessingException {
 
         Response response = target()
                 .path("sendinn")
