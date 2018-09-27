@@ -6,6 +6,7 @@ import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +35,7 @@ public class SokerResourceTest {
 
     @Test
     public void uthentingAvSokerinformasjon() {
-        WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
+        WebTarget target = ClientBuilder.newClient().register(LoggingFeature.class).target("http://localhost:" + port + contextPath);
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
         Response response = target.path("/soker")
                 .request(MediaType.APPLICATION_JSON_TYPE)

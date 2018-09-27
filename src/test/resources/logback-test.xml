@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="ROOT_LOG_LEVEL" value="INFO"/>
 
-    <include resource="logback-default-without-abac.xml"/>
+    <!-- Logger used for tests that don't requre spring boot -->
 
-    <appender name="stdout_json_with_filter"  class="no.nav.log.MaskingAppender">
-        <appender name="stdout_json_masked_with_filter" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
-        </appender>
-    </appender>
-    <appender name="stdout_simple" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- override spring base logging pattern -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%d [%-5level] [%thread] %logger{5} %replace(- [%X{consumerId}, %X{callId}, %X{userId}] ){'- \[, , \] ',''}- %m%n"/>
 
-        <encoder>
-            <pattern>${loggingPattern}</pattern>
-        </encoder>
-    </appender>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.glassfish" level="INFO"/>
+    <logger name="org.glassfish.jersey.logging.LoggingFeature" level="DEBUG"/>
+    <logger name="com.fasterxml" level="INFO"/>
+    <logger name="org.hibernate" level="INFO"/>
 
-    <root >
-        <!-- nais+local -->
-        <appender-ref ref="stdout_simple"/>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <root level="DEBUG">
     </root>
 
 </configuration>

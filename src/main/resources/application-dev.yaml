@@ -11,3 +11,11 @@ APP_NAME: soknad-kontantstotte-api
 
 SOKNAD_PDF_GENERATOR_URL: http://localhost:8082/api
 SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://localhost:8082/api
+
+logging:
+  level:
+    org.springframework: WARN
+    org.glassfish.jersey: WARN
+    org.glassfish.jersey.logging.LoggingFeature: DEBUG
+    com.fasterxml: WARN
+  config: classpath:logback-spring-test.xml
