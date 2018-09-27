@@ -2,10 +2,10 @@ package no.nav.kontantstotte.api.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xpath.internal.Arg;
 import no.nav.kontantstotte.oppsummering.InnsendingService;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -14,13 +14,12 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.context.support.StaticApplicationContext;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
-
-import java.time.LocalDateTime;
 
 import static java.time.LocalDateTime.now;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
@@ -32,6 +31,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class InnsendingResourceTest extends JerseyTest {
+
+    static {
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
+    }
 
     private InnsendingService innsendingService = mock(InnsendingService.class);
 
@@ -71,7 +75,6 @@ public class InnsendingResourceTest extends JerseyTest {
         assertThat(captor.getValue().innsendingTimestamp).isAfter(now().minusMinutes(5));
 
 
-
     }
 
     @Test
@@ -102,16 +105,22 @@ public class InnsendingResourceTest extends JerseyTest {
         staticApplicationContext.registerBean(InnsendingResource.class, () -> new InnsendingResource(innsendingService));
 
         forceSet(TestProperties.CONTAINER_PORT, "0"); // random port
+        enable(TestProperties.DUMP_ENTITY);
+        enable(TestProperties.LOG_TRAFFIC);
 
         return new ResourceConfig()
                 .register(InnsendingResource.class)
                 .register(MultiPartFeature.class)
+                .register(LoggingFeature.class)
+                .property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL, "INFO")
                 .property("contextConfig", staticApplicationContext); // Since spring/jersey integration is on CP, we need a dummy appctx
     }
 
     @Override
     protected void configureClient(ClientConfig config) {
-        config.register(MultiPartFeature.class);
+        config.register(MultiPartFeature.class)
+                .property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL, "INFO")
+                .register(LoggingFeature.class);
 
     }
 }

@@ -29,7 +29,7 @@ class FssInnsendingService implements InnsendingService {
 
     public Response sendInnSoknad(Soknad soknad) {
 
-        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), pdfService.genererPdf(soknad));
+        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), pdfService.genererPdf(soknad), soknad.innsendingTimestamp);
 
         return client.target(proxyServiceUri)
                 .path("soknad")
