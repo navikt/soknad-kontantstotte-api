@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.oppsummering.bolk;
+package no.nav.kontantstotte.oppsummering.v1.bolk;
 
 public class UtenlandskeYtelser {
     public String mottarYtelserFraUtland;

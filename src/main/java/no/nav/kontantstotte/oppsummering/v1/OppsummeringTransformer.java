@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.oppsummering;
+package no.nav.kontantstotte.oppsummering.v1;
 
 import jdk.nashorn.api.scripting.NashornScriptEngine;
 import no.nav.kontantstotte.tekst.Utf8Control;

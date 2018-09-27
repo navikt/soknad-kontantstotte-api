@@ -1,10 +1,15 @@
 package no.nav.kontantstotte.api.rest;
 
-import no.nav.kontantstotte.oppsummering.OppsummeringTransformer;
-import no.nav.kontantstotte.oppsummering.Soknad;
+import no.finn.unleash.Unleash;
+import no.nav.kontantstotte.oppsummering.v1.OppsummeringTransformer;
+import no.nav.kontantstotte.oppsummering.v1.Soknad;
+import no.nav.kontantstotte.oppsummering.v2.SoknadOppsummering;
+import no.nav.kontantstotte.oppsummering.v2.SoknadTilOppsummering;
+import no.nav.kontantstotte.service.OppsummeringService;
 import no.nav.kontantstotte.service.SoknadDto;
 import no.nav.kontantstotte.service.InnsendingService;
 import no.nav.kontantstotte.service.PdfService;
+import no.nav.kontantstotte.tekst.TekstProvider;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
@@ -28,7 +33,10 @@ import static java.time.LocalDateTime.now;
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class InnsendingResource {
 
+    public static final String KONTANTSTOTTE_NY_OPPSUMMERING = "kontantstotte.bolk.oppsummering";
+
     private final PdfService pdfService;
+    private final OppsummeringService oppsummeringService;
 
     private final InnsendingService innsendingService;
 
@@ -38,11 +46,22 @@ public class InnsendingResource {
 
     private final Logger logger = LoggerFactory.getLogger(InnsendingResource.class);
 
+    private final Unleash unleash;
+    private final TeksterResource teksterResource;
+
     @Inject
-    public InnsendingResource(PdfService pdfService, InnsendingService innsendingService, OppsummeringTransformer oppsummeringTransformer) {
+    public InnsendingResource(PdfService pdfService,
+                              OppsummeringService oppsummeringService,
+                              InnsendingService innsendingService,
+                              TeksterResource teksterResource,
+                              OppsummeringTransformer oppsummeringTransformer,
+                              Unleash unleash) {
         this.pdfService = pdfService;
+        this.oppsummeringService = oppsummeringService;
         this.innsendingService = innsendingService;
+        this.teksterResource = teksterResource;
         this.oppsummeringTransformer = oppsummeringTransformer;
+        this.unleash = unleash;
     }
 
     @POST
@@ -52,8 +71,15 @@ public class InnsendingResource {
         soknad.person.fnr = hentFnrFraToken();
 
         if(soknad.erGyldig()) {
-            String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
-            byte[] soknadPdf = pdfService.genererPdf(oppsummeringHtml);
+            byte[] soknadPdf;
+            if(unleash.isEnabled(KONTANTSTOTTE_NY_OPPSUMMERING)){
+                SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(soknad, teksterResource.tekster(soknad.sprak));
+                byte[] bytes = oppsummeringService.genererHtml(oppsummering);
+                soknadPdf = pdfService.genererPdf(bytes.toString());
+            }else {
+                String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
+                soknadPdf = pdfService.genererPdf(oppsummeringHtml);
+            }
             SoknadDto soknadDto = new SoknadDto(soknad.person.fnr, soknadPdf);
             return innsendingService.sendInnSoknad(soknadDto);
         } else {

@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.config;
 
 import no.nav.kontantstotte.config.toggle.FeatureToggleConfig;
-import no.nav.kontantstotte.oppsummering.OppsummeringTransformer;
+import no.nav.kontantstotte.oppsummering.v1.OppsummeringTransformer;
 import no.nav.kontantstotte.service.ServiceConfiguration;
 import no.nav.log.LogFilter;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;

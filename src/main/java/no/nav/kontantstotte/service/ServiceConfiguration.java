@@ -57,6 +57,14 @@ public class ServiceConfiguration {
     }
 
     @Bean
+    public OppsummeringService oppsummeringServiceRetriever(
+            @Named("client") Client client,
+            @Value("${SOKNAD_OPPSUMMERING_GENERATOR_URL}") URI url) {
+
+        return new OppsummeringService(client, url);
+    }
+
+    @Bean
     public InnsendingService innsendingServiceRetriever(
             @Named("proxyClient") Client client,
             @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI target) {

@@ -1,6 +1,6 @@
-package no.nav.kontantstotte.oppsummering;
+package no.nav.kontantstotte.oppsummering.v1;
 
-import no.nav.kontantstotte.oppsummering.bolk.*;
+import no.nav.kontantstotte.oppsummering.v1.bolk.*;
 
 import java.time.LocalDateTime;
 
