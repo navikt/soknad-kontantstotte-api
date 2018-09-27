@@ -23,8 +23,9 @@ const SoknadPdf = (props) => {
             <Personalia person={props.soknad.person} tekster={props.tekster}/>
             <SokerKrav kravTilSoker={props.soknad.kravTilSoker} tekster={props.tekster}/>
             <Barn mineBarn={props.soknad.mineBarn} tekster={props.tekster}/>
-            <Familieforhold familieforhold={props.soknad.familieforhold} tekster={props.tekster}/>
             <Barnehageplass barnehageplass={props.soknad.barnehageplass} tekster={props.tekster}/>
+            <Familieforhold familieforhold={props.soknad.familieforhold} tekster={props.tekster}/>
+            <TilknytningTilUtland tekster={props.tekster} tilknytningTilUtland={props.soknad.tilknytningTilUtland} familieforhold={props.soknad.familieforhold} />
             <ArbeidIUtlandet arbeidIUtlandet={props.soknad.arbeidIUtlandet} familieforhold={props.soknad.familieforhold} tekster={props.tekster}/>
             <UtenlandskeYtelser familieforhold={props.soknad.familieforhold} utenlandskeYtelser={props.soknad.utenlandskeYtelser} tekster={props.tekster}/>
             <UtenlandskKontantstotte utenlandskKontantstotte={props.soknad.utenlandskKontantstotte} tekster={props.tekster}/>
@@ -42,7 +43,7 @@ function hentHTMLStringForOppsummering(soknad, tekster) {
             <style type="text/css"> 
                 @page   { margin: 12mm 1cm 2.5cm; } 
                 *       { box-sizing: border-box; } 
-                body    { font-family: Source Sans Pro, sans-serif; font-size: 10pt; line-height: 1.4em; margin: 0; color: #3e3832; } 
+                body    { font-family: ArialSystem, sans-serif; font-size: 10pt; line-height: 1.4em; margin: 0; color: #3e3832; } 
             </style>
             </head>
             <body>
