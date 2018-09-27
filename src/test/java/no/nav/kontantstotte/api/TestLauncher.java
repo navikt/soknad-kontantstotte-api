@@ -8,20 +8,16 @@ import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
-import static no.nav.kontantstotte.service.PdfService.BRUK_PDFGEN;
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_PDFGEN;
 
-@SpringBootApplication
-@ComponentScan({ "no.nav.kontantstotte.api" })
-@EnableAutoConfiguration(exclude = ErrorMvcAutoConfiguration.class)
+@SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 @Import(ApplicationConfig.class)
 public class TestLauncher {
 

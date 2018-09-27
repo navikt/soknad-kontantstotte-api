@@ -1,22 +1,22 @@
 package no.nav.kontantstotte.oppsummering.innsending;
 
-import no.nav.kontantstotte.oppsummering.Soknad;
-
 import no.finn.unleash.Unleash;
+import no.nav.kontantstotte.oppsummering.Soknad;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_PDFGEN;
+
 class PdfService {
-    public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
+
 
     @Autowired
     private Unleash unleash;

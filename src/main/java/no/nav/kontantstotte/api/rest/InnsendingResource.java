@@ -33,12 +33,13 @@ public class InnsendingResource {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
-        soknad.markerInnsendingsTidspunkt();
 
         if (!soknad.erGyldig()) {
             logger.warn("Noen har forsøkt å sende inn en ugyldig søknad.");
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+
+        soknad.markerInnsendingsTidspunkt();
 
         return innsendingService.sendInnSoknad(soknad);
     }
