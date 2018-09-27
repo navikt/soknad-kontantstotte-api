@@ -75,8 +75,8 @@ public class InnsendingResource {
             if(unleash.isEnabled(KONTANTSTOTTE_NY_OPPSUMMERING)){
                 SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(soknad, teksterResource.tekster(soknad.sprak));
                 byte[] bytes = oppsummeringService.genererHtml(oppsummering);
-                soknadPdf = pdfService.genererPdf(bytes.toString());
-            }else {
+                soknadPdf = pdfService.genererPdf(bytes);
+            } else {
                 String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
                 soknadPdf = pdfService.genererPdf(oppsummeringHtml);
             }

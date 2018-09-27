@@ -30,6 +30,27 @@ public class PdfService {
         this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
     }
 
+    public byte[] genererPdf(byte[] oppsummeringHtml) {
+        Response response;
+        if (unleash.isEnabled(BRUK_PDFGEN)) {
+            response = client
+                    .target(pdfSvgSupportGeneratorUrl)
+                    .path("v1/genpdf/html/kontantstotte")
+                    .request()
+                    .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
+                    .invoke();
+        } else {
+            response = client
+                    .target(pdfGeneratorUri)
+                    .path("convert")
+                    .request()
+                    .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
+                    .invoke();
+        }
+
+        return response.readEntity(byte[].class);
+    }
+
     public byte[] genererPdf(String oppsummeringHtml) {
         Response response;
         if (unleash.isEnabled(BRUK_PDFGEN)) {

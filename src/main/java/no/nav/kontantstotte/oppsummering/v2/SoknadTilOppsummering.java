@@ -23,7 +23,7 @@ public class SoknadTilOppsummering {
         Bolk barneBolk = mapBarn(mineBarn, tekster);
 
 
-        return new SoknadOppsummering(soknad, Arrays.asList(barneBolk));
+        return new SoknadOppsummering(soknad, Arrays.asList(barneBolk), tekster);
     }
 
     public Bolk mapBarn(Barn barn, Map<String, String> tekster) {

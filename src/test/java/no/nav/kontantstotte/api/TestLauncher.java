@@ -17,6 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
+import static no.nav.kontantstotte.api.rest.InnsendingResource.KONTANTSTOTTE_NY_OPPSUMMERING;
 import static no.nav.kontantstotte.service.PdfService.BRUK_PDFGEN;
 
 @SpringBootApplication
@@ -43,6 +44,7 @@ public class TestLauncher {
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();
         fakeUnleash.enable(BRUK_PDFGEN);
+        fakeUnleash.enable(KONTANTSTOTTE_NY_OPPSUMMERING);
 
         return fakeUnleash;
     }

@@ -22,7 +22,7 @@ public class OppsummeringService {
     public byte[] genererHtml(SoknadOppsummering oppsummering) {
         Response response = client
                 .target(url)
-                .path("convert")
+                .path("generateHtml")
                 .request()
                 .buildPost(Entity.entity(oppsummering, MediaType.APPLICATION_JSON_TYPE))
                 .invoke();
