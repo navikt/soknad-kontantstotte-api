@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.oppsummering.v1;
 
+import no.nav.kontantstotte.oppsummering.bolk.TilknytningTilUtland;
 import no.nav.kontantstotte.oppsummering.v1.bolk.*;
 
 import java.time.LocalDateTime;
