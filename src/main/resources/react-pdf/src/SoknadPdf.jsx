@@ -1,7 +1,5 @@
 const wrapper = {
     alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column'
 };
 
 const SideTittel = {

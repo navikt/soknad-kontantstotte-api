@@ -26,6 +26,9 @@ prometheus:
   path: /actuator/prometheus
 fasitResources:
   used:
+# Unleash
+  - alias: unleash-api
+    resourceType: restservice
 # Appdynamics
   - alias: appdynamics
     resourceType: applicationproperties
