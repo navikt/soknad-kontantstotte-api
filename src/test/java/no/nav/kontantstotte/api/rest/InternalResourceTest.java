@@ -23,7 +23,7 @@ import static org.hamcrest.core.Is.is;
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = { ApplicationConfig.class, TokenGeneratorConfiguration.class})
-public class StatusResourceTest {
+public class InternalResourceTest {
 
     @Value("${local.server.port}")
     private int port;
@@ -32,26 +32,13 @@ public class StatusResourceTest {
     private String contextPath;
 
     @Test
-    public void skalGi200MedGyldigToken() {
-
+    public void skalGi200() {
         WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
-        SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT("12345678911");
-        Response response = target.path("/status/ping")
+        Response response = target.path("/internal/isAlive")
                 .request()
-                .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
                 .get();
 
         assertThat(response.getStatus(), is(equalTo(Response.Status.OK.getStatusCode())));
-    }
-
-    @Test
-    public void skalGi401UtenToken() {
-        WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
-        Response response = target.path("/status/ping")
-                .request()
-                .get();
-
-        assertThat(response.getStatus(), is(equalTo(Response.Status.UNAUTHORIZED.getStatusCode())));
     }
 
 }

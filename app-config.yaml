@@ -15,10 +15,10 @@ resources:
 healthcheck:
   liveness:
     initialDelay: 20
-    path: /api/status/isAlive
+    path: /api/internal/isAlive
   readiness:
     initialDelay: 20
-    path: /api/status/isAlive
+    path: /api/internal/isAlive
 ingress:
   enabled: true
 prometheus:

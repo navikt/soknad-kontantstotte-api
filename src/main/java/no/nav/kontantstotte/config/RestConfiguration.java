@@ -16,7 +16,7 @@ public class RestConfiguration extends ResourceConfig {
         register(JacksonFeature.class);
         register(MultiPartFeature.class);
         // Resources
-        register(StatusResource.class);
+        register(InternalResource.class);
         register(TeksterResource.class);
         register(PersonResource.class);
         register(SokerResource.class);
