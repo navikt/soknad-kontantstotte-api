@@ -30,7 +30,7 @@ public class InnsendingConfiguration {
             @Named("proxyClient") Client client,
             @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI target,
             PdfService pdfService) {
-        return new FssInnsendingService(client, target, pdfService);
+        return new ArkivInnsendingService(client, target, pdfService);
     }
 
     @Bean

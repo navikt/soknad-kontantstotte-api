@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
-class FssInnsendingService implements InnsendingService {
+class ArkivInnsendingService implements InnsendingService {
 
     private static final String SELVBETJENING = "selvbetjening";
 
@@ -21,7 +21,7 @@ class FssInnsendingService implements InnsendingService {
 
     private final PdfService pdfService;
 
-    FssInnsendingService(Client client, URI proxyServiceUri, PdfService pdfService) {
+    ArkivInnsendingService(Client client, URI proxyServiceUri, PdfService pdfService) {
         this.client = client;
         this.proxyServiceUri = proxyServiceUri;
         this.pdfService = pdfService;
