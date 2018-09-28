@@ -18,7 +18,6 @@ public class RestConfiguration extends ResourceConfig {
         // Resources
         register(InternalResource.class);
         register(TeksterResource.class);
-        register(PersonResource.class);
         register(SokerResource.class);
         register(InnsendingResource.class);
         // Filters
