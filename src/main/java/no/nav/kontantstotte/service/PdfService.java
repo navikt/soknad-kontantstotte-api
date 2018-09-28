@@ -14,15 +14,10 @@ import java.io.OutputStream;
 import java.net.URI;
 
 public class PdfService {
-    public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
-
     private URI pdfGeneratorUri;
     private URI pdfSvgSupportGeneratorUrl;
 
     private final Client client;
-
-    @Autowired
-    private Unleash unleash;
 
     public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl) {
         this.client = client;
@@ -30,44 +25,24 @@ public class PdfService {
         this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
     }
 
-    public byte[] genererPdf(byte[] oppsummeringHtml) {
-        Response response;
-        if (unleash.isEnabled(BRUK_PDFGEN)) {
-            response = client
+    public byte[] genererNyPdf(byte[] oppsummeringHtml) {
+        Response response = client
                     .target(pdfSvgSupportGeneratorUrl)
                     .path("v1/genpdf/html/kontantstotte")
                     .request()
                     .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
                     .invoke();
-        } else {
-            response = client
-                    .target(pdfGeneratorUri)
-                    .path("convert")
-                    .request()
-                    .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
-                    .invoke();
-        }
 
         return response.readEntity(byte[].class);
     }
 
-    public byte[] genererPdf(String oppsummeringHtml) {
-        Response response;
-        if (unleash.isEnabled(BRUK_PDFGEN)) {
-            response = client
-                    .target(pdfSvgSupportGeneratorUrl)
-                    .path("v1/genpdf/html/kontantstotte")
-                    .request()
-                    .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
-                    .invoke();
-        } else {
-            response = client
+    public byte[] genererGammelPdf(String oppsummeringHtml) {
+        Response response = client
                     .target(pdfGeneratorUri)
                     .path("convert")
                     .request()
                     .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
                     .invoke();
-        }
 
         return response.readEntity(byte[].class);
     }

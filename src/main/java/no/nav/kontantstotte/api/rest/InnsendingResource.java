@@ -33,7 +33,7 @@ import static java.time.LocalDateTime.now;
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class InnsendingResource {
 
-    public static final String KONTANTSTOTTE_NY_OPPSUMMERING = "kontantstotte.bolk.oppsummering";
+    public static final String KONTANTSTOTTE_NY_PDF= "kontantstotte.nypdf";
 
     private final PdfService pdfService;
     private final OppsummeringService oppsummeringService;
@@ -72,13 +72,13 @@ public class InnsendingResource {
 
         if(soknad.erGyldig()) {
             byte[] soknadPdf;
-            if(unleash.isEnabled(KONTANTSTOTTE_NY_OPPSUMMERING)){
+            if(unleash.isEnabled(KONTANTSTOTTE_NY_PDF)){
                 SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(soknad, teksterResource.tekster(soknad.sprak));
                 byte[] bytes = oppsummeringService.genererHtml(oppsummering);
-                soknadPdf = pdfService.genererPdf(bytes);
+                soknadPdf = pdfService.genererNyPdf(bytes);
             } else {
                 String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
-                soknadPdf = pdfService.genererPdf(oppsummeringHtml);
+                soknadPdf = pdfService.genererGammelPdf(oppsummeringHtml);
             }
             SoknadDto soknadDto = new SoknadDto(soknad.person.fnr, soknadPdf);
             return innsendingService.sendInnSoknad(soknadDto);

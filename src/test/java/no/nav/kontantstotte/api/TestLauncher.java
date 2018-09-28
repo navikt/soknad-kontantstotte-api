@@ -17,8 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
-import static no.nav.kontantstotte.api.rest.InnsendingResource.KONTANTSTOTTE_NY_OPPSUMMERING;
-import static no.nav.kontantstotte.service.PdfService.BRUK_PDFGEN;
+import static no.nav.kontantstotte.api.rest.InnsendingResource.KONTANTSTOTTE_NY_PDF;
 
 @SpringBootApplication
 @ComponentScan({ "no.nav.kontantstotte.api" })
@@ -43,8 +42,7 @@ public class TestLauncher {
     @Bean
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();
-        fakeUnleash.enable(BRUK_PDFGEN);
-        fakeUnleash.enable(KONTANTSTOTTE_NY_OPPSUMMERING);
+        fakeUnleash.enable(KONTANTSTOTTE_NY_PDF);
 
         return fakeUnleash;
     }
