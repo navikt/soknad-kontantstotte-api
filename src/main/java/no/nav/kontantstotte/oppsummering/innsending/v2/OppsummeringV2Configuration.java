@@ -16,7 +16,7 @@ public class OppsummeringV2Configuration {
     public OppsummeringService oppsummeringService(
             HtmlOppsummeringService htmlOppsummeringService,
             PdfGenService pdfService) {
-        return new NodeOppsummeringService(pdfService);
+        return new NodeOppsummeringService(htmlOppsummeringService, pdfService);
     }
 
 

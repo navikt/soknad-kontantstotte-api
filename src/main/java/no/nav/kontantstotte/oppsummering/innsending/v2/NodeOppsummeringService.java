@@ -13,18 +13,20 @@ class NodeOppsummeringService implements OppsummeringService {
 
 
     private final PdfGenService pdfService;
+    private final HtmlOppsummeringService htmlOppsummeringService;
 
-    public NodeOppsummeringService(PdfGenService pdfService) {
+    public NodeOppsummeringService(HtmlOppsummeringService htmlOppsummeringService, PdfGenService pdfService) {
+        this.htmlOppsummeringService = htmlOppsummeringService;
         this.pdfService = pdfService;
+
     }
 
     @Override
     public byte[] genererOppsummering(Soknad soknad) {
         Map<String, String> tekster = new TeksterResource().tekster(soknad.sprak);
         SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(soknad, tekster);
-
-        byte[] bytes = soknad.toString().getBytes();
-        return pdfService.genererPdf(bytes);
+        byte[] htmlBytes = htmlOppsummeringService.genererHtml(oppsummering);
+        return pdfService.genererPdf(htmlBytes);
 
 
     }
