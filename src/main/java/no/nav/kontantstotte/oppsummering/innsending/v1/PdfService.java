@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.oppsummering.innsending;
+package no.nav.kontantstotte.oppsummering.innsending.v1;
 
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.Soknad;

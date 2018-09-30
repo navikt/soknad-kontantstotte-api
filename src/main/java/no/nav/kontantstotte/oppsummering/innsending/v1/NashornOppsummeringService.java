@@ -1,6 +1,7 @@
-package no.nav.kontantstotte.oppsummering.innsending;
+package no.nav.kontantstotte.oppsummering.innsending.v1;
 
 import no.nav.kontantstotte.oppsummering.Soknad;
+import no.nav.kontantstotte.oppsummering.innsending.OppsummeringService;
 
 class NashornOppsummeringService implements OppsummeringService {
 

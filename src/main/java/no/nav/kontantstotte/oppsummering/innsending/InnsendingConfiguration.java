@@ -2,6 +2,7 @@ package no.nav.kontantstotte.oppsummering.innsending;
 
 import no.nav.kontantstotte.client.RestClientConfigration;
 import no.nav.kontantstotte.oppsummering.InnsendingService;
+import no.nav.kontantstotte.oppsummering.innsending.v1.OppsummeringV1Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,25 +13,9 @@ import javax.ws.rs.client.Client;
 import java.net.URI;
 
 @Configuration
-@Import(RestClientConfigration.class)
+@Import({RestClientConfigration.class, OppsummeringV1Configuration.class})
 public class InnsendingConfiguration {
 
-    @Bean
-    public PdfService pdfServiceRetriever(
-            @Named("client") Client client,
-            @Value("${SOKNAD_PDF_GENERATOR_URL}") URI pdfGeneratorUrl,
-            @Value("${SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl
-    ) {
-
-        return new PdfService(client, pdfGeneratorUrl, pdfSvgSupportGeneratorUrl);
-    }
-
-    @Bean
-    public OppsummeringService oppsummeringService(
-            OppsummeringTransformer oppsummeringTransformer,
-            PdfService pdfService) {
-        return new NashornOppsummeringService(pdfService, oppsummeringTransformer);
-    }
 
     @Bean
     public InnsendingService innsendingServiceRetriever(
@@ -39,8 +24,5 @@ public class InnsendingConfiguration {
             OppsummeringService oppsummeringService) {
         return new ArkivInnsendingService(client, target, oppsummeringService);
     }
-
-    @Bean
-    public OppsummeringTransformer oppsummeringTransformerRetriever() { return new OppsummeringTransformer(); }
 
 }
