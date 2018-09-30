@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Import;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import java.net.URI;
-import java.util.List;
 
 @Configuration
 @Import(RestClientConfigration.class)
@@ -30,7 +29,7 @@ public class InnsendingConfiguration {
     public OppsummeringService oppsummeringService(
             OppsummeringTransformer oppsummeringTransformer,
             PdfService pdfService) {
-        return new OppsummeringService(pdfService, oppsummeringTransformer);
+        return new NashornOppsummeringService(pdfService, oppsummeringTransformer);
     }
 
     @Bean
