@@ -14,6 +14,7 @@ public class OppsummeringV2Configuration {
 
     @Bean("v2")
     public OppsummeringService oppsummeringService(
+            HtmlOppsummeringService htmlOppsummeringService,
             PdfGenService pdfService) {
         return new NodeOppsummeringService(pdfService);
     }
@@ -26,6 +27,15 @@ public class OppsummeringV2Configuration {
     ) {
 
         return new PdfGenService(client, pdfSvgSupportGeneratorUrl);
+    }
+
+    @Bean
+    public HtmlOppsummeringService htmlOppsummeringService(
+            @Named("client") Client client,
+            @Value("${SOKNAD_OPPSUMMERING_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl
+    ) {
+
+        return new HtmlOppsummeringService(client, pdfSvgSupportGeneratorUrl);
     }
 
 }

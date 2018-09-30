@@ -19,3 +19,4 @@ logging:
     no.nav: INFO
 
 SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://pdf-gen.default/api
+SOKNAD_OPPSUMMERING_GENERATOR_URL: http://soknad-html-generator/api
