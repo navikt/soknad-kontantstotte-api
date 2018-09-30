@@ -26,25 +26,21 @@ class PdfService {
 
     private final Client client;
 
-    private final OppsummeringTransformer oppsummeringTransformer;
 
-    public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl, OppsummeringTransformer oppsummeringTransformer) {
+    public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl) {
         this.client = client;
         this.pdfGeneratorUri = pdfGeneratorUri;
         this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
-        this.oppsummeringTransformer = oppsummeringTransformer;
     }
 
-    public byte[] genererPdf(Soknad soknad) {
-
-        String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
+    public byte[] genererPdf(String html) {
 
         if (unleash.isEnabled(BRUK_PDFGEN)) {
             return client
                     .target(pdfSvgSupportGeneratorUrl)
                     .path("v1/genpdf/html/kontantstotte")
                     .request()
-                    .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
+                    .buildPost(Entity.entity(html, "text/html; charset=utf-8"))
                     .invoke()
                     .readEntity(byte[].class);
         } else {
@@ -52,7 +48,7 @@ class PdfService {
                     .target(pdfGeneratorUri)
                     .path("convert")
                     .request()
-                    .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
+                    .buildPost(Entity.entity(html, MediaType.TEXT_HTML))
                     .invoke()
                     .readEntity(byte[].class);
         }

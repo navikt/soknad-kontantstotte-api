@@ -19,17 +19,17 @@ class ArkivInnsendingService implements InnsendingService {
 
     private final Client client;
 
-    private final PdfService pdfService;
+    private final OppsummeringService oppsummeringService;
 
-    ArkivInnsendingService(Client client, URI proxyServiceUri, PdfService pdfService) {
+    ArkivInnsendingService(Client client, URI proxyServiceUri, OppsummeringService oppsummeringService) {
         this.client = client;
         this.proxyServiceUri = proxyServiceUri;
-        this.pdfService = pdfService;
+        this.oppsummeringService = oppsummeringService;
     }
 
     public Response sendInnSoknad(Soknad soknad) {
 
-        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), pdfService.genererPdf(soknad), soknad.innsendingTimestamp);
+        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringService.genererOppsummering(soknad), soknad.innsendingTimestamp);
 
         return client.target(proxyServiceUri)
                 .path("soknad")

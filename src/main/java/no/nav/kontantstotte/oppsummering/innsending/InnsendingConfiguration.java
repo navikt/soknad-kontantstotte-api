@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Import;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import java.net.URI;
+import java.util.List;
 
 @Configuration
 @Import(RestClientConfigration.class)
@@ -19,18 +20,25 @@ public class InnsendingConfiguration {
     public PdfService pdfServiceRetriever(
             @Named("client") Client client,
             @Value("${SOKNAD_PDF_GENERATOR_URL}") URI pdfGeneratorUrl,
-            @Value("${SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl,
-            OppsummeringTransformer oppsummeringTransformer) {
+            @Value("${SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl
+    ) {
 
-        return new PdfService(client, pdfGeneratorUrl, pdfSvgSupportGeneratorUrl, oppsummeringTransformer);
+        return new PdfService(client, pdfGeneratorUrl, pdfSvgSupportGeneratorUrl);
+    }
+
+    @Bean
+    public OppsummeringService oppsummeringService(
+            OppsummeringTransformer oppsummeringTransformer,
+            PdfService pdfService) {
+        return new OppsummeringService(pdfService, oppsummeringTransformer);
     }
 
     @Bean
     public InnsendingService innsendingServiceRetriever(
             @Named("proxyClient") Client client,
             @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI target,
-            PdfService pdfService) {
-        return new ArkivInnsendingService(client, target, pdfService);
+            OppsummeringService oppsummeringService) {
+        return new ArkivInnsendingService(client, target, oppsummeringService);
     }
 
     @Bean
