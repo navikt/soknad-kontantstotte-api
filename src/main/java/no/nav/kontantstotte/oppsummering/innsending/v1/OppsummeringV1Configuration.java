@@ -13,22 +13,21 @@ import java.net.URI;
 public class OppsummeringV1Configuration {
 
     @Bean
+    public PdfService pdfServiceRetriever(
+            @Named("client") Client client,
+            @Value("${SOKNAD_PDF_GENERATOR_URL}") URI pdfGeneratorUrl,
+            @Value("${SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl
+    ) {
+        return new PdfService(client, pdfGeneratorUrl, pdfSvgSupportGeneratorUrl);
+    }
+
+    @Bean("v1")
     public OppsummeringService oppsummeringService(
             OppsummeringTransformer oppsummeringTransformer,
             PdfService pdfService) {
         return new NashornOppsummeringService(pdfService, oppsummeringTransformer);
     }
 
-
-    @Bean
-    public PdfService pdfServiceRetriever(
-            @Named("client") Client client,
-            @Value("${SOKNAD_PDF_GENERATOR_URL}") URI pdfGeneratorUrl,
-            @Value("${SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl
-    ) {
-
-        return new PdfService(client, pdfGeneratorUrl, pdfSvgSupportGeneratorUrl);
-    }
 
     @Bean
     public OppsummeringTransformer oppsummeringTransformerRetriever() { return new OppsummeringTransformer(); }
