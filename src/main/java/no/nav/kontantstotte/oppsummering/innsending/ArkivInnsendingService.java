@@ -15,7 +15,7 @@ import java.net.URI;
 class ArkivInnsendingService implements InnsendingService {
 
     private static final String SELVBETJENING = "selvbetjening";
-    public static final String KONTANTSTOTTE_NY_OPPSUMMERING = "kontantstotte.bolk.oppsummering\n";
+    public static final String KONTANTSTOTTE_NY_OPPSUMMERING = "kontantstotte.bolk.oppsummering";
     private final Unleash unleash;
 
     private URI proxyServiceUri;
