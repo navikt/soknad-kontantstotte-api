@@ -18,19 +18,18 @@ import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_PDFGEN
 class PdfService {
 
 
-    @Autowired
-    private Unleash unleash;
-
+    private final Unleash unleash;
     private URI pdfGeneratorUri;
     private URI pdfSvgSupportGeneratorUrl;
 
     private final Client client;
 
 
-    public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl) {
+    public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl, Unleash unleash) {
         this.client = client;
         this.pdfGeneratorUri = pdfGeneratorUri;
         this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
+        this.unleash = unleash;
     }
 
     public byte[] genererPdf(String html) {
