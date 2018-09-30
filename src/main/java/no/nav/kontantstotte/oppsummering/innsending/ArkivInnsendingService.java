@@ -15,7 +15,7 @@ import java.net.URI;
 class ArkivInnsendingService implements InnsendingService {
 
     private static final String SELVBETJENING = "selvbetjening";
-    public static final String KONTANTSTOTTE_NY_PDF= "kontantstotte.nypdf";
+    public static final String KONTANTSTOTTE_NY_OPPSUMMERING = "kontantstotte.bolk.oppsummering\n";
     private final Unleash unleash;
 
     private URI proxyServiceUri;
@@ -42,7 +42,7 @@ class ArkivInnsendingService implements InnsendingService {
     public Response sendInnSoknad(Soknad soknad) {
 
         OppsummeringService oppsummeringService;
-        if(unleash.isEnabled(KONTANTSTOTTE_NY_PDF)){
+        if(unleash.isEnabled(KONTANTSTOTTE_NY_OPPSUMMERING)){
             oppsummeringService =this.oppsummeringServiceV2;
         }else{
             oppsummeringService =this.oppsummeringServiceV1;
