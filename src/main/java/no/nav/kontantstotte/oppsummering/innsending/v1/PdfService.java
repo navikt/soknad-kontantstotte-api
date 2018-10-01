@@ -32,7 +32,7 @@ class PdfService {
         this.unleash = unleash;
     }
 
-    byte[] genererPdf(String html) {
+    public byte[] genererPdf(String html) {
 
         if (unleash.isEnabled(BRUK_PDFGEN)) {
             return client
