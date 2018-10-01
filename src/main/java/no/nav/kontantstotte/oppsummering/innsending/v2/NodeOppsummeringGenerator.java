@@ -2,20 +2,19 @@ package no.nav.kontantstotte.oppsummering.innsending.v2;
 
 import no.nav.kontantstotte.api.rest.TeksterResource;
 import no.nav.kontantstotte.oppsummering.Soknad;
-import no.nav.kontantstotte.oppsummering.innsending.OppsummeringService;
+import no.nav.kontantstotte.oppsummering.innsending.OppsummeringGenerator;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadOppsummering;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering;
-import no.nav.kontantstotte.tekst.TekstProvider;
 
 import java.util.Map;
 
-class NodeOppsummeringService implements OppsummeringService {
+class NodeOppsummeringGenerator implements OppsummeringGenerator {
 
 
     private final PdfGenService pdfService;
     private final HtmlOppsummeringService htmlOppsummeringService;
 
-    public NodeOppsummeringService(HtmlOppsummeringService htmlOppsummeringService, PdfGenService pdfService) {
+    public NodeOppsummeringGenerator(HtmlOppsummeringService htmlOppsummeringService, PdfGenService pdfService) {
         this.htmlOppsummeringService = htmlOppsummeringService;
         this.pdfService = pdfService;
 

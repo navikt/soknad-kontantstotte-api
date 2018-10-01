@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.oppsummering.innsending.v1;
 
 import no.finn.unleash.Unleash;
-import no.nav.kontantstotte.oppsummering.innsending.OppsummeringService;
+import no.nav.kontantstotte.oppsummering.innsending.OppsummeringGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +24,10 @@ public class OppsummeringV1Configuration {
     }
 
     @Bean("v1")
-    public OppsummeringService oppsummeringService(
+    public OppsummeringGenerator oppsummeringService(
             OppsummeringTransformer oppsummeringTransformer,
             PdfService pdfService) {
-        return new NashornOppsummeringService(pdfService, oppsummeringTransformer);
+        return new NashornOppsummeringGenerator(pdfService, oppsummeringTransformer);
     }
 
 

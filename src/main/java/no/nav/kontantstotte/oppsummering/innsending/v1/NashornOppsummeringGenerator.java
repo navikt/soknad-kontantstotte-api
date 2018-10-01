@@ -1,16 +1,16 @@
 package no.nav.kontantstotte.oppsummering.innsending.v1;
 
 import no.nav.kontantstotte.oppsummering.Soknad;
-import no.nav.kontantstotte.oppsummering.innsending.OppsummeringService;
+import no.nav.kontantstotte.oppsummering.innsending.OppsummeringGenerator;
 
-class NashornOppsummeringService implements OppsummeringService {
+class NashornOppsummeringGenerator implements OppsummeringGenerator {
 
 
     private final PdfService pdfService;
 
     private final OppsummeringTransformer oppsummeringTransformer;
 
-    public NashornOppsummeringService(PdfService pdfService, OppsummeringTransformer oppsummeringTransformer) {
+    public NashornOppsummeringGenerator(PdfService pdfService, OppsummeringTransformer oppsummeringTransformer) {
         this.pdfService = pdfService;
         this.oppsummeringTransformer = oppsummeringTransformer;
     }

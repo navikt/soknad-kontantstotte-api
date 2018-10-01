@@ -26,13 +26,13 @@ public class InnsendingConfiguration {
     public InnsendingService innsendingServiceRetriever(
             @Named("proxyClient") Client client,
             @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI target,
-            @Named("v1") OppsummeringService oppsummeringServiceV1,
-            @Named("v2") OppsummeringService oppsummeringServiceV2,
+            @Named("v1") OppsummeringGenerator oppsummeringGeneratorV1,
+            @Named("v2") OppsummeringGenerator oppsummeringGeneratorV2,
             Unleash unleash) {
         return new ArkivInnsendingService(client,
                 target,
-                oppsummeringServiceV1,
-                oppsummeringServiceV2,
+                oppsummeringGeneratorV1,
+                oppsummeringGeneratorV2,
                 unleash);
     }
 

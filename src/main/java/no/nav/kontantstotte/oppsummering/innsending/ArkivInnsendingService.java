@@ -23,33 +23,33 @@ class ArkivInnsendingService implements InnsendingService {
 
     private final Client client;
 
-    private final OppsummeringService oppsummeringServiceV1;
-    private final OppsummeringService oppsummeringServiceV2;
+    private final OppsummeringGenerator oppsummeringGeneratorV1;
+    private final OppsummeringGenerator oppsummeringGeneratorV2;
 
     ArkivInnsendingService(Client client,
                            URI proxyServiceUri,
-                           OppsummeringService oppsummeringServiceV1,
-                           OppsummeringService oppsummeringServiceV2,
+                           OppsummeringGenerator oppsummeringGeneratorV1,
+                           OppsummeringGenerator oppsummeringGeneratorV2,
                            Unleash unleash
     ) {
         this.client = client;
         this.proxyServiceUri = proxyServiceUri;
-        this.oppsummeringServiceV1 = oppsummeringServiceV1;
-        this.oppsummeringServiceV2 = oppsummeringServiceV2;
+        this.oppsummeringGeneratorV1 = oppsummeringGeneratorV1;
+        this.oppsummeringGeneratorV2 = oppsummeringGeneratorV2;
         this.unleash = unleash;
 
     }
 
     public Response sendInnSoknad(Soknad soknad) {
 
-        OppsummeringService oppsummeringService;
+        OppsummeringGenerator oppsummeringGenerator;
         if (unleash.isEnabled(KONTANTSTOTTE_NY_OPPSUMMERING)) {
-            oppsummeringService = this.oppsummeringServiceV2;
+            oppsummeringGenerator = this.oppsummeringGeneratorV2;
         } else {
-            oppsummeringService = this.oppsummeringServiceV1;
+            oppsummeringGenerator = this.oppsummeringGeneratorV1;
         }
 
-        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringService.genererOppsummering(soknad), soknad.innsendingTimestamp);
+        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringGenerator.genererOppsummering(soknad), soknad.innsendingTimestamp);
 
         return client.target(proxyServiceUri)
                 .path("soknad")
