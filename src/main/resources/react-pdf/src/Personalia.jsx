@@ -1,7 +1,9 @@
 const spacing = {
-    margin: '0 0 10px 0',
+    margin: '0 auto 10px auto',
     padding: '0 0 10px 0',
-    textAlign: 'center'
+    textAlign: 'center',
+    display: 'inline-block',
+    width: '60%'
 };
 
 const Personalia = (props) => {

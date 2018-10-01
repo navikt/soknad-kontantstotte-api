@@ -20,7 +20,11 @@ const SoknadPdf = (props) => {
                 <h1 style={Uppercase}>{props.tekster['kontantstotte.tittel'].toUpperCase()}</h1>
             </div>
 
-            <Personalia person={props.soknad.person} tekster={props.tekster}/>
+            <div>
+                <InnsendingDato tekster={props.tekster} dato={props.soknad.innsendingTimestamp}/>
+                <Personalia person={props.soknad.person} tekster={props.tekster}/>
+            </div>
+
             <SokerKrav kravTilSoker={props.soknad.kravTilSoker} tekster={props.tekster}/>
             <Barn mineBarn={props.soknad.mineBarn} tekster={props.tekster}/>
             <Barnehageplass barnehageplass={props.soknad.barnehageplass} tekster={props.tekster}/>
