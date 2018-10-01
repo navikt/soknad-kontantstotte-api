@@ -43,10 +43,10 @@ class ArkivInnsendingService implements InnsendingService {
     public Response sendInnSoknad(Soknad soknad) {
 
         OppsummeringService oppsummeringService;
-        if(unleash.isEnabled(KONTANTSTOTTE_NY_OPPSUMMERING)){
-            oppsummeringService =this.oppsummeringServiceV2;
-        }else{
-            oppsummeringService =this.oppsummeringServiceV1;
+        if (unleash.isEnabled(KONTANTSTOTTE_NY_OPPSUMMERING)) {
+            oppsummeringService = this.oppsummeringServiceV2;
+        } else {
+            oppsummeringService = this.oppsummeringServiceV1;
         }
 
         SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringService.genererOppsummering(soknad), soknad.innsendingTimestamp);
