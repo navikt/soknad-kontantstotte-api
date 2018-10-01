@@ -32,7 +32,7 @@ class PdfService {
         this.unleash = unleash;
     }
 
-    public byte[] genererPdf(String html) {
+    byte[] genererPdf(String html) {
 
         if (unleash.isEnabled(BRUK_PDFGEN)) {
             return client
@@ -50,19 +50,6 @@ class PdfService {
                     .buildPost(Entity.entity(html, MediaType.TEXT_HTML))
                     .invoke()
                     .readEntity(byte[].class);
-        }
-
-
-    }
-
-    private void skrivTilFil(byte[] soknad) {
-        try {
-            new File(System.getProperty("user.dir") + "/TEST.pdf");
-            OutputStream out = new FileOutputStream(System.getProperty("user.dir") + "/TEST.pdf");
-            out.write(soknad);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
