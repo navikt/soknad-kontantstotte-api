@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.oppsummering.innsending;
+package no.nav.kontantstotte.oppsummering.innsending.v1;
 
 import jdk.nashorn.api.scripting.NashornScriptEngine;
 import no.nav.kontantstotte.oppsummering.Soknad;

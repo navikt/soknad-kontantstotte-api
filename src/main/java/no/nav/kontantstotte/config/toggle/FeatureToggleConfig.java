@@ -17,6 +17,7 @@ public class FeatureToggleConfig {
     private static final String FASIT_ENVIRONMENT_NAME = "${FASIT_ENVIRONMENT_NAME}";
 
     public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
+    public static final String KONTANTSTOTTE_NY_OPPSUMMERING = "kontantstotte.bolk.oppsummering";
 
     @Bean
     public Unleash unleash(

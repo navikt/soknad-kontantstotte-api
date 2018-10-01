@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.oppsummering.innsending;
+package no.nav.kontantstotte.oppsummering.innsending.v1;
 
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.Soknad;
@@ -18,33 +18,28 @@ import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_PDFGEN
 class PdfService {
 
 
-    @Autowired
-    private Unleash unleash;
-
+    private final Unleash unleash;
     private URI pdfGeneratorUri;
     private URI pdfSvgSupportGeneratorUrl;
 
     private final Client client;
 
-    private final OppsummeringTransformer oppsummeringTransformer;
 
-    public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl, OppsummeringTransformer oppsummeringTransformer) {
+    public PdfService(Client client, URI pdfGeneratorUri, URI pdfSvgSupportGeneratorUrl, Unleash unleash) {
         this.client = client;
         this.pdfGeneratorUri = pdfGeneratorUri;
         this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
-        this.oppsummeringTransformer = oppsummeringTransformer;
+        this.unleash = unleash;
     }
 
-    public byte[] genererPdf(Soknad soknad) {
-
-        String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
+    public byte[] genererPdf(String html) {
 
         if (unleash.isEnabled(BRUK_PDFGEN)) {
             return client
                     .target(pdfSvgSupportGeneratorUrl)
                     .path("v1/genpdf/html/kontantstotte")
                     .request()
-                    .buildPost(Entity.entity(oppsummeringHtml, "text/html; charset=utf-8"))
+                    .buildPost(Entity.entity(html, "text/html; charset=utf-8"))
                     .invoke()
                     .readEntity(byte[].class);
         } else {
@@ -52,7 +47,7 @@ class PdfService {
                     .target(pdfGeneratorUri)
                     .path("convert")
                     .request()
-                    .buildPost(Entity.entity(oppsummeringHtml, MediaType.TEXT_HTML))
+                    .buildPost(Entity.entity(html, MediaType.TEXT_HTML))
                     .invoke()
                     .readEntity(byte[].class);
         }

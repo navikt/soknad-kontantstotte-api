@@ -3,6 +3,8 @@ package no.nav.kontantstotte.api;
 import no.finn.unleash.FakeUnleash;
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
+import no.nav.kontantstotte.oppsummering.innsending.v2.HtmlOppsummeringService;
+import no.nav.kontantstotte.oppsummering.innsending.v2.PdfGenService;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -15,7 +17,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_PDFGEN;
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_NY_OPPSUMMERING;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 @Import(ApplicationConfig.class)
@@ -36,9 +46,37 @@ public class TestLauncher {
     }
 
     @Bean
+    @Primary
+    PdfGenService pdfGenService() throws IOException {
+        PdfGenService service = mock(PdfGenService.class);
+        byte[] b = readFile("oppsummering.pdf");
+        when(service.genererPdf(any())).thenReturn(b);
+        return service;
+    }
+
+
+    @Bean
+    @Primary
+    HtmlOppsummeringService htmlOppsummeringService() throws IOException {
+        HtmlOppsummeringService service = mock(HtmlOppsummeringService.class);
+        byte[] b = readFile("oppsummering.html");
+        when(service.genererHtml(any())).thenReturn(b);
+        return service;
+    }
+
+    private byte[] readFile(String filename) throws IOException {
+        File file = new File(getClass().getClassLoader().getResource(filename).getFile());
+        RandomAccessFile f = new RandomAccessFile(file, "r");
+        byte[] b = new byte[(int)f.length()];
+        f.readFully(b);
+        return b;
+    }
+
+    @Bean
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();
         fakeUnleash.enable(BRUK_PDFGEN);
+        fakeUnleash.enable(KONTANTSTOTTE_NY_OPPSUMMERING);
 
         return fakeUnleash;
     }

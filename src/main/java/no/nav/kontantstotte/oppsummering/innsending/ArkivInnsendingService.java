@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.oppsummering.innsending;
 
+import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.InnsendingService;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.security.oidc.context.OIDCValidationContext;
@@ -11,25 +12,44 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_NY_OPPSUMMERING;
+
 class ArkivInnsendingService implements InnsendingService {
 
     private static final String SELVBETJENING = "selvbetjening";
+    private final Unleash unleash;
 
     private URI proxyServiceUri;
 
     private final Client client;
 
-    private final PdfService pdfService;
+    private final OppsummeringGenerator oppsummeringGeneratorV1;
+    private final OppsummeringGenerator oppsummeringGeneratorV2;
 
-    ArkivInnsendingService(Client client, URI proxyServiceUri, PdfService pdfService) {
+    ArkivInnsendingService(Client client,
+                           URI proxyServiceUri,
+                           OppsummeringGenerator oppsummeringGeneratorV1,
+                           OppsummeringGenerator oppsummeringGeneratorV2,
+                           Unleash unleash
+    ) {
         this.client = client;
         this.proxyServiceUri = proxyServiceUri;
-        this.pdfService = pdfService;
+        this.oppsummeringGeneratorV1 = oppsummeringGeneratorV1;
+        this.oppsummeringGeneratorV2 = oppsummeringGeneratorV2;
+        this.unleash = unleash;
+
     }
 
     public Response sendInnSoknad(Soknad soknad) {
 
-        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), pdfService.genererPdf(soknad), soknad.innsendingTimestamp);
+        OppsummeringGenerator oppsummeringGenerator;
+        if (unleash.isEnabled(KONTANTSTOTTE_NY_OPPSUMMERING)) {
+            oppsummeringGenerator = this.oppsummeringGeneratorV2;
+        } else {
+            oppsummeringGenerator = this.oppsummeringGeneratorV1;
+        }
+
+        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringGenerator.genererOppsummering(soknad), soknad.innsendingTimestamp);
 
         return client.target(proxyServiceUri)
                 .path("soknad")
