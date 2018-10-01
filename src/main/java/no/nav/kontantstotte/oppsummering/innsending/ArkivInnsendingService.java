@@ -12,10 +12,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_NY_OPPSUMMERING;
+
 class ArkivInnsendingService implements InnsendingService {
 
     private static final String SELVBETJENING = "selvbetjening";
-    public static final String KONTANTSTOTTE_NY_OPPSUMMERING = "kontantstotte.bolk.oppsummering";
     private final Unleash unleash;
 
     private URI proxyServiceUri;
