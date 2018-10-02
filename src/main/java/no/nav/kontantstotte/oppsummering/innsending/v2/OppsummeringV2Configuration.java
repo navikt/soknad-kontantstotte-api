@@ -32,10 +32,9 @@ public class OppsummeringV2Configuration {
     @Bean
     public HtmlOppsummeringService htmlOppsummeringService(
             @Named("client") Client client,
-            @Value("${SOKNAD_OPPSUMMERING_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl
+            @Value("${SOKNAD_HTML_GENERATOR_URL}") URI htmlGeneratorUrl
     ) {
-
-        return new HtmlOppsummeringService(client, pdfSvgSupportGeneratorUrl);
+        return new HtmlOppsummeringService(client, htmlGeneratorUrl);
     }
 
 }

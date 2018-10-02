@@ -51,18 +51,5 @@ class PdfService {
                     .invoke()
                     .readEntity(byte[].class);
         }
-
-
-    }
-
-    private void skrivTilFil(byte[] soknad) {
-        try {
-            new File(System.getProperty("user.dir") + "/TEST.pdf");
-            OutputStream out = new FileOutputStream(System.getProperty("user.dir") + "/TEST.pdf");
-            out.write(soknad);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -28,7 +28,7 @@ public class SoknadTilOppsummering {
 
     public Bolk mapBarn(Barn barn, Map<String, String> tekster) {
         Bolk barneBolk = new Bolk();
-        barneBolk.bolknavn = "barn";
+        barneBolk.bolknavn = "minebarn";
         barneBolk.tittel = tekster.get(BARN_TITTEL);
         barneBolk.undertittel = tekster.get(BARN_UNDERTITTEL);
         barneBolk.elementer = new ArrayList<>();
