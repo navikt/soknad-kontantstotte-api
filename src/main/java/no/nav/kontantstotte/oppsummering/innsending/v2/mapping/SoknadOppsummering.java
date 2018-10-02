@@ -16,4 +16,16 @@ public class SoknadOppsummering {
         this.bolker = bolker;
         this.tekster = tekster;
     }
+
+    public Soknad getSoknad() {
+        return soknad;
+    }
+
+    public List<Bolk> getBolker() {
+        return bolker;
+    }
+
+    public Map<String, String> getTekster() {
+        return tekster;
+    }
 }
