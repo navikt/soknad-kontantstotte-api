@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.oppsummering.innsending.v2.mapping;
 
+import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
 import org.junit.Test;
 
@@ -12,9 +13,37 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class SoknadTilOppsummeringTest {
+
+    @Test
+    public void bolkerIRettRekkefølge() {
+
+        Map<String, String> tekster = mock(Map.class);
+        when(tekster.get(any())).thenReturn("tekstinnhold");
+        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(new Soknad(), tekster);
+
+        assertThat(oppsummering.getBolker())
+                .extracting("bolknavn")
+                .containsSequence(
+                        "personalia",
+                        "kravTilSoker", 
+                        null,
+                        "barnehageplass", 
+                        "familieforhold", 
+                        "tilknytningTilUtland", 
+                        "arbeidIUtlandet", 
+                        "utenlandskeYtelser", 
+                        "utenlandskKontantstotte", 
+                        "oppsummering"
+                );
+    }
+
 
     @Test
     public void tilBarneBolk() {
@@ -47,4 +76,6 @@ public class SoknadTilOppsummeringTest {
 
 
     }
+
+
 }

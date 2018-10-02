@@ -6,6 +6,7 @@ import no.nav.kontantstotte.oppsummering.bolk.Barn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class SoknadTilOppsummering {
@@ -18,17 +19,34 @@ public class SoknadTilOppsummering {
 
     public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster) {
 
-        Barn mineBarn = soknad.mineBarn;
+        return new SoknadOppsummering(soknad,
+                mapBolker(soknad, tekster),
+                tekster);
+    }
 
-        Bolk barneBolk = mapBarn(mineBarn, tekster);
+    private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
+        return Arrays.asList(
+                nyBolk("personalia"),
+                nyBolk("kravTilSoker"),
+                mapBarn(soknad.mineBarn, tekster),
+                nyBolk("barnehageplass"),
+                nyBolk("familieforhold"),
+                nyBolk("tilknytningTilUtland"),
+                nyBolk("arbeidIUtlandet"),
+                nyBolk("utenlandskeYtelser"),
+                nyBolk("utenlandskKontantstotte"),
+                nyBolk("oppsummering")
+        );
+    }
 
-
-        return new SoknadOppsummering(soknad, Arrays.asList(barneBolk), tekster);
+    private Bolk nyBolk(String bolknavn) {
+        Bolk bolk = new Bolk();
+        bolk.bolknavn = bolknavn;
+        return bolk;
     }
 
     public Bolk mapBarn(Barn barn, Map<String, String> tekster) {
         Bolk barneBolk = new Bolk();
-        barneBolk.bolknavn = "minebarn";
         barneBolk.tittel = tekster.get(BARN_TITTEL);
         barneBolk.undertittel = tekster.get(BARN_UNDERTITTEL);
         barneBolk.elementer = new ArrayList<>();
@@ -36,6 +54,8 @@ public class SoknadTilOppsummering {
         barneBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_FODSELSDATO), barn.fodselsdato));
         return barneBolk;
     }
+
+
 
 
 }
