@@ -72,8 +72,8 @@ public class InnsendingResourceTest extends JerseyTest {
         ArgumentCaptor<Soknad> captor = ArgumentCaptor.forClass(Soknad.class);
         verify(innsendingService).sendInnSoknad(captor.capture());
 
-        assertThat(captor.getValue().innsendingTimestamp).isBefore(now());
-        assertThat(captor.getValue().innsendingTimestamp).isAfter(now().minus(5, MINUTES));
+        assertThat(captor.getValue().innsendingsTidspunkt).isBefore(now());
+        assertThat(captor.getValue().innsendingsTidspunkt).isAfter(now().minus(5, MINUTES));
 
 
     }

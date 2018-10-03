@@ -8,7 +8,7 @@ import static java.time.Instant.now;
 
 public class Soknad {
 
-    public Instant innsendingTimestamp;
+    public Instant innsendingsTidspunkt;
     public Person person;
     public SokerKrav kravTilSoker;
     public Familieforhold familieforhold;
@@ -39,6 +39,6 @@ public class Soknad {
     }
 
     public void markerInnsendingsTidspunkt() {
-        innsendingTimestamp = now();
+        innsendingsTidspunkt = now();
     }
 }
