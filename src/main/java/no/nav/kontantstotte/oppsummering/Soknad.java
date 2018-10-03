@@ -2,13 +2,13 @@ package no.nav.kontantstotte.oppsummering;
 
 import no.nav.kontantstotte.oppsummering.bolk.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
-import static java.time.LocalDateTime.now;
+import static java.time.Instant.now;
 
 public class Soknad {
 
-    public LocalDateTime innsendingTimestamp;
+    public Instant innsendingTimestamp;
     public Person person;
     public SokerKrav kravTilSoker;
     public Familieforhold familieforhold;

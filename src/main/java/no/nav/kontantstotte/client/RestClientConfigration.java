@@ -3,6 +3,7 @@ package no.nav.kontantstotte.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import no.nav.sbl.rest.ClientLogFilter;
 import no.nav.sbl.rest.RestUtils;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
 import org.glassfish.jersey.client.ClientConfig;
@@ -26,13 +27,31 @@ public class RestClientConfigration {
 
     @Bean(name = "client")
     public Client client() {
-        ClientConfig clientConfig = RestUtils
-                .createClientConfig()
+
+        return ClientBuilder.newBuilder()
+                .register(new ClientLogFilter(ClientLogFilter.ClientLogFilterConfig.builder().metricName("").build()))
                 .register(OidcClientRequestFilter.class)
                 .register(objectMapperResolver())
-                .register(new LoggingFeature());
+                .register(new LoggingFeature())
+                .build();
+    }
 
-        return ClientBuilder.newBuilder().withConfig(clientConfig).build();
+    @Bean(name = "proxyClient")
+    public Client proxyClient(ProxyHeaderRequestFilter proxyHeaderRequestFilter) {
+
+        return ClientBuilder.newBuilder()
+                .register(new ClientLogFilter(ClientLogFilter.ClientLogFilterConfig.builder().metricName("").build()))
+                .register(OidcClientRequestFilter.class)
+                .register(objectMapperResolver())
+                .register(proxyHeaderRequestFilter)
+                .register(new LoggingFeature())
+                .build();
+    }
+
+    @Bean
+    public ProxyHeaderRequestFilter proxyHeaderRequestFilter() {
+
+        return new ProxyHeaderRequestFilter(key, proxyApiKey);
     }
 
     private ContextResolver<ObjectMapper> objectMapperResolver() {
@@ -44,25 +63,6 @@ public class RestClientConfigration {
                         .enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             }
         };
-    }
-
-    @Bean(name = "proxyClient")
-    public Client proxyClient(ProxyHeaderRequestFilter proxyHeaderRequestFilter) {
-
-        ClientConfig clientConfig = RestUtils
-                .createClientConfig()
-                .register(objectMapperResolver())
-                .register(OidcClientRequestFilter.class)
-                .register(proxyHeaderRequestFilter)
-                .register(new LoggingFeature());
-
-        return ClientBuilder.newBuilder().withConfig(clientConfig).build();
-    }
-
-    @Bean
-    public ProxyHeaderRequestFilter proxyHeaderRequestFilter() {
-
-        return new ProxyHeaderRequestFilter(key, proxyApiKey);
     }
 
 }

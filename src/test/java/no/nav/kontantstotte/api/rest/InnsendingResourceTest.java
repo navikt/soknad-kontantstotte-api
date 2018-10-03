@@ -21,7 +21,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-import static java.time.LocalDateTime.now;
+import static java.time.Instant.now;
+import static java.time.temporal.ChronoUnit.MINUTES;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
@@ -72,7 +73,7 @@ public class InnsendingResourceTest extends JerseyTest {
         verify(innsendingService).sendInnSoknad(captor.capture());
 
         assertThat(captor.getValue().innsendingTimestamp).isBefore(now());
-        assertThat(captor.getValue().innsendingTimestamp).isAfter(now().minusMinutes(5));
+        assertThat(captor.getValue().innsendingTimestamp).isAfter(now().minus(5, MINUTES));
 
 
     }
