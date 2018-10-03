@@ -2,6 +2,7 @@ package no.nav.kontantstotte.oppsummering.innsending;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 class SoknadDto {
@@ -13,9 +14,9 @@ class SoknadDto {
     private final String fnr;
 
     @JsonProperty
-    private final LocalDateTime innsendingTimestamp;
+    private final Instant innsendingTimestamp;
 
-    SoknadDto(String fnr, byte[] pdf, LocalDateTime innsendingTimestamp) {
+    SoknadDto(String fnr, byte[] pdf, Instant innsendingTimestamp) {
         this.fnr = fnr;
         this.pdf = pdf;
         this.innsendingTimestamp = innsendingTimestamp;
