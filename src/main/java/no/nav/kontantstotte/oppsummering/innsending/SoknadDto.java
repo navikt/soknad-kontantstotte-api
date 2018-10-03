@@ -14,12 +14,12 @@ class SoknadDto {
     private final String fnr;
 
     @JsonProperty
-    private final Instant innsendingTimestamp;
+    private final Instant innsendingsTidspunkt;
 
-    SoknadDto(String fnr, byte[] pdf, Instant innsendingTimestamp) {
+    SoknadDto(String fnr, byte[] pdf, Instant innsendingsTidspunkt) {
         this.fnr = fnr;
         this.pdf = pdf;
-        this.innsendingTimestamp = innsendingTimestamp;
+        this.innsendingsTidspunkt = innsendingsTidspunkt;
     }
 
     byte[] getPdf() {

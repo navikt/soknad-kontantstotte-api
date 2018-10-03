@@ -53,7 +53,7 @@ class ArkivInnsendingService implements InnsendingService {
             oppsummeringGenerator = this.oppsummeringGeneratorV1;
         }
 
-        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringGenerator.genererOppsummering(soknad), soknad.innsendingTimestamp);
+        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringGenerator.genererOppsummering(soknad), soknad.innsendingsTidspunkt);
 
         return client.target(proxyServiceUri)
                 .path("soknad")
