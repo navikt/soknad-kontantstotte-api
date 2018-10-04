@@ -9,24 +9,31 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static no.nav.kontantstotte.oppsummering.innsending.ArkivInnsendingService.hentFnrFraToken;
+
+/**
+ * Klassen benyttes til ny pdf generering.
+ * mapBolker tar inn søknadsobjektet og mapper til ny
+ * oppsummeringsobjekt som skal til ny html+pdf generator.
+ *
+ * For hver bolk man tar fra soknad til ny oppsummering skriver vi en map
+ * funksjon som erstatter det gamle attributtet.
+ */
 public class SoknadTilOppsummering {
-
-
     public static final String BARN_TITTEL = "barn.tittel";
     public static final String BARN_UNDERTITTEL = "oppsummering.barn.subtittel";
     public static final String BARN_NAVN = "barn.navn";
     public static final String BARN_FODSELSDATO = "barn.fodselsdato";
 
-    public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster) {
-
+    public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
         return new SoknadOppsummering(soknad,
+                fnr,
                 mapBolker(soknad, tekster),
                 tekster);
     }
 
     private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
         return Arrays.asList(
-                nyBolk("personalia"),
                 nyBolk("kravTilSoker"),
                 mapBarn(soknad.mineBarn, tekster),
                 nyBolk("barnehageplass"),
@@ -54,8 +61,4 @@ public class SoknadTilOppsummering {
         barneBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_FODSELSDATO), barn.fodselsdato));
         return barneBolk;
     }
-
-
-
-
 }

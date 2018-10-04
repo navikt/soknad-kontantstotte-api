@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static no.nav.kontantstotte.oppsummering.innsending.ArkivInnsendingService.hentFnrFraToken;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,19 +21,18 @@ import static org.mockito.Mockito.when;
 
 
 public class SoknadTilOppsummeringTest {
+    private static String fnr = "MOCK_FNR";
 
     @Test
     public void bolkerIRettRekkefølge() {
-
         Map<String, String> tekster = mock(Map.class);
         when(tekster.get(any())).thenReturn("tekstinnhold");
-        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(new Soknad(), tekster);
+        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(new Soknad(), tekster, fnr);
 
         assertThat(oppsummering.getBolker())
                 .extracting("bolknavn")
                 .containsSequence(
-                        "personalia",
-                        "kravTilSoker", 
+                        "kravTilSoker",
                         null,
                         "barnehageplass", 
                         "familieforhold", 
@@ -42,6 +42,7 @@ public class SoknadTilOppsummeringTest {
                         "utenlandskKontantstotte", 
                         "oppsummering"
                 );
+        assertThat(oppsummering.getFnr()).isEqualTo(fnr);
     }
 
 
