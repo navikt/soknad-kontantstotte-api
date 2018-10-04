@@ -2,6 +2,7 @@ package no.nav.kontantstotte.oppsummering.innsending.v2.mapping;
 
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
+import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
 import org.junit.Test;
 
 import java.util.AbstractMap;
@@ -76,6 +77,36 @@ public class SoknadTilOppsummeringTest {
 
 
     }
+
+    @Test
+    public void tilFamilieforholdBolk() {
+        String tittel = "Familieforhold";
+        String sporsmal = "Bor du sammen med den andre forelderen?" ;
+
+        Map<String, String> tekster = Collections.unmodifiableMap(Stream.of(
+                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, tittel),
+                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.FAMILIEFORHOLD_BOR_SAMMEN, "Bor du sammen med den andre forelderen?"),
+                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.SVAR_NEI, "Nei"))
+                .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
+
+
+        Familieforhold familieforhold = new Familieforhold();
+        familieforhold.borForeldreneSammenMedBarnet = "NEI";
+        Bolk bolk = new SoknadTilOppsummering().mapFamilieforhold(familieforhold, tekster);
+        assertThat(bolk)
+                .extracting("tittel", "undertittel")
+                .containsExactly(tittel, null);
+
+        List<Element> elementer = bolk.elementer;
+        assertThat(elementer)
+                .extracting("sporsmal", "svar")
+                .contains(
+                        tuple(sporsmal, "Nei"));
+
+
+    }
+
+
 
 
 }

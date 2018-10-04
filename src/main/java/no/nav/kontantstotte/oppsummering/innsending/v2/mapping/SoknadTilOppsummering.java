@@ -3,6 +3,7 @@ package no.nav.kontantstotte.oppsummering.innsending.v2.mapping;
 
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
+import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,10 +13,13 @@ import java.util.Map;
 public class SoknadTilOppsummering {
 
 
+    public static final String SVAR_NEI = "svar.nei";
     public static final String BARN_TITTEL = "barn.tittel";
     public static final String BARN_UNDERTITTEL = "oppsummering.barn.subtittel";
     public static final String BARN_NAVN = "barn.navn";
     public static final String BARN_FODSELSDATO = "barn.fodselsdato";
+    public static final String FAMILIEFORHOLD_TITTEL = "familieforhold.tittel";
+    public static final String FAMILIEFORHOLD_BOR_SAMMEN = "familieforhold.borForeldreneSammenMedBarnet.sporsmal";
 
     public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster) {
 
@@ -55,6 +59,16 @@ public class SoknadTilOppsummering {
         return barneBolk;
     }
 
+
+    public Bolk mapFamilieforhold(Familieforhold familieforhold, Map<String, String> tekster) {
+        Bolk bolk = new Bolk();
+        bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL);
+        bolk.elementer = new ArrayList<>();
+        if("NEI".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN), tekster.get(SVAR_NEI)));
+        }
+        return bolk;
+    }
 
 
 
