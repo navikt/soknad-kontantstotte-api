@@ -14,12 +14,15 @@ public class SoknadTilOppsummering {
 
 
     public static final String SVAR_NEI = "svar.nei";
+    public static final String SVAR_JA = "svar.ja";
     public static final String BARN_TITTEL = "barn.tittel";
     public static final String BARN_UNDERTITTEL = "oppsummering.barn.subtittel";
     public static final String BARN_NAVN = "barn.navn";
     public static final String BARN_FODSELSDATO = "barn.fodselsdato";
     public static final String FAMILIEFORHOLD_TITTEL = "familieforhold.tittel";
     public static final String FAMILIEFORHOLD_BOR_SAMMEN = "familieforhold.borForeldreneSammenMedBarnet.sporsmal";
+    public static final String FAMILIEFORHOLD_NAVN_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderNavn.label";
+    public static final String FAMILIEFORHOLD_FNR_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderFodselsnummer.label";
 
     public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster) {
 
@@ -66,6 +69,10 @@ public class SoknadTilOppsummering {
         bolk.elementer = new ArrayList<>();
         if("NEI".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
             bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN), tekster.get(SVAR_NEI)));
+        }if("JA".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN), tekster.get(SVAR_JA)));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER), familieforhold.annenForelderNavn));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_FNR_ANNEN_FORELDER), familieforhold.annenForelderFodselsnummer));
         }
         return bolk;
     }
