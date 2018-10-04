@@ -37,7 +37,7 @@ public class SoknadTilOppsummering {
                 nyBolk("kravTilSoker"),
                 mapBarn(soknad.mineBarn, tekster),
                 nyBolk("barnehageplass"),
-                nyBolk("familieforhold"),
+                mapFamilieforhold(soknad.familieforhold, tekster),
                 nyBolk("tilknytningTilUtland"),
                 nyBolk("arbeidIUtlandet"),
                 nyBolk("utenlandskeYtelser"),

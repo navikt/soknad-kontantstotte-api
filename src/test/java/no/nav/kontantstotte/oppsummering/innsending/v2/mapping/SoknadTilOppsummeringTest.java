@@ -14,9 +14,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 
 public class SoknadTilOppsummeringTest {
@@ -27,23 +24,27 @@ public class SoknadTilOppsummeringTest {
     @Test
     public void bolkerIRettRekkefølge() {
 
-        Map<String, String> tekster = mock(Map.class);
-        when(tekster.get(any())).thenReturn("tekstinnhold");
-        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(new Soknad(), tekster);
+
+        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(
+                new Soknad(),
+                tekster(
+                        tekst(SoknadTilOppsummering.BARN_TITTEL, SoknadTilOppsummering.BARN_TITTEL),
+                        tekst(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL)
+                ));
 
         assertThat(oppsummering.getBolker())
-                .extracting("bolknavn")
+                .extracting("bolknavn", "tittel")
                 .containsSequence(
-                        "personalia",
-                        "kravTilSoker",
-                        null,
-                        "barnehageplass",
-                        "familieforhold",
-                        "tilknytningTilUtland",
-                        "arbeidIUtlandet",
-                        "utenlandskeYtelser",
-                        "utenlandskKontantstotte",
-                        "oppsummering"
+                        tuple("personalia", null),
+                        tuple("kravTilSoker", null),
+                        tuple(null, SoknadTilOppsummering.BARN_TITTEL),
+                        tuple("barnehageplass", null),
+                        tuple(null, SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL),
+                        tuple("tilknytningTilUtland", null),
+                        tuple("arbeidIUtlandet", null),
+                        tuple("utenlandskeYtelser", null),
+                        tuple("utenlandskKontantstotte", null),
+                        tuple("oppsummering", null)
                 );
     }
 
@@ -132,7 +133,7 @@ public class SoknadTilOppsummeringTest {
                         tuple(sporsmal, JA),
                         tuple(sporsmal_navn, familieforhold.annenForelderNavn),
                         tuple(sporsmal_fnr, familieforhold.annenForelderFodselsnummer)
-                        );
+                );
 
 
     }
