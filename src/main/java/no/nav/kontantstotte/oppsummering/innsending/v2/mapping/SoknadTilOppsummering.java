@@ -55,8 +55,4 @@ public class SoknadTilOppsummering {
         barneBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_FODSELSDATO), barn.fodselsdato));
         return barneBolk;
     }
-
-
-
-
 }

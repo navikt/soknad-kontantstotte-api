@@ -9,15 +9,12 @@ import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsumme
 import java.util.Map;
 
 class NodeOppsummeringGenerator implements OppsummeringGenerator {
-
-
     private final PdfGenService pdfService;
     private final HtmlOppsummeringService htmlOppsummeringService;
 
     public NodeOppsummeringGenerator(HtmlOppsummeringService htmlOppsummeringService, PdfGenService pdfService) {
         this.htmlOppsummeringService = htmlOppsummeringService;
         this.pdfService = pdfService;
-
     }
 
     @Override
@@ -26,7 +23,5 @@ class NodeOppsummeringGenerator implements OppsummeringGenerator {
         SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(soknad, tekster);
         byte[] htmlBytes = htmlOppsummeringService.genererHtml(oppsummering);
         return pdfService.genererPdf(htmlBytes);
-
-
     }
 }

@@ -55,8 +55,6 @@ public class ArkivInnsendingService implements InnsendingService {
 
         SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringGenerator.genererOppsummering(soknad), soknad.innsendingsTidspunkt);
 
-        skrivTilFil(soknadDto.getPdf());
-
         return client.target(proxyServiceUri)
                 .path("soknad")
                 .request()
