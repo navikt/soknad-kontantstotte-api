@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -33,14 +32,14 @@ public class SoknadTilOppsummeringTest {
                 .extracting("bolknavn")
                 .containsSequence(
                         "personalia",
-                        "kravTilSoker", 
+                        "kravTilSoker",
                         null,
-                        "barnehageplass", 
-                        "familieforhold", 
-                        "tilknytningTilUtland", 
-                        "arbeidIUtlandet", 
-                        "utenlandskeYtelser", 
-                        "utenlandskKontantstotte", 
+                        "barnehageplass",
+                        "familieforhold",
+                        "tilknytningTilUtland",
+                        "arbeidIUtlandet",
+                        "utenlandskeYtelser",
+                        "utenlandskKontantstotte",
                         "oppsummering"
                 );
     }
@@ -53,12 +52,11 @@ public class SoknadTilOppsummeringTest {
         String navn = "Navn";
         String fodselsdato = "Fødselsdato";
 
-        Map<String, String> tekster = Collections.unmodifiableMap(Stream.of(
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.BARN_TITTEL, tittel),
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.BARN_UNDERTITTEL, undertittel),
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.BARN_NAVN, navn),
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.BARN_FODSELSDATO, fodselsdato))
-                .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
+        Map<String, String> tekster = tekster(
+                tekst(SoknadTilOppsummering.BARN_TITTEL, tittel),
+                tekst(SoknadTilOppsummering.BARN_UNDERTITTEL, undertittel),
+                tekst(SoknadTilOppsummering.BARN_NAVN, navn),
+                tekst(SoknadTilOppsummering.BARN_FODSELSDATO, fodselsdato));
 
         Barn innsendtBarn = new Barn();
         innsendtBarn.navn = "Barnets navn";
@@ -79,15 +77,14 @@ public class SoknadTilOppsummeringTest {
     }
 
     @Test
-    public void tilFamilieforholdBolk() {
+    public void familieforhold_nar_foreldre_ikke_bor_sammen() {
         String tittel = "Familieforhold";
-        String sporsmal = "Bor du sammen med den andre forelderen?" ;
+        String sporsmal = "Bor du sammen med den andre forelderen?";
 
-        Map<String, String> tekster = Collections.unmodifiableMap(Stream.of(
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, tittel),
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.FAMILIEFORHOLD_BOR_SAMMEN, "Bor du sammen med den andre forelderen?"),
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.SVAR_NEI, "Nei"))
-                .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
+        Map<String, String> tekster = tekster(
+                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, tittel),
+                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_BOR_SAMMEN, "Bor du sammen med den andre forelderen?"),
+                tekst(SoknadTilOppsummering.SVAR_NEI, "Nei"));
 
 
         Familieforhold familieforhold = new Familieforhold();
@@ -106,7 +103,14 @@ public class SoknadTilOppsummeringTest {
 
     }
 
+    private Map<String, String> tekster(AbstractMap.SimpleEntry<String, String>... tekst) {
+        return Collections.unmodifiableMap(Stream.of(tekst)
+                .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
+    }
 
+    private AbstractMap.SimpleEntry<String, String> tekst(String nokkel, String tekstinnhold) {
+        return new AbstractMap.SimpleEntry<>(nokkel, tekstinnhold);
+    }
 
 
 }
