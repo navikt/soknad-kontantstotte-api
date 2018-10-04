@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static no.nav.kontantstotte.oppsummering.innsending.ArkivInnsendingService.hentFnrFraToken;
+
 public class SoknadTilOppsummering {
-
-
     public static final String BARN_TITTEL = "barn.tittel";
     public static final String BARN_UNDERTITTEL = "oppsummering.barn.subtittel";
     public static final String BARN_NAVN = "barn.navn";
@@ -20,6 +20,7 @@ public class SoknadTilOppsummering {
     public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster) {
 
         return new SoknadOppsummering(soknad,
+                hentFnrFraToken(),
                 mapBolker(soknad, tekster),
                 tekster);
     }
