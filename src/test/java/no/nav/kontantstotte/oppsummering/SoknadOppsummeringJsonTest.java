@@ -3,6 +3,7 @@ package no.nav.kontantstotte.oppsummering.innsending.v2;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadOppsummering;
+import no.nav.kontantstotte.tekst.TekstProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -25,6 +26,7 @@ public class SoknadOppsummeringJsonTest {
         htmlOppsummeringService = mock(HtmlOppsummeringService.class);
 
         nodeOppsummeringGenerator = new NodeOppsummeringGenerator(
+                new TekstProvider("mapping_tekster", "nb"),
                 htmlOppsummeringService,
                 mock(PdfGenService.class));
 
