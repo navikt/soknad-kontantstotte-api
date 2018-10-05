@@ -40,7 +40,7 @@ public class SoknadOppsummeringJsonTest {
 
         ArgumentCaptor<SoknadOppsummering> captor = ArgumentCaptor.forClass(SoknadOppsummering.class);
         when(htmlOppsummeringService.genererHtml(captor.capture())).thenReturn(new byte[1]);
-        nodeOppsummeringGenerator.genererOppsummering(enkelSoknad);
+        nodeOppsummeringGenerator.genererOppsummering(enkelSoknad, "XXXXXXXXXX");
 
          assertThat(captor.getValue()).isEqualToComparingFieldByFieldRecursively(oppsummering);
     }

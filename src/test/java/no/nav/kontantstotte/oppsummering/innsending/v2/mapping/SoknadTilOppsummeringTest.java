@@ -25,17 +25,18 @@ public class SoknadTilOppsummeringTest {
     public void bolkerIRettRekkefølge() {
 
 
+        String fnr = "XXXXXXXXXX";
         SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(
                 new Soknad(),
                 tekster(
                         tekst(SoknadTilOppsummering.BARN_TITTEL, SoknadTilOppsummering.BARN_TITTEL),
                         tekst(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL)
-                ));
+                ),
+                fnr);
 
         assertThat(oppsummering.getBolker())
                 .extracting("bolknavn", "tittel")
                 .containsSequence(
-                        tuple("personalia", null),
                         tuple("kravTilSoker", null),
                         tuple(null, SoknadTilOppsummering.BARN_TITTEL),
                         tuple("barnehageplass", null),
@@ -46,6 +47,7 @@ public class SoknadTilOppsummeringTest {
                         tuple("utenlandskKontantstotte", null),
                         tuple("oppsummering", null)
                 );
+        assertThat(oppsummering.getFnr()).isEqualTo(fnr);
     }
 
 

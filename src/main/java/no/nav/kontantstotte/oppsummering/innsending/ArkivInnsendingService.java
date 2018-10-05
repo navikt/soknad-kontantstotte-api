@@ -18,7 +18,7 @@ import java.net.URI;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_NY_OPPSUMMERING;
 
-class ArkivInnsendingService implements InnsendingService {
+public class ArkivInnsendingService implements InnsendingService {
 
     private static final String SELVBETJENING = "selvbetjening";
     private final Unleash unleash;
@@ -53,7 +53,7 @@ class ArkivInnsendingService implements InnsendingService {
             oppsummeringGenerator = this.oppsummeringGeneratorV1;
         }
 
-        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringGenerator.genererOppsummering(soknad), soknad.innsendingsTidspunkt);
+        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringGenerator.genererOppsummering(soknad, hentFnrFraToken()), soknad.innsendingsTidspunkt);
 
         return client.target(proxyServiceUri)
                 .path("soknad")
@@ -62,7 +62,7 @@ class ArkivInnsendingService implements InnsendingService {
                 .invoke();
     }
 
-    private static String hentFnrFraToken() {
+    public static String hentFnrFraToken() {
         OIDCValidationContext context = OidcRequestContext.getHolder().getOIDCValidationContext();
         return context.getClaims(SELVBETJENING).getClaimSet().getSubject();
     }

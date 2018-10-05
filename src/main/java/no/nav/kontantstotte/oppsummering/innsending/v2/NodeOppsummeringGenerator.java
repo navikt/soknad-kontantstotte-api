@@ -8,9 +8,8 @@ import no.nav.kontantstotte.tekst.TekstProvider;
 
 import java.util.Map;
 
+
 class NodeOppsummeringGenerator implements OppsummeringGenerator {
-
-
     private final PdfGenService pdfService;
     private final HtmlOppsummeringService htmlOppsummeringService;
     private final TekstProvider tekstProvider;
@@ -22,12 +21,10 @@ class NodeOppsummeringGenerator implements OppsummeringGenerator {
     }
 
     @Override
-    public byte[] genererOppsummering(Soknad soknad) {
+    public byte[] genererOppsummering(Soknad soknad, String fnr) {
         Map<String, String> tekster = tekstProvider.hentTekster(soknad.sprak);
-        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(soknad, tekster);
+        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(soknad, tekster, fnr);
         byte[] htmlBytes = htmlOppsummeringService.genererHtml(oppsummering);
         return pdfService.genererPdf(htmlBytes);
-
-
     }
 }

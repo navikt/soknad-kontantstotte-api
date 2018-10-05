@@ -64,13 +64,8 @@
     },
     "sprak": "nb"
   },
+  "fnr": "XXXXXXXXXX",
   "bolker": [
-    {
-      "bolknavn": "personalia",
-      "tittel": null,
-      "undertittel": null,
-      "elementer": null
-    },
     {
       "bolknavn": "kravTilSoker",
       "tittel": null,

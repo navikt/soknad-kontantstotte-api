@@ -10,8 +10,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class SoknadTilOppsummering {
 
+/**
+ * Klassen benyttes til ny pdf generering.
+ * mapBolker tar inn søknadsobjektet og mapper til ny
+ * oppsummeringsobjekt som skal til ny html+pdf generator.
+ *
+ * For hver bolk man tar fra soknad til ny oppsummering skriver vi en map
+ * funksjon som erstatter det gamle attributtet.
+ */
+public class SoknadTilOppsummering {
 
     public static final String SVAR_NEI = "svar.nei";
     public static final String SVAR_JA = "svar.ja";
@@ -24,16 +32,15 @@ public class SoknadTilOppsummering {
     public static final String FAMILIEFORHOLD_NAVN_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderNavn.label";
     public static final String FAMILIEFORHOLD_FNR_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderFodselsnummer.label";
 
-    public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster) {
-
+    public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
         return new SoknadOppsummering(soknad,
+                fnr,
                 mapBolker(soknad, tekster),
                 tekster);
     }
 
     private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
         return Arrays.asList(
-                nyBolk("personalia"),
                 nyBolk("kravTilSoker"),
                 mapBarn(soknad.mineBarn, tekster),
                 nyBolk("barnehageplass"),
