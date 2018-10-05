@@ -45,6 +45,18 @@ public class SoknadOppsummeringJsonTest {
          assertThat(captor.getValue()).isEqualToComparingFieldByFieldRecursively(oppsummering);
     }
 
+    @Test
+    public void komplett_soknadjson_gir_forventet_oppsummeringsobjekt() throws IOException {
+        Soknad enkelSoknad = mapper.readValue(new File(getFile("mapping/komplett/soknad.json")), Soknad.class);
+        SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/komplett/soknad-oppsummering.json")), SoknadOppsummering.class);
+
+        ArgumentCaptor<SoknadOppsummering> captor = ArgumentCaptor.forClass(SoknadOppsummering.class);
+        when(htmlOppsummeringService.genererHtml(captor.capture())).thenReturn(new byte[1]);
+        nodeOppsummeringGenerator.genererOppsummering(enkelSoknad, "XXXXXXXXXX");
+
+        assertThat(captor.getValue()).isEqualToComparingFieldByFieldRecursively(oppsummering);
+    }
+
     private String getFile(String filnavn) {
         return getClass().getClassLoader().getResource(filnavn).getFile();
     }
