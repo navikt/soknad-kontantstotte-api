@@ -44,14 +44,14 @@
       "mottarKontantstotteFraUtlandetTilleggsinfo": ""
     },
     "mineBarn": {
-      "navn": "barnNavn",
-      "fodselsdato": "12.12.1212"
+      "navn": "Jakob",
+      "fodselsdato": "12.12.2018"
     },
     "tilknytningTilUtland": {
-      "annenForelderBoddEllerJobbetINorgeMinstFemAar": null,
-      "annenForelderBoddEllerJobbetINorgeMinstFemAarForklaring": null,
-      "boddEllerJobbetINorgeMinstFemAar": null,
-      "boddEllerJobbetINorgeMinstFemAarForklaring": null
+      "annenForelderBoddEllerJobbetINorgeMinstFemAar": "Ubesvart",
+      "annenForelderBoddEllerJobbetINorgeMinstFemAarForklaring": "",
+      "boddEllerJobbetINorgeMinstFemAar": "jaINorge",
+      "boddEllerJobbetINorgeMinstFemAarForklaring": ""
     },
     "utenlandskeYtelser": {
       "mottarYtelserFraUtland": "NEI",
@@ -79,12 +79,12 @@
       "elementer": [
         {
           "sporsmal": "Navn",
-          "svar": "barnNavn",
+          "svar": "Jakob",
           "underelementer": null
         },
         {
           "sporsmal": "Fødselsdato",
-          "svar": "12.12.1212",
+          "svar": "12.12.2018",
           "underelementer": null
         }
       ]
