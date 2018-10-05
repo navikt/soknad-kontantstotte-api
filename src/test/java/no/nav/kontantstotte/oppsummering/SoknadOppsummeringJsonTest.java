@@ -20,6 +20,7 @@ public class SoknadOppsummeringJsonTest {
     private NodeOppsummeringGenerator nodeOppsummeringGenerator;
     private HtmlOppsummeringService htmlOppsummeringService;
     private ObjectMapper mapper;
+    private ArgumentCaptor<SoknadOppsummering> captor;
 
     @Before
     public void setup(){
@@ -31,14 +32,14 @@ public class SoknadOppsummeringJsonTest {
                 mock(PdfGenService.class));
 
         mapper = new ObjectMapper();
+        captor = ArgumentCaptor.forClass(SoknadOppsummering.class);
     }
 
     @Test
     public void enkelt_soknadjson_gir_forventet_oppsummeringsobjekt() throws IOException {
-        Soknad enkelSoknad = mapper.readValue(new File(getFile("soknad.json")), Soknad.class);
-        SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("soknad-oppsummering.json")), SoknadOppsummering.class);
+        Soknad enkelSoknad = mapper.readValue(new File(getFile("mapping/enkel/soknad.json")), Soknad.class);
+        SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/enkel/soknad-oppsummering.json")), SoknadOppsummering.class);
 
-        ArgumentCaptor<SoknadOppsummering> captor = ArgumentCaptor.forClass(SoknadOppsummering.class);
         when(htmlOppsummeringService.genererHtml(captor.capture())).thenReturn(new byte[1]);
         nodeOppsummeringGenerator.genererOppsummering(enkelSoknad, "XXXXXXXXXX");
 
@@ -50,7 +51,6 @@ public class SoknadOppsummeringJsonTest {
         Soknad enkelSoknad = mapper.readValue(new File(getFile("mapping/komplett/soknad.json")), Soknad.class);
         SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/komplett/soknad-oppsummering.json")), SoknadOppsummering.class);
 
-        ArgumentCaptor<SoknadOppsummering> captor = ArgumentCaptor.forClass(SoknadOppsummering.class);
         when(htmlOppsummeringService.genererHtml(captor.capture())).thenReturn(new byte[1]);
         nodeOppsummeringGenerator.genererOppsummering(enkelSoknad, "XXXXXXXXXX");
 
