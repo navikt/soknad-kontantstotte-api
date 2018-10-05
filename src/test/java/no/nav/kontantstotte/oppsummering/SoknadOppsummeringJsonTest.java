@@ -37,22 +37,33 @@ public class SoknadOppsummeringJsonTest {
 
     @Test
     public void enkelt_soknadjson_gir_forventet_oppsummeringsobjekt() throws IOException {
-        Soknad enkelSoknad = mapper.readValue(new File(getFile("mapping/enkel/soknad.json")), Soknad.class);
+        Soknad soknad = mapper.readValue(new File(getFile("mapping/enkel/soknad.json")), Soknad.class);
         SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/enkel/soknad-oppsummering.json")), SoknadOppsummering.class);
 
         when(htmlOppsummeringService.genererHtml(captor.capture())).thenReturn(new byte[1]);
-        nodeOppsummeringGenerator.genererOppsummering(enkelSoknad, "XXXXXXXXXX");
+        nodeOppsummeringGenerator.genererOppsummering(soknad, "XXXXXXXXXX");
 
          assertThat(captor.getValue()).isEqualToComparingFieldByFieldRecursively(oppsummering);
     }
 
     @Test
     public void komplett_soknadjson_gir_forventet_oppsummeringsobjekt() throws IOException {
-        Soknad enkelSoknad = mapper.readValue(new File(getFile("mapping/komplett/soknad.json")), Soknad.class);
+        Soknad soknad = mapper.readValue(new File(getFile("mapping/komplett/soknad.json")), Soknad.class);
         SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/komplett/soknad-oppsummering.json")), SoknadOppsummering.class);
 
         when(htmlOppsummeringService.genererHtml(captor.capture())).thenReturn(new byte[1]);
-        nodeOppsummeringGenerator.genererOppsummering(enkelSoknad, "XXXXXXXXXX");
+        nodeOppsummeringGenerator.genererOppsummering(soknad, "XXXXXXXXXX");
+
+        assertThat(captor.getValue()).isEqualToComparingFieldByFieldRecursively(oppsummering);
+    }
+
+    @Test
+    public void ekstrem_soknadjson_gir_forventet_oppsummeringsobjekt() throws IOException {
+        Soknad soknad = mapper.readValue(new File(getFile("mapping/ekstrem/soknad.json")), Soknad.class);
+        SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/ekstrem/soknad-oppsummering.json")), SoknadOppsummering.class);
+
+        when(htmlOppsummeringService.genererHtml(captor.capture())).thenReturn(new byte[1]);
+        nodeOppsummeringGenerator.genererOppsummering(soknad, "XXXXXXXXXX");
 
         assertThat(captor.getValue()).isEqualToComparingFieldByFieldRecursively(oppsummering);
     }
