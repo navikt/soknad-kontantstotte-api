@@ -1,0 +1,53 @@
+{
+    "arbeidIUtlandet": {
+        "arbeiderAnnenForelderIUtlandet":"UBESVART",
+        "arbeiderAnnenForelderIUtlandetForklaring":"",
+        "arbeiderIUtlandetEllerKontinentalsokkel":"NEI",
+        "arbeiderIUtlandetEllerKontinentalsokkelForklaring":""
+    },
+    "barnehageplass": {
+        "barnBarnehageplassStatus":"garIkkeIBarnehage",
+        "harBarnehageplass":"NEI",
+        "harBarnehageplassAntallTimer":"",
+        "harBarnehageplassDato":"",
+        "harBarnehageplassKommune":"",
+        "harSluttetIBarnehageAntallTimer":"",
+        "harSluttetIBarnehageDato":"",
+        "harSluttetIBarnehageKommune":"",
+        "skalBegynneIBarnehageAntallTimer":"",
+        "skalBegynneIBarnehageDato":"",
+        "skalBegynneIBarnehageKommune":"",
+        "skalSlutteIBarnehageAntallTimer":"",
+        "skalSlutteIBarnehageDato":"",
+        "skalSlutteIBarnehageKommune":""
+    },
+    "familieforhold": {
+        "annenForelderFodselsnummer":"",
+        "annenForelderNavn":"",
+        "borForeldreneSammenMedBarnet":"NEI"
+    },
+    "kravTilSoker": {
+        "barnIkkeHjemme":"JA",
+        "boddEllerJobbetINorgeSisteFemAar":"JA",
+        "borSammenMedBarnet":"JA",
+        "ikkeAvtaltDeltBosted":"JA",
+        "norskStatsborger":"JA",
+        "skalBoMedBarnetINorgeNesteTolvMaaneder":"JA"
+    },
+    "mineBarn": {
+        "fodselsdato":"12.12.1212",
+        "navn":"barnNavn"
+    },
+    "oppsummering": {
+        "bekreftelse":"JA"
+    },
+    "utenlandskKontantstotte": {
+        "mottarKontantstotteFraUtlandet":"NEI",
+        "mottarKontantstotteFraUtlandetTilleggsinfo":""},
+    "utenlandskeYtelser":{"mottarAnnenForelderYtelserFraUtland":"UBESVART",
+        "mottarAnnenForelderYtelserFraUtlandForklaring":"",
+        "mottarYtelserFraUtland":"NEI",
+        "mottarYtelserFraUtlandForklaring":""
+    },
+    "sprak":"nb"
+}

@@ -7,9 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 public class SoknadOppsummering {
-    private final Soknad soknad;
-    private final List<Bolk> bolker;
-    private final Map<String, String> tekster;
+    private Soknad soknad;
+    private List<Bolk> bolker;
+    private Map<String, String> tekster;
+
+    public SoknadOppsummering(){
+
+    }
 
     public SoknadOppsummering(Soknad soknad, List<Bolk> bolker, Map<String, String> tekster) {
         this.soknad = soknad;
