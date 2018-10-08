@@ -58,7 +58,6 @@ public class SoknadTilOppsummering {
         barneBolk.undertittel = tekster.get(BARN_UNDERTITTEL);
         barneBolk.elementer = new ArrayList<>();
         barneBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_NAVN), barn.navn));
-        barneBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_FODSELSDATO), barn.fodselsdato));
         return barneBolk;
     }
 }
