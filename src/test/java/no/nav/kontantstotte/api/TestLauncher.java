@@ -23,6 +23,7 @@ import java.io.RandomAccessFile;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_PDFGEN;
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_NY_OPPSUMMERING;
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -77,6 +78,7 @@ public class TestLauncher {
         FakeUnleash fakeUnleash = new FakeUnleash();
         fakeUnleash.enable(BRUK_PDFGEN);
         fakeUnleash.enable(KONTANTSTOTTE_NY_OPPSUMMERING);
+        fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
 
         return fakeUnleash;
     }

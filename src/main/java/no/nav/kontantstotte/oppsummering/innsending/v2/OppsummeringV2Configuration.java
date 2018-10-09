@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.oppsummering.innsending.v2;
 
+import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.innsending.OppsummeringGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +16,9 @@ public class OppsummeringV2Configuration {
     @Bean("v2")
     public OppsummeringGenerator oppsummeringService(
             HtmlOppsummeringService htmlOppsummeringService,
-            PdfGenService pdfService) {
-        return new NodeOppsummeringGenerator(htmlOppsummeringService, pdfService);
+            PdfGenService pdfService,
+            Unleash unleash) {
+        return new NodeOppsummeringGenerator(htmlOppsummeringService, pdfService, unleash);
     }
 
 
