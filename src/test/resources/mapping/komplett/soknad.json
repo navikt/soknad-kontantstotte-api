@@ -1,0 +1,61 @@
+{
+  "arbeidIUtlandet": {
+    "arbeiderAnnenForelderIUtlandet": "JA",
+    "arbeiderAnnenForelderIUtlandetForklaring": "Andre forelder oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor h*n arbeidet i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel.",
+    "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
+    "arbeiderIUtlandetEllerKontinentalsokkelForklaring": ""
+  },
+  "barnehageplass": {
+    "barnBarnehageplassStatus": "skalBegynneIBarnehage",
+    "harBarnehageplass": "JA",
+    "harBarnehageplassAntallTimer": "",
+    "harBarnehageplassDato": "",
+    "harBarnehageplassKommune": "",
+    "harSluttetIBarnehageAntallTimer": "",
+    "harSluttetIBarnehageDato": "",
+    "harSluttetIBarnehageKommune": "",
+    "skalBegynneIBarnehageAntallTimer": "10",
+    "skalBegynneIBarnehageDato": "01.01.2019",
+    "skalBegynneIBarnehageKommune": "Oslo",
+    "skalSlutteIBarnehageAntallTimer": "",
+    "skalSlutteIBarnehageDato": "",
+    "skalSlutteIBarnehageKommune": ""
+  },
+  "familieforhold": {
+    "annenForelderFodselsnummer": "ZZZZZZZZZZ",
+    "annenForelderNavn": "Annen forelder navn",
+    "borForeldreneSammenMedBarnet": "JA"
+  },
+  "kravTilSoker": {
+    "barnIkkeHjemme": "JA",
+    "boddEllerJobbetINorgeSisteFemAar": "JA",
+    "borSammenMedBarnet": "JA",
+    "ikkeAvtaltDeltBosted": "JA",
+    "norskStatsborger": "JA",
+    "skalBoMedBarnetINorgeNesteTolvMaaneder": "JA"
+  },
+  "mineBarn": {
+    "fodselsdato": "12.12.2018",
+    "navn": "Jakob"
+  },
+  "oppsummering": {
+    "bekreftelse": "JA"
+  },
+  "tilknytningTilUtland": {
+    "annenForelderBoddEllerJobbetINorgeMinstFemAar": "jaLeggerSammenPerioderEOS",
+    "annenForelderBoddEllerJobbetINorgeMinstFemAarForklaring": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder",
+    "boddEllerJobbetINorgeMinstFemAar": "jaIEOS",
+    "boddEllerJobbetINorgeMinstFemAarForklaring": "Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder"
+  },
+  "utenlandskKontantstotte": {
+    "mottarKontantstotteFraUtlandet": "JA",
+    "mottarKontantstotteFraUtlandetTilleggsinfo": "Barnet får kontantstøtte fra land X"
+  },
+  "utenlandskeYtelser": {
+    "mottarAnnenForelderYtelserFraUtland": "NEI",
+    "mottarAnnenForelderYtelserFraUtlandForklaring": "",
+    "mottarYtelserFraUtland": "JA",
+    "mottarYtelserFraUtlandForklaring": "Søker oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor man mottok eller fortsatt mottar ytelser fra utlandet"
+  },
+  "sprak": "nb"
+}

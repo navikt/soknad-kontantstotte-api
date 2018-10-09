@@ -16,7 +16,7 @@ class NashornOppsummeringGenerator implements OppsummeringGenerator {
     }
 
     @Override
-    public byte[] genererOppsummering(Soknad soknad) {
+    public byte[] genererOppsummering(Soknad soknad, String fnr) {
         String oppsummeringHtml = oppsummeringTransformer.renderHTMLForPdf(soknad);
 
         return pdfService.genererPdf(oppsummeringHtml);
