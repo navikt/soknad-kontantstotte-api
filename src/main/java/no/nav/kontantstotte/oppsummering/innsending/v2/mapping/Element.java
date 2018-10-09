@@ -31,4 +31,12 @@ public class Element {
     @JsonProperty("underelementer")
     public List<Element> underelementer;
 
+    @Override
+    public String toString() {
+        return "Element{" +
+                "sporsmal='" + sporsmal + '\'' +
+                ", svar='" + svar + '\'' +
+                ", underelementer=" + underelementer +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.api.rest;
 
+import no.nav.kontantstotte.tekst.DefaultTekstProvider;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import no.nav.security.oidc.api.Unprotected;
 import org.springframework.stereotype.Component;
@@ -17,14 +18,10 @@ import java.util.Map;
 @Unprotected
 public class TeksterResource {
 
-    private static final String DEFAULT_BUNDLE_NAME = "tekster";
-
-    private static final String[] DEFAULT_VALID_LANGUAGES = { "nb", "nn" };
-
     private final TekstProvider tekstProvider;
 
     public TeksterResource() {
-        this.tekstProvider = new TekstProvider(DEFAULT_BUNDLE_NAME, DEFAULT_VALID_LANGUAGES);
+        this.tekstProvider = new DefaultTekstProvider();
     }
 
     @GET

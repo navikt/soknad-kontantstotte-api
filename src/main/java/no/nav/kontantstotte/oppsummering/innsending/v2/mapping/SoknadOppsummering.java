@@ -7,10 +7,16 @@ import java.util.List;
 import java.util.Map;
 
 public class SoknadOppsummering {
-    private final Soknad soknad;
-    private final String fnr;
-    private final List<Bolk> bolker;
-    private final Map<String, String> tekster;
+
+    private Soknad soknad;
+    private String fnr;
+    private List<Bolk> bolker;
+    private Map<String, String> tekster;
+
+    public SoknadOppsummering(){
+
+    }
+
 
     public SoknadOppsummering(Soknad soknad, String fnr, List<Bolk> bolker, Map<String, String> tekster) {
         this.soknad = soknad;
