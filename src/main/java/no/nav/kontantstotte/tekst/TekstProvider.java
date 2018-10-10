@@ -11,6 +11,7 @@ public class TekstProvider {
 
     private final Map<String, Map<String, String>> properties;
 
+
     public TekstProvider(String bundleNavn, String... gyldigeSprak) {
 
         Function<ResourceBundle, Map<String, String>> bundleToMap = bundle -> bundle.keySet().stream()

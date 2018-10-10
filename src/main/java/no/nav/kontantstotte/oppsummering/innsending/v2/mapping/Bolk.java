@@ -19,6 +19,13 @@ public class Bolk {
     @JsonProperty("elementer")
     public List<Element> elementer;
 
-
-
+    @Override
+    public String toString() {
+        return "Bolk{" +
+                "bolknavn='" + bolknavn + '\'' +
+                ", tittel='" + tittel + '\'' +
+                ", undertittel='" + undertittel + '\'' +
+                ", antall elementer=" + elementer.size() +
+                '}';
+    }
 }

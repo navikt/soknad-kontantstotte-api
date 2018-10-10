@@ -13,13 +13,30 @@ public class Element {
         return element;
     }
 
+    public static Element nyttSvar(String sporsmal, String svar, String advarsel){
+        Element element = nyttSvar(sporsmal, svar);
+        element.advarsel = advarsel;
+        return element;
+    }
+
     @JsonProperty("sporsmal")
     public String sporsmal;
 
     @JsonProperty("svar")
     public String svar;
 
+    @JsonProperty("advarsel")
+    public String advarsel;
+
     @JsonProperty("underelementer")
     public List<Element> underelementer;
 
+    @Override
+    public String toString() {
+        return "Element{" +
+                "sporsmal='" + sporsmal + '\'' +
+                ", svar='" + svar + '\'' +
+                ", underelementer=" + underelementer +
+                '}';
+    }
 }
