@@ -5,6 +5,9 @@ import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
 import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,10 +34,14 @@ public class SoknadTilOppsummering {
     public static final String FAMILIEFORHOLD_BOR_SAMMEN = "familieforhold.borForeldreneSammenMedBarnet.sporsmal";
     public static final String FAMILIEFORHOLD_NAVN_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderNavn.label";
     public static final String FAMILIEFORHOLD_FNR_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderFodselsnummer.label";
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
+            .withZone(ZoneId.of("Europe/Paris"));
 
     public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
+
         return new SoknadOppsummering(soknad,
                 fnr,
+                FORMATTER.format(soknad.innsendingsTidspunkt),
                 mapBolker(soknad, tekster),
                 tekster);
     }
