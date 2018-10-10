@@ -63,17 +63,17 @@ public class SoknadTilOppsummering {
 
 
     public Bolk mapFamilieforhold(Familieforhold familieforhold, Map<String, String> tekster) {
-        Bolk Bolk = new Bolk();
-        Bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL.getNokkel());
-        Bolk.elementer = new ArrayList<>();
+        Bolk bolk = new Bolk();
+        bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL.getNokkel());
+        bolk.elementer = new ArrayList<>();
         if("NEI".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            Bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel()), tekster.get(SVAR_NEI.getNokkel())));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel()), tekster.get(SVAR_NEI.getNokkel())));
         }if("JA".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            Bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel()), tekster.get(SVAR_JA.getNokkel())));
-            Bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER.getNokkel()), familieforhold.annenForelderNavn));
-            Bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_FNR_ANNEN_FORELDER.getNokkel()), familieforhold.annenForelderFodselsnummer));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel()), tekster.get(SVAR_JA.getNokkel())));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER.getNokkel()), familieforhold.annenForelderNavn));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_FNR_ANNEN_FORELDER.getNokkel()), familieforhold.annenForelderFodselsnummer));
         }
-        return Bolk;
+        return bolk;
     }
 
 
