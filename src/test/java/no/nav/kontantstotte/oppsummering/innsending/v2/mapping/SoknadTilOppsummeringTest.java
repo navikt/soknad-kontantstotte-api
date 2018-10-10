@@ -26,8 +26,10 @@ public class SoknadTilOppsummeringTest {
 
 
         String fnr = "XXXXXXXXXX";
+        Soknad soknad = new Soknad();
+        soknad.markerInnsendingsTidspunkt();
         SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(
-                new Soknad(),
+                soknad,
                 tekster(
                         tekst(SoknadTilOppsummering.BARN_TITTEL, SoknadTilOppsummering.BARN_TITTEL),
                         tekst(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL)
