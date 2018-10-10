@@ -34,14 +34,14 @@ public class SoknadTilOppsummering {
     public static final String FAMILIEFORHOLD_BOR_SAMMEN = "familieforhold.borForeldreneSammenMedBarnet.sporsmal";
     public static final String FAMILIEFORHOLD_NAVN_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderNavn.label";
     public static final String FAMILIEFORHOLD_FNR_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderFodselsnummer.label";
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
+            .withZone(ZoneId.of("Europe/Paris"));
 
     public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
-                .withZone(ZoneId.of("Europe/Paris"));
 
         return new SoknadOppsummering(soknad,
                 fnr,
-                formatter.format(soknad.innsendingsTidspunkt),
+                FORMATTER.format(soknad.innsendingsTidspunkt),
                 mapBolker(soknad, tekster),
                 tekster);
     }

@@ -1,6 +1,8 @@
 package no.nav.kontantstotte.oppsummering.innsending.v2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadOppsummering;
 import no.nav.kontantstotte.tekst.TekstProvider;
@@ -10,6 +12,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -32,6 +35,8 @@ public class SoknadOppsummeringJsonTest {
                 mock(PdfGenService.class));
 
         mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         captor = ArgumentCaptor.forClass(SoknadOppsummering.class);
     }
 
