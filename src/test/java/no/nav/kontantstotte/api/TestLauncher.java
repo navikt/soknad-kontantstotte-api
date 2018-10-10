@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_PDFGEN;
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_NY_OPPSUMMERING;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -74,6 +75,7 @@ public class TestLauncher {
     @Bean
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();
+        fakeUnleash.enable(BRUK_PDFGEN);
         fakeUnleash.enable(KONTANTSTOTTE_NY_OPPSUMMERING);
 
         return fakeUnleash;
