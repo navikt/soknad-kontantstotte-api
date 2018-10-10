@@ -5,6 +5,9 @@ import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
 import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,9 +26,14 @@ import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokke
  */
 public class SoknadTilOppsummering {
 
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
+            .withZone(ZoneId.of("Europe/Paris"));
+
     public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
+
         return new SoknadOppsummering(soknad,
                 fnr,
+                FORMATTER.format(soknad.innsendingsTidspunkt),
                 mapBolker(soknad, tekster),
                 tekster);
     }
