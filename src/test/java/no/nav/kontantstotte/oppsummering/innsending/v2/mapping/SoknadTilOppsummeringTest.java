@@ -19,13 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering.SVAR_JA;
-import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering.SVAR_NEI;
-import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnMapping.*;
-import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping.BARNEHAGEPLASS_TITTEL;
-import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping.BARN_BARNEHAGEPLASS_STATUS;
-import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping.HAR_BARNEHAGEPLASS;
-import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.FamilieforholdMapping.*;
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokkel.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
@@ -44,12 +38,15 @@ public class SoknadTilOppsummeringTest {
     @Test
     public void bolkerIRettRekkefølge() {
         String fnr = "XXXXXXXXXX";
+        Soknad soknad = new Soknad();
+        soknad.markerInnsendingsTidspunkt();
+
         SoknadOppsummering oppsummering = new SoknadTilOppsummering(unleash).map(
-                new Soknad(),
+                soknad,
                 tekster(
-                        tekst(BARN_TITTEL, BARN_TITTEL),
-                        tekst(BARNEHAGEPLASS_TITTEL, BARNEHAGEPLASS_TITTEL),
-                        tekst(FAMILIEFORHOLD_TITTEL, FAMILIEFORHOLD_TITTEL)
+                        tekst(BARN_TITTEL),
+                        tekst(BARNEHAGEPLASS_TITTEL),
+                        tekst(FAMILIEFORHOLD_TITTEL)
                 ),
                 fnr);
 
@@ -57,9 +54,9 @@ public class SoknadTilOppsummeringTest {
                 .extracting("bolknavn", "tittel")
                 .containsSequence(
                         tuple("kravTilSoker", null),
-                        tuple(null, BARN_TITTEL),
-                        tuple(null, BARNEHAGEPLASS_TITTEL),
-                        tuple(null, FAMILIEFORHOLD_TITTEL),
+                        tuple(null, BARN_TITTEL.getNokkel()),
+                        tuple(null, BARNEHAGEPLASS_TITTEL.getNokkel()),
+                        tuple(null, FAMILIEFORHOLD_TITTEL.getNokkel()),
                         tuple("tilknytningTilUtland", null),
                         tuple("arbeidIUtlandet", null),
                         tuple("utenlandskeYtelser", null),
@@ -105,16 +102,16 @@ public class SoknadTilOppsummeringTest {
     @Test
     public void tilBarnehageplassBolk() {
         String tittel = "BARNEHAGEPLASS";
-        String harBarnehageplass = "NEI";
-        String barnBarnehageplassStatus = "garIkkeIBarnehage";
-        String BARNEHAGEPLASS_GAR_IKKE_I_BARNEHAGE = "barnehageplass.garIkkeIBarnehage";
+        String harBarnehageplass = "Har barnet barnehageplass?";
+        String barnBarnehageplassStatusSpormal = "Barnet mitt";
+        String barnBarnehageplassStatusSvar = "går ikke i barnehage";
 
-        Map<String, String> tekster = Collections.unmodifiableMap(Stream.of(
-                new AbstractMap.SimpleEntry<>(BARNEHAGEPLASS_TITTEL, tittel),
-                new AbstractMap.SimpleEntry<>(HAR_BARNEHAGEPLASS, harBarnehageplass),
-                new AbstractMap.SimpleEntry<>(BARN_BARNEHAGEPLASS_STATUS, barnBarnehageplassStatus),
-                new AbstractMap.SimpleEntry<>(BARNEHAGEPLASS_GAR_IKKE_I_BARNEHAGE, barnBarnehageplassStatus))
-                .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
+        Map<String, String> tekster = tekster(
+                tekst(BARNEHAGEPLASS_TITTEL, tittel),
+                tekst(HAR_BARNEHAGEPLASS, harBarnehageplass),
+                tekst(BARN_BARNEHAGEPLASS_STATUS, barnBarnehageplassStatusSpormal),
+                tekst(GAR_IKKE_I_BARNEHAGE, barnBarnehageplassStatusSvar),
+                tekst(SVAR_NEI, NEI));
 
         Soknad soknad = new Soknad();
         Barnehageplass barnehageplass = new Barnehageplass();
@@ -131,8 +128,8 @@ public class SoknadTilOppsummeringTest {
         assertThat(elementer)
                 .extracting("sporsmal", "svar")
                 .contains(
-                        tuple(harBarnehageplass, barnehageplass.harBarnehageplass),
-                        tuple(barnBarnehageplassStatus, barnehageplass.barnBarnehageplassStatus.getKey()));
+                        tuple(harBarnehageplass, NEI),
+                        tuple(barnBarnehageplassStatusSpormal, barnBarnehageplassStatusSvar));
     }
 
     @Test
@@ -195,10 +192,14 @@ public class SoknadTilOppsummeringTest {
 
     private Map<String, String> tekster(AbstractMap.SimpleEntry<String, String>... tekst) {
         return Collections.unmodifiableMap(Stream.of(tekst)
-                .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
+                .collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue)));
     }
 
-    private AbstractMap.SimpleEntry<String, String> tekst(String nokkel, String tekstinnhold) {
-        return new AbstractMap.SimpleEntry<>(nokkel, tekstinnhold);
+    private AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel) {
+        return new AbstractMap.SimpleEntry<>(nokkel.getNokkel(), nokkel.getNokkel());
+    }
+
+    private AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel, String tekstinnhold) {
+        return new AbstractMap.SimpleEntry<>(nokkel.getNokkel(), tekstinnhold);
     }
 }

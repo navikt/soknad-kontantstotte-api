@@ -7,19 +7,15 @@ import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Bolk;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Element;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokkel.*;
 
 public class BarnehageplassMapping implements BolkMapping {
-    public static final String BARNEHAGEPLASS_TITTEL = "barnehageplass.tittel";
-    public static final String HAR_BARNEHAGEPLASS = "oppsummering.barnehageplass.harBarnehageplass";
-    public static final String BARN_BARNEHAGEPLASS_STATUS = "barnehageplass.barnBarnehageplassStatus";
-    public static final String BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL = "advarsel.barnehageplass.timerIBarnehage";
-
     @Override
     public Bolk map(Soknad soknad, Map<String, String> tekster, Unleash unleash) {
 
@@ -29,44 +25,66 @@ public class BarnehageplassMapping implements BolkMapping {
         Bolk barnehageplassBolk = new Bolk();
         Barnehageplass barnehageplass = soknad.barnehageplass;
 
-        barnehageplassBolk.tittel = tekster.get(BARNEHAGEPLASS_TITTEL);
+        barnehageplassBolk.tittel = tekster.get(BARNEHAGEPLASS_TITTEL.getNokkel());
         barnehageplassBolk.elementer = new ArrayList<>();
 
-        barnehageplassBolk.elementer.add(Element.nyttSvar(tekster.get(HAR_BARNEHAGEPLASS), barnehageplass.harBarnehageplass));
+        if("NEI".equalsIgnoreCase(barnehageplass.harBarnehageplass)){
+            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS.getNokkel(), SVAR_NEI.getNokkel()));
+        } else {
+            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS.getNokkel(), SVAR_JA.getNokkel()));
+        }
 
-        /*
         if (barnehageplass.barnBarnehageplassStatus != null) {
-            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(BARN_BARNEHAGEPLASS_STATUS, barnehageplass.barnBarnehageplassStatus.getKeyTekstNokkel()));
-
+            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(BARN_BARNEHAGEPLASS_STATUS.getNokkel(), barnehageplass.barnBarnehageplassStatus.getKeyTekstNokkel()));
 
             switch (barnehageplass.barnBarnehageplassStatus) {
                 case harSluttetIBarnehage:
-                    svar = Arrays.asList(
-                            nyttElementMedVerdisvar.apply("barnehageplass.harBarnehageplass.dato.sporsmal", barnehageplass.harSluttetIBarnehageDato)
-                            , barnehageplass.harSluttetIBarnehageAntallTimer, barnehageplass.harSluttetIBarnehageKommune);
-                    barnehageplassBolk.elementer.addAll(leggTilUtvidetInfoElementer(sporsmal, svar));
+                    barnehageplassBolk.elementer.addAll(
+                        Arrays.asList(
+                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_DATO.getNokkel(), barnehageplass.harSluttetIBarnehageDato),
+                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_ANTALL_TIMER.getNokkel(), barnehageplass.harSluttetIBarnehageAntallTimer),
+                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_KOMMUNE.getNokkel(), barnehageplass.harSluttetIBarnehageKommune)
+                        )
+                    );
                     break;
                 case skalSlutteIBarnehage:
-                    svar = Arrays.asList(barnehageplass.skalSlutteIBarnehageDato, barnehageplass.skalSlutteIBarnehageAntallTimer, barnehageplass.skalSlutteIBarnehageKommune);
-                    barnehageplassBolk.elementer.addAll(leggTilUtvidetInfoElementer(sporsmal, svar));
+                    barnehageplassBolk.elementer.addAll(
+                        Arrays.asList(
+                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_DATO.getNokkel(), barnehageplass.skalSlutteIBarnehageDato),
+                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER.getNokkel(), barnehageplass.skalSlutteIBarnehageAntallTimer),
+                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE.getNokkel(), barnehageplass.skalSlutteIBarnehageKommune)
+                        )
+                    );
                     break;
                 case harBarnehageplass:
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmal.get(0), barnehageplass.harBarnehageplassDato));
-                    if (Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 && unleash.isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL)) {
-                        barnehageplassBolk.elementer.add(
-                                Element.nyttSvar(sporsmal.get(1), barnehageplass.harBarnehageplassAntallTimer, tekster.get(BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL))
-                        );
-                    } else {
-                        barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmal.get(1), barnehageplass.harBarnehageplassAntallTimer));
-                    }
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmal.get(2), barnehageplass.harBarnehageplassKommune));
+                    Element harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 && unleash.isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL) ?
+                            Element.nyttSvar(
+                                    tekster.get(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel()),
+                                    barnehageplass.harBarnehageplassAntallTimer,
+                                    tekster.get(BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL.getNokkel())
+                            ) :
+                            nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel(), barnehageplass.harBarnehageplassAntallTimer);
+
+                    barnehageplassBolk.elementer.addAll(
+                        Arrays.asList(
+                            nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_DATO.getNokkel(), barnehageplass.harBarnehageplassDato),
+                            harBarnehageplassAntallTimer,
+                            nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_KOMMUNE.getNokkel(), barnehageplass.harBarnehageplassKommune)
+                        )
+                    );
+
                     break;
                 case skalBegynneIBarnehage:
-                    svar = Arrays.asList(barnehageplass.skalBegynneIBarnehageDato, barnehageplass.skalBegynneIBarnehageAntallTimer, barnehageplass.skalBegynneIBarnehageKommune);
-                    barnehageplassBolk.elementer.addAll(leggTilUtvidetInfoElementer(sporsmal, svar));
+                    barnehageplassBolk.elementer.addAll(
+                            Arrays.asList(
+                                    nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_DATO.getNokkel(), barnehageplass.skalBegynneIBarnehageDato),
+                                    nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_ANTALL_TIMER.getNokkel(), barnehageplass.skalBegynneIBarnehageAntallTimer),
+                                    nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_KOMMUNE.getNokkel(), barnehageplass.skalBegynneIBarnehageKommune)
+                            )
+                    );
                     break;
             }
-        }*/
+        }
 
         return barnehageplassBolk;
     }

@@ -1,6 +1,6 @@
 {
   "soknad": {
-    "innsendingsTidspunkt": null,
+    "innsendingsTidspunkt": "2018-10-10T11:23:03.181Z",
     "person": {
       "fnr": null
     },
@@ -65,6 +65,7 @@
     "sprak": "nb"
   },
   "fnr": "XXXXXXXXXX",
+  "innsendingsTidspunkt": "10.10.2018 - 13.23",
   "bolker": [
     {
       "bolknavn": "kravTilSoker",
@@ -98,7 +99,7 @@
       "elementer": [
         {
           "sporsmal": "Har barnet barnehageplass?",
-          "svar": "JA",
+          "svar": "Ja",
           "advarsel": null,
           "underelementer": null
         },

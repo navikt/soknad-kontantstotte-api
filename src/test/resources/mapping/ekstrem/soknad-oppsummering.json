@@ -1,5 +1,6 @@
 {
   "soknad": {
+    "innsendingsTidspunkt": "2018-10-10T11:23:03.181Z",
     "arbeidIUtlandet": {
       "arbeiderAnnenForelderIUtlandet": "JA",
       "arbeiderAnnenForelderIUtlandetForklaring": "Andre forelder oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor h*n arbeidet i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel.\n",
@@ -61,6 +62,7 @@
     "sprak": "nb"
   },
   "fnr": "XXXXXXXXXX",
+  "innsendingsTidspunkt": "10.10.2018 - 13.23",
   "bolker": [
     {
       "bolknavn": "kravTilSoker",
@@ -94,7 +96,7 @@
       "elementer": [
         {
           "sporsmal": "Har barnet barnehageplass?",
-          "svar": "JA",
+          "svar": "Ja",
           "advarsel": null,
           "underelementer": null
         },

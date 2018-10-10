@@ -2,6 +2,8 @@ package no.nav.kontantstotte.oppsummering.innsending.v2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.finn.unleash.FakeUnleash;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadOppsummering;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering;
@@ -12,6 +14,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,6 +41,8 @@ public class SoknadOppsummeringJsonTest {
                 new SoknadTilOppsummering(fakeUnleash));
 
         mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         captor = ArgumentCaptor.forClass(SoknadOppsummering.class);
     }
 

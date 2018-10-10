@@ -3,21 +3,16 @@ package no.nav.kontantstotte.oppsummering.innsending.v2.mapping;
 
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.Soknad;
-import no.nav.kontantstotte.oppsummering.bolk.Barn;
-import no.nav.kontantstotte.oppsummering.bolk.Barnehageplass;
-import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnMapping;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.FamilieforholdMapping;
 
-import java.util.ArrayList;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
-
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 
 /**
  * Klassen benyttes til ny pdf generering.
@@ -28,8 +23,9 @@ import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOT
  * funksjon som erstatter det gamle attributtet.
  */
 public class SoknadTilOppsummering {
-    public static final String SVAR_NEI = "svar.nei";
-    public static final String SVAR_JA = "svar.ja";
+
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
+            .withZone(ZoneId.of("Europe/Paris"));
 
     private final Unleash unleash;
 
@@ -40,6 +36,7 @@ public class SoknadTilOppsummering {
     public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
         return new SoknadOppsummering(soknad,
                 fnr,
+                FORMATTER.format(soknad.innsendingsTidspunkt),
                 mapBolker(soknad, tekster),
                 tekster);
     }
