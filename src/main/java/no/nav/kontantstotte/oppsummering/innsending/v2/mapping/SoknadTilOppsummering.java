@@ -6,11 +6,15 @@ import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
 import no.nav.kontantstotte.oppsummering.bolk.Barnehageplass;
 import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.FamilieforholdMapping;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
@@ -26,19 +30,6 @@ import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOT
 public class SoknadTilOppsummering {
     public static final String SVAR_NEI = "svar.nei";
     public static final String SVAR_JA = "svar.ja";
-    public static final String BARN_TITTEL = "barn.tittel";
-    public static final String BARN_UNDERTITTEL = "oppsummering.barn.subtittel";
-    public static final String BARN_NAVN = "barn.navn";
-    public static final String BARN_FODSELSDATO = "barn.fodselsdato";
-    public static final String FAMILIEFORHOLD_TITTEL = "familieforhold.tittel";
-    public static final String FAMILIEFORHOLD_BOR_SAMMEN = "familieforhold.borForeldreneSammenMedBarnet.sporsmal";
-    public static final String FAMILIEFORHOLD_NAVN_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderNavn.label";
-    public static final String FAMILIEFORHOLD_FNR_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderFodselsnummer.label";
-
-    public static final String BARNEHAGEPLASS_TITTEL = "barnehageplass.tittel";
-    public static final String HAR_BARNEHAGEPLASS = "oppsummering.barnehageplass.harBarnehageplass";
-    public static final String BARN_BARNEHAGEPLASS_STATUS = "barnehageplass.barnBarnehageplassStatus";
-    public static final String BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL = "advarsel.barnehageplass.timerIBarnehage";
 
     private final Unleash unleash;
 
@@ -56,9 +47,9 @@ public class SoknadTilOppsummering {
     private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
         return Arrays.asList(
                 nyBolk("kravTilSoker"),
-                mapBarn(soknad.mineBarn, tekster),
-                mapBarnehageplass(soknad.barnehageplass, tekster),
-                mapFamilieforhold(soknad.familieforhold, tekster),
+                new BarnMapping().map(soknad, tekster, unleash),
+                new BarnehageplassMapping().map(soknad, tekster, unleash),
+                new FamilieforholdMapping().map(soknad, tekster, unleash),
                 nyBolk("tilknytningTilUtland"),
                 nyBolk("arbeidIUtlandet"),
                 nyBolk("utenlandskeYtelser"),
@@ -73,75 +64,11 @@ public class SoknadTilOppsummering {
         return bolk;
     }
 
-    public Bolk mapBarn(Barn barn, Map<String, String> tekster) {
-        Bolk barneBolk = new Bolk();
-        barneBolk.tittel = tekster.get(BARN_TITTEL);
-        barneBolk.undertittel = tekster.get(BARN_UNDERTITTEL);
-        barneBolk.elementer = new ArrayList<>();
-        barneBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_NAVN), barn.navn));
-        barneBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_FODSELSDATO), barn.fodselsdato));
-        return barneBolk;
+    public static BiFunction<String, String, Element> opprettElementMedTekster(Map<String, String> tekster){
+        return (String sporsmal, String svar) -> Element.nyttSvar(tekster.get(sporsmal), tekster.get(svar));
     }
 
-    public Bolk mapBarnehageplass(Barnehageplass barnehageplass, Map<String, String> tekster) {
-        Bolk barnehageplassBolk = new Bolk();
-        barnehageplassBolk.tittel = tekster.get(BARNEHAGEPLASS_TITTEL);
-        barnehageplassBolk.elementer = new ArrayList<>();
-
-        barnehageplassBolk.elementer.add(Element.nyttSvar(tekster.get(HAR_BARNEHAGEPLASS), barnehageplass.harBarnehageplass));
-
-        if (barnehageplass.barnBarnehageplassStatus != null) {
-            barnehageplassBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_BARNEHAGEPLASS_STATUS), tekster.get(barnehageplass.barnBarnehageplassStatus.getTekstNokkel())));
-
-            List<String> sporsmalNokler = barnehageplass.barnBarnehageplassStatus.getSporsmalNokler().stream().map(tekster::get).collect(Collectors.toList());
-            switch (barnehageplass.barnBarnehageplassStatus) {
-                case harSluttetIBarnehage:
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(0), barnehageplass.harSluttetIBarnehageDato));
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(1), barnehageplass.harSluttetIBarnehageAntallTimer));
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(2), barnehageplass.harSluttetIBarnehageKommune));
-                    break;
-                case skalSlutteIBarnehage:
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(0), barnehageplass.skalSlutteIBarnehageDato));
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(1), barnehageplass.skalSlutteIBarnehageAntallTimer));
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(2), barnehageplass.skalSlutteIBarnehageKommune));
-                    break;
-                case harBarnehageplass:
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(0), barnehageplass.harBarnehageplassDato));
-                    if (Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 && unleash.isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL)) {
-                        barnehageplassBolk.elementer.add(
-                                Element.nyttSvar(sporsmalNokler.get(1), barnehageplass.harBarnehageplassAntallTimer, tekster.get(BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL))
-                        );
-                    } else {
-                        barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(1), barnehageplass.harBarnehageplassAntallTimer));
-                    }
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(2), barnehageplass.harBarnehageplassKommune));
-                    break;
-                case skalBegynneIBarnehage:
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(0), barnehageplass.skalBegynneIBarnehageDato));
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(1), barnehageplass.skalBegynneIBarnehageAntallTimer));
-                    barnehageplassBolk.elementer.add(Element.nyttSvar(sporsmalNokler.get(2), barnehageplass.skalBegynneIBarnehageKommune));
-                    break;
-            }
-        }
-
-        return barnehageplassBolk;
+    public static BiFunction<String, String, Element> opprettElementMedVerdier(Map<String, String> tekster){
+        return (String sporsmal, String svar) -> Element.nyttSvar(tekster.get(sporsmal), svar);
     }
-
-
-    public Bolk mapFamilieforhold(Familieforhold familieforhold, Map<String, String> tekster) {
-        Bolk bolk = new Bolk();
-        bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL);
-        bolk.elementer = new ArrayList<>();
-        if("NEI".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN), tekster.get(SVAR_NEI)));
-        }if("JA".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN), tekster.get(SVAR_JA)));
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER), familieforhold.annenForelderNavn));
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_FNR_ANNEN_FORELDER), familieforhold.annenForelderFodselsnummer));
-        }
-        return bolk;
-    }
-
-
-
 }

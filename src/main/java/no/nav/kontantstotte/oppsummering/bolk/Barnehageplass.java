@@ -49,25 +49,25 @@ public class Barnehageplass {
         Ubesvart("Ubesvart", "", Collections.emptyList());
 
         String key;
-        String tekstNokkel;
-        List<String> sporsmalNokler;
+        String keyTekstNokkel;
+        List<String> sporsmalTekstNokler;
 
-        BarnehageplassVerdier(String key, String tekstNokkel, List<String> sporsmalNokler) {
+        BarnehageplassVerdier(String key, String keyTekstNokkel, List<String> sporsmalTekstNokler) {
             this.key = key;
-            this.tekstNokkel = tekstNokkel;
-            this.sporsmalNokler = sporsmalNokler;
+            this.keyTekstNokkel = keyTekstNokkel;
+            this.sporsmalTekstNokler = sporsmalTekstNokler;
         }
 
         public String getKey() {
             return key;
         }
 
-        public String getTekstNokkel() {
-            return tekstNokkel;
+        public String getKeyTekstNokkel() {
+            return keyTekstNokkel;
         }
 
-        public List<String> getSporsmalNokler() {
-            return sporsmalNokler;
+        public List<String> getSporsmalTekstNokler() {
+            return sporsmalTekstNokler;
         }
     }
 }

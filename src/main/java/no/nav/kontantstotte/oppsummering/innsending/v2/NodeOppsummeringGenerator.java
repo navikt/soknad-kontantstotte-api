@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.oppsummering.innsending.v2;
 
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.innsending.OppsummeringGenerator;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadOppsummering;

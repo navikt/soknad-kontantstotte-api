@@ -13,6 +13,7 @@ import org.mockito.ArgumentCaptor;
 import java.io.File;
 import java.io.IOException;
 
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,13 +26,16 @@ public class SoknadOppsummeringJsonTest {
 
     @Before
     public void setup(){
+        FakeUnleash fakeUnleash = new FakeUnleash();
+        fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
+
         htmlOppsummeringService = mock(HtmlOppsummeringService.class);
 
         nodeOppsummeringGenerator = new NodeOppsummeringGenerator(
                 new TekstProvider("mapping_tekster", "nb"),
                 htmlOppsummeringService,
                 mock(PdfGenService.class),
-                new SoknadTilOppsummering(new FakeUnleash()));
+                new SoknadTilOppsummering(fakeUnleash));
 
         mapper = new ObjectMapper();
         captor = ArgumentCaptor.forClass(SoknadOppsummering.class);

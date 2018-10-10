@@ -19,16 +19,16 @@
     },
     "barnehageplass": {
       "harBarnehageplass": "JA",
-      "barnBarnehageplassStatus": "skalBegynneIBarnehage",
-      "harBarnehageplassAntallTimer": "",
-      "harBarnehageplassDato": "",
-      "harBarnehageplassKommune": "",
+      "barnBarnehageplassStatus": "harBarnehageplass",
+      "harBarnehageplassAntallTimer": "40",
+      "harBarnehageplassDato": "01.01.2019",
+      "harBarnehageplassKommune": "Oslo",
       "harSluttetIBarnehageKommune": "",
       "harSluttetIBarnehageAntallTimer": "",
       "harSluttetIBarnehageDato": "",
-      "skalBegynneIBarnehageKommune": "Oslo",
-      "skalBegynneIBarnehageAntallTimer": "10",
-      "skalBegynneIBarnehageDato": "01.01.2019",
+      "skalBegynneIBarnehageKommune": "",
+      "skalBegynneIBarnehageAntallTimer": "",
+      "skalBegynneIBarnehageDato": "",
       "skalSlutteIBarnehageKommune": "",
       "skalSlutteIBarnehageAntallTimer": "",
       "skalSlutteIBarnehageDato": ""
@@ -104,20 +104,20 @@
         },
         {
           "sporsmal": "Barnet mitt",
-          "svar": "skal begynne i barnehage",
+          "svar": "har barnehageplass",
           "advarsel": null,
           "underelementer": null
         },
         {
-          "sporsmal": "Når skal barnet starte i barnehagen?",
+          "sporsmal": "Hvilken dato startet barnet i barnehagen?",
           "svar": "01.01.2019",
           "advarsel": null,
           "underelementer": null
         },
         {
-          "sporsmal": "Hvor mange timer i uken har barnet fått i barnehagen?",
-          "svar": "10",
-          "advarsel": null,
+          "sporsmal": "Hvor mange timer i uken har barnet fått plass i barnehagen?",
+          "svar": "40",
+          "advarsel": "Du får ikke kontantstøtte hvis barnet har plasss i barnehagen mer enn 33 timer i uken. Det betyr at du ikke trenger å sende inn denne søknaden.",
           "underelementer": null
         },
         {

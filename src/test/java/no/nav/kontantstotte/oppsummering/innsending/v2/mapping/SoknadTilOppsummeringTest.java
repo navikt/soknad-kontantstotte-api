@@ -6,6 +6,9 @@ import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
 import no.nav.kontantstotte.oppsummering.bolk.Barnehageplass;
 import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.FamilieforholdMapping;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +19,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering.SVAR_JA;
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering.SVAR_NEI;
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnMapping.*;
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping.BARNEHAGEPLASS_TITTEL;
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping.BARN_BARNEHAGEPLASS_STATUS;
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping.HAR_BARNEHAGEPLASS;
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.FamilieforholdMapping.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
@@ -37,9 +47,9 @@ public class SoknadTilOppsummeringTest {
         SoknadOppsummering oppsummering = new SoknadTilOppsummering(unleash).map(
                 new Soknad(),
                 tekster(
-                        tekst(SoknadTilOppsummering.BARN_TITTEL, SoknadTilOppsummering.BARN_TITTEL),
-                        tekst(SoknadTilOppsummering.BARNEHAGEPLASS_TITTEL, SoknadTilOppsummering.BARNEHAGEPLASS_TITTEL),
-                        tekst(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL)
+                        tekst(BARN_TITTEL, BARN_TITTEL),
+                        tekst(BARNEHAGEPLASS_TITTEL, BARNEHAGEPLASS_TITTEL),
+                        tekst(FAMILIEFORHOLD_TITTEL, FAMILIEFORHOLD_TITTEL)
                 ),
                 fnr);
 
@@ -47,9 +57,9 @@ public class SoknadTilOppsummeringTest {
                 .extracting("bolknavn", "tittel")
                 .containsSequence(
                         tuple("kravTilSoker", null),
-                        tuple(null, SoknadTilOppsummering.BARN_TITTEL),
-                        tuple(null, SoknadTilOppsummering.BARNEHAGEPLASS_TITTEL),
-                        tuple(null, SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL),
+                        tuple(null, BARN_TITTEL),
+                        tuple(null, BARNEHAGEPLASS_TITTEL),
+                        tuple(null, FAMILIEFORHOLD_TITTEL),
                         tuple("tilknytningTilUtland", null),
                         tuple("arbeidIUtlandet", null),
                         tuple("utenlandskeYtelser", null),
@@ -68,15 +78,18 @@ public class SoknadTilOppsummeringTest {
         String fodselsdato = "Fødselsdato";
 
         Map<String, String> tekster = tekster(
-                tekst(SoknadTilOppsummering.BARN_TITTEL, tittel),
-                tekst(SoknadTilOppsummering.BARN_UNDERTITTEL, undertittel),
-                tekst(SoknadTilOppsummering.BARN_NAVN, navn),
-                tekst(SoknadTilOppsummering.BARN_FODSELSDATO, fodselsdato));
+                tekst(BARN_TITTEL, tittel),
+                tekst(BARN_UNDERTITTEL, undertittel),
+                tekst(BARN_NAVN, navn),
+                tekst(BARN_FODSELSDATO, fodselsdato));
 
+        Soknad soknad = new Soknad();
         Barn innsendtBarn = new Barn();
         innsendtBarn.navn = "Barnets navn";
         innsendtBarn.fodselsdato = "01.01.2019";
-        Bolk bolk = new SoknadTilOppsummering(unleash).mapBarn(innsendtBarn, tekster);
+        soknad.mineBarn = innsendtBarn;
+
+        Bolk bolk = new BarnMapping().map(soknad, tekster, unleash);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, undertittel);
@@ -97,17 +110,19 @@ public class SoknadTilOppsummeringTest {
         String BARNEHAGEPLASS_GAR_IKKE_I_BARNEHAGE = "barnehageplass.garIkkeIBarnehage";
 
         Map<String, String> tekster = Collections.unmodifiableMap(Stream.of(
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.BARNEHAGEPLASS_TITTEL, tittel),
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.HAR_BARNEHAGEPLASS, harBarnehageplass),
-                new AbstractMap.SimpleEntry<>(SoknadTilOppsummering.BARN_BARNEHAGEPLASS_STATUS, barnBarnehageplassStatus),
+                new AbstractMap.SimpleEntry<>(BARNEHAGEPLASS_TITTEL, tittel),
+                new AbstractMap.SimpleEntry<>(HAR_BARNEHAGEPLASS, harBarnehageplass),
+                new AbstractMap.SimpleEntry<>(BARN_BARNEHAGEPLASS_STATUS, barnBarnehageplassStatus),
                 new AbstractMap.SimpleEntry<>(BARNEHAGEPLASS_GAR_IKKE_I_BARNEHAGE, barnBarnehageplassStatus))
                 .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
 
+        Soknad soknad = new Soknad();
         Barnehageplass barnehageplass = new Barnehageplass();
         barnehageplass.harBarnehageplass = "NEI";
         barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.garIkkeIBarnehage;
+        soknad.barnehageplass = barnehageplass;
 
-        Bolk bolk = new SoknadTilOppsummering(unleash).mapBarnehageplass(barnehageplass, tekster);
+        Bolk bolk = new BarnehageplassMapping().map(soknad, tekster, unleash);
         assertThat(bolk)
                 .extracting("tittel")
                 .containsExactly(tittel);
@@ -126,14 +141,16 @@ public class SoknadTilOppsummeringTest {
         String sporsmal = "Bor du sammen med den andre forelderen?";
 
         Map<String, String> tekster = tekster(
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, tittel),
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
-                tekst(SoknadTilOppsummering.SVAR_NEI, NEI));
+                tekst(FAMILIEFORHOLD_TITTEL, tittel),
+                tekst(FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
+                tekst(SVAR_NEI, NEI));
 
-
+        Soknad soknad = new Soknad();
         Familieforhold familieforhold = new Familieforhold();
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
-        Bolk bolk = new SoknadTilOppsummering(unleash).mapFamilieforhold(familieforhold, tekster);
+        soknad.familieforhold = familieforhold;
+
+        Bolk bolk = new FamilieforholdMapping().map(soknad, tekster, unleash);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, null);
@@ -152,17 +169,19 @@ public class SoknadTilOppsummeringTest {
         String sporsmal_fnr = "Fødselsnummeret til den andre forelderen:";
 
         Map<String, String> tekster = tekster(
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_NAVN_ANNEN_FORELDER, sporsmal_navn),
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_FNR_ANNEN_FORELDER, sporsmal_fnr),
-                tekst(SoknadTilOppsummering.SVAR_JA, JA));
+                tekst(FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
+                tekst(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER, sporsmal_navn),
+                tekst(FAMILIEFORHOLD_FNR_ANNEN_FORELDER, sporsmal_fnr),
+                tekst(SVAR_JA, JA));
 
-
+        Soknad soknad = new Soknad();
         Familieforhold familieforhold = new Familieforhold();
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         familieforhold.annenForelderNavn = "NN";
         familieforhold.annenForelderFodselsnummer = "XXXXXX";
-        Bolk bolk = new SoknadTilOppsummering(unleash).mapFamilieforhold(familieforhold, tekster);
+        soknad.familieforhold = familieforhold;
+
+        Bolk bolk = new FamilieforholdMapping().map(soknad, tekster, unleash);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -172,8 +191,6 @@ public class SoknadTilOppsummeringTest {
                         tuple(sporsmal_navn, familieforhold.annenForelderNavn),
                         tuple(sporsmal_fnr, familieforhold.annenForelderFodselsnummer)
                 );
-
-
     }
 
     private Map<String, String> tekster(AbstractMap.SimpleEntry<String, String>... tekst) {
