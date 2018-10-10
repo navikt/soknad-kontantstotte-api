@@ -86,7 +86,7 @@ public class SoknadTilOppsummeringTest {
         innsendtBarn.fodselsdato = "01.01.2019";
         soknad.mineBarn = innsendtBarn;
 
-        Bolk bolk = new BarnMapping().map(soknad, tekster, unleash);
+        Bolk bolk = new BarnMapping(tekster).map(soknad, unleash);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, undertittel);
@@ -119,7 +119,7 @@ public class SoknadTilOppsummeringTest {
         barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.garIkkeIBarnehage;
         soknad.barnehageplass = barnehageplass;
 
-        Bolk bolk = new BarnehageplassMapping().map(soknad, tekster, unleash);
+        Bolk bolk = new BarnehageplassMapping(tekster).map(soknad, unleash);
         assertThat(bolk)
                 .extracting("tittel")
                 .containsExactly(tittel);
@@ -147,7 +147,7 @@ public class SoknadTilOppsummeringTest {
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new FamilieforholdMapping().map(soknad, tekster, unleash);
+        Bolk bolk = new FamilieforholdMapping(tekster).map(soknad, unleash);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, null);
@@ -178,7 +178,7 @@ public class SoknadTilOppsummeringTest {
         familieforhold.annenForelderFodselsnummer = "XXXXXX";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new FamilieforholdMapping().map(soknad, tekster, unleash);
+        Bolk bolk = new FamilieforholdMapping(tekster).map(soknad, unleash);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)

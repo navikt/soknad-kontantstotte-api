@@ -1,9 +1,5 @@
 package no.nav.kontantstotte.oppsummering.bolk;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class Barnehageplass {
     public String harBarnehageplass;
     public BarnehageplassVerdier barnBarnehageplassStatus;
@@ -21,53 +17,27 @@ public class Barnehageplass {
     public String skalSlutteIBarnehageDato;
 
     public enum BarnehageplassVerdier {
-        garIkkeIBarnehage("garIkkeIBarnehage", "barnehageplass.garIkkeIBarnehage", Collections.emptyList()),
-        harBarnehageplass("harBarnehageplass", "barnehageplass.harBarnehageplass",
-                Arrays.asList(
-                        "barnehageplass.harBarnehageplass.dato.sporsmal",
-                        "barnehageplass.harBarnehageplass.antallTimer.sporsmal",
-                        "barnehageplass.harBarnehageplass.kommune.sporsmal"
-                )),
-        harSluttetIBarnehage("harSluttetIBarnehage", "barnehageplass.harSluttetIBarnehage",
-                Arrays.asList(
-                        "barnehageplass.harSluttetIBarnehage.dato.sporsmal",
-                        "barnehageplass.harSluttetIBarnehage.antallTimer.sporsmal",
-                        "barnehageplass.harSluttetIBarnehage.kommune.sporsmal"
-                )),
-        skalBegynneIBarnehage("skalBegynneIBarnehage", "barnehageplass.skalBegynneIBarnehage",
-                Arrays.asList(
-                        "barnehageplass.skalBegynneIBarnehage.dato.sporsmal",
-                        "barnehageplass.skalBegynneIBarnehage.antallTimer.sporsmal",
-                        "barnehageplass.skalBegynneIBarnehage.kommune.sporsmal"
-                )),
-        skalSlutteIBarnehage("skalSlutteIBarnehage", "barnehageplass.skalSlutteIBarnehage",
-                Arrays.asList(
-                        "barnehageplass.skalSlutteIBarnehage.dato.sporsmal",
-                        "barnehageplass.skalSlutteIBarnehage.antallTimer.sporsmal",
-                        "barnehageplass.skalSlutteIBarnehage.kommune.sporsmal"
-                )),
-        Ubesvart("Ubesvart", "", Collections.emptyList());
+        garIkkeIBarnehage("garIkkeIBarnehage", "barnehageplass.garIkkeIBarnehage"),
+        harBarnehageplass("harBarnehageplass", "barnehageplass.harBarnehageplass"),
+        harSluttetIBarnehage("harSluttetIBarnehage", "barnehageplass.harSluttetIBarnehage"),
+        skalBegynneIBarnehage("skalBegynneIBarnehage", "barnehageplass.skalBegynneIBarnehage"),
+        skalSlutteIBarnehage("skalSlutteIBarnehage", "barnehageplass.skalSlutteIBarnehage"),
+        Ubesvart("Ubesvart", "");
 
         String key;
-        String keyTekstNokkel;
-        List<String> sporsmalTekstNokler;
+        String tekstNokkel;
 
-        BarnehageplassVerdier(String key, String keyTekstNokkel, List<String> sporsmalTekstNokler) {
+        BarnehageplassVerdier(String key, String tekstNokkel) {
             this.key = key;
-            this.keyTekstNokkel = keyTekstNokkel;
-            this.sporsmalTekstNokler = sporsmalTekstNokler;
+            this.tekstNokkel = tekstNokkel;
         }
 
         public String getKey() {
             return key;
         }
 
-        public String getKeyTekstNokkel() {
-            return keyTekstNokkel;
-        }
-
-        public List<String> getSporsmalTekstNokler() {
-            return sporsmalTekstNokler;
+        public String getTekstNokkel() {
+            return tekstNokkel;
         }
     }
 }

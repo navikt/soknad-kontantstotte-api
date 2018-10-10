@@ -23,7 +23,6 @@ import java.util.function.BiFunction;
  * funksjon som erstatter det gamle attributtet.
  */
 public class SoknadTilOppsummering {
-
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
             .withZone(ZoneId.of("Europe/Paris"));
 
@@ -42,11 +41,12 @@ public class SoknadTilOppsummering {
     }
 
     private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
+
         return Arrays.asList(
                 nyBolk("kravTilSoker"),
-                new BarnMapping().map(soknad, tekster, unleash),
-                new BarnehageplassMapping().map(soknad, tekster, unleash),
-                new FamilieforholdMapping().map(soknad, tekster, unleash),
+                new BarnMapping(tekster).map(soknad, unleash),
+                new BarnehageplassMapping(tekster).map(soknad, unleash),
+                new FamilieforholdMapping(tekster).map(soknad, unleash),
                 nyBolk("tilknytningTilUtland"),
                 nyBolk("arbeidIUtlandet"),
                 nyBolk("utenlandskeYtelser"),

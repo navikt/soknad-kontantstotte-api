@@ -5,23 +5,21 @@ import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barnehageplass;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Bolk;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Element;
-import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokkel.*;
 
-public class BarnehageplassMapping implements BolkMapping {
+public class BarnehageplassMapping extends BolkMapping {
+    public BarnehageplassMapping(Map<String, String> tekster) {
+        super(tekster);
+    }
+
     @Override
-    public Bolk map(Soknad soknad, Map<String, String> tekster, Unleash unleash) {
-
-        BiFunction<String, String, Element> nyttElementMedTekstsvar = SoknadTilOppsummering.opprettElementMedTekster(tekster);
-        BiFunction<String, String, Element> nyttElementMedVerdisvar = SoknadTilOppsummering.opprettElementMedVerdier(tekster);
-
+    public Bolk map(Soknad soknad, Unleash unleash) {
         Bolk barnehageplassBolk = new Bolk();
         Barnehageplass barnehageplass = soknad.barnehageplass;
 
@@ -35,7 +33,7 @@ public class BarnehageplassMapping implements BolkMapping {
         }
 
         if (barnehageplass.barnBarnehageplassStatus != null) {
-            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(BARN_BARNEHAGEPLASS_STATUS.getNokkel(), barnehageplass.barnBarnehageplassStatus.getKeyTekstNokkel()));
+            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(BARN_BARNEHAGEPLASS_STATUS.getNokkel(), barnehageplass.barnBarnehageplassStatus.getTekstNokkel()));
 
             switch (barnehageplass.barnBarnehageplassStatus) {
                 case harSluttetIBarnehage:
