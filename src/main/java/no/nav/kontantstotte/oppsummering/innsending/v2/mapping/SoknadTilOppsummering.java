@@ -5,6 +5,9 @@ import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
 import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,8 +36,12 @@ public class SoknadTilOppsummering {
     public static final String FAMILIEFORHOLD_FNR_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderFodselsnummer.label";
 
     public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
+                .withZone(ZoneId.of("Europe/Paris"));
+
         return new SoknadOppsummering(soknad,
                 fnr,
+                formatter.format(soknad.innsendingsTidspunkt),
                 mapBolker(soknad, tekster),
                 tekster);
     }
