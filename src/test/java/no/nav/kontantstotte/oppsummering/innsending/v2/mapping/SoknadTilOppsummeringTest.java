@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokkel.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
@@ -31,8 +32,8 @@ public class SoknadTilOppsummeringTest {
         SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(
                 soknad,
                 tekster(
-                        tekst(SoknadTilOppsummering.BARN_TITTEL, SoknadTilOppsummering.BARN_TITTEL),
-                        tekst(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL)
+                        tekst(BARN_TITTEL),
+                        tekst(FAMILIEFORHOLD_TITTEL)
                 ),
                 fnr);
 
@@ -40,9 +41,9 @@ public class SoknadTilOppsummeringTest {
                 .extracting("bolknavn", "tittel")
                 .containsSequence(
                         tuple("kravTilSoker", null),
-                        tuple(null, SoknadTilOppsummering.BARN_TITTEL),
+                        tuple(null, BARN_TITTEL.getNokkel()),
                         tuple("barnehageplass", null),
-                        tuple(null, SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL),
+                        tuple(null, FAMILIEFORHOLD_TITTEL.getNokkel()),
                         tuple("tilknytningTilUtland", null),
                         tuple("arbeidIUtlandet", null),
                         tuple("utenlandskeYtelser", null),
@@ -61,10 +62,10 @@ public class SoknadTilOppsummeringTest {
         String fodselsdato = "Fødselsdato";
 
         Map<String, String> tekster = tekster(
-                tekst(SoknadTilOppsummering.BARN_TITTEL, tittel),
-                tekst(SoknadTilOppsummering.BARN_UNDERTITTEL, undertittel),
-                tekst(SoknadTilOppsummering.BARN_NAVN, navn),
-                tekst(SoknadTilOppsummering.BARN_FODSELSDATO, fodselsdato));
+                tekst(BARN_TITTEL, tittel),
+                tekst(BARN_UNDERTITTEL, undertittel),
+                tekst(BARN_NAVN, navn),
+                tekst(BARN_FODSELSDATO, fodselsdato));
 
         Barn innsendtBarn = new Barn();
         innsendtBarn.navn = "Barnets navn";
@@ -90,9 +91,9 @@ public class SoknadTilOppsummeringTest {
         String sporsmal = "Bor du sammen med den andre forelderen?";
 
         Map<String, String> tekster = tekster(
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, tittel),
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
-                tekst(SoknadTilOppsummering.SVAR_NEI, NEI));
+                tekst(FAMILIEFORHOLD_TITTEL, tittel),
+                tekst(FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
+                tekst(SVAR_NEI, NEI));
 
 
         Familieforhold familieforhold = new Familieforhold();
@@ -118,10 +119,10 @@ public class SoknadTilOppsummeringTest {
         String sporsmal_fnr = "Fødselsnummeret til den andre forelderen:";
 
         Map<String, String> tekster = tekster(
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_NAVN_ANNEN_FORELDER, sporsmal_navn),
-                tekst(SoknadTilOppsummering.FAMILIEFORHOLD_FNR_ANNEN_FORELDER, sporsmal_fnr),
-                tekst(SoknadTilOppsummering.SVAR_JA, JA));
+                tekst(FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
+                tekst(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER, sporsmal_navn),
+                tekst(FAMILIEFORHOLD_FNR_ANNEN_FORELDER, sporsmal_fnr),
+                tekst(SVAR_JA, JA));
 
 
         Familieforhold familieforhold = new Familieforhold();
@@ -147,8 +148,12 @@ public class SoknadTilOppsummeringTest {
                 .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
     }
 
-    private AbstractMap.SimpleEntry<String, String> tekst(String nokkel, String tekstinnhold) {
-        return new AbstractMap.SimpleEntry<>(nokkel, tekstinnhold);
+    private AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel) {
+        return new AbstractMap.SimpleEntry<>(nokkel.getNokkel(), nokkel.getNokkel());
+    }
+
+    private AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel, String tekstinnhold) {
+        return new AbstractMap.SimpleEntry<>(nokkel.getNokkel(), tekstinnhold);
     }
 
 

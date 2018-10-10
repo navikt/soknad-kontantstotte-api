@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokkel.*;
+
 
 /**
  * Klassen benyttes til ny pdf generering.
@@ -24,16 +26,6 @@ import java.util.Map;
  */
 public class SoknadTilOppsummering {
 
-    public static final String SVAR_NEI = "svar.nei";
-    public static final String SVAR_JA = "svar.ja";
-    public static final String BARN_TITTEL = "barn.tittel";
-    public static final String BARN_UNDERTITTEL = "oppsummering.barn.subtittel";
-    public static final String BARN_NAVN = "barn.navn";
-    public static final String BARN_FODSELSDATO = "barn.fodselsdato";
-    public static final String FAMILIEFORHOLD_TITTEL = "familieforhold.tittel";
-    public static final String FAMILIEFORHOLD_BOR_SAMMEN = "familieforhold.borForeldreneSammenMedBarnet.sporsmal";
-    public static final String FAMILIEFORHOLD_NAVN_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderNavn.label";
-    public static final String FAMILIEFORHOLD_FNR_ANNEN_FORELDER = "oppsummering.familieforhold.annenForelderFodselsnummer.label";
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
             .withZone(ZoneId.of("Europe/Paris"));
 
@@ -61,32 +53,33 @@ public class SoknadTilOppsummering {
     }
 
     private Bolk nyBolk(String bolknavn) {
-        Bolk bolk = new Bolk();
-        bolk.bolknavn = bolknavn;
-        return bolk;
+        Bolk Bolk = new Bolk();
+        Bolk.bolknavn = bolknavn;
+        return Bolk;
     }
 
+
     public Bolk mapBarn(Barn barn, Map<String, String> tekster) {
-        Bolk barneBolk = new Bolk();
-        barneBolk.tittel = tekster.get(BARN_TITTEL);
-        barneBolk.undertittel = tekster.get(BARN_UNDERTITTEL);
-        barneBolk.elementer = new ArrayList<>();
-        barneBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_NAVN), barn.navn));
-        barneBolk.elementer.add(Element.nyttSvar(tekster.get(BARN_FODSELSDATO), barn.fodselsdato));
-        return barneBolk;
+        Bolk bolk = new Bolk();
+        bolk.tittel = tekster.get(BARN_TITTEL.getNokkel());
+        bolk.undertittel = tekster.get(BARN_UNDERTITTEL.getNokkel());
+        bolk.elementer = new ArrayList<>();
+        bolk.elementer.add(Element.nyttSvar(tekster.get(BARN_NAVN.getNokkel()), barn.navn));
+        bolk.elementer.add(Element.nyttSvar(tekster.get(BARN_FODSELSDATO.getNokkel()), barn.fodselsdato));
+        return bolk;
     }
 
 
     public Bolk mapFamilieforhold(Familieforhold familieforhold, Map<String, String> tekster) {
         Bolk bolk = new Bolk();
-        bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL);
+        bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL.getNokkel());
         bolk.elementer = new ArrayList<>();
         if("NEI".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN), tekster.get(SVAR_NEI)));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel()), tekster.get(SVAR_NEI.getNokkel())));
         }if("JA".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN), tekster.get(SVAR_JA)));
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER), familieforhold.annenForelderNavn));
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_FNR_ANNEN_FORELDER), familieforhold.annenForelderFodselsnummer));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel()), tekster.get(SVAR_JA.getNokkel())));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER.getNokkel()), familieforhold.annenForelderNavn));
+            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_FNR_ANNEN_FORELDER.getNokkel()), familieforhold.annenForelderFodselsnummer));
         }
         return bolk;
     }
