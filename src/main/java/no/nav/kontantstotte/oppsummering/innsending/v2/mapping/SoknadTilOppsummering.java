@@ -24,7 +24,6 @@ import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOT
  * funksjon som erstatter det gamle attributtet.
  */
 public class SoknadTilOppsummering {
-
     public static final String SVAR_NEI = "svar.nei";
     public static final String SVAR_JA = "svar.ja";
     public static final String BARN_TITTEL = "barn.tittel";
@@ -41,19 +40,24 @@ public class SoknadTilOppsummering {
     public static final String BARN_BARNEHAGEPLASS_STATUS = "barnehageplass.barnBarnehageplassStatus";
     public static final String BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL = "advarsel.barnehageplass.timerIBarnehage";
 
+    private final Unleash unleash;
 
-    public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr, Unleash unleash) {
+    public SoknadTilOppsummering(Unleash unleash) {
+        this.unleash = unleash;
+    }
+
+    public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
         return new SoknadOppsummering(soknad,
                 fnr,
-                mapBolker(soknad, tekster, unleash),
+                mapBolker(soknad, tekster),
                 tekster);
     }
 
-    private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster, Unleash unleash) {
+    private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
         return Arrays.asList(
                 nyBolk("kravTilSoker"),
                 mapBarn(soknad.mineBarn, tekster),
-                mapBarnehageplass(soknad.barnehageplass, tekster, unleash),
+                mapBarnehageplass(soknad.barnehageplass, tekster),
                 mapFamilieforhold(soknad.familieforhold, tekster),
                 nyBolk("tilknytningTilUtland"),
                 nyBolk("arbeidIUtlandet"),
@@ -79,7 +83,7 @@ public class SoknadTilOppsummering {
         return barneBolk;
     }
 
-    public Bolk mapBarnehageplass(Barnehageplass barnehageplass, Map<String, String> tekster, Unleash unleash) {
+    public Bolk mapBarnehageplass(Barnehageplass barnehageplass, Map<String, String> tekster) {
         Bolk barnehageplassBolk = new Bolk();
         barnehageplassBolk.tittel = tekster.get(BARNEHAGEPLASS_TITTEL);
         barnehageplassBolk.elementer = new ArrayList<>();

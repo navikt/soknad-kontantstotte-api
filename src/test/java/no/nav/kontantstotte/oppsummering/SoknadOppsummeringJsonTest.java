@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.finn.unleash.FakeUnleash;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadOppsummering;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class SoknadOppsummeringJsonTest {
-
     private NodeOppsummeringGenerator nodeOppsummeringGenerator;
     private HtmlOppsummeringService htmlOppsummeringService;
     private ObjectMapper mapper;
@@ -31,7 +31,7 @@ public class SoknadOppsummeringJsonTest {
                 new TekstProvider("mapping_tekster", "nb"),
                 htmlOppsummeringService,
                 mock(PdfGenService.class),
-                new FakeUnleash());
+                new SoknadTilOppsummering(new FakeUnleash()));
 
         mapper = new ObjectMapper();
         captor = ArgumentCaptor.forClass(SoknadOppsummering.class);

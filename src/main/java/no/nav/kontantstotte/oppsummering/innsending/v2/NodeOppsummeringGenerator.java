@@ -12,20 +12,20 @@ import java.util.Map;
 class NodeOppsummeringGenerator implements OppsummeringGenerator {
     private final PdfGenService pdfService;
     private final HtmlOppsummeringService htmlOppsummeringService;
-    private final Unleash unleash;
+    private final SoknadTilOppsummering soknadTilOppsummering;
     private final TekstProvider tekstProvider;
 
-    public NodeOppsummeringGenerator(TekstProvider tekstProvider, HtmlOppsummeringService htmlOppsummeringService, PdfGenService pdfService, Unleash unleash) {
+    public NodeOppsummeringGenerator(TekstProvider tekstProvider, HtmlOppsummeringService htmlOppsummeringService, PdfGenService pdfService, SoknadTilOppsummering soknadTilOppsummering) {
         this.tekstProvider = tekstProvider;
         this.htmlOppsummeringService = htmlOppsummeringService;
         this.pdfService = pdfService;
-        this.unleash = unleash;
+        this.soknadTilOppsummering = soknadTilOppsummering;
     }
 
     @Override
     public byte[] genererOppsummering(Soknad soknad, String fnr) {
         Map<String, String> tekster = tekstProvider.hentTekster(soknad.sprak);
-        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(soknad, tekster, fnr, unleash);
+        SoknadOppsummering oppsummering = soknadTilOppsummering.map(soknad, tekster, fnr);
         byte[] htmlBytes = htmlOppsummeringService.genererHtml(oppsummering);
         return pdfService.genererPdf(htmlBytes);
     }

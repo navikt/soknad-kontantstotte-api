@@ -1,10 +1,12 @@
 package no.nav.kontantstotte.oppsummering.innsending.v2.mapping;
 
 import no.finn.unleash.FakeUnleash;
+import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
 import no.nav.kontantstotte.oppsummering.bolk.Barnehageplass;
 import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.AbstractMap;
@@ -22,18 +24,24 @@ public class SoknadTilOppsummeringTest {
     public static final String JA = "Ja";
     public static final String NEI = "Nei";
 
+    private Unleash unleash;
+
+    @Before
+    public void init() {
+        this.unleash = new FakeUnleash();
+    }
+
     @Test
     public void bolkerIRettRekkefølge() {
         String fnr = "XXXXXXXXXX";
-        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(
+        SoknadOppsummering oppsummering = new SoknadTilOppsummering(unleash).map(
                 new Soknad(),
                 tekster(
                         tekst(SoknadTilOppsummering.BARN_TITTEL, SoknadTilOppsummering.BARN_TITTEL),
                         tekst(SoknadTilOppsummering.BARNEHAGEPLASS_TITTEL, SoknadTilOppsummering.BARNEHAGEPLASS_TITTEL),
                         tekst(SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL, SoknadTilOppsummering.FAMILIEFORHOLD_TITTEL)
                 ),
-                fnr,
-                new FakeUnleash());
+                fnr);
 
         assertThat(oppsummering.getBolker())
                 .extracting("bolknavn", "tittel")
@@ -68,7 +76,7 @@ public class SoknadTilOppsummeringTest {
         Barn innsendtBarn = new Barn();
         innsendtBarn.navn = "Barnets navn";
         innsendtBarn.fodselsdato = "01.01.2019";
-        Bolk bolk = new SoknadTilOppsummering().mapBarn(innsendtBarn, tekster);
+        Bolk bolk = new SoknadTilOppsummering(unleash).mapBarn(innsendtBarn, tekster);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, undertittel);
@@ -99,7 +107,7 @@ public class SoknadTilOppsummeringTest {
         barnehageplass.harBarnehageplass = "NEI";
         barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.garIkkeIBarnehage;
 
-        Bolk bolk = new SoknadTilOppsummering().mapBarnehageplass(barnehageplass, tekster, new FakeUnleash());
+        Bolk bolk = new SoknadTilOppsummering(unleash).mapBarnehageplass(barnehageplass, tekster);
         assertThat(bolk)
                 .extracting("tittel")
                 .containsExactly(tittel);
@@ -125,7 +133,7 @@ public class SoknadTilOppsummeringTest {
 
         Familieforhold familieforhold = new Familieforhold();
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
-        Bolk bolk = new SoknadTilOppsummering().mapFamilieforhold(familieforhold, tekster);
+        Bolk bolk = new SoknadTilOppsummering(unleash).mapFamilieforhold(familieforhold, tekster);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, null);
@@ -154,7 +162,7 @@ public class SoknadTilOppsummeringTest {
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         familieforhold.annenForelderNavn = "NN";
         familieforhold.annenForelderFodselsnummer = "XXXXXX";
-        Bolk bolk = new SoknadTilOppsummering().mapFamilieforhold(familieforhold, tekster);
+        Bolk bolk = new SoknadTilOppsummering(unleash).mapFamilieforhold(familieforhold, tekster);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
