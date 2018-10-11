@@ -20,7 +20,7 @@ public class UtenlandskKontantstotteMapping extends BolkMapping {
     }
 
     @Override
-    Bolk map(Soknad soknad, Unleash unleash) {
+    public Bolk map(Soknad soknad, Unleash unleash) {
         UtenlandskKontantstotte utenlandskKontantstotte = soknad.utenlandskKontantstotte;
         Bolk bolk = new Bolk();
         bolk.tittel = tekster.get(UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel());
