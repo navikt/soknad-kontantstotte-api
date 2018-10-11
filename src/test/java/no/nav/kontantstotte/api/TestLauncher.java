@@ -3,8 +3,10 @@ package no.nav.kontantstotte.api;
 import no.finn.unleash.FakeUnleash;
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
+import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.innsending.v2.HtmlOppsummeringService;
 import no.nav.kontantstotte.oppsummering.innsending.v2.PdfGenService;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_NY_OPPSUMMERING;
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -75,6 +78,7 @@ public class TestLauncher {
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();
         fakeUnleash.enable(KONTANTSTOTTE_NY_OPPSUMMERING);
+        fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
 
         return fakeUnleash;
     }

@@ -81,20 +81,35 @@
         {
           "sporsmal": "Navn",
           "svar": "Jakob",
+          "advarsel": null,
           "underelementer": null
         },
         {
           "sporsmal": "Fødselsdato",
           "svar": "12.12.2018",
+          "advarsel": null,
           "underelementer": null
         }
       ]
     },
     {
-      "bolknavn": "barnehageplass",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Tildelt barnehageplass",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Har barnet barnehageplass?",
+          "svar": "Nei",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Barnet mitt",
+          "svar": "går ikke i barnehage",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": null,
@@ -104,6 +119,7 @@
         {
           "sporsmal": "Bor du sammen med den andre forelderen?",
           "svar": "Nei",
+          "advarsel": null,
           "underelementer": null
         }
       ]

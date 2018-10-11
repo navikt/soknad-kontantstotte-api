@@ -9,8 +9,6 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 
 public class HtmlOppsummeringService {
-
-
     private URI url;
 
     private final Client client;
@@ -31,6 +29,5 @@ public class HtmlOppsummeringService {
 
         return response.readEntity(byte[].class);
     }
-
 }
 
