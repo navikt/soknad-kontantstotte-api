@@ -78,20 +78,53 @@
         {
           "sporsmal": "Navn",
           "svar": "Jakob",
+          "advarsel": null,
           "underelementer": null
         },
         {
           "sporsmal": "Fødselsdato",
           "svar": "12.12.2018",
+          "advarsel": null,
           "underelementer": null
         }
       ]
     },
     {
-      "bolknavn": "barnehageplass",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Tildelt barnehageplass",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Har barnet barnehageplass?",
+          "svar": "Ja",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Barnet mitt",
+          "svar": "skal begynne i barnehage",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Når skal barnet starte i barnehagen?",
+          "svar": "01.01.2019",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Hvor mange timer i uken har barnet fått i barnehagen?",
+          "svar": "10",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Hvilken kommune ligger barnehagen i?",
+          "svar": "Oslo",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": null,
@@ -101,16 +134,19 @@
         {
           "sporsmal": "Bor du sammen med den andre forelderen?",
           "svar": "Ja",
+          "advarsel": null,
           "underelementer": null
         },
         {
           "sporsmal": "Navnet til den andre forelderen:",
           "svar": "Annen forelder navn",
+          "advarsel": null,
           "underelementer": null
         },
         {
           "sporsmal": "Fødselsnummeret til den andre forelderen:",
           "svar": "ZZZZZZZZZZ",
+          "advarsel": null,
           "underelementer": null
         }
       ]

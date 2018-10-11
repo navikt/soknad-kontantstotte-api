@@ -1,10 +1,12 @@
 package no.nav.kontantstotte.oppsummering.innsending.v2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.finn.unleash.FakeUnleash;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadOppsummering;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.SoknadTilOppsummering;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,12 +16,12 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class SoknadOppsummeringJsonTest {
-
     private NodeOppsummeringGenerator nodeOppsummeringGenerator;
     private HtmlOppsummeringService htmlOppsummeringService;
     private ObjectMapper mapper;
@@ -27,12 +29,16 @@ public class SoknadOppsummeringJsonTest {
 
     @Before
     public void setup(){
+        FakeUnleash fakeUnleash = new FakeUnleash();
+        fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
+
         htmlOppsummeringService = mock(HtmlOppsummeringService.class);
 
         nodeOppsummeringGenerator = new NodeOppsummeringGenerator(
                 new TekstProvider("mapping_tekster", "nb"),
                 htmlOppsummeringService,
-                mock(PdfGenService.class));
+                mock(PdfGenService.class),
+                new SoknadTilOppsummering(fakeUnleash));
 
         mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
