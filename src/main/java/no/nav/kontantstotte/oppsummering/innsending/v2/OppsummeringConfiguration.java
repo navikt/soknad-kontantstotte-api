@@ -14,9 +14,9 @@ import javax.ws.rs.client.Client;
 import java.net.URI;
 
 @Configuration
-public class OppsummeringV2Configuration {
+public class OppsummeringConfiguration {
 
-    @Bean("v2")
+    @Bean
     public OppsummeringGenerator oppsummeringService(
             HtmlOppsummeringService htmlOppsummeringService,
             PdfGenService pdfService,

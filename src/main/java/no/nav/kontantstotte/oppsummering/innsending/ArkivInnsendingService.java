@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 
-public class ArkivInnsendingService implements InnsendingService {
+class ArkivInnsendingService implements InnsendingService {
 
     private static final String SELVBETJENING = "selvbetjening";
 

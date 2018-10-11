@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
-public class HtmlOppsummeringService {
+class HtmlOppsummeringService {
     private URI url;
 
     private final Client client;

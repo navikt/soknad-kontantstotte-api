@@ -4,7 +4,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import java.net.URI;
 
-public class PdfGenService {
+class PdfGenService {
 
 
     private URI pdfSvgSupportGeneratorUrl;

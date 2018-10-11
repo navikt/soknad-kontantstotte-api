@@ -2,7 +2,7 @@ package no.nav.kontantstotte.oppsummering.innsending;
 
 import no.nav.kontantstotte.client.RestClientConfigration;
 import no.nav.kontantstotte.oppsummering.InnsendingService;
-import no.nav.kontantstotte.oppsummering.innsending.v2.OppsummeringV2Configuration;
+import no.nav.kontantstotte.oppsummering.innsending.v2.OppsummeringConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import java.net.URI;
 
 @Configuration
 @Import({RestClientConfigration.class,
-        OppsummeringV2Configuration.class
+        OppsummeringConfiguration.class
 })
 public class InnsendingConfiguration {
 
