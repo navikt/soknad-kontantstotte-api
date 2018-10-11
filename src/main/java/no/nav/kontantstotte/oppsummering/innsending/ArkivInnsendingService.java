@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.oppsummering.innsending;
 
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.InnsendingService;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.security.oidc.context.OIDCValidationContext;
@@ -16,43 +15,26 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_NY_OPPSUMMERING;
-
 public class ArkivInnsendingService implements InnsendingService {
 
     private static final String SELVBETJENING = "selvbetjening";
-    private final Unleash unleash;
 
     private URI proxyServiceUri;
 
     private final Client client;
 
-    private final OppsummeringGenerator oppsummeringGeneratorV1;
-    private final OppsummeringGenerator oppsummeringGeneratorV2;
+    private final OppsummeringGenerator oppsummeringGenerator;
 
     ArkivInnsendingService(Client client,
                            URI proxyServiceUri,
-                           OppsummeringGenerator oppsummeringGeneratorV1,
-                           OppsummeringGenerator oppsummeringGeneratorV2,
-                           Unleash unleash
+                           OppsummeringGenerator oppsummeringGenerator
     ) {
         this.client = client;
         this.proxyServiceUri = proxyServiceUri;
-        this.oppsummeringGeneratorV1 = oppsummeringGeneratorV1;
-        this.oppsummeringGeneratorV2 = oppsummeringGeneratorV2;
-        this.unleash = unleash;
-
+        this.oppsummeringGenerator = oppsummeringGenerator;
     }
 
     public Response sendInnSoknad(Soknad soknad) {
-
-        OppsummeringGenerator oppsummeringGenerator;
-        if (unleash.isEnabled(KONTANTSTOTTE_NY_OPPSUMMERING)) {
-            oppsummeringGenerator = this.oppsummeringGeneratorV2;
-        } else {
-            oppsummeringGenerator = this.oppsummeringGeneratorV1;
-        }
-
         SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringGenerator.genererOppsummering(soknad, hentFnrFraToken()), soknad.innsendingsTidspunkt);
 
         return client.target(proxyServiceUri)
