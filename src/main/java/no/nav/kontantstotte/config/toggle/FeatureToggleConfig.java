@@ -18,6 +18,7 @@ public class FeatureToggleConfig {
 
     public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
     public static final String KONTANTSTOTTE_NY_OPPSUMMERING = "kontantstotte.bolk.oppsummering";
+    public static final String KONTANTSTOTTE_OPPSUMMERING_ADVARSEL = "kontantstotte.oppsummering.advarsel";
 
     @Bean
     public Unleash unleash(

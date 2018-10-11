@@ -1,20 +1,18 @@
 package no.nav.kontantstotte.oppsummering.innsending.v2.mapping;
 
 
+import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.Soknad;
-import no.nav.kontantstotte.oppsummering.bolk.Barn;
-import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.FamilieforholdMapping;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokkel.*;
-
+import java.util.function.BiFunction;
 
 /**
  * Klassen benyttes til ny pdf generering.
@@ -25,12 +23,16 @@ import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokke
  * funksjon som erstatter det gamle attributtet.
  */
 public class SoknadTilOppsummering {
-
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
             .withZone(ZoneId.of("Europe/Paris"));
 
-    public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
+    private final Unleash unleash;
 
+    public SoknadTilOppsummering(Unleash unleash) {
+        this.unleash = unleash;
+    }
+
+    public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
         return new SoknadOppsummering(soknad,
                 fnr,
                 FORMATTER.format(soknad.innsendingsTidspunkt),
@@ -39,11 +41,12 @@ public class SoknadTilOppsummering {
     }
 
     private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
+
         return Arrays.asList(
                 nyBolk("kravTilSoker"),
-                mapBarn(soknad.mineBarn, tekster),
-                nyBolk("barnehageplass"),
-                mapFamilieforhold(soknad.familieforhold, tekster),
+                new BarnMapping(tekster).map(soknad, unleash),
+                new BarnehageplassMapping(tekster).map(soknad, unleash),
+                new FamilieforholdMapping(tekster).map(soknad, unleash),
                 nyBolk("tilknytningTilUtland"),
                 nyBolk("arbeidIUtlandet"),
                 nyBolk("utenlandskeYtelser"),
@@ -53,37 +56,16 @@ public class SoknadTilOppsummering {
     }
 
     private Bolk nyBolk(String bolknavn) {
-        Bolk Bolk = new Bolk();
-        Bolk.bolknavn = bolknavn;
-        return Bolk;
-    }
-
-
-    public Bolk mapBarn(Barn barn, Map<String, String> tekster) {
         Bolk bolk = new Bolk();
-        bolk.tittel = tekster.get(BARN_TITTEL.getNokkel());
-        bolk.undertittel = tekster.get(BARN_UNDERTITTEL.getNokkel());
-        bolk.elementer = new ArrayList<>();
-        bolk.elementer.add(Element.nyttSvar(tekster.get(BARN_NAVN.getNokkel()), barn.navn));
-        bolk.elementer.add(Element.nyttSvar(tekster.get(BARN_FODSELSDATO.getNokkel()), barn.fodselsdato));
+        bolk.bolknavn = bolknavn;
         return bolk;
     }
 
-
-    public Bolk mapFamilieforhold(Familieforhold familieforhold, Map<String, String> tekster) {
-        Bolk bolk = new Bolk();
-        bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL.getNokkel());
-        bolk.elementer = new ArrayList<>();
-        if("NEI".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel()), tekster.get(SVAR_NEI.getNokkel())));
-        }if("JA".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel()), tekster.get(SVAR_JA.getNokkel())));
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER.getNokkel()), familieforhold.annenForelderNavn));
-            bolk.elementer.add(Element.nyttSvar(tekster.get(FAMILIEFORHOLD_FNR_ANNEN_FORELDER.getNokkel()), familieforhold.annenForelderFodselsnummer));
-        }
-        return bolk;
+    public static BiFunction<String, String, Element> opprettElementMedTekster(Map<String, String> tekster){
+        return (String sporsmal, String svar) -> Element.nyttSvar(tekster.get(sporsmal), tekster.get(svar));
     }
 
-
-
+    public static BiFunction<String, String, Element> opprettElementMedVerdier(Map<String, String> tekster){
+        return (String sporsmal, String svar) -> Element.nyttSvar(tekster.get(sporsmal), svar);
+    }
 }

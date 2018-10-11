@@ -1,8 +1,15 @@
 package no.nav.kontantstotte.oppsummering.innsending.v2.mapping;
 
+import no.finn.unleash.FakeUnleash;
+import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
+import no.nav.kontantstotte.oppsummering.bolk.Barnehageplass;
 import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.FamilieforholdMapping;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.AbstractMap;
@@ -18,21 +25,27 @@ import static org.assertj.core.api.Assertions.tuple;
 
 
 public class SoknadTilOppsummeringTest {
-
     public static final String JA = "Ja";
     public static final String NEI = "Nei";
 
+    private Unleash unleash;
+
+    @Before
+    public void init() {
+        this.unleash = new FakeUnleash();
+    }
+
     @Test
     public void bolkerIRettRekkefølge() {
-
-
         String fnr = "XXXXXXXXXX";
         Soknad soknad = new Soknad();
         soknad.markerInnsendingsTidspunkt();
-        SoknadOppsummering oppsummering = new SoknadTilOppsummering().map(
+
+        SoknadOppsummering oppsummering = new SoknadTilOppsummering(unleash).map(
                 soknad,
                 tekster(
                         tekst(BARN_TITTEL),
+                        tekst(BARNEHAGEPLASS_TITTEL),
                         tekst(FAMILIEFORHOLD_TITTEL)
                 ),
                 fnr);
@@ -42,7 +55,7 @@ public class SoknadTilOppsummeringTest {
                 .containsSequence(
                         tuple("kravTilSoker", null),
                         tuple(null, BARN_TITTEL.getNokkel()),
-                        tuple("barnehageplass", null),
+                        tuple(null, BARNEHAGEPLASS_TITTEL.getNokkel()),
                         tuple(null, FAMILIEFORHOLD_TITTEL.getNokkel()),
                         tuple("tilknytningTilUtland", null),
                         tuple("arbeidIUtlandet", null),
@@ -67,10 +80,13 @@ public class SoknadTilOppsummeringTest {
                 tekst(BARN_NAVN, navn),
                 tekst(BARN_FODSELSDATO, fodselsdato));
 
+        Soknad soknad = new Soknad();
         Barn innsendtBarn = new Barn();
         innsendtBarn.navn = "Barnets navn";
         innsendtBarn.fodselsdato = "01.01.2019";
-        Bolk bolk = new SoknadTilOppsummering().mapBarn(innsendtBarn, tekster);
+        soknad.mineBarn = innsendtBarn;
+
+        Bolk bolk = new BarnMapping(tekster).map(soknad, unleash);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, undertittel);
@@ -81,8 +97,39 @@ public class SoknadTilOppsummeringTest {
                 .contains(
                         tuple(navn, innsendtBarn.navn),
                         tuple(fodselsdato, innsendtBarn.fodselsdato));
+    }
 
+    @Test
+    public void tilBarnehageplassBolk() {
+        String tittel = "BARNEHAGEPLASS";
+        String harBarnehageplass = "Har barnet barnehageplass?";
+        String barnBarnehageplassStatusSpormal = "Barnet mitt";
+        String barnBarnehageplassStatusSvar = "går ikke i barnehage";
 
+        Map<String, String> tekster = tekster(
+                tekst(BARNEHAGEPLASS_TITTEL, tittel),
+                tekst(HAR_BARNEHAGEPLASS, harBarnehageplass),
+                tekst(BARN_BARNEHAGEPLASS_STATUS, barnBarnehageplassStatusSpormal),
+                tekst(GAR_IKKE_I_BARNEHAGE, barnBarnehageplassStatusSvar),
+                tekst(SVAR_NEI, NEI));
+
+        Soknad soknad = new Soknad();
+        Barnehageplass barnehageplass = new Barnehageplass();
+        barnehageplass.harBarnehageplass = "NEI";
+        barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.garIkkeIBarnehage;
+        soknad.barnehageplass = barnehageplass;
+
+        Bolk bolk = new BarnehageplassMapping(tekster).map(soknad, unleash);
+        assertThat(bolk)
+                .extracting("tittel")
+                .containsExactly(tittel);
+
+        List<Element> elementer = bolk.elementer;
+        assertThat(elementer)
+                .extracting("sporsmal", "svar")
+                .contains(
+                        tuple(harBarnehageplass, NEI),
+                        tuple(barnBarnehageplassStatusSpormal, barnBarnehageplassStatusSvar));
     }
 
     @Test
@@ -95,10 +142,12 @@ public class SoknadTilOppsummeringTest {
                 tekst(FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
                 tekst(SVAR_NEI, NEI));
 
-
+        Soknad soknad = new Soknad();
         Familieforhold familieforhold = new Familieforhold();
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
-        Bolk bolk = new SoknadTilOppsummering().mapFamilieforhold(familieforhold, tekster);
+        soknad.familieforhold = familieforhold;
+
+        Bolk bolk = new FamilieforholdMapping(tekster).map(soknad, unleash);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, null);
@@ -108,8 +157,6 @@ public class SoknadTilOppsummeringTest {
                 .extracting("sporsmal", "svar")
                 .contains(
                         tuple(sporsmal, NEI));
-
-
     }
 
     @Test
@@ -124,12 +171,14 @@ public class SoknadTilOppsummeringTest {
                 tekst(FAMILIEFORHOLD_FNR_ANNEN_FORELDER, sporsmal_fnr),
                 tekst(SVAR_JA, JA));
 
-
+        Soknad soknad = new Soknad();
         Familieforhold familieforhold = new Familieforhold();
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         familieforhold.annenForelderNavn = "NN";
         familieforhold.annenForelderFodselsnummer = "XXXXXX";
-        Bolk bolk = new SoknadTilOppsummering().mapFamilieforhold(familieforhold, tekster);
+        soknad.familieforhold = familieforhold;
+
+        Bolk bolk = new FamilieforholdMapping(tekster).map(soknad, unleash);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -139,13 +188,11 @@ public class SoknadTilOppsummeringTest {
                         tuple(sporsmal_navn, familieforhold.annenForelderNavn),
                         tuple(sporsmal_fnr, familieforhold.annenForelderFodselsnummer)
                 );
-
-
     }
 
     private Map<String, String> tekster(AbstractMap.SimpleEntry<String, String>... tekst) {
         return Collections.unmodifiableMap(Stream.of(tekst)
-                .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
+                .collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue)));
     }
 
     private AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel) {
@@ -155,6 +202,4 @@ public class SoknadTilOppsummeringTest {
     private AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel, String tekstinnhold) {
         return new AbstractMap.SimpleEntry<>(nokkel.getNokkel(), tekstinnhold);
     }
-
-
 }
