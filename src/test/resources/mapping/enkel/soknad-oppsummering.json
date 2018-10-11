@@ -137,10 +137,17 @@
       "elementer": null
     },
     {
-      "bolknavn": "utenlandskeYtelser",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Utenlandske ytelser",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Mottar du ytelser fra utlandet?",
+          "svar": "Nei",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": "utenlandskKontantstotte",

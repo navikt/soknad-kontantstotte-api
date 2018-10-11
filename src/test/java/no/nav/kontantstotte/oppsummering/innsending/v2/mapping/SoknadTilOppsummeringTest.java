@@ -6,9 +6,11 @@ import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.bolk.Barn;
 import no.nav.kontantstotte.oppsummering.bolk.Barnehageplass;
 import no.nav.kontantstotte.oppsummering.bolk.Familieforhold;
+import no.nav.kontantstotte.oppsummering.bolk.UtenlandskeYtelser;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnMapping;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.FamilieforholdMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.UtenlandskeYtelserMapping;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,7 +48,8 @@ public class SoknadTilOppsummeringTest {
                 tekster(
                         tekst(BARN_TITTEL),
                         tekst(BARNEHAGEPLASS_TITTEL),
-                        tekst(FAMILIEFORHOLD_TITTEL)
+                        tekst(FAMILIEFORHOLD_TITTEL),
+                        tekst(UTENLANDSKE_YTELSER_TITTEL)
                 ),
                 fnr);
 
@@ -59,7 +62,7 @@ public class SoknadTilOppsummeringTest {
                         tuple(null, FAMILIEFORHOLD_TITTEL.getNokkel()),
                         tuple("tilknytningTilUtland", null),
                         tuple("arbeidIUtlandet", null),
-                        tuple("utenlandskeYtelser", null),
+                        tuple(null, UTENLANDSKE_YTELSER_TITTEL.getNokkel()),
                         tuple("utenlandskKontantstotte", null),
                         tuple("oppsummering", null)
                 );
@@ -190,16 +193,16 @@ public class SoknadTilOppsummeringTest {
                 );
     }
 
-    private Map<String, String> tekster(AbstractMap.SimpleEntry<String, String>... tekst) {
+    public static Map<String, String> tekster(AbstractMap.SimpleEntry<String, String>... tekst) {
         return Collections.unmodifiableMap(Stream.of(tekst)
                 .collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue)));
     }
 
-    private AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel) {
+    public static AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel) {
         return new AbstractMap.SimpleEntry<>(nokkel.getNokkel(), nokkel.getNokkel());
     }
 
-    private AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel, String tekstinnhold) {
+    public static AbstractMap.SimpleEntry<String, String> tekst(Tekstnokkel nokkel, String tekstinnhold) {
         return new AbstractMap.SimpleEntry<>(nokkel.getNokkel(), tekstinnhold);
     }
 }

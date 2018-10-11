@@ -167,10 +167,29 @@
       "elementer": null
     },
     {
-      "bolknavn": "utenlandskeYtelser",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Utenlandske ytelser",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Mottar du ytelser fra utlandet?",
+          "svar": "Ja",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
+          "svar": "Søker oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor man mottok eller fortsatt mottar ytelser fra utlandet",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Mottar annen forelder ytelser fra utlandet?",
+          "svar": "Nei",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": "utenlandskKontantstotte",

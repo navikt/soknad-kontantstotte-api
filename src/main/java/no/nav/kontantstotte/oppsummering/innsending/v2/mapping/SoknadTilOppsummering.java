@@ -6,6 +6,7 @@ import no.nav.kontantstotte.oppsummering.Soknad;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnMapping;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.BarnehageplassMapping;
 import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.FamilieforholdMapping;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.bolker.UtenlandskeYtelserMapping;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -49,7 +50,7 @@ public class SoknadTilOppsummering {
                 new FamilieforholdMapping(tekster).map(soknad, unleash),
                 nyBolk("tilknytningTilUtland"),
                 nyBolk("arbeidIUtlandet"),
-                nyBolk("utenlandskeYtelser"),
+                new UtenlandskeYtelserMapping(tekster).map(soknad, unleash),
                 nyBolk("utenlandskKontantstotte"),
                 nyBolk("oppsummering")
         );
