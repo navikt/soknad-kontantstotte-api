@@ -1,5 +1,9 @@
 package no.nav.kontantstotte.oppsummering.bolk;
 
+import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
+
+import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
+
 public class Barnehageplass {
     public String harBarnehageplass;
     public BarnehageplassVerdier barnBarnehageplassStatus;
@@ -17,17 +21,16 @@ public class Barnehageplass {
     public String skalSlutteIBarnehageDato;
 
     public enum BarnehageplassVerdier {
-        garIkkeIBarnehage("garIkkeIBarnehage", "barnehageplass.garIkkeIBarnehage"),
-        harBarnehageplass("harBarnehageplass", "barnehageplass.harBarnehageplass"),
-        harSluttetIBarnehage("harSluttetIBarnehage", "barnehageplass.harSluttetIBarnehage"),
-        skalBegynneIBarnehage("skalBegynneIBarnehage", "barnehageplass.skalBegynneIBarnehage"),
-        skalSlutteIBarnehage("skalSlutteIBarnehage", "barnehageplass.skalSlutteIBarnehage"),
-        Ubesvart("Ubesvart", "");
+        garIkkeIBarnehage("garIkkeIBarnehage", GAR_IKKE_I_BARNEHAGE),
+        harBarnehageplass("harBarnehageplass", GAR_I_BARNEHAGE),
+        harSluttetIBarnehage("harSluttetIBarnehage", HAR_SLUTTET_I_BARNEHAGE),
+        skalBegynneIBarnehage("skalBegynneIBarnehage", SKAL_BEGYNNE_I_BARNEHAGE),
+        skalSlutteIBarnehage("skalSlutteIBarnehage", SKAL_SLUTTE_I_BARNEHAGE);
 
         String key;
-        String tekstNokkel;
+        Tekstnokkel tekstNokkel;
 
-        BarnehageplassVerdier(String key, String tekstNokkel) {
+        BarnehageplassVerdier(String key, Tekstnokkel tekstNokkel) {
             this.key = key;
             this.tekstNokkel = tekstNokkel;
         }
@@ -36,7 +39,7 @@ public class Barnehageplass {
             return key;
         }
 
-        public String getTekstNokkel() {
+        public Tekstnokkel getTekstNokkel() {
             return tekstNokkel;
         }
     }
