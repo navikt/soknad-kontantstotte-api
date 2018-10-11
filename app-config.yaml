@@ -44,7 +44,5 @@ fasitResources:
     resourceType: baseUrl
   - alias: soknad-kontantstotte-proxy-api
     resourceType: restservice
-  - alias: soknad-pdf-generator
-    resourceType: restservice
   - alias: soknad-kontantstotte-api-soknad-kontantstotte-proxy-api-apiKey
     resourceType: credential
