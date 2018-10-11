@@ -3,7 +3,7 @@ package no.nav.kontantstotte.api;
 import no.finn.unleash.FakeUnleash;
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
-import no.nav.kontantstotte.oppsummering.innsending.v2.OppsummeringTestConfiguration;
+import no.nav.kontantstotte.innsending.oppsummering.PdfTestConfiguration;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -20,7 +20,7 @@ import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOT
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
-@Import({ApplicationConfig.class, OppsummeringTestConfiguration.class})
+@Import({ApplicationConfig.class, PdfTestConfiguration.class})
 public class TestLauncher {
 
     public static void main(String... args) {
