@@ -6,18 +6,19 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
-public class HtmlConverter {
+class HtmlConverter {
     private URI url;
 
     private final Client client;
 
-
     public HtmlConverter(Client client, URI url) {
         this.client = client;
         this.url = url;
+
     }
 
     public byte[] genererHtml(SoknadOppsummering oppsummering) {
+
         Response response = client
                 .target(url)
                 .path("generateHtml")

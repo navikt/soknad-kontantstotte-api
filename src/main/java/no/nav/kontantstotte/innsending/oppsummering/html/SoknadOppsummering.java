@@ -6,7 +6,7 @@ import no.nav.kontantstotte.innsending.Soknad;
 import java.util.List;
 import java.util.Map;
 
-public class SoknadOppsummering {
+class SoknadOppsummering {
 
     private Soknad soknad;
     private String fnr;

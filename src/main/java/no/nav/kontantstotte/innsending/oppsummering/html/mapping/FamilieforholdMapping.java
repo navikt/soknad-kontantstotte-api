@@ -8,7 +8,7 @@ import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static no.nav.kontantstotte.innsending.oppsummering.html.Tekstnokkel.*;
+import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class FamilieforholdMapping extends BolkMapping {
     public FamilieforholdMapping(Map<String, String> tekster) {

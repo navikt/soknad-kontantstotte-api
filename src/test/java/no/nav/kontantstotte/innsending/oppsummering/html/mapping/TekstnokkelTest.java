@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.innsending.oppsummering.html;
+package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 import no.nav.kontantstotte.tekst.DefaultTekstProvider;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.innsending.oppsummering.html;
+package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 public enum Tekstnokkel {
     SVAR_NEI("svar.nei"),

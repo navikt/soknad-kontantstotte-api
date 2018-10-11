@@ -1,6 +1,5 @@
-package no.nav.kontantstotte.innsending.oppsummering;
+package no.nav.kontantstotte.innsending.oppsummering.html;
 
-import no.nav.kontantstotte.innsending.oppsummering.html.HtmlConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -14,21 +13,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Configuration
-public class PdfTestConfiguration {
+public class OppsummeringHtmlTestConfiguration {
 
     @Bean
     @Primary
-    PdfConverter pdfGenService() throws IOException {
-        PdfConverter service = mock(PdfConverter.class);
-        byte[] b = readFile("oppsummering.pdf");
-        when(service.genererPdf(any())).thenReturn(b);
-        return service;
-    }
-
-
-    @Bean
-    @Primary
-    HtmlConverter htmlOppsummeringService() throws IOException {
+    HtmlConverter htmlConverter() throws IOException {
         HtmlConverter service = mock(HtmlConverter.class);
         byte[] b = readFile("oppsummering.html");
         when(service.genererHtml(any())).thenReturn(b);

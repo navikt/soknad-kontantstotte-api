@@ -6,6 +6,7 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.BarnMapping;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.BarnehageplassMapping;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.FamilieforholdMapping;
+import no.nav.kontantstotte.tekst.TekstProvider;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -18,21 +19,24 @@ import java.util.function.BiFunction;
  * Klassen benyttes til ny oppsummering generering.
  * mapBolker tar inn søknadsobjektet og mapper til ny
  * oppsummeringsobjekt som skal til ny html+oppsummering generator.
- *
+ * <p>
  * For hver steg man tar fra soknad til ny innsending skriver vi en map
  * funksjon som erstatter det gamle attributtet.
  */
-public class SoknadTilOppsummering {
+class SoknadTilOppsummering {
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
             .withZone(ZoneId.of("Europe/Paris"));
 
     private final Unleash unleash;
+    private final TekstProvider tekstProvider;
 
-    public SoknadTilOppsummering(Unleash unleash) {
+    public SoknadTilOppsummering(TekstProvider tekstProvider, Unleash unleash) {
+        this.tekstProvider = tekstProvider;
         this.unleash = unleash;
     }
 
-    public SoknadOppsummering map(Soknad soknad, Map<String, String> tekster, String fnr) {
+    public SoknadOppsummering map(Soknad soknad, String fnr) {
+        Map<String, String> tekster = tekstProvider.hentTekster(soknad.sprak);
         return new SoknadOppsummering(soknad,
                 fnr,
                 FORMATTER.format(soknad.innsendingsTidspunkt),
@@ -61,11 +65,5 @@ public class SoknadTilOppsummering {
         return bolk;
     }
 
-    public static BiFunction<String, String, Element> opprettElementMedTekster(Map<String, String> tekster){
-        return (String sporsmal, String svar) -> Element.nyttSvar(tekster.get(sporsmal), tekster.get(svar));
-    }
 
-    public static BiFunction<String, String, Element> opprettElementMedVerdier(Map<String, String> tekster){
-        return (String sporsmal, String svar) -> Element.nyttSvar(tekster.get(sporsmal), svar);
-    }
 }

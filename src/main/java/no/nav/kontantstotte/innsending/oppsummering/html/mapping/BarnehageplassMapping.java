@@ -2,16 +2,16 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
-import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
+import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
-import static no.nav.kontantstotte.innsending.oppsummering.html.Tekstnokkel.*;
+import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class BarnehageplassMapping extends BolkMapping {
     public BarnehageplassMapping(Map<String, String> tekster) {
