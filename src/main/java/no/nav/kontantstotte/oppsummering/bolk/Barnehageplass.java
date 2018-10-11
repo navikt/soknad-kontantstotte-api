@@ -1,8 +1,9 @@
 package no.nav.kontantstotte.oppsummering.bolk;
 
-import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
 
-import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
+import no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokkel;
+
+import static no.nav.kontantstotte.oppsummering.innsending.v2.mapping.Tekstnokkel.*;
 
 public class Barnehageplass {
     public String harBarnehageplass;
