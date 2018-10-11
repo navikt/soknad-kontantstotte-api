@@ -19,14 +19,10 @@ public class OppsummeringHtmlGenerator {
     public OppsummeringHtmlGenerator(SoknadTilOppsummering soknadTilOppsummering, HtmlConverter htmlConverter) {
         this.soknadTilOppsummering = soknadTilOppsummering;
         this.htmlConverter = htmlConverter;
-
     }
 
     public byte[] genererHtml(Soknad soknad, String fnr) {
-
-
         SoknadOppsummering oppsummering = soknadTilOppsummering.map(soknad, fnr);
-
         return htmlConverter.genererHtml(oppsummering);
     }
 }
