@@ -1,7 +1,9 @@
 package no.nav.kontantstotte.innsending.oppsummering;
 
+import no.nav.kontantstotte.innsending.oppsummering.html.OppsummeringHtmlTestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
 import java.io.File;
@@ -13,6 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Configuration
+@Import(OppsummeringHtmlTestConfiguration.class)
 public class OppsummeringTestConfiguration {
 
     @Bean
