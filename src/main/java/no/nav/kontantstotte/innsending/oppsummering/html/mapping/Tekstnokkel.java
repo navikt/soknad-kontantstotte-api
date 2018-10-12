@@ -1,6 +1,9 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 public enum Tekstnokkel {
+    TITTEL("kontantstotte.tittel"),
+    BEKREFTELSE("oppsummering.bekreftelse.label"),
+    INNSENDING_LABEL("oppsummering.innsendingsdato"),
     SVAR_NEI("svar.nei"),
     SVAR_JA("svar.ja"),
 

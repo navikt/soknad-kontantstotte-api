@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 /**
  * Klassen benyttes til generering av oppsummeringsinnhold.
@@ -51,7 +50,6 @@ class SoknadTilOppsummering {
     }
 
     private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
-
         return Arrays.asList(
                 new KravTilSokerMapping(tekster).map(soknad, unleash),
                 new BarnMapping(tekster).map(soknad, unleash),
@@ -60,8 +58,7 @@ class SoknadTilOppsummering {
                 nyBolk("tilknytningTilUtland"),
                 nyBolk("arbeidIUtlandet"),
                 new UtenlandskeYtelserMapping(tekster).map(soknad, unleash),
-                new UtenlandskKontantstotteMapping(tekster).map(soknad, unleash),
-                nyBolk("oppsummering")
+                new UtenlandskKontantstotteMapping(tekster).map(soknad, unleash)
         );
     }
 
@@ -70,6 +67,4 @@ class SoknadTilOppsummering {
         bolk.bolknavn = bolknavn;
         return bolk;
     }
-
-
 }

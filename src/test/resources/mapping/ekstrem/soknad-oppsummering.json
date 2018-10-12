@@ -61,8 +61,20 @@
     },
     "sprak": "nb"
   },
-  "fnr": "XXXXXXXXXX",
-  "innsendingsTidspunkt": "10.10.2018 - 13.23",
+  "metaData": {
+    "tittel": "Søknad om kontantstøtte",
+    "innsendingsTidspunkt": {
+      "tekst": "Sendt inn:",
+      "verdi": "10.10.2018 - 13.23"
+    },
+    "person": {
+      "fnr": "XXXXXXXXXX"
+    },
+    "bekreftelse": {
+      "tekst": "Opplysningene jeg har oppgitt er riktige, og jeg har ikke holdt tilbake opplysninger som har betydning for retten jeg har til kontantstøtte",
+      "verdi": null
+    }
+  },
   "bolker": [
     {
       "bolknavn": null,
@@ -237,12 +249,6 @@
           "underelementer": null
         }
       ]
-    },
-    {
-      "bolknavn": "oppsummering",
-      "tittel": null,
-      "undertittel": null,
-      "elementer": null
     }
   ],
   "tekster": {
@@ -316,7 +322,7 @@
     "tilknytningTilUtland.svar.jaLeggerSammenPerioderEOS": "Ja, hvis jeg legger sammen perioder i EØS-land",
     "oppsummering.familieforhold.foreldreBorSammen": "Jeg bor sammen med den andre forelderen",
     "advarsel.barnehageplass.timerIBarnehage": "Du får ikke kontantstøtte hvis barnet har plasss i barnehagen mer enn 33 timer i uken. Det betyr at du ikke trenger å sende inn denne søknaden.",
-    "kvittering.soknadSendt": "Du har sendt inn søknaden",
+    "oppsummering.innsendingsdato": "Sendt inn:",
     "oppsummering.barnehageplass.harBarnehageplass": "Har barnet barnehageplass?",
     "feilside.innsending.knapp": "Start på nytt",
     "tilknytningTilUtland.annenForelderBoddEllerJobbetINorgeMinstFemAar.sporsmal": "Har den andre forelderen bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen?",
@@ -326,6 +332,7 @@
     "familieforhold.tittel": "Familieforhold",
     "oppsummering.tilknytningTilUtland.svar.jaINorge": "Ja, i Norge",
     "kvittering.takkForSoknad": "Takk for søknaden!",
+    "kvittering.soknadSendt": "Du har sendt inn søknaden",
     "veiledningsside.veileder.melding": "Før vi setter i gang må du godkjenne våre vilkår for søknaden",
     "barnehageplass.sporsmal": "Har barnet barnehageplass?",
     "utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland.annenForelder": "annen forelder",
@@ -368,7 +375,6 @@
     "oppsummering.kravtilsoker.borSammenMedBarnet": "Jeg bor i Norge sammen med barnet",
     "utenlandskeYtelser.forklaring.hjelpetekst": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
     "barnehageplass.harBarnehageplass.kommune.sporsmal": "Hvilken kommune ligger barnehagen i?",
-    "oppsummering.innsendingsdato": "Søknad er sendt inn:",
     "barnehageplass.harSluttetIBarnehage": "har sluttet i barnehage",
     "arbeidIUtlandet.forklaring.hjelpetekst": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
     "kontantstotte.tittel": "Søknad om kontantstøtte",

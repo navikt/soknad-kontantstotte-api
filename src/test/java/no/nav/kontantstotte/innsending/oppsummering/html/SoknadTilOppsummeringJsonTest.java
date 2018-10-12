@@ -27,7 +27,6 @@ public class SoknadTilOppsummeringJsonTest {
         FakeUnleash fakeUnleash = new FakeUnleash();
         fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
 
-
         soknadTilOppsummering = new SoknadTilOppsummering(new TekstProvider("mapping_tekster", "nb"), fakeUnleash);
 
         mapper = new ObjectMapper();
