@@ -20,7 +20,7 @@ public abstract class BolkMapping {
     }
 
 
-    abstract Bolk map(Soknad soknad, Unleash unleash);
+    public abstract Bolk map(Soknad soknad, Unleash unleash);
 
     public static BiFunction<String, String, Element> opprettElementMedTekster(Map<String, String> tekster) {
         return (String sporsmal, String svar) -> Element.nyttSvar(tekster.get(sporsmal), tekster.get(svar));

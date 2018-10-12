@@ -31,7 +31,10 @@ public enum Tekstnokkel {
 
     SKAL_SLUTTE_I_BARNEHAGE_DATO("barnehageplass.skalSlutteIBarnehage.dato.sporsmal"),
     SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER("barnehageplass.skalSlutteIBarnehage.antallTimer.sporsmal"),
-    SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE("barnehageplass.skalSlutteIBarnehage.kommune.sporsmal");
+    SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE("barnehageplass.skalSlutteIBarnehage.kommune.sporsmal"),
+    UTENLANDSK_KONTANTSTOTTE_TITTEL("utenlandskKontantstotte.tittel"),
+    UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE("utenlandskKontantstotte.mottarKontantstotteFraUtlandet.sporsmal"),
+    UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO("utenlandskKontantstotte.mottarKontantstotteFraUtlandet.tilleggsinfo.sporsmal");
 
     private final String nokkel;
 

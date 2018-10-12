@@ -53,7 +53,8 @@ public class SoknadTilOppsummeringTest {
         Map<String, String> tekster = tekster(
                 tekst(BARN_TITTEL),
                 tekst(BARNEHAGEPLASS_TITTEL),
-                tekst(FAMILIEFORHOLD_TITTEL)
+                tekst(FAMILIEFORHOLD_TITTEL),
+                tekst(UTENLANDSK_KONTANTSTOTTE_TITTEL)
         );
         when(mock.hentTekster(any())).thenReturn(tekster);
 
@@ -71,7 +72,7 @@ public class SoknadTilOppsummeringTest {
                         tuple("tilknytningTilUtland", null),
                         tuple("arbeidIUtlandet", null),
                         tuple("utenlandskeYtelser", null),
-                        tuple("utenlandskKontantstotte", null),
+                        tuple(null, UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel()),
                         tuple("oppsummering", null)
                 );
         assertThat(oppsummering.getFnr()).isEqualTo(fnr);

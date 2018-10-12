@@ -173,10 +173,23 @@
       "elementer": null
     },
     {
-      "bolknavn": "utenlandskKontantstotte",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Kontantstøtte fra utlandet",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Får du kontantstøtte fra andre land enn Norge?",
+          "svar": "Ja",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Oppgi land, beløp som utbetales og periode for utbetalingen",
+          "svar": "Barnet får kontantstøtte fra land X",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": "oppsummering",
