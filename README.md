@@ -15,14 +15,3 @@ Lokal innlogging gjøre ved å kalle cookie-endepunktet til ```no.nav.security.o
 ## Bygging og publisering
 
 For å bygge imaget, kjør `sh build.sh`. Se `sh build.sh --help` for alternativer.
-
-## Se PDF lokalt
-
-- Start soknad-pdf-generator lokalt
-- I [PDFService](src/main/java/no/nav/kontantstotte/person/PdfService.java) legg til `skrivTilFil(response.readEntity(byte[].class));` før funksjonen returnerer
-- Kjør `cd src/main/resources/react-pdf/` i terminalen
-- Kjør  `npm i` 
-- Kjør `npm run local`
-- Kjør opp TestLauncher som normalt.
-
-For hver endring i koden må man kjøre `npm run local` og restarte launcheren for å få med alle endringene.
