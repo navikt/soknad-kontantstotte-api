@@ -3,6 +3,15 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 public enum Tekstnokkel {
     SVAR_NEI("svar.nei"),
     SVAR_JA("svar.ja"),
+
+    KRAV_TIL_SOKER_TITTEL("oppsummering.kravtilsoker.tittel"),
+    KRAV_TIL_SOKER_BARN_IKKE_HJEMME("startside.krav.barnIkkeHjemme"),
+    KRAV_TIL_SOKER_BODD_ELLER_JOBBET_I_NORGE_SISTE_FEM_AAR("startside.krav.boddEllerJobbetINorgeSisteFemAar"),
+    KRAV_TIL_SOKER_BOR_SAMMEN_MED_BARNET("startside.krav.borSammenMedBarnet"),
+    KRAV_TIL_SOKER_IKKE_AVTALT_DELT_BOSTED("startside.krav.ikkeAvtaltDeltBosted"),
+    KRAV_TIL_SOKER_NORSK_STATSBORGER("startside.krav.norskStatsborger"),
+    KRAV_TIL_SOKER_SKAL_BO_MED_BARNET_I_NORGE_NESTE_TOLV_MAANEDER("startside.krav.skalBoMedBarnetINorgeNesteTolvMaaneder"),
+
     BARN_TITTEL("barn.tittel"),
     BARN_UNDERTITTEL("oppsummering.barn.subtittel"),
     BARN_NAVN("barn.navn"),
