@@ -189,10 +189,17 @@
       ]
     },
     {
-      "bolknavn": "utenlandskKontantstotte",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Kontantstøtte fra utlandet",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Får du kontantstøtte fra andre land enn Norge?",
+          "svar": "Nei",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": "oppsummering",
