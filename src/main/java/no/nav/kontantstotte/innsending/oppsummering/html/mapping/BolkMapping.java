@@ -10,8 +10,8 @@ import java.util.function.BiFunction;
 
 public abstract class BolkMapping {
     Map<String, String> tekster;
-    BiFunction<String, String, Element> nyttElementMedTekstsvar;
-    BiFunction<String, String, Element> nyttElementMedVerdisvar;
+    BiFunction<Tekstnokkel, Tekstnokkel, Element> nyttElementMedTekstsvar;
+    BiFunction<Tekstnokkel, String, Element> nyttElementMedVerdisvar;
 
     BolkMapping(Map<String, String> tekster) {
         this.tekster = tekster;
@@ -20,13 +20,19 @@ public abstract class BolkMapping {
     }
 
 
-    public abstract Bolk map(Soknad soknad, Unleash unleash);
+    abstract Bolk map(Soknad soknad, Unleash unleash);
 
-    public static BiFunction<String, String, Element> opprettElementMedTekster(Map<String, String> tekster) {
-        return (String sporsmal, String svar) -> Element.nyttSvar(tekster.get(sporsmal), tekster.get(svar));
+    public static BiFunction<Tekstnokkel, Tekstnokkel, Element> opprettElementMedTekster(Map<String, String> tekster) {
+        return (Tekstnokkel sporsmal, Tekstnokkel svar) ->
+                Element.nyttSvar(
+                        tekster.get(sporsmal.getNokkel()),
+                        tekster.get(svar.getNokkel()));
     }
 
-    public static BiFunction<String, String, Element> opprettElementMedVerdier(Map<String, String> tekster) {
-        return (String sporsmal, String svar) -> Element.nyttSvar(tekster.get(sporsmal), svar);
+    public static BiFunction<Tekstnokkel, String, Element> opprettElementMedVerdier(Map<String, String> tekster) {
+        return (Tekstnokkel sporsmal, String svar) ->
+                Element.nyttSvar(
+                        tekster.get(sporsmal.getNokkel()),
+                        svar);
     }
 }

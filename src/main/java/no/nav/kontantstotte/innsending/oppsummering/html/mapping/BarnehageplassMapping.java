@@ -27,30 +27,30 @@ public class BarnehageplassMapping extends BolkMapping {
         barnehageplassBolk.elementer = new ArrayList<>();
 
         if("NEI".equalsIgnoreCase(barnehageplass.harBarnehageplass)){
-            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS.getNokkel(), SVAR_NEI.getNokkel()));
+            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS, SVAR_NEI));
         } else {
-            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS.getNokkel(), SVAR_JA.getNokkel()));
+            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS, SVAR_JA));
         }
 
         if (barnehageplass.barnBarnehageplassStatus != null) {
-            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(BARN_BARNEHAGEPLASS_STATUS.getNokkel(), barnehageplass.barnBarnehageplassStatus.getTekstNokkel()));
+            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(BARN_BARNEHAGEPLASS_STATUS, barnehageplass.barnBarnehageplassStatus.getTekstNokkel()));
 
             switch (barnehageplass.barnBarnehageplassStatus) {
                 case harSluttetIBarnehage:
                     barnehageplassBolk.elementer.addAll(
                         Arrays.asList(
-                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_DATO.getNokkel(), barnehageplass.harSluttetIBarnehageDato),
-                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_ANTALL_TIMER.getNokkel(), barnehageplass.harSluttetIBarnehageAntallTimer),
-                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_KOMMUNE.getNokkel(), barnehageplass.harSluttetIBarnehageKommune)
+                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_DATO, barnehageplass.harSluttetIBarnehageDato),
+                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_ANTALL_TIMER, barnehageplass.harSluttetIBarnehageAntallTimer),
+                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_KOMMUNE, barnehageplass.harSluttetIBarnehageKommune)
                         )
                     );
                     break;
                 case skalSlutteIBarnehage:
                     barnehageplassBolk.elementer.addAll(
                         Arrays.asList(
-                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_DATO.getNokkel(), barnehageplass.skalSlutteIBarnehageDato),
-                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER.getNokkel(), barnehageplass.skalSlutteIBarnehageAntallTimer),
-                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE.getNokkel(), barnehageplass.skalSlutteIBarnehageKommune)
+                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_DATO, barnehageplass.skalSlutteIBarnehageDato),
+                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER, barnehageplass.skalSlutteIBarnehageAntallTimer),
+                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE, barnehageplass.skalSlutteIBarnehageKommune)
                         )
                     );
                     break;
@@ -61,13 +61,13 @@ public class BarnehageplassMapping extends BolkMapping {
                                     barnehageplass.harBarnehageplassAntallTimer,
                                     tekster.get(BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL.getNokkel())
                             ) :
-                            nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel(), barnehageplass.harBarnehageplassAntallTimer);
+                            nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_ANTALL_TIMER, barnehageplass.harBarnehageplassAntallTimer);
 
                     barnehageplassBolk.elementer.addAll(
                         Arrays.asList(
-                            nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_DATO.getNokkel(), barnehageplass.harBarnehageplassDato),
+                            nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_DATO, barnehageplass.harBarnehageplassDato),
                             harBarnehageplassAntallTimer,
-                            nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_KOMMUNE.getNokkel(), barnehageplass.harBarnehageplassKommune)
+                            nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_KOMMUNE, barnehageplass.harBarnehageplassKommune)
                         )
                     );
 
@@ -75,9 +75,9 @@ public class BarnehageplassMapping extends BolkMapping {
                 case skalBegynneIBarnehage:
                     barnehageplassBolk.elementer.addAll(
                             Arrays.asList(
-                                    nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_DATO.getNokkel(), barnehageplass.skalBegynneIBarnehageDato),
-                                    nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_ANTALL_TIMER.getNokkel(), barnehageplass.skalBegynneIBarnehageAntallTimer),
-                                    nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_KOMMUNE.getNokkel(), barnehageplass.skalBegynneIBarnehageKommune)
+                                    nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_DATO, barnehageplass.skalBegynneIBarnehageDato),
+                                    nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_ANTALL_TIMER, barnehageplass.skalBegynneIBarnehageAntallTimer),
+                                    nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_KOMMUNE, barnehageplass.skalBegynneIBarnehageKommune)
                             )
                     );
                     break;

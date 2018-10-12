@@ -16,6 +16,10 @@ public enum Tekstnokkel {
     BARN_BARNEHAGEPLASS_STATUS("barnehageplass.barnBarnehageplassStatus"),
     BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL("advarsel.barnehageplass.timerIBarnehage"),
     GAR_IKKE_I_BARNEHAGE("barnehageplass.garIkkeIBarnehage"),
+    GAR_I_BARNEHAGE("barnehageplass.harBarnehageplass"),
+    HAR_SLUTTET_I_BARNEHAGE("barnehageplass.harSluttetIBarnehage"),
+    SKAL_BEGYNNE_I_BARNEHAGE("barnehageplass.skalBegynneIBarnehage"),
+    SKAL_SLUTTE_I_BARNEHAGE("barnehageplass.skalSlutteIBarnehage"),
 
     HAR_BARNEHAGEPLASS_DATO("barnehageplass.harBarnehageplass.dato.sporsmal"),
     HAR_BARNEHAGEPLASS_ANTALL_TIMER("barnehageplass.harBarnehageplass.antallTimer.sporsmal"),

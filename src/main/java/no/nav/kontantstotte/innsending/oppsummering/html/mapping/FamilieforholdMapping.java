@@ -23,12 +23,12 @@ public class FamilieforholdMapping extends BolkMapping {
         bolk.elementer = new ArrayList<>();
 
         if("NEI".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            bolk.elementer.add(nyttElementMedTekstsvar.apply(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel(), SVAR_NEI.getNokkel()));
+            bolk.elementer.add(nyttElementMedTekstsvar.apply(FAMILIEFORHOLD_BOR_SAMMEN, SVAR_NEI));
         }
         if("JA".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
-            bolk.elementer.add(nyttElementMedTekstsvar.apply(FAMILIEFORHOLD_BOR_SAMMEN.getNokkel(), SVAR_JA.getNokkel()));
-            bolk.elementer.add(nyttElementMedVerdisvar.apply(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER.getNokkel(), familieforhold.annenForelderNavn));
-            bolk.elementer.add(nyttElementMedVerdisvar.apply(FAMILIEFORHOLD_FNR_ANNEN_FORELDER.getNokkel(), familieforhold.annenForelderFodselsnummer));
+            bolk.elementer.add(nyttElementMedTekstsvar.apply(FAMILIEFORHOLD_BOR_SAMMEN, SVAR_JA));
+            bolk.elementer.add(nyttElementMedVerdisvar.apply(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER, familieforhold.annenForelderNavn));
+            bolk.elementer.add(nyttElementMedVerdisvar.apply(FAMILIEFORHOLD_FNR_ANNEN_FORELDER, familieforhold.annenForelderFodselsnummer));
         }
         return bolk;
     }
