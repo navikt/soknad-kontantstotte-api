@@ -37,7 +37,6 @@ public class TestLauncher {
         return new FileResourceRetriever("/metadata.json", "/jwkset.json");
     }
 
-
     @Bean
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();

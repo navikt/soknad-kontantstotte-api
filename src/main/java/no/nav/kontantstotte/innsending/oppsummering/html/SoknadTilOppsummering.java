@@ -53,7 +53,7 @@ class SoknadTilOppsummering {
     private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
 
         return Arrays.asList(
-                nyBolk("kravTilSoker"),
+                new KravTilSokerMapping(tekster).map(soknad, unleash),
                 new BarnMapping(tekster).map(soknad, unleash),
                 new BarnehageplassMapping(tekster).map(soknad, unleash),
                 new FamilieforholdMapping(tekster).map(soknad, unleash),

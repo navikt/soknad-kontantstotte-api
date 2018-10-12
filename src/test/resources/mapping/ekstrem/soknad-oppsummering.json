@@ -65,10 +65,47 @@
   "innsendingsTidspunkt": "10.10.2018 - 13.23",
   "bolker": [
     {
-      "bolknavn": "kravTilSoker",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Kravene til elektronisk søknad",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": null,
+          "svar": "Jeg er statsborger i Norge eller i et annet EØS-land",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": null,
+          "svar": "Jeg har bodd eller vært yrkesaktiv i Norge eller et annet EØS-land i minst 5 år til sammen",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": null,
+          "svar": "Jeg bor i Norge sammen med barnet",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": null,
+          "svar": "Barnet er ikke adoptert, asylsøker i fosterhjem eller på institusjon",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": null,
+          "svar": "Jeg og den andre forelderen har ikke avtalt delt bosted",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": null,
+          "svar": "Jeg og barnet skal ikke oppholde dere i utlandet mer enn 3 måneder de neste 12 månedene",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": null,
