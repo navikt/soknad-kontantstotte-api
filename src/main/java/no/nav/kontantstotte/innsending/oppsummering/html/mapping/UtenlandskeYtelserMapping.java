@@ -25,18 +25,18 @@ public class UtenlandskeYtelserMapping extends BolkMapping {
         utenlandskeYtelserBolk.elementer = new ArrayList<>();
 
         if ("NEI".equalsIgnoreCase(utenlandskeYtelser.mottarYtelserFraUtland)) {
-            utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND.getNokkel(), SVAR_NEI.getNokkel()));
+            utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND, SVAR_NEI));
         } else {
-            utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND.getNokkel(), SVAR_JA.getNokkel()));
-            utenlandskeYtelserBolk.elementer.add(nyttElementMedVerdisvar.apply(UTENLANDSKE_YTELSER_FORKLARING.getNokkel(), utenlandskeYtelser.mottarYtelserFraUtlandForklaring));
+            utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND, SVAR_JA));
+            utenlandskeYtelserBolk.elementer.add(nyttElementMedVerdisvar.apply(UTENLANDSKE_YTELSER_FORKLARING, utenlandskeYtelser.mottarYtelserFraUtlandForklaring));
         }
 
         if ("JA".equalsIgnoreCase(soknad.familieforhold.borForeldreneSammenMedBarnet)) {
             if ("NEI".equalsIgnoreCase(utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland)) {
-                utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND.getNokkel(), SVAR_NEI.getNokkel()));
+                utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND, SVAR_NEI));
             } else {
-                utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND.getNokkel(), SVAR_JA.getNokkel()));
-                utenlandskeYtelserBolk.elementer.add(nyttElementMedVerdisvar.apply(UTENLANDSKE_YTELSER_FORKLARING.getNokkel(), utenlandskeYtelser.mottarAnnenForelderYtelserFraUtlandForklaring));
+                utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND, SVAR_JA));
+                utenlandskeYtelserBolk.elementer.add(nyttElementMedVerdisvar.apply(UTENLANDSKE_YTELSER_FORKLARING, utenlandskeYtelser.mottarAnnenForelderYtelserFraUtlandForklaring));
             }
         }
 
