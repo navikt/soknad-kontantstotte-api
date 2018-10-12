@@ -3,10 +3,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
-import no.nav.kontantstotte.innsending.oppsummering.html.mapping.BarnMapping;
-import no.nav.kontantstotte.innsending.oppsummering.html.mapping.BarnehageplassMapping;
-import no.nav.kontantstotte.innsending.oppsummering.html.mapping.FamilieforholdMapping;
-import no.nav.kontantstotte.innsending.oppsummering.html.mapping.UtenlandskKontantstotteMapping;
+import no.nav.kontantstotte.innsending.oppsummering.html.mapping.*;
 import no.nav.kontantstotte.tekst.TekstProvider;
 
 import java.time.ZoneId;
@@ -62,7 +59,7 @@ class SoknadTilOppsummering {
                 new FamilieforholdMapping(tekster).map(soknad, unleash),
                 nyBolk("tilknytningTilUtland"),
                 nyBolk("arbeidIUtlandet"),
-                nyBolk("utenlandskeYtelser"),
+                new UtenlandskeYtelserMapping(tekster).map(soknad, unleash),
                 new UtenlandskKontantstotteMapping(tekster).map(soknad, unleash),
                 nyBolk("oppsummering")
         );
