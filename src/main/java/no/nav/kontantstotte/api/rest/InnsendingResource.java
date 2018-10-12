@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.api.rest;
 
-import no.nav.kontantstotte.oppsummering.InnsendingService;
-import no.nav.kontantstotte.oppsummering.Soknad;
+import no.nav.kontantstotte.innsending.InnsendingService;
+import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;

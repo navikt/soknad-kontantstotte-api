@@ -16,7 +16,6 @@ public class FeatureToggleConfig {
     private static final String UNLEASH_API_URL_PROPERTY_NAME = "${UNLEASH_API_URL}";
     private static final String FASIT_ENVIRONMENT_NAME = "${FASIT_ENVIRONMENT_NAME}";
 
-    public static final String BRUK_PDFGEN = "kontantstotte.pdfgen";
     public static final String KONTANTSTOTTE_NY_OPPSUMMERING = "kontantstotte.bolk.oppsummering";
     public static final String KONTANTSTOTTE_OPPSUMMERING_ADVARSEL = "kontantstotte.oppsummering.advarsel";
 

@@ -2,8 +2,8 @@ package no.nav.kontantstotte.api.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.nav.kontantstotte.oppsummering.InnsendingService;
-import no.nav.kontantstotte.oppsummering.Soknad;
+import no.nav.kontantstotte.innsending.InnsendingService;
+import no.nav.kontantstotte.innsending.Soknad;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;

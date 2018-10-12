@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.config;
 
 import no.nav.kontantstotte.config.toggle.FeatureToggleConfig;
-import no.nav.kontantstotte.oppsummering.innsending.InnsendingConfiguration;
+import no.nav.kontantstotte.innsending.InnsendingConfiguration;
 import no.nav.kontantstotte.person.PersonConfiguration;
 import no.nav.log.LogFilter;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
