@@ -18,7 +18,6 @@ class SoknadOppsummering {
 
     }
 
-
     public SoknadOppsummering(Soknad soknad, String fnr, String innsendingsTidspunkt, List<Bolk> bolker, Map<String, String> tekster) {
         this.soknad = soknad;
         this.fnr = fnr;

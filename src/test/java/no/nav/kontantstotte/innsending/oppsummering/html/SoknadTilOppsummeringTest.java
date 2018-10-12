@@ -54,6 +54,7 @@ public class SoknadTilOppsummeringTest {
                 tekst(BARN_TITTEL),
                 tekst(BARNEHAGEPLASS_TITTEL),
                 tekst(FAMILIEFORHOLD_TITTEL),
+                tekst(UTENLANDSKE_YTELSER_TITTEL),
                 tekst(UTENLANDSK_KONTANTSTOTTE_TITTEL)
         );
         when(mock.hentTekster(any())).thenReturn(tekster);
@@ -71,14 +72,12 @@ public class SoknadTilOppsummeringTest {
                         tuple(null, FAMILIEFORHOLD_TITTEL.getNokkel()),
                         tuple("tilknytningTilUtland", null),
                         tuple("arbeidIUtlandet", null),
-                        tuple("utenlandskeYtelser", null),
+                        tuple(null, UTENLANDSKE_YTELSER_TITTEL.getNokkel()),
                         tuple(null, UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel()),
                         tuple("oppsummering", null)
                 );
         assertThat(oppsummering.getFnr()).isEqualTo(fnr);
     }
-
-
 
     private Map<String, String> tekster(AbstractMap.SimpleEntry<String, String>... tekst) {
         return Collections.unmodifiableMap(Stream.of(tekst)
