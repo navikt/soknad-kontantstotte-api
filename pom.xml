@@ -20,6 +20,7 @@
         <common-java-modules.version>2018.10.02.19.54</common-java-modules.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <unleash.version>3.1.0</unleash.version>
+        <jackson.version>2.9.7</jackson.version>
     </properties>
 
     <build>
