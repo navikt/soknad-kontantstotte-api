@@ -48,7 +48,7 @@ public class InnsendingResource {
         return response.getStatus() != 200 ? response :
                 Response
                         .ok(
-                                soknad.innsendingsTidspunkt.atZone(ZoneId.systemDefault()).toLocalDateTime().toString(),
+                                soknad.innsendingsTidspunkt.toString(),
                                 MediaType.APPLICATION_JSON_TYPE
                         )
                         .build();
