@@ -30,7 +30,7 @@ public class SokerResourceTest {
     @Value("${local.server.port}")
     private int port;
 
-    @Value("${server.servlet.context-path:}")
+    @Value("${spring.jersey.application-path}")
     private String contextPath;
 
     @Test
