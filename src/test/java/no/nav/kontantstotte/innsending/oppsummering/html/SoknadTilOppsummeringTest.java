@@ -55,6 +55,7 @@ public class SoknadTilOppsummeringTest {
                 tekst(BARN_TITTEL),
                 tekst(BARNEHAGEPLASS_TITTEL),
                 tekst(FAMILIEFORHOLD_TITTEL),
+                tekst(ARBEID_I_UTLANDET_TITTEL),
                 tekst(UTENLANDSKE_YTELSER_TITTEL),
                 tekst(UTENLANDSK_KONTANTSTOTTE_TITTEL)
         );
@@ -72,7 +73,7 @@ public class SoknadTilOppsummeringTest {
                         tuple(null, BARNEHAGEPLASS_TITTEL.getNokkel()),
                         tuple(null, FAMILIEFORHOLD_TITTEL.getNokkel()),
                         tuple("tilknytningTilUtland", null),
-                        tuple("arbeidIUtlandet", null),
+                        tuple(null, ARBEID_I_UTLANDET_TITTEL.getNokkel()),
                         tuple(null, UTENLANDSKE_YTELSER_TITTEL.getNokkel()),
                         tuple(null, UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel()),
                         tuple("oppsummering", null)
