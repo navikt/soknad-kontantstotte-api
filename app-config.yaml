@@ -14,10 +14,10 @@ resources:
     memory: 512Mi
 healthcheck:
   liveness:
-    initialDelay: 20
+    initialDelay: 30
     path: /internal/status/isAlive
   readiness:
-    initialDelay: 20
+    initialDelay: 30
     path: /internal/status/isAlive
 ingress:
   enabled: true
