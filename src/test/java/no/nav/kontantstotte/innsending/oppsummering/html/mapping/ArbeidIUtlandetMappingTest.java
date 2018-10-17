@@ -20,17 +20,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 public class ArbeidIUtlandetMappingTest {
-    private final String sporsmal = "Mottar du ytelser fra utlandet?";
+    private final String sporsmal = "Arbeider du i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?";
     private final String svar = "Ja";
     private final String tileggsSporsmal = "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder";
     private final String tileggsSvar = "Søker oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor man mottok eller fortsatt mottar ytelser fra utlandet";
-    private final String annenForelderSporsmal = "Mottar annen forelder ytelser fra utlandet?";
+    private final String annenForelderSporsmal = "Arbeider den andre forelderen i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?";
     private final String annenForelderSvar = "Nei";
 
     private Map<String, String> tekster = mockTekster(
-            tekst(UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND, sporsmal),
-            tekst(UTENLANDSKE_YTELSER_FORKLARING, tileggsSporsmal),
-            tekst(UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND, annenForelderSporsmal),
+            tekst(ARBEID_I_UTLANDET_ELLER_KONTINENTALSOKKEL, sporsmal),
+            tekst(ARBEID_I_UTLANDET_FORKLARING, tileggsSporsmal),
+            tekst(ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET, annenForelderSporsmal),
             tekst(SVAR_JA, svar),
             tekst(SVAR_NEI, annenForelderSvar));
 
