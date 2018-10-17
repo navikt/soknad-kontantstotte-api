@@ -84,7 +84,7 @@ public class ArbeidIUtlandetMappingTest {
         Soknad soknad = new Soknad();
         ArbeidIUtlandet arbeidIUtlandet = new ArbeidIUtlandet();
         arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkel = "JA";
-        arbeidIUtlandet.arbeiderAnnenForelderIUtlandetForklaring = tileggsSvar;
+        arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkelForklaring = tileggsSvar;
         arbeidIUtlandet.arbeiderAnnenForelderIUtlandet = "NEI";
         arbeidIUtlandet.arbeiderAnnenForelderIUtlandetForklaring = "";
         soknad.arbeidIUtlandet = arbeidIUtlandet;
