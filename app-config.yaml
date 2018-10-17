@@ -23,7 +23,7 @@ ingress:
   enabled: true
 prometheus:
   enabled: true
-  path: /actuator/prometheus
+  path: /internal/prometheus
 fasitResources:
   used:
 # Unleash
