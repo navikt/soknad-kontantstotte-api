@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_NY_OPPSUMMERING;
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
@@ -40,7 +39,6 @@ public class TestLauncher {
     @Bean
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();
-        fakeUnleash.enable(KONTANTSTOTTE_NY_OPPSUMMERING);
         fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
 
         return fakeUnleash;
