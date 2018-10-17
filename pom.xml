@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.2.RELEASE</version>
+        <version>2.0.5.RELEASE</version>
     </parent>
 
     <groupId>no.nav.kontantstotte</groupId>
@@ -20,6 +20,7 @@
         <common-java-modules.version>2018.10.02.19.54</common-java-modules.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <unleash.version>3.1.0</unleash.version>
+        <jackson.version>2.9.7</jackson.version>
     </properties>
 
     <build>
@@ -116,7 +117,13 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>4.10</version>
+            <version>5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>no.nav.sbl</groupId>
+            <artifactId>log</artifactId>
+            <version>${common-java-modules.version}</version>
         </dependency>
 
         <!-- Utils -->
@@ -125,6 +132,13 @@
             <artifactId>unleash-client-java</artifactId>
             <version>${unleash.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
 
         <!-- Test -->
 
