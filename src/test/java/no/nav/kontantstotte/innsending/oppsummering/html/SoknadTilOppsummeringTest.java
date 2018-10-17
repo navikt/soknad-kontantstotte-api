@@ -51,6 +51,7 @@ public class SoknadTilOppsummeringTest {
 
         TekstProvider mock = mock(TekstProvider.class);
         Map<String, String> tekster = tekster(
+                tekst(KRAV_TIL_SOKER_TITTEL),
                 tekst(BARN_TITTEL),
                 tekst(BARNEHAGEPLASS_TITTEL),
                 tekst(FAMILIEFORHOLD_TITTEL),
@@ -66,7 +67,7 @@ public class SoknadTilOppsummeringTest {
         assertThat(oppsummering.getBolker())
                 .extracting("bolknavn", "tittel")
                 .containsSequence(
-                        tuple("kravTilSoker", null),
+                        tuple(null, KRAV_TIL_SOKER_TITTEL.getNokkel()),
                         tuple(null, BARN_TITTEL.getNokkel()),
                         tuple(null, BARNEHAGEPLASS_TITTEL.getNokkel()),
                         tuple(null, FAMILIEFORHOLD_TITTEL.getNokkel()),

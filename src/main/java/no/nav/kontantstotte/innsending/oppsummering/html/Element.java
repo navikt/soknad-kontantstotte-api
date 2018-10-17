@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class Element {
-
     public static Element nyttSvar(String sporsmal, String svar){
         Element element = new Element();
         element.sporsmal = sporsmal;
