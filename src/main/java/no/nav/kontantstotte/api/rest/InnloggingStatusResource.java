@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@Path("status")
+@Path("/")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class InnloggingStatusResource {
 
@@ -39,7 +39,7 @@ public class InnloggingStatusResource {
      * @deprecated remove after frontend is updated
      */
     @GET
-    @Path("ping")
+    @Path("status/ping")
     @Deprecated
     public String ping() {
         return "pong";

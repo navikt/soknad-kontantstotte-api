@@ -63,7 +63,7 @@ public class InnloggingStatusResourceTest {
 
         WebTarget target = client().target("http://localhost:" + port + contextPath);
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT("12345678911");
-        Response response = target.path("/status/verify/loggedin")
+        Response response = target.path("/verify/loggedin")
                 .request()
                 .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
                 .get();
@@ -74,7 +74,7 @@ public class InnloggingStatusResourceTest {
     @Test
     public void skalGi401UtenToken() {
         WebTarget target = client().target("http://localhost:" + port + contextPath);
-        Response response = target.path("/status/verify/loggedin")
+        Response response = target.path("/verify/loggedin")
                 .request()
                 .get();
 
