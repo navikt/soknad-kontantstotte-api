@@ -12,20 +12,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@Path("status")
+@Path("/")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
-public class StatusResource {
+public class InnloggingStatusResource {
 
     private final URI proxyServiceUri;
 
     private final Client client;
 
-    public StatusResource(
+    public InnloggingStatusResource(
             @Named("proxyClient") Client client,
             @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI proxyServiceUri) {
 
@@ -33,35 +34,19 @@ public class StatusResource {
         this.client = client;
     }
 
+    /**
+     * TODO Remove after frontend is updated
+     * @deprecated remove after frontend is updated
+     */
     @GET
-    @Path("ping")
+    @Path("status/ping")
+    @Deprecated
     public String ping() {
         return "pong";
     }
 
     @GET
-    @Path("selftest")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, String> selftest() {
-        WebTarget target = client
-                .target(proxyServiceUri);
-
-        String response = target
-                .path("status").path("ping")
-                .request()
-                .get(String.class);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("self", ping());
-        map.put(target.getUri().toString(), response);
-        return map;
-
-
-    }
-
-    @GET
-    @Path("isAlive")
-    @Unprotected
-    public String isAlive() {
-        return "Ok";
-    }
-}
+    @Path("verify/loggedin")
+    public Response verifyUserLoggedIn() {
+        return Response.ok().build();
+    }}
