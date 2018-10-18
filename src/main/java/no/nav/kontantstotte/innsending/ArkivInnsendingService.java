@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.innsending;
 
+import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
@@ -36,11 +37,19 @@ class ArkivInnsendingService implements InnsendingService {
     public Response sendInnSoknad(Soknad soknad) {
         SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), soknad.innsendingsTidspunkt);
 
-        return client.target(proxyServiceUri)
+        Response response = client.target(proxyServiceUri)
                 .path("soknad")
                 .request()
                 .buildPost(Entity.entity(soknadDto, MediaType.APPLICATION_JSON))
                 .invoke();
+
+        return response.getStatus() != 200 ? response :
+                Response
+                        .ok(
+                                new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString()),
+                                MediaType.APPLICATION_JSON_TYPE
+                        )
+                        .build();
     }
 
     public static String hentFnrFraToken() {

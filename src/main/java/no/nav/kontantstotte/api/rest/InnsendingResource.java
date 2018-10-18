@@ -15,8 +15,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 @Component
 @Path("sendinn")
@@ -43,14 +41,6 @@ public class InnsendingResource {
 
         soknad.markerInnsendingsTidspunkt();
 
-        Response response = innsendingService.sendInnSoknad(soknad);
-
-        return response.getStatus() != 200 ? response :
-                Response
-                        .ok(
-                                soknad.innsendingsTidspunkt.toString(),
-                                MediaType.APPLICATION_JSON_TYPE
-                        )
-                        .build();
+        return innsendingService.sendInnSoknad(soknad);
     }
 }
