@@ -1,13 +1,10 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.FakeUnleash;
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Familieforhold;
 import no.nav.kontantstotte.innsending.steg.UtenlandskeYtelser;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -34,13 +31,6 @@ public class UtenlandskeYtelserMappingTest {
             tekst(SVAR_JA, svar),
             tekst(SVAR_NEI, annenForelderSvar));
 
-    private Unleash unleash;
-
-    @Before
-    public void init() {
-        this.unleash = new FakeUnleash();
-    }
-
     @Test
     public void utenlandskeYtelser_nar_foreldre_ikke_bor_sammen() {
         Soknad soknad = hentUtenlandskeYtelserSoknad();
@@ -49,7 +39,7 @@ public class UtenlandskeYtelserMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new UtenlandskeYtelserMapping(tekster).map(soknad, unleash);
+        Bolk bolk = new UtenlandskeYtelserMapping(tekster).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -68,7 +58,7 @@ public class UtenlandskeYtelserMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new UtenlandskeYtelserMapping(tekster).map(soknad, unleash);
+        Bolk bolk = new UtenlandskeYtelserMapping(tekster).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)

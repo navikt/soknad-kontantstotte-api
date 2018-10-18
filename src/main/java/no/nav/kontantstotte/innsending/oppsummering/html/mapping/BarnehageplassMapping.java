@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.Unleash;
+import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -19,7 +19,7 @@ public class BarnehageplassMapping extends BolkMapping {
     }
 
     @Override
-    public Bolk map(Soknad soknad, Unleash unleash) {
+    public Bolk map(Soknad soknad) {
         Bolk barnehageplassBolk = new Bolk();
         Barnehageplass barnehageplass = soknad.barnehageplass;
 
@@ -55,7 +55,7 @@ public class BarnehageplassMapping extends BolkMapping {
                     );
                     break;
                 case harBarnehageplass:
-                    Element harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 && unleash.isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL) ?
+                    Element harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 && UnleashProvider.get().isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL) ?
                             Element.nyttSvar(
                                     tekster.get(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel()),
                                     barnehageplass.harBarnehageplassAntallTimer,

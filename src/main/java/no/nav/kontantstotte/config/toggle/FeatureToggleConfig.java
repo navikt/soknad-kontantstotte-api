@@ -1,4 +1,5 @@
 package no.nav.kontantstotte.config.toggle;
+
 import no.finn.unleash.DefaultUnleash;
 import no.finn.unleash.Unleash;
 import no.finn.unleash.strategy.Strategy;
@@ -7,6 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Scope;
+
+import javax.annotation.PostConstruct;
+
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_SINGLETON;
 
 
 @Configuration
@@ -19,6 +25,7 @@ public class FeatureToggleConfig {
     public static final String KONTANTSTOTTE_OPPSUMMERING_ADVARSEL = "kontantstotte.oppsummering.advarsel";
 
     @Bean
+    @Scope(SCOPE_SINGLETON)
     public Unleash unleash(
             @Value(APP_NAME_PROPERTY_NAME) String appName,
             @Value(UNLEASH_API_URL_PROPERTY_NAME) String unleashApiUrl,
@@ -40,5 +47,10 @@ public class FeatureToggleConfig {
     @Bean
     public Strategy byEnvironment(@Value(FASIT_ENVIRONMENT_NAME) String env){
         return new ByEnvironmentStrategy(env);
+    }
+
+    @PostConstruct
+    public void initUnleashProvider(Unleash unleash) {
+        UnleashProvider.initialize(unleash);
     }
 }
