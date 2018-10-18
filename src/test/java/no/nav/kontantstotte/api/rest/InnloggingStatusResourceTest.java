@@ -25,16 +25,17 @@ import static org.hamcrest.core.Is.is;
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = { ApplicationConfig.class, TokenGeneratorConfiguration.class})
-public class StatusResourceTest {
+public class InnloggingStatusResourceTest {
 
     @Value("${local.server.port}")
     private int port;
 
-    @Value("${server.servlet.context-path:}")
+    @Value("${spring.jersey.application-path}")
     private String contextPath;
 
     @Test
-    public void skalGi200MedGyldigToken() {
+    @Deprecated
+    public void pingSkalGi200MedGyldigToken() {
 
         WebTarget target = client().target("http://localhost:" + port + contextPath);
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT("12345678911");
@@ -47,9 +48,33 @@ public class StatusResourceTest {
     }
 
     @Test
-    public void skalGi401UtenToken() {
+    @Deprecated
+    public void pingSkalGi401UtenToken() {
         WebTarget target = client().target("http://localhost:" + port + contextPath);
         Response response = target.path("/status/ping")
+                .request()
+                .get();
+
+        assertThat(response.getStatus(), is(equalTo(Response.Status.UNAUTHORIZED.getStatusCode())));
+    }
+
+    @Test
+    public void skalGi200MedGyldigToken() {
+
+        WebTarget target = client().target("http://localhost:" + port + contextPath);
+        SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT("12345678911");
+        Response response = target.path("/verify/loggedin")
+                .request()
+                .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
+                .get();
+
+        assertThat(response.getStatus(), is(equalTo(Response.Status.OK.getStatusCode())));
+    }
+
+    @Test
+    public void skalGi401UtenToken() {
+        WebTarget target = client().target("http://localhost:" + port + contextPath);
+        Response response = target.path("/verify/loggedin")
                 .request()
                 .get();
 

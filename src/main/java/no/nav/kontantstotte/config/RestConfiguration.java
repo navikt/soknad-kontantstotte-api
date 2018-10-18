@@ -16,11 +16,11 @@ public class RestConfiguration extends ResourceConfig {
         register(JacksonFeature.class);
         register(MultiPartFeature.class);
         // Resources
-        register(StatusResource.class);
         register(TeksterResource.class);
         register(PersonResource.class);
         register(SokerResource.class);
         register(InnsendingResource.class);
+        register(InnloggingStatusResource.class);
         // Filters
         register(CORSResponseFilter.class);
         register(OidcContainerRequestFilter.class);
