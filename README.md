@@ -12,7 +12,7 @@ For å kjøre opp løsningen lokalt:
 * Apper som må kjøre i tillegg til api-et: _soknad-kontantstotte-proxy_
 
 ###Uten mock
-* Edit Configurations -> VM Options: ``-Dspring.profiles.active=dev`` evt lage springboot run-config med profile `dev,mockgen`
+* Edit Configurations -> VM Options: ``-Dspring.profiles.active=dev`` evt lage springboot run-config med profile `dev`
 * TEST.pdf innholder data fylt inn fra frontenden
 * Apper som må kjøre i tillegg til api-et: _soknad-kontantstotte-proxy, soknad-html-generator, pdfgen_
 
