@@ -1,6 +1,8 @@
 package no.nav.kontantstotte.api.rest;
 
-import no.nav.kontantstotte.person.PersonService;
+import no.nav.kontantstotte.person.domain.Person;
+import no.nav.kontantstotte.person.domain.PersonService;
+import no.nav.kontantstotte.person.domain.PersonServiceException;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +11,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import static no.nav.kontantstotte.api.rest.SokerResource.hentFnrFraToken;
 
 @Component
 @Produces(MediaType.APPLICATION_JSON)
@@ -24,7 +28,7 @@ public class PersonResource {
     }
 
     @GET
-    public String hentPerson() {
-        return personService.hentPerson();
+    public Person hentPerson() throws PersonServiceException {
+        return personService.hentPersonInfo(hentFnrFraToken());
     }
 }

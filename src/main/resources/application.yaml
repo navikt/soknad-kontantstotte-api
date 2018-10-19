@@ -35,3 +35,5 @@ logging:
 
 SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://pdf-gen.default/api
 SOKNAD_HTML_GENERATOR_URL: http://soknad-html-generator/api
+
+PERSONINFO_V1_URL: http://urlsomikkeeribruk
