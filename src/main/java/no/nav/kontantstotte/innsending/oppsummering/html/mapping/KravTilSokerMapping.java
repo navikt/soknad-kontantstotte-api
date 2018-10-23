@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 
@@ -16,7 +15,7 @@ public class KravTilSokerMapping extends BolkMapping {
     }
 
     @Override
-    public Bolk map(Soknad soknad, Unleash unleash) {
+    public Bolk map(Soknad soknad) {
         Bolk kravTilSokerBolk = new Bolk();
 
         kravTilSokerBolk.tittel = tekster.get(KRAV_TIL_SOKER_TITTEL.getNokkel());
