@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.config;
 
+import no.nav.kontantstotte.api.filter.SecurityHttpHeaderFilter;
 import no.nav.kontantstotte.config.toggle.FeatureToggleConfig;
 import no.nav.kontantstotte.innsending.InnsendingConfiguration;
 import no.nav.kontantstotte.person.PersonConfiguration;
@@ -78,6 +79,11 @@ public class ApplicationConfig implements EnvironmentAware {
         filterRegistration.setFilter(new LogFilter());
         filterRegistration.setOrder(1);
         return filterRegistration;
+    }
+
+    @Bean
+    public FilterRegistrationBean<SecurityHttpHeaderFilter> securityHttpHeaderFilterBean() {
+        return new FilterRegistrationBean<>(new SecurityHttpHeaderFilter());
     }
 
     @Bean
