@@ -1,7 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html;
 
-
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.*;
 import no.nav.kontantstotte.tekst.TekstProvider;
@@ -11,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 /**
  * Klassen benyttes til generering av oppsummeringsinnhold.
@@ -33,12 +30,10 @@ class SoknadTilOppsummering {
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
             .withZone(ZoneId.of("Europe/Paris"));
 
-    private final Unleash unleash;
     private final TekstProvider tekstProvider;
 
-    public SoknadTilOppsummering(TekstProvider tekstProvider, Unleash unleash) {
+    public SoknadTilOppsummering(TekstProvider tekstProvider) {
         this.tekstProvider = tekstProvider;
-        this.unleash = unleash;
     }
 
     public SoknadOppsummering map(Soknad soknad, String fnr) {
@@ -53,14 +48,14 @@ class SoknadTilOppsummering {
     private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
 
         return Arrays.asList(
-                new KravTilSokerMapping(tekster).map(soknad, unleash),
-                new BarnMapping(tekster).map(soknad, unleash),
-                new BarnehageplassMapping(tekster).map(soknad, unleash),
-                new FamilieforholdMapping(tekster).map(soknad, unleash),
-                new TilknytningTilUtlandMapping(tekster).map(soknad, unleash),
+                new KravTilSokerMapping(tekster).map(soknad),
+                new BarnMapping(tekster).map(soknad),
+                new BarnehageplassMapping(tekster).map(soknad),
+                new FamilieforholdMapping(tekster).map(soknad),
+                new TilknytningTilUtlandMapping(tekster).map(soknad),
                 nyBolk("arbeidIUtlandet"),
-                new UtenlandskeYtelserMapping(tekster).map(soknad, unleash),
-                new UtenlandskKontantstotteMapping(tekster).map(soknad, unleash),
+                new UtenlandskeYtelserMapping(tekster).map(soknad),
+                new UtenlandskKontantstotteMapping(tekster).map(soknad),
                 nyBolk("oppsummering")
         );
     }

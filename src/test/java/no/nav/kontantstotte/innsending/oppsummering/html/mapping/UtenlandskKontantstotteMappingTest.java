@@ -1,7 +1,6 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 
-import no.finn.unleash.FakeUnleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -26,7 +25,6 @@ public class UtenlandskKontantstotteMappingTest {
     private static final String SPORSMAL = "Får du kontantstøtte fra andre land enn Norge??";
     private static final String FRITEKSTSPORSMAL = "Oppgi landene, beløpet du får utbetalt og perioden for utbetalingen";
 
-    private final FakeUnleash unleash = new FakeUnleash();
     private Soknad soknad;
     private UtenlandskKontantstotte utenlandskKontantstotte;
     private Map<String, String> tekster;
@@ -49,7 +47,7 @@ public class UtenlandskKontantstotteMappingTest {
 
     @Test
     public void skal_ha_rett_tittel_og_undertitteø() {
-        Bolk bolk = mapping.map(soknad, unleash);
+        Bolk bolk = mapping.map(soknad);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(TITTEL, null);
@@ -59,7 +57,7 @@ public class UtenlandskKontantstotteMappingTest {
     public void mottar_ikke_utenlandsk_kontantstotte() {
         utenlandskKontantstotte.mottarKontantstotteFraUtlandet = "NEI";
 
-        Bolk bolk = mapping.map(soknad, unleash);
+        Bolk bolk = mapping.map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -74,7 +72,7 @@ public class UtenlandskKontantstotteMappingTest {
 
         utenlandskKontantstotte.mottarKontantstotteFraUtlandet = "JA";
         utenlandskKontantstotte.mottarKontantstotteFraUtlandetTilleggsinfo = fritekstsvar;
-        Bolk bolk = mapping.map(soknad, unleash);
+        Bolk bolk = mapping.map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)

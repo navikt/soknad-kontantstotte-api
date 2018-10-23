@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html;
 
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.tekst.DefaultTekstProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +14,8 @@ public class OppsummeringHtmlConfiguration {
 
 
     @Bean
-    public SoknadTilOppsummering soknadTilOppsummering(Unleash unleash) {
-        return new SoknadTilOppsummering(new DefaultTekstProvider(), unleash);
+    public SoknadTilOppsummering soknadTilOppsummering() {
+        return new SoknadTilOppsummering(new DefaultTekstProvider());
     }
 
 
