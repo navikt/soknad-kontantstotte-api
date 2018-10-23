@@ -162,10 +162,17 @@
       ]
     },
     {
-      "bolknavn": "tilknytningTilUtland",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Tilknytning til andre land",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Har du bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen?",
+          "svar": "Ja, i Norge",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": "arbeidIUtlandet",
