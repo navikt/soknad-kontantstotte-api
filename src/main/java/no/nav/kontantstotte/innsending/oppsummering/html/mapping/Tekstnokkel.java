@@ -3,6 +3,9 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 public enum Tekstnokkel {
     SVAR_NEI("svar.nei"),
     SVAR_JA("svar.ja"),
+    SVAR_JA_I_NORGE("tilknytningTilUtland.svar.jaINorge"),
+    SVAR_JA_I_EOS("tilknytningTilUtland.svar.jaIEOS"),
+    SVAR_JA_LEGGER_SAMMEN_PERIODER_EOS("tilknytningTilUtland.svar.jaLeggerSammenPerioderEOS"),
 
     KRAV_TIL_SOKER_TITTEL("oppsummering.kravtilsoker.tittel"),
     KRAV_TIL_SOKER_BARN_IKKE_HJEMME("startside.krav.barnIkkeHjemme"),
@@ -53,7 +56,17 @@ public enum Tekstnokkel {
 
     UTENLANDSK_KONTANTSTOTTE_TITTEL("utenlandskKontantstotte.tittel"),
     UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE("utenlandskKontantstotte.mottarKontantstotteFraUtlandet.sporsmal"),
-    UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO("utenlandskKontantstotte.mottarKontantstotteFraUtlandet.tilleggsinfo.sporsmal");
+    UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO("utenlandskKontantstotte.mottarKontantstotteFraUtlandet.tilleggsinfo.sporsmal"),
+
+    TILKNYTNING_TIL_UTLAND_TITTEL("tilknytningTilUtland.tittel"),
+    TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE("tilknytningTilUtland.svar.nei"),
+    TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR("tilknytningTilUtland.boddEllerJobbetINorgeMinstFemAar.sporsmal"),
+    TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR_ANNEN_FORELDER("tilknytningTilUtland.annenForelderBoddEllerJobbetINorgeMinstFemAar.sporsmal"),
+    TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE_ADVARSEL("tilknytningTilUtland.advarsel.nei.soker"),
+    TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE_ADVARSEL("tilknytningTilUtland.advarsel.nei.annenForelder"),
+    TILKNYTNING_TIL_UTLAND_FORKLARING("tilknytningTilUtland.forklaring.hjelpetekst");
+
+
 
     private final String nokkel;
 
