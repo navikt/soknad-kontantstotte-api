@@ -1,11 +1,10 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.Unleash;
+import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.TilknytningTilUtland;
-import no.nav.kontantstotte.innsending.steg.UtenlandskeYtelser;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -18,9 +17,8 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
         super(tekster);
     }
 
-
     @Override
-    public Bolk map(Soknad soknad, Unleash unleash) {
+    public Bolk map(Soknad soknad) {
         Bolk tilknytningTilUtlandBolk = new Bolk();
 
         TilknytningTilUtland tilknytningTilUtland = soknad.tilknytningTilUtland;
@@ -38,13 +36,13 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
         }
         else {
             tilknytningTilUtlandBolk.elementer.add(
-                unleash.isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL) ?
-                        Element.nyttSvar(
-                            tekster.get(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR.getNokkel()),
-                            tilknytningTilUtland.boddEllerJobbetINorgeMinstFemAar,
-                            tekster.get(TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE_ADVARSEL.getNokkel())
-                        ) :
-                        nyttElementMedTekstsvar.apply(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR, SVAR_NEI)
+                    UnleashProvider.get().isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL) ?
+                            Element.nyttSvar(
+                                    tekster.get(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR.getNokkel()),
+                                    tilknytningTilUtland.boddEllerJobbetINorgeMinstFemAar,
+                                    tekster.get(TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE_ADVARSEL.getNokkel())
+                            ) :
+                            nyttElementMedTekstsvar.apply(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR, SVAR_NEI)
             );
         }
 
@@ -59,7 +57,7 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
                 tilknytningTilUtlandBolk.elementer.add(nyttElementMedVerdisvar.apply(TILKNYTNING_TIL_UTLAND_FORKLARING, tilknytningTilUtland.annenForelderBoddEllerJobbetINorgeMinstFemAarForklaring));
             } else if("NEI".equalsIgnoreCase(tilknytningTilUtland.annenForelderBoddEllerJobbetINorgeMinstFemAar)) {
                 tilknytningTilUtlandBolk.elementer.add(
-                        unleash.isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL) ?
+                        UnleashProvider.get().isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL) ?
                                 Element.nyttSvar(
                                         tekster.get(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR_ANNEN_FORELDER.getNokkel()),
                                         tekster.get(TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE.getNokkel()),
@@ -72,4 +70,5 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
 
         return tilknytningTilUtlandBolk;
     }
+
 }
