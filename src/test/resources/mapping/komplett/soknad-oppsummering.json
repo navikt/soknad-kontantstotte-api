@@ -192,10 +192,35 @@
       ]
     },
     {
-      "bolknavn": "tilknytningTilUtland",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Tilknytning til andre land",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Har du bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen?",
+          "svar": "Ja, i ett EØS-land",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Oppgi land, utenlandsk ID-nummer, adresse i landene og perioder",
+          "svar": "Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Har den andre forelderen bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen?",
+          "svar": "Ja, hvis jeg legger sammen perioder i EØS-land",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Oppgi land, utenlandsk ID-nummer, adresse i landene og perioder",
+          "svar": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": "arbeidIUtlandet",
