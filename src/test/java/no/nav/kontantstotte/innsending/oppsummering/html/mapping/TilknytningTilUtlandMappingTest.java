@@ -34,13 +34,6 @@ public class TilknytningTilUtlandMappingTest {
             tekst(SVAR_JA_I_EOS, svar),
             tekst(TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE, annenForelderSvar));
 
-    private Unleash unleash;
-
-    @Before
-    public void init() {
-        this.unleash = new FakeUnleash();
-    }
-
     @Test
     public void tilknytningTilUtland_nar_foreldre_ikke_bor_sammen() {
         Soknad soknad = hentTilknytningTilUtlandSoknad();
@@ -49,7 +42,7 @@ public class TilknytningTilUtlandMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new TilknytningTilUtlandMapping(tekster).map(soknad, unleash);
+        Bolk bolk = new TilknytningTilUtlandMapping(tekster).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -68,7 +61,7 @@ public class TilknytningTilUtlandMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new TilknytningTilUtlandMapping(tekster).map(soknad, unleash);
+        Bolk bolk = new TilknytningTilUtlandMapping(tekster).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
