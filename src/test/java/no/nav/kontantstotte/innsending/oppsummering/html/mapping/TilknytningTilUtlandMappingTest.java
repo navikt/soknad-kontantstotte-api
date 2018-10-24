@@ -2,6 +2,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 import no.finn.unleash.FakeUnleash;
 import no.finn.unleash.Unleash;
+import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -34,7 +35,16 @@ public class TilknytningTilUtlandMappingTest {
             tekst(SVAR_JA_I_EOS, svar),
             tekst(TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE, annenForelderSvar));
 
-    @Test
+    private FakeUnleash fakeUnleash;
+
+    @Before
+    public void setUp() {
+
+        fakeUnleash = new FakeUnleash();
+        UnleashProvider.initialize(fakeUnleash);
+    }
+
+        @Test
     public void tilknytningTilUtland_nar_foreldre_ikke_bor_sammen() {
         Soknad soknad = hentTilknytningTilUtlandSoknad();
 
