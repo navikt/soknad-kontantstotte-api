@@ -21,7 +21,7 @@ public class InnsendingConfiguration {
 
     @Bean
     public InnsendingService innsendingServiceRetriever(
-            @Named("proxyClient") Client client,
+            @Named("kontantstotteProxyClient") Client client,
             @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI target,
             OppsummeringPdfGenerator oppsummeringPdfGenerator) {
         return new ArkivInnsendingService(client,

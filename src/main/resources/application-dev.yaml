@@ -11,6 +11,8 @@ APP_NAME: soknad-kontantstotte-api
 SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://localhost:8082/api
 SOKNAD_HTML_GENERATOR_URL: http://localhost:9000/api
 
+tps-proxy.api.v1.innsyn: http://dummyTps/api
+
 logging:
   level:
     org.springframework: INFO

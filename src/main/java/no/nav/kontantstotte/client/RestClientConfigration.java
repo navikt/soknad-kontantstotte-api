@@ -21,7 +21,10 @@ public class RestClientConfigration {
     private String key;
 
     @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}")
-    private String proxyApiKey;
+    private String kontantstotteProxyApiKey;
+
+    @Value("soknad-kontantstotte-api-tps-proxy.api.v1.innsyn-apikey")
+    private String tpsProxyApiKey;
 
     @Bean(name = "client")
     public Client client() {
@@ -35,23 +38,30 @@ public class RestClientConfigration {
                 .build();
     }
 
-    @Bean(name = "proxyClient")
-    public Client proxyClient(ProxyHeaderRequestFilter proxyHeaderRequestFilter) {
+    @Bean(name = "kontantstotteProxyClient")
+    public Client kontantstotteProxyClient() {
 
         return ClientBuilder.newBuilder()
                 .register(new ClientLogFilter(ClientLogFilter.ClientLogFilterConfig.builder()
                         .metricName("soknad-kontantstotte-api").build()))
                 .register(OidcClientRequestFilter.class)
                 .register(objectMapperResolver())
-                .register(proxyHeaderRequestFilter)
+                .register(new ProxyHeaderRequestFilter(key, kontantstotteProxyApiKey))
                 .register(new LoggingFeature())
                 .build();
     }
 
-    @Bean
-    public ProxyHeaderRequestFilter proxyHeaderRequestFilter() {
+    @Bean(name = "tpsProxyClient")
+    public Client tpsProxyClient() {
 
-        return new ProxyHeaderRequestFilter(key, proxyApiKey);
+        return ClientBuilder.newBuilder()
+                .register(new ClientLogFilter(ClientLogFilter.ClientLogFilterConfig.builder()
+                        .metricName("soknad-kontantstotte-api").build()))
+                .register(OidcClientRequestFilter.class)
+                .register(objectMapperResolver())
+                .register(new ProxyHeaderRequestFilter(key, tpsProxyApiKey))
+                .register(new LoggingFeature())
+                .build();
     }
 
     private ContextResolver<ObjectMapper> objectMapperResolver() {

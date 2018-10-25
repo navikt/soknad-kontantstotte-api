@@ -17,8 +17,8 @@ public class PersonRestConfiguration {
 
     @Bean
     public PersonService personServiceRest(
-            @Named("client")Client client,
-            @Value("${PERSONINFO_V1_URL}") URI personServiceUri) {
+            @Named("tpsProxyClient")Client client,
+            @Value("${tps-proxy.api.v1.innsyn}") URI personServiceUri) {
         return new PersonServiceClient(client, personServiceUri);
     }
 
