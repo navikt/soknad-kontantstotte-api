@@ -48,7 +48,7 @@ fasitResources:
   - alias: soknad-kontantstotte-api-soknad-kontantstotte-proxy-api-apiKey
     resourceType: credential
 # tps-proxy
-  - alias: tps-proxy.api.v1.innsyn
+  - alias: tps-proxy_api_v1_innsyn
     resourceType: restservice
   - alias: soknad-kontantstotte-api-tps-proxy.api.v1.innsyn-apiKey
     resourceType: credential
