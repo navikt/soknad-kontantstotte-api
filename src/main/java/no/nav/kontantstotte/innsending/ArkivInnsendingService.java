@@ -8,10 +8,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URI;
 
 class ArkivInnsendingService implements InnsendingService {
@@ -48,14 +44,4 @@ class ArkivInnsendingService implements InnsendingService {
         return context.getClaims(SELVBETJENING).getClaimSet().getSubject();
     }
 
-    private void skrivTilFil(byte[] soknad) {
-        try {
-            new File(System.getProperty("user.dir") + "/TEST.pdf");
-            OutputStream out = new FileOutputStream(System.getProperty("user.dir") + "/TEST.pdf");
-            out.write(soknad);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

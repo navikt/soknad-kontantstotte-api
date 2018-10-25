@@ -1,17 +1,32 @@
-spring.autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
-server:
-  servlet:
-    context-path: /api
-management:
-   endpoints.web.exposure.include: info, health, metrics, prometheus
-   metrics.export.prometheus.enabled: true
-http.proxy: http://webproxy-nais.nav.no:8088
+server.servlet.path: /
+
+spring:
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  main.banner-mode: "off"
+  jersey:
+    servlet.load-on-startup: 1
+    application-path: "/api"
+  metrics.web.server.auto-time-requests: true
+
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
     discoveryurl: <Hentes fra fasit>
     acceptedaudience: <Hentes fra fasit>
     cookie_name: selvbetjening-idtoken
+
+management:
+  endpoint:
+    health.show-details: always
+  endpoints.web:
+    exposure.include: info, health, metrics, prometheus
+    base-path: "/internal"
+    path-mapping:
+      info: "status/isAlive"
+  metrics.export.prometheus.enabled: true
+
+http.proxy: http://webproxy-nais.nav.no:8088
+
 logging:
   level:
     org.springframework: INFO
