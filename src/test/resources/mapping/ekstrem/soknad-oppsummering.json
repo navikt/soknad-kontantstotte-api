@@ -207,7 +207,7 @@
         },
         {
           "sporsmal": "Har den andre forelderen bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen?",
-          "svar": "Nei, jeg har ikke bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen",
+          "svar": "Nei, den andre forelderen har ikke bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen",
           "advarsel": "Du vil mest mest sannsynlig få avslag på søknaden din. Annen forelder må ha bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år til sammen for å kunne få kontantstøtte",
           "underelementer": null
         }
@@ -407,10 +407,12 @@
     "tilknytningTilUtland.forklaring.hjelpetekst": "Oppgi land, utenlandsk ID-nummer, adresse i landene og perioder",
     "tilknytningTilUtland.hjelpetekst": "Bestemmelser i avtaler Norge har med andre land, gjør at man kan medregne medlemsperioder i disse landene for å fylle vilkåret om fem års medlemsskap",
     "tilknytningTilUtland.hjelpetekst.label": "Hjelpetekst for spørsmål om tilknytning til andre land",
+    "tilknytningTilUtland.svar.annenForelder.jaLeggerSammenPerioderEOS": "Ja, hvis den andre forelderen legger sammen perioder i EØS-land",
+    "tilknytningTilUtland.svar.annenForelder.nei": "Nei, den andre forelderen har ikke bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen",
     "tilknytningTilUtland.svar.jaIEOS": "Ja, i ett EØS-land",
     "tilknytningTilUtland.svar.jaINorge": "Ja, i Norge",
-    "tilknytningTilUtland.svar.jaLeggerSammenPerioderEOS": "Ja, hvis jeg legger sammen perioder i EØS-land",
-    "tilknytningTilUtland.svar.nei": "Nei, jeg har ikke bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen",
+    "tilknytningTilUtland.svar.soker.jaLeggerSammenPerioderEOS": "Ja, hvis jeg legger sammen perioder i EØS-land",
+    "tilknytningTilUtland.svar.soker.nei": "Nei, jeg har ikke bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år tilsammen",
     "tilknytningTilUtland.tittel": "Tilknytning til andre land",
     "utenlandskeYtelser.forklaring.hjelpetekst": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
     "utenlandskeYtelser.hjelpetekst": "Hvis du eller den andre forelderen mottar en ytelse (for eksempel dagpenger, pensjon eller foreldrepenger) som likestilles som arbeidsinntekt fra et annet EØS-land, må vi ha informasjon om dette.",

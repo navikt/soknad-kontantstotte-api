@@ -33,7 +33,7 @@ public class TilknytningTilUtlandMappingTest {
             tekst(TILKNYTNING_TIL_UTLAND_FORKLARING, tileggsSporsmal),
             tekst(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR_ANNEN_FORELDER, annenForelderSporsmal),
             tekst(SVAR_JA_I_EOS, svar),
-            tekst(TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE, annenForelderSvar));
+            tekst(TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE, annenForelderSvar));
 
     private FakeUnleash fakeUnleash;
 
