@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.steg.Familieforhold;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
@@ -16,7 +15,7 @@ public class FamilieforholdMapping extends BolkMapping {
     }
 
     @Override
-    public Bolk map(Soknad soknad, Unleash unleash) {
+    public Bolk map(Soknad soknad) {
         Bolk bolk = new Bolk();
         Familieforhold familieforhold = soknad.familieforhold;
         bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL.getNokkel());

@@ -1,7 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.FakeUnleash;
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -18,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 public class KravTilSokerMappingTest {
-    private Unleash unleash = new FakeUnleash();
 
     @Test
     public void kravTilSokerMapping() {
@@ -49,7 +46,7 @@ public class KravTilSokerMappingTest {
         kravTilSoker.skalBoMedBarnetINorgeNesteTolvMaaneder = "JA";
         soknad.kravTilSoker = kravTilSoker;
 
-        Bolk kravTilSokerBolk = new KravTilSokerMapping(tekster).map(soknad, unleash);
+        Bolk kravTilSokerBolk = new KravTilSokerMapping(tekster).map(soknad);
 
         assertThat(kravTilSokerBolk)
                 .extracting("tittel", "undertittel")

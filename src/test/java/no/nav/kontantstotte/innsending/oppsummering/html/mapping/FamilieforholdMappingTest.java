@@ -1,7 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.FakeUnleash;
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -21,7 +19,6 @@ public class FamilieforholdMappingTest {
 
     private static final String JA = "Ja";
     private static final String NEI = "Nei";
-    private Unleash unleash = new FakeUnleash();
 
     @Test
     public void familieforhold_nar_foreldre_ikke_bor_sammen() {
@@ -38,7 +35,7 @@ public class FamilieforholdMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new FamilieforholdMapping(tekster).map(soknad, unleash);
+        Bolk bolk = new FamilieforholdMapping(tekster).map(soknad);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, null);
@@ -69,7 +66,7 @@ public class FamilieforholdMappingTest {
         familieforhold.annenForelderFodselsnummer = "XXXXXX";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new FamilieforholdMapping(tekster).map(soknad, unleash);
+        Bolk bolk = new FamilieforholdMapping(tekster).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
