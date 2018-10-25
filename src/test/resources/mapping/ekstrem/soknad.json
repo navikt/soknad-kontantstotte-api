@@ -45,7 +45,7 @@
     "annenForelderBoddEllerJobbetINorgeMinstFemAar": "nei",
     "annenForelderBoddEllerJobbetINorgeMinstFemAarForklaring": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder",
     "boddEllerJobbetINorgeMinstFemAar": "jaIEOS",
-    "boddEllerJobbetINorgeMinstFemAarForklaring": "Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder"
+    "boddEllerJobbetINorgeMinstFemAarForklaring": "Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder hvor man mottok eller fortsatt mottar ytelser fra utlandet"
   },
   "utenlandskKontantstotte": {
     "mottarKontantstotteFraUtlandet": "NEI",

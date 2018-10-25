@@ -1,8 +1,11 @@
 package no.nav.kontantstotte.innsending.oppsummering.html;
 
+import no.finn.unleash.FakeUnleash;
+import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
 import no.nav.kontantstotte.tekst.TekstProvider;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.AbstractMap;
@@ -22,6 +25,15 @@ import static org.mockito.Mockito.when;
 public class SoknadTilOppsummeringTest {
     public static final String NEI = "Nei";
 
+    private FakeUnleash fakeUnleash;
+
+    @Before
+    public void setUp() {
+
+        fakeUnleash = new FakeUnleash();
+        UnleashProvider.initialize(fakeUnleash);
+    }
+
     @Test
     public void bolkerIRettRekkefølge() {
         String fnr = "XXXXXXXXXX";
@@ -34,6 +46,7 @@ public class SoknadTilOppsummeringTest {
                 tekst(BARN_TITTEL),
                 tekst(BARNEHAGEPLASS_TITTEL),
                 tekst(FAMILIEFORHOLD_TITTEL),
+                tekst(TILKNYTNING_TIL_UTLAND_TITTEL),
                 tekst(UTENLANDSKE_YTELSER_TITTEL),
                 tekst(UTENLANDSK_KONTANTSTOTTE_TITTEL)
         );
@@ -50,7 +63,7 @@ public class SoknadTilOppsummeringTest {
                         tuple(null, BARN_TITTEL.getNokkel()),
                         tuple(null, BARNEHAGEPLASS_TITTEL.getNokkel()),
                         tuple(null, FAMILIEFORHOLD_TITTEL.getNokkel()),
-                        tuple("tilknytningTilUtland", null),
+                        tuple(null, TILKNYTNING_TIL_UTLAND_TITTEL.getNokkel()),
                         tuple("arbeidIUtlandet", null),
                         tuple(null, UTENLANDSKE_YTELSER_TITTEL.getNokkel()),
                         tuple(null, UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel()),
