@@ -14,16 +14,16 @@ resources:
     memory: 512Mi
 healthcheck:
   liveness:
-    initialDelay: 20
-    path: /api/status/isAlive
+    initialDelay: 30
+    path: /internal/status/isAlive
   readiness:
-    initialDelay: 20
-    path: /api/status/isAlive
+    initialDelay: 30
+    path: /internal/status/isAlive
 ingress:
   enabled: true
 prometheus:
   enabled: true
-  path: /actuator/prometheus
+  path: /internal/prometheus
 fasitResources:
   used:
 # Unleash

@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.steg.Barn;
@@ -17,7 +16,7 @@ public class BarnMapping extends BolkMapping {
     }
 
     @Override
-    public Bolk map(Soknad soknad, Unleash unleash) {
+    public Bolk map(Soknad soknad) {
         Bolk barneBolk = new Bolk();
         Barn barn = soknad.mineBarn;
 

@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.FakeUnleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -15,7 +14,6 @@ import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.TekstHel
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.junit.Assert.*;
 
 public class BarnMappingTest {
 
@@ -38,7 +36,7 @@ public class BarnMappingTest {
         innsendtBarn.fodselsdato = "01.01.2019";
         soknad.mineBarn = innsendtBarn;
 
-        Bolk bolk = new BarnMapping(tekster).map(soknad, new FakeUnleash());
+        Bolk bolk = new BarnMapping(tekster).map(soknad);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(tittel, undertittel);
