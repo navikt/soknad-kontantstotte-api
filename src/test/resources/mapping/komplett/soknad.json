@@ -51,6 +51,12 @@
     "mottarKontantstotteFraUtlandet": "JA",
     "mottarKontantstotteFraUtlandetTilleggsinfo": "Barnet får kontantstøtte fra land X"
   },
+  "arbeidIUtlandet": {
+    "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
+    "arbeiderIUtlandetEllerKontinentalsokkelForklaring":"",
+    "arbeiderAnnenForelderIUtlandet": "JA",
+    "arbeiderAnnenForelderIUtlandetForklaring": "Andre forelder oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor h*n arbeidet i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel."
+  },
   "utenlandskeYtelser": {
     "mottarAnnenForelderYtelserFraUtland": "NEI",
     "mottarAnnenForelderYtelserFraUtlandForklaring": "",

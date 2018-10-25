@@ -49,6 +49,12 @@
       "boddEllerJobbetINorgeMinstFemAar": "jaIEOS",
       "boddEllerJobbetINorgeMinstFemAarForklaring": "Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder hvor man mottok eller fortsatt mottar ytelser fra utlandet"
     },
+    "arbeidIUtlandet": {
+      "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
+      "arbeiderIUtlandetEllerKontinentalsokkelForklaring":"Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder",
+      "arbeiderAnnenForelderIUtlandet": "JA",
+      "arbeiderAnnenForelderIUtlandetForklaring": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder"
+    },
     "utenlandskKontantstotte": {
       "mottarKontantstotteFraUtlandet": "NEI",
       "mottarKontantstotteFraUtlandetTilleggsinfo": "Barnet får kontantstøtte fra land X"
@@ -214,10 +220,29 @@
       ]
     },
     {
-      "bolknavn": "arbeidIUtlandet",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Arbeid i utlandet",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Arbeider du i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?",
+          "svar": "Nei",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Arbeider den andre forelderen i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?",
+          "svar": "Ja",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
+          "svar": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": null,

@@ -47,6 +47,12 @@
     "boddEllerJobbetINorgeMinstFemAar": "jaIEOS",
     "boddEllerJobbetINorgeMinstFemAarForklaring": "Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder hvor man mottok eller fortsatt mottar ytelser fra utlandet"
   },
+  "arbeidIUtlandet": {
+    "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
+    "arbeiderIUtlandetEllerKontinentalsokkelForklaring":"Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder",
+    "arbeiderAnnenForelderIUtlandet": "JA",
+    "arbeiderAnnenForelderIUtlandetForklaring": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder"
+  },
   "utenlandskKontantstotte": {
     "mottarKontantstotteFraUtlandet": "NEI",
     "mottarKontantstotteFraUtlandetTilleggsinfo": "Barnet får kontantstøtte fra land X"

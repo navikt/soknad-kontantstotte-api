@@ -175,10 +175,17 @@
       ]
     },
     {
-      "bolknavn": "arbeidIUtlandet",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Arbeid i utlandet",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Arbeider du i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?",
+          "svar": "Nei",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": null,

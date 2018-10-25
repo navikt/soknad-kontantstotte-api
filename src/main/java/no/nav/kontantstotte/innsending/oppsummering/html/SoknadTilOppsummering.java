@@ -53,7 +53,7 @@ class SoknadTilOppsummering {
                 new BarnehageplassMapping(tekster).map(soknad),
                 new FamilieforholdMapping(tekster).map(soknad),
                 new TilknytningTilUtlandMapping(tekster).map(soknad),
-                nyBolk("arbeidIUtlandet"),
+                new ArbeidIUtlandetMapping(tekster).map(soknad),
                 new UtenlandskeYtelserMapping(tekster).map(soknad),
                 new UtenlandskKontantstotteMapping(tekster).map(soknad),
                 nyBolk("oppsummering")
