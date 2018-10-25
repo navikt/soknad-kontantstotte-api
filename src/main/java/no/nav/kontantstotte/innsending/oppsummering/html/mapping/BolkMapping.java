@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -23,7 +22,7 @@ public abstract class BolkMapping {
     }
 
 
-    abstract Bolk map(Soknad soknad, Unleash unleash);
+    abstract Bolk map(Soknad soknad);
 
     public static Function<Tekstnokkel, Element> opprettElementMedSvar(Map<String, String> tekster) {
         return (Tekstnokkel svar) -> {
