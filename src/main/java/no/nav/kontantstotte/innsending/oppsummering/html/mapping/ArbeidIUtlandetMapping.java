@@ -16,7 +16,7 @@ public class ArbeidIUtlandetMapping extends BolkMapping {
     }
 
     @Override
-    public Bolk map(Soknad soknad, Unleash unleash) {
+    public Bolk map(Soknad soknad) {
         Bolk arbeidIUtlandetBolk = new Bolk();
 
         ArbeidIUtlandet arbeidIUtlandet = soknad.arbeidIUtlandet;

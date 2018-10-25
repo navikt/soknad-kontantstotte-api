@@ -34,13 +34,6 @@ public class ArbeidIUtlandetMappingTest {
             tekst(SVAR_JA, svar),
             tekst(SVAR_NEI, annenForelderSvar));
 
-    private Unleash unleash;
-
-    @Before
-    public void init() {
-        this.unleash = new FakeUnleash();
-    }
-
     @Test
     public void arbeidIUtlandet_nar_foreldre_ikke_bor_sammen() {
         Soknad soknad = hentArbeidIUtlandetSoknad();
@@ -49,7 +42,7 @@ public class ArbeidIUtlandetMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new ArbeidIUtlandetMapping(tekster).map(soknad, unleash);
+        Bolk bolk = new ArbeidIUtlandetMapping(tekster).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -68,7 +61,7 @@ public class ArbeidIUtlandetMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new ArbeidIUtlandetMapping(tekster).map(soknad, unleash);
+        Bolk bolk = new ArbeidIUtlandetMapping(tekster).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
