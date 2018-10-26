@@ -46,17 +46,15 @@ class SoknadTilOppsummering {
     }
 
     private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
-
         return Arrays.asList(
                 new KravTilSokerMapping(tekster).map(soknad),
                 new BarnMapping(tekster).map(soknad),
                 new BarnehageplassMapping(tekster).map(soknad),
                 new FamilieforholdMapping(tekster).map(soknad),
-                nyBolk("tilknytningTilUtland"),
-                nyBolk("arbeidIUtlandet"),
+                new TilknytningTilUtlandMapping(tekster).map(soknad),
+                new ArbeidIUtlandetMapping(tekster).map(soknad),
                 new UtenlandskeYtelserMapping(tekster).map(soknad),
-                new UtenlandskKontantstotteMapping(tekster).map(soknad),
-                nyBolk("oppsummering")
+                new UtenlandskKontantstotteMapping(tekster).map(soknad)
         );
     }
 
@@ -65,6 +63,4 @@ class SoknadTilOppsummering {
         bolk.bolknavn = bolknavn;
         return bolk;
     }
-
-
 }
