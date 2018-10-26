@@ -17,14 +17,17 @@ import javax.ws.rs.ext.ContextResolver;
 @Configuration
 public class RestClientConfigration {
 
-    @Value("${apikeys.key:x-nav-apiKey}")
-    private String key;
+    @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME}")
+    private String kontantstotteProxyApiKeyUsername;
 
     @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}")
-    private String kontantstotteProxyApiKey;
+    private String kontantstotteProxyApiKeyPassword;
 
-    @Value("soknad-kontantstotte-api-tps-proxy.api.v1.innsyn-apikey")
-    private String tpsProxyApiKey;
+    @Value("${SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}")
+    private String tpsProxyApiKeyUsername;
+
+    @Value("${SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}")
+    private String tpsProxyApiKeyPassword;
 
     @Bean(name = "client")
     public Client client() {
@@ -46,7 +49,7 @@ public class RestClientConfigration {
                         .metricName("soknad-kontantstotte-api").build()))
                 .register(OidcClientRequestFilter.class)
                 .register(objectMapperResolver())
-                .register(new ProxyHeaderRequestFilter(key, kontantstotteProxyApiKey))
+                .register(new ProxyHeaderRequestFilter(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword))
                 .register(new LoggingFeature())
                 .build();
     }
@@ -59,7 +62,7 @@ public class RestClientConfigration {
                         .metricName("soknad-kontantstotte-api").build()))
                 .register(OidcClientRequestFilter.class)
                 .register(objectMapperResolver())
-                .register(new ProxyHeaderRequestFilter(key, tpsProxyApiKey))
+                .register(new ProxyHeaderRequestFilter(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword))
                 .register(new LoggingFeature())
                 .build();
     }
