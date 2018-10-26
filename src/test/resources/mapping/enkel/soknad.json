@@ -1,10 +1,4 @@
 {
-  "arbeidIUtlandet": {
-    "arbeiderAnnenForelderIUtlandet": "UBESVART",
-    "arbeiderAnnenForelderIUtlandetForklaring": "",
-    "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
-    "arbeiderIUtlandetEllerKontinentalsokkelForklaring": ""
-  },
   "barnehageplass": {
     "barnBarnehageplassStatus": "garIkkeIBarnehage",
     "harBarnehageplass": "NEI",
@@ -46,6 +40,12 @@
     "annenForelderBoddEllerJobbetINorgeMinstFemAarForklaring": "",
     "boddEllerJobbetINorgeMinstFemAar": "jaINorge",
     "boddEllerJobbetINorgeMinstFemAarForklaring": ""
+  },
+  "arbeidIUtlandet": {
+    "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
+    "arbeiderIUtlandetEllerKontinentalsokkelForklaring":"",
+    "arbeiderAnnenForelderIUtlandet": "UBESVART",
+    "arbeiderAnnenForelderIUtlandetForklaring": ""
   },
   "utenlandskKontantstotte": {
     "mottarKontantstotteFraUtlandet": "NEI",

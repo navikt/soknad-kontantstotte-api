@@ -1,8 +1,15 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 public enum Tekstnokkel {
+    TITTEL("kontantstotte.tittel"),
+    BEKREFTELSE("oppsummering.bekreftelse.label"),
+    INNSENDING_LABEL("oppsummering.innsendingsdato"),
     SVAR_NEI("svar.nei"),
     SVAR_JA("svar.ja"),
+    SVAR_JA_I_NORGE("tilknytningTilUtland.svar.jaINorge"),
+    SVAR_JA_I_EOS("tilknytningTilUtland.svar.jaIEOS"),
+    SOKER_SVAR_JA_LEGGER_SAMMEN_PERIODER_EOS("tilknytningTilUtland.svar.soker.jaLeggerSammenPerioderEOS"),
+    ANNEN_FORELDER_SVAR_JA_LEGGER_SAMMEN_PERIODER_EOS("tilknytningTilUtland.svar.annenForelder.jaLeggerSammenPerioderEOS"),
 
     KRAV_TIL_SOKER_TITTEL("oppsummering.kravtilsoker.tittel"),
     KRAV_TIL_SOKER_BARN_IKKE_HJEMME("startside.krav.barnIkkeHjemme"),
@@ -46,6 +53,11 @@ public enum Tekstnokkel {
     SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER("barnehageplass.skalSlutteIBarnehage.antallTimer.sporsmal"),
     SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE("barnehageplass.skalSlutteIBarnehage.kommune.sporsmal"),
 
+    ARBEID_I_UTLANDET_TITTEL("arbeidIUtlandet.tittel"),
+    ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET("arbeidIUtlandet.arbeiderAnnenForelderIUtlandet.sporsmal"),
+    ARBEID_I_UTLANDET_ELLER_KONTINENTALSOKKEL("arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkel.sporsmal"),
+    ARBEID_I_UTLANDET_FORKLARING("arbeidIUtlandet.forklaring.hjelpetekst"),
+
     UTENLANDSKE_YTELSER_TITTEL("utenlandskeYtelser.tittel"),
     UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND("oppsummering.utenlandskeYtelser.mottarYtelserFraUtland"),
     UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND("oppsummering.utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland"),
@@ -53,7 +65,18 @@ public enum Tekstnokkel {
 
     UTENLANDSK_KONTANTSTOTTE_TITTEL("utenlandskKontantstotte.tittel"),
     UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE("utenlandskKontantstotte.mottarKontantstotteFraUtlandet.sporsmal"),
-    UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO("utenlandskKontantstotte.mottarKontantstotteFraUtlandet.tilleggsinfo.sporsmal");
+    UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO("utenlandskKontantstotte.mottarKontantstotteFraUtlandet.tilleggsinfo.sporsmal"),
+
+    TILKNYTNING_TIL_UTLAND_TITTEL("tilknytningTilUtland.tittel"),
+    TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE("tilknytningTilUtland.svar.soker.nei"),
+    TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE("tilknytningTilUtland.svar.annenForelder.nei"),
+    TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR("tilknytningTilUtland.boddEllerJobbetINorgeMinstFemAar.sporsmal"),
+    TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR_ANNEN_FORELDER("tilknytningTilUtland.annenForelderBoddEllerJobbetINorgeMinstFemAar.sporsmal"),
+    TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE_ADVARSEL("tilknytningTilUtland.advarsel.nei.soker"),
+    TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE_ADVARSEL("tilknytningTilUtland.advarsel.nei.annenForelder"),
+    TILKNYTNING_TIL_UTLAND_FORKLARING("tilknytningTilUtland.forklaring.hjelpetekst");
+
+
 
     private final String nokkel;
 
