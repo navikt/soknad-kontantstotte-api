@@ -67,10 +67,9 @@ public class SoknadTilOppsummeringTest {
                         tuple(null, TILKNYTNING_TIL_UTLAND_TITTEL.getNokkel()),
                         tuple(null, ARBEID_I_UTLANDET_TITTEL.getNokkel()),
                         tuple(null, UTENLANDSKE_YTELSER_TITTEL.getNokkel()),
-                        tuple(null, UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel()),
-                        tuple("oppsummering", null)
+                        tuple(null, UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel())
                 );
-        assertThat(oppsummering.getFnr()).isEqualTo(fnr);
+        assertThat(oppsummering.getMetaData().getPerson().fnr).isEqualTo(fnr);
     }
 
     private Map<String, String> tekster(AbstractMap.SimpleEntry<String, String>... tekst) {

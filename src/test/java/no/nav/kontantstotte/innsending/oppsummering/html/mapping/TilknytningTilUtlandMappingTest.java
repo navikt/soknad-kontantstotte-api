@@ -8,6 +8,7 @@ import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Familieforhold;
 import no.nav.kontantstotte.innsending.steg.TilknytningTilUtland;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,6 +43,11 @@ public class TilknytningTilUtlandMappingTest {
 
         fakeUnleash = new FakeUnleash();
         UnleashProvider.initialize(fakeUnleash);
+    }
+
+    @After
+    public void tearDown() {
+        UnleashProvider.initialize(null);
     }
 
         @Test

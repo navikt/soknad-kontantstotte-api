@@ -1,10 +1,4 @@
 {
-  "arbeidIUtlandet": {
-    "arbeiderAnnenForelderIUtlandet": "UBESVART",
-    "arbeiderAnnenForelderIUtlandetForklaring": "",
-    "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
-    "arbeiderIUtlandetEllerKontinentalsokkelForklaring": ""
-  },
   "barnehageplass": {
     "barnBarnehageplassStatus": "garIkkeIBarnehage",
     "harBarnehageplass": "NEI",

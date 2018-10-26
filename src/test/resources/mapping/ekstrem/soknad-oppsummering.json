@@ -1,12 +1,6 @@
 {
   "soknad": {
     "innsendingsTidspunkt": "2018-10-10T11:23:03.181Z",
-    "arbeidIUtlandet": {
-      "arbeiderAnnenForelderIUtlandet": "JA",
-      "arbeiderAnnenForelderIUtlandetForklaring": "Andre forelder oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor h*n arbeidet i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel.\n",
-      "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
-      "arbeiderIUtlandetEllerKontinentalsokkelForklaring": "Søkeren fyller ut info om arbeid i utlandet"
-    },
     "barnehageplass": {
       "barnBarnehageplassStatus": "skalBegynneIBarnehage",
       "harBarnehageplass": "JA",
@@ -67,8 +61,20 @@
     },
     "sprak": "nb"
   },
-  "fnr": "XXXXXXXXXX",
-  "innsendingsTidspunkt": "10.10.2018 - 13.23",
+  "metaData": {
+    "tittel": "Søknad om kontantstøtte",
+    "innsendingsTidspunkt": {
+      "tekst": "Sendt inn:",
+      "verdi": "10.10.2018 - 13.23"
+    },
+    "person": {
+      "fnr": "XXXXXXXXXX"
+    },
+    "bekreftelse": {
+      "tekst": "Opplysningene jeg har oppgitt er riktige, og jeg har ikke holdt tilbake opplysninger som har betydning for retten jeg har til kontantstøtte",
+      "verdi": null
+    }
+  },
   "bolker": [
     {
       "bolknavn": null,
@@ -281,12 +287,6 @@
           "underelementer": null
         }
       ]
-    },
-    {
-      "bolknavn": "oppsummering",
-      "tittel": null,
-      "undertittel": null,
-      "elementer": null
     }
   ],
   "tekster": {
@@ -383,7 +383,7 @@
     "oppsummering.familieforhold.foreldreBorSammen": "Jeg bor sammen med den andre forelderen",
     "oppsummering.fodselsdato.label": "Fødselsdato:",
     "oppsummering.fodselsnummer.label": "Fødselsnummer:",
-    "oppsummering.innsendingsdato": "Søknad er sendt inn:",
+    "oppsummering.innsendingsdato": "Sendt inn:",
     "oppsummering.kravtilsoker.barnIkkeHjemme": "Barnet er ikke adoptert, asylsøker i fosterhjem eller på institusjon",
     "oppsummering.kravtilsoker.boddEllerJobbetINorgeSisteFemAar": "Jeg har bodd eller vært yrkesaktiv i Norge eller et annet EØS-land i minst 5 år til sammen",
     "oppsummering.kravtilsoker.borSammenMedBarnet": "Jeg bor i Norge sammen med barnet",
