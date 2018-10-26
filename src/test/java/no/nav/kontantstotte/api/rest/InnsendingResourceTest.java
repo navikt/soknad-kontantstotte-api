@@ -52,6 +52,7 @@ public class InnsendingResourceTest extends JerseyTest {
         Response response = target()
                 .path("sendinn")
                 .request()
+                .accept(APPLICATION_JSON_TYPE)
                 .post(Entity.entity(multipart(soknadMedBekreftelse), MULTIPART_FORM_DATA_TYPE));
 
         assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
