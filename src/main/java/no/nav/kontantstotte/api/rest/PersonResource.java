@@ -2,7 +2,6 @@ package no.nav.kontantstotte.api.rest;
 
 import no.nav.kontantstotte.person.domain.Person;
 import no.nav.kontantstotte.person.domain.PersonService;
-import no.nav.kontantstotte.person.domain.PersonServiceException;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +27,7 @@ public class PersonResource {
     }
 
     @GET
-    public Person hentPerson() throws PersonServiceException {
+    public Person hentPerson() {
         return personService.hentPersonInfo(hentFnrFraToken());
     }
 }

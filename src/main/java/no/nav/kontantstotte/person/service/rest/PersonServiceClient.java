@@ -2,17 +2,12 @@ package no.nav.kontantstotte.person.service.rest;
 
 import no.nav.kontantstotte.person.domain.Person;
 import no.nav.kontantstotte.person.domain.PersonService;
-import no.nav.kontantstotte.person.domain.PersonServiceException;
 import no.nav.log.MDCConstants;
-import no.nav.sbl.rest.RestUtils;
-import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
 import no.nav.tps.person.PersoninfoDto;
-import org.glassfish.jersey.client.ClientConfig;
 import org.slf4j.MDC;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
@@ -34,7 +29,7 @@ class PersonServiceClient implements PersonService {
     }
 
     @Override
-    public Person hentPersonInfo(String fnr) throws PersonServiceException {
+    public Person hentPersonInfo(String fnr) {
         PersoninfoDto dto = client.target(personServiceUri)
                 .path("person")
                 .request()
