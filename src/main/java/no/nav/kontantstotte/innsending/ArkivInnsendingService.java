@@ -4,6 +4,7 @@ import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
+import org.springframework.web.server.NotAcceptableStatusException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -34,7 +35,7 @@ class ArkivInnsendingService implements InnsendingService {
         this.oppsummeringPdfGenerator = oppsummeringPdfGenerator;
     }
 
-    public Response sendInnSoknad(Soknad soknad) {
+    public InnsendingsResponsDto sendInnSoknad(Soknad soknad) {
         SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), soknad.innsendingsTidspunkt);
 
         Response response = client.target(proxyServiceUri)
@@ -43,13 +44,11 @@ class ArkivInnsendingService implements InnsendingService {
                 .buildPost(Entity.entity(soknadDto, MediaType.APPLICATION_JSON))
                 .invoke();
 
-        return response.getStatus() != 200 ? response :
-                Response
-                        .ok(
-                                new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString()),
-                                MediaType.APPLICATION_JSON_TYPE
-                        )
-                        .build();
+        if (response.getStatus() != 200) {
+            throw new NotAcceptableStatusException("Response fra proxy: "+ response.getStatus());
+        }
+
+        return new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString());
     }
 
     public static String hentFnrFraToken() {

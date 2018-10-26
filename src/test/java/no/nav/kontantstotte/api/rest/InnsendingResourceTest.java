@@ -2,6 +2,7 @@ package no.nav.kontantstotte.api.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
 import org.glassfish.jersey.client.ClientConfig;
@@ -43,7 +44,7 @@ public class InnsendingResourceTest extends JerseyTest {
     @Test
     public void at_innsending_av_soknad_er_ok_med_bekreftelse() throws JsonProcessingException {
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
-                .thenReturn(Response.ok().build());
+                .thenReturn(new InnsendingsResponsDto(now().toString()));
 
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
@@ -60,7 +61,7 @@ public class InnsendingResourceTest extends JerseyTest {
     @Test
     public void at_soknad_markeres_med_innsendingstidspunkt() throws JsonProcessingException {
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
-                .thenReturn(Response.ok().build());
+                .thenReturn(new InnsendingsResponsDto(now().toString()));
 
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";

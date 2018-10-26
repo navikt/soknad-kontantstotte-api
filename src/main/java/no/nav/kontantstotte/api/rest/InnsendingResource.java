@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.api.rest;
 
+import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.security.oidc.api.ProtectedWithClaims;
@@ -32,7 +33,7 @@ public class InnsendingResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
+    public InnsendingsResponsDto sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
 
         if (!soknad.erGyldig()) {
             logger.warn("Noen har forsøkt å sende inn en ugyldig søknad.");
