@@ -39,7 +39,7 @@ class PersonServiceClient implements PersonService {
                 .header("Nav-Ident", fnr)
                 .get();
 
-        if(SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+        if(!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
             throw new PersonOppslagException(response.readEntity(String.class));
         }
 
