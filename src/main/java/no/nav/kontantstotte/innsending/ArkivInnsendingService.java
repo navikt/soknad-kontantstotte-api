@@ -3,6 +3,7 @@ package no.nav.kontantstotte.innsending;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
+import org.springframework.web.server.NotAcceptableStatusException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -29,14 +30,20 @@ class ArkivInnsendingService implements InnsendingService {
         this.oppsummeringPdfGenerator = oppsummeringPdfGenerator;
     }
 
-    public Response sendInnSoknad(Soknad soknad) {
+    public Soknad sendInnSoknad(Soknad soknad) {
         SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), soknad.innsendingsTidspunkt);
 
-        return client.target(proxyServiceUri)
+        Response response = client.target(proxyServiceUri)
                 .path("soknad")
                 .request()
                 .buildPost(Entity.entity(soknadDto, MediaType.APPLICATION_JSON))
                 .invoke();
+
+        if (response.getStatus() != 200) {
+            throw new NotAcceptableStatusException("Response fra proxy: "+ response.getStatus());
+        }
+
+        return soknad;
     }
 
     public static String hentFnrFraToken() {
