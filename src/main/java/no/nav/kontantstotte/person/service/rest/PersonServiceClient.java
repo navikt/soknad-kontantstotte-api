@@ -36,7 +36,7 @@ class PersonServiceClient implements PersonService {
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Ident", fnr)
+                .header("Nav-Personident", fnr)
                 .get();
 
         if(!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
