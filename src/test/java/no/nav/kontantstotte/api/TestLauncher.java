@@ -5,6 +5,7 @@ import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringTestConfiguration;
 import no.nav.kontantstotte.person.domain.Person;
+import no.nav.kontantstotte.person.domain.PersonOppslagException;
 import no.nav.kontantstotte.person.domain.PersonService;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
@@ -15,6 +16,8 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+
+import javax.ws.rs.WebApplicationException;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static org.mockito.ArgumentMatchers.any;
@@ -56,7 +59,9 @@ public class TestLauncher {
     @Bean
     @Primary
     public PersonService personService() {
-        return mock(PersonService.class);
+        PersonService mock = mock(PersonService.class);
+        when(mock.hentPersonInfo(any())).thenThrow(new PersonOppslagException("TPS mock"));
+        return mock;
     }
 
 }

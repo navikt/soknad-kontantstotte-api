@@ -2,7 +2,9 @@ package no.nav.kontantstotte.config;
 
 import no.nav.kontantstotte.api.filter.CORSResponseFilter;
 import no.nav.kontantstotte.api.rest.*;
+import no.nav.kontantstotte.api.rest.exceptionmapper.PersonOppslagExceptionMapper;
 import no.nav.kontantstotte.api.rest.exceptionmapper.WebApplicationExceptionMapper;
+import no.nav.kontantstotte.person.domain.SkjermetAdresseException;
 import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -26,6 +28,8 @@ public class RestConfiguration extends ResourceConfig {
         register(OidcContainerRequestFilter.class);
         // ExceptionMappers
         register(WebApplicationExceptionMapper.class);
+        register(SkjermetAdresseException.class);
+        register(PersonOppslagExceptionMapper.class);
     }
 
 }

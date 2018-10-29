@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.person.service.rest;
 
 import no.nav.kontantstotte.person.domain.Person;
-import no.nav.kontantstotte.person.domain.SikkerhetsbegrensningException;
+import no.nav.kontantstotte.person.domain.SkjermetAdresseException;
 import no.nav.tps.person.KodeDto;
 import no.nav.tps.person.KodeMedDatoOgKildeDto;
 import no.nav.tps.person.NavnDto;
@@ -20,7 +20,7 @@ public class PersonConverterTest {
 
     @Test
     public void at_spesiell_opplysning_kaster_exception() {
-        exception.expect(SikkerhetsbegrensningException.class);
+        exception.expect(SkjermetAdresseException.class);
 
         PersoninfoDto dto = person1();
         dto.setSpesiellOpplysning(spesiellOpplysning("KODE6"));

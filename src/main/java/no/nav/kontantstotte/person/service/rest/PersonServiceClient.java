@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.person.service.rest;
 
 import no.nav.kontantstotte.person.domain.Person;
+import no.nav.kontantstotte.person.domain.PersonOppslagException;
 import no.nav.kontantstotte.person.domain.PersonService;
 import no.nav.log.MDCConstants;
 import no.nav.tps.person.PersoninfoDto;
@@ -30,14 +31,19 @@ class PersonServiceClient implements PersonService {
 
     @Override
     public Person hentPersonInfo(String fnr) {
-        PersoninfoDto dto = client.target(personServiceUri)
+        Response response = client.target(personServiceUri)
                 .path("person")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Ident", fnr)
-                .get(PersoninfoDto.class);
+                .get();
 
+        if(SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+            throw new PersonOppslagException(response.readEntity(String.class));
+        }
+
+        PersoninfoDto dto = response.readEntity(PersoninfoDto.class);
         return personinfoDtoToPerson.apply(dto);
     }
 
@@ -49,7 +55,7 @@ class PersonServiceClient implements PersonService {
                 .get();
 
         if(!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
-            throw new WebApplicationException("TPS person service is not up", response.getStatus());
+            throw new PersonOppslagException("TPS person service is not up");
         }
     }
 
