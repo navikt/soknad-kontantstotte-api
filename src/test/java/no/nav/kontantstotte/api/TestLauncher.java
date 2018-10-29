@@ -59,9 +59,7 @@ public class TestLauncher {
     @Bean
     @Primary
     public PersonService personService() {
-        PersonService mock = mock(PersonService.class);
-        when(mock.hentPersonInfo(any())).thenThrow(new PersonOppslagException("TPS mock"));
-        return mock;
+        return mock(PersonService.class);
     }
 
 }
