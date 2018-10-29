@@ -13,6 +13,7 @@ public class SikkerhetsbegrensningExceptionMapper implements ExceptionMapper<Sik
 
     @Override
     public Response toResponse(SikkerhetsbegrensningException e) {
+        logger.info(e.getMessage(), e);
         return Response.status(Response.Status.FORBIDDEN).build();
     }
 }
