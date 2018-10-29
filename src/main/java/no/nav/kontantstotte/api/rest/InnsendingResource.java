@@ -41,7 +41,8 @@ public class InnsendingResource {
         }
 
         soknad.markerInnsendingsTidspunkt();
+        innsendingService.sendInnSoknad(soknad);
 
-        return innsendingService.sendInnSoknad(soknad);
+        return new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString());
     }
 }

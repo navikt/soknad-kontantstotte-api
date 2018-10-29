@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending;
 
-import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
@@ -31,7 +30,7 @@ class ArkivInnsendingService implements InnsendingService {
         this.oppsummeringPdfGenerator = oppsummeringPdfGenerator;
     }
 
-    public InnsendingsResponsDto sendInnSoknad(Soknad soknad) {
+    public Soknad sendInnSoknad(Soknad soknad) {
         SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), soknad.innsendingsTidspunkt);
 
         Response response = client.target(proxyServiceUri)
@@ -44,7 +43,7 @@ class ArkivInnsendingService implements InnsendingService {
             throw new NotAcceptableStatusException("Response fra proxy: "+ response.getStatus());
         }
 
-        return new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString());
+        return soknad;
     }
 
     public static String hentFnrFraToken() {
