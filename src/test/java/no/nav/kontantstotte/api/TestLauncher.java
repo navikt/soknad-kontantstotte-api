@@ -4,6 +4,8 @@ import no.finn.unleash.FakeUnleash;
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringTestConfiguration;
+import no.nav.kontantstotte.person.domain.Person;
+import no.nav.kontantstotte.person.domain.PersonService;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -15,6 +17,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 @Import({ApplicationConfig.class, OppsummeringTestConfiguration.class})
@@ -46,6 +51,12 @@ public class TestLauncher {
     @Primary
     public ResourceConfig proxyConfig() {
         return new TestRestConfiguration();
+    }
+
+    @Bean
+    @Primary
+    public PersonService personService() {
+        return mock(PersonService.class);
     }
 
 }
