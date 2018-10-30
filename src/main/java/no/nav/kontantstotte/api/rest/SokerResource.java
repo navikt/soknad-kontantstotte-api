@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.api.rest;
 
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
+import no.nav.kontantstotte.person.domain.Person;
 import no.nav.kontantstotte.person.domain.PersonService;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import no.nav.security.oidc.context.OIDCValidationContext;
@@ -31,8 +32,8 @@ public class SokerResource {
 
     @GET
     public SokerDto hentInfoOmSoker() {
-        personService.hentPersonInfo(hentFnrFraToken());
-        return new SokerDto(hentFnrFraToken());
+        Person person = personService.hentPersonInfo(hentFnrFraToken());
+        return new SokerDto(hentFnrFraToken(), person.getFornavn(), person.getNavn());
     }
 
     public static String hentFnrFraToken() {

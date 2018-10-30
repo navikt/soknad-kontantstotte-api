@@ -7,11 +7,31 @@ public class SokerDto {
     @JsonProperty
     private final String innloggetSom;
 
-    public SokerDto(@JsonProperty("innloggetSom") String innloggetSom) {
+    @JsonProperty
+    private final String fornavn;
+
+    @JsonProperty
+    private final String fulltnavn;
+
+    public SokerDto(
+            String innloggetSom,
+            String fornavn,
+            String fulltnavn) {
+
         this.innloggetSom = innloggetSom;
+        this.fornavn = fornavn;
+        this.fulltnavn = fulltnavn;
     }
 
     public String getInnloggetSom() {
         return innloggetSom;
+    }
+
+    public String getFornavn() {
+        return fornavn;
+    }
+
+    public String getFulltnavn() {
+        return fulltnavn;
     }
 }

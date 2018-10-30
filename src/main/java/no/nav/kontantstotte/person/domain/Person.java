@@ -1,5 +1,9 @@
 package no.nav.kontantstotte.person.domain;
 
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class Person {
     private final String fornavn;
     private final String mellomnavn;
@@ -23,6 +27,14 @@ public class Person {
 
     public String getSlektsnavn() {
         return slektsnavn;
+    }
+
+    public String getNavn() {
+
+        return Stream.of(fornavn, mellomnavn, slektsnavn)
+                .filter(Objects::nonNull)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.joining(" "));
     }
 
     public static class Builder {
