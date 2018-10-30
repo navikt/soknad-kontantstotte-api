@@ -59,7 +59,9 @@ public class TestLauncher {
     @Bean
     @Primary
     public PersonService personService() {
-        return mock(PersonService.class);
+        PersonService personService= mock(PersonService.class);
+        when(personService.hentPersonInfo(any())).thenReturn(new Person.Builder().build());
+        return personService;
     }
 
 }

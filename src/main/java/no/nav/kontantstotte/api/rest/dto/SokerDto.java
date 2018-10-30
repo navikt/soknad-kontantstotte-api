@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.api.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SokerDto {
@@ -13,10 +14,11 @@ public class SokerDto {
     @JsonProperty
     private final String fulltnavn;
 
+    @JsonCreator
     public SokerDto(
-            String innloggetSom,
-            String fornavn,
-            String fulltnavn) {
+            @JsonProperty("innloggetSom") String innloggetSom,
+            @JsonProperty("fornavn") String fornavn,
+            @JsonProperty("fulltnavn") String fulltnavn) {
 
         this.innloggetSom = innloggetSom;
         this.fornavn = fornavn;
