@@ -1,5 +1,5 @@
 #!/bin/bash
-if test -r "/appdynamics/agent.jar";
+if test -r "/app/appdynamics/agent.jar";
 then
     JAVA_OPTS="${JAVA_OPTS} -javaagent:/app/appdynamics/agent.jar"
     JAVA_OPTS="${JAVA_OPTS} -Dappdynamics.agent.applicationName=soknad-kontantstotte-api"
