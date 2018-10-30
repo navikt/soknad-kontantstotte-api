@@ -9,11 +9,3 @@ then
     JAVA_OPTS="${JAVA_OPTS} -Dappdynamics.agent.tierName=prod-soknad-kontantstotte-api"
     export JAVA_OPTS
 fi
-
-set -x
-exec java \
-${DEFAULT_JVM_OPTS} \
-${JAVA_OPTS} \
--jar ${APP_JAR} \
-${RUNTIME_OPTS} \
-$@
