@@ -1,10 +1,8 @@
 package no.nav.kontantstotte.innsending.oppsummering;
 
+import no.nav.kontantstotte.innsending.oppsummering.html.OppsummeringHtmlGenerator;
 import no.nav.kontantstotte.innsending.oppsummering.html.OppsummeringHtmlTestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,12 +17,20 @@ import static org.mockito.Mockito.when;
 public class OppsummeringTestConfiguration {
 
     @Bean
+    @Profile("mockgen")
     @Primary
     PdfConverter pdfGenService() throws IOException {
         PdfConverter service = mock(PdfConverter.class);
         byte[] b = readFile("oppsummering.pdf");
         when(service.genererPdf(any())).thenReturn(b);
         return service;
+    }
+
+    @Bean
+    public OppsummeringPdfGenerator oppsummeringService(
+            OppsummeringHtmlGenerator oppsummeringHtmlGenerator,
+            PdfConverter pdfConverter) {
+        return new OppsummeringPdfLagringOgGenerator(oppsummeringHtmlGenerator, pdfConverter);
     }
 
 

@@ -1,6 +1,9 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 public enum Tekstnokkel {
+    TITTEL("kontantstotte.tittel"),
+    BEKREFTELSE("oppsummering.bekreftelse.label"),
+    INNSENDING_LABEL("oppsummering.innsendingsdato"),
     SVAR_NEI("svar.nei"),
     SVAR_JA("svar.ja"),
     SVAR_JA_I_NORGE("tilknytningTilUtland.svar.jaINorge"),
@@ -49,6 +52,11 @@ public enum Tekstnokkel {
     SKAL_SLUTTE_I_BARNEHAGE_DATO("barnehageplass.skalSlutteIBarnehage.dato.sporsmal"),
     SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER("barnehageplass.skalSlutteIBarnehage.antallTimer.sporsmal"),
     SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE("barnehageplass.skalSlutteIBarnehage.kommune.sporsmal"),
+
+    ARBEID_I_UTLANDET_TITTEL("arbeidIUtlandet.tittel"),
+    ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET("arbeidIUtlandet.arbeiderAnnenForelderIUtlandet.sporsmal"),
+    ARBEID_I_UTLANDET_ELLER_KONTINENTALSOKKEL("arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkel.sporsmal"),
+    ARBEID_I_UTLANDET_FORKLARING("arbeidIUtlandet.forklaring.hjelpetekst"),
 
     UTENLANDSKE_YTELSER_TITTEL("utenlandskeYtelser.tittel"),
     UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND("oppsummering.utenlandskeYtelser.mottarYtelserFraUtland"),

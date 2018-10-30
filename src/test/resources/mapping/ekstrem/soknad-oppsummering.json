@@ -1,12 +1,6 @@
 {
   "soknad": {
     "innsendingsTidspunkt": "2018-10-10T11:23:03.181Z",
-    "arbeidIUtlandet": {
-      "arbeiderAnnenForelderIUtlandet": "JA",
-      "arbeiderAnnenForelderIUtlandetForklaring": "Andre forelder oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor h*n arbeidet i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel.\n",
-      "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
-      "arbeiderIUtlandetEllerKontinentalsokkelForklaring": "Søkeren fyller ut info om arbeid i utlandet"
-    },
     "barnehageplass": {
       "barnBarnehageplassStatus": "skalBegynneIBarnehage",
       "harBarnehageplass": "JA",
@@ -49,6 +43,12 @@
       "boddEllerJobbetINorgeMinstFemAar": "jaIEOS",
       "boddEllerJobbetINorgeMinstFemAarForklaring": "Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder hvor man mottok eller fortsatt mottar ytelser fra utlandet"
     },
+    "arbeidIUtlandet": {
+      "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
+      "arbeiderIUtlandetEllerKontinentalsokkelForklaring":"Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder",
+      "arbeiderAnnenForelderIUtlandet": "JA",
+      "arbeiderAnnenForelderIUtlandetForklaring": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder"
+    },
     "utenlandskKontantstotte": {
       "mottarKontantstotteFraUtlandet": "NEI",
       "mottarKontantstotteFraUtlandetTilleggsinfo": "Barnet får kontantstøtte fra land X"
@@ -61,8 +61,20 @@
     },
     "sprak": "nb"
   },
-  "fnr": "XXXXXXXXXX",
-  "innsendingsTidspunkt": "10.10.2018 - 13.23",
+  "metaData": {
+    "tittel": "Søknad om kontantstøtte",
+    "innsendingsTidspunkt": {
+      "tekst": "Sendt inn:",
+      "verdi": "10.10.2018 - 13.23"
+    },
+    "person": {
+      "fnr": "XXXXXXXXXX"
+    },
+    "bekreftelse": {
+      "tekst": "Opplysningene jeg har oppgitt er riktige, og jeg har ikke holdt tilbake opplysninger som har betydning for retten jeg har til kontantstøtte",
+      "verdi": null
+    }
+  },
   "bolker": [
     {
       "bolknavn": null,
@@ -214,10 +226,29 @@
       ]
     },
     {
-      "bolknavn": "arbeidIUtlandet",
-      "tittel": null,
+      "bolknavn": null,
+      "tittel": "Arbeid i utlandet",
       "undertittel": null,
-      "elementer": null
+      "elementer": [
+        {
+          "sporsmal": "Arbeider du i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?",
+          "svar": "Nei",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Arbeider den andre forelderen i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?",
+          "svar": "Ja",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
+          "svar": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder",
+          "advarsel": null,
+          "underelementer": null
+        }
+      ]
     },
     {
       "bolknavn": null,
@@ -256,12 +287,6 @@
           "underelementer": null
         }
       ]
-    },
-    {
-      "bolknavn": "oppsummering",
-      "tittel": null,
-      "undertittel": null,
-      "elementer": null
     }
   ],
   "tekster": {
@@ -358,7 +383,7 @@
     "oppsummering.familieforhold.foreldreBorSammen": "Jeg bor sammen med den andre forelderen",
     "oppsummering.fodselsdato.label": "Fødselsdato:",
     "oppsummering.fodselsnummer.label": "Fødselsnummer:",
-    "oppsummering.innsendingsdato": "Søknad er sendt inn:",
+    "oppsummering.innsendingsdato": "Sendt inn:",
     "oppsummering.kravtilsoker.barnIkkeHjemme": "Barnet er ikke adoptert, asylsøker i fosterhjem eller på institusjon",
     "oppsummering.kravtilsoker.boddEllerJobbetINorgeSisteFemAar": "Jeg har bodd eller vært yrkesaktiv i Norge eller et annet EØS-land i minst 5 år til sammen",
     "oppsummering.kravtilsoker.borSammenMedBarnet": "Jeg bor i Norge sammen med barnet",

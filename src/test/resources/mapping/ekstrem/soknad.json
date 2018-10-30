@@ -1,10 +1,4 @@
 {
-  "arbeidIUtlandet": {
-    "arbeiderAnnenForelderIUtlandet": "JA",
-    "arbeiderAnnenForelderIUtlandetForklaring": "Andre forelder oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor h*n arbeidet i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel.\n",
-    "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
-    "arbeiderIUtlandetEllerKontinentalsokkelForklaring": "Søkeren fyller ut info om arbeid i utlandet"
-  },
   "barnehageplass": {
     "barnBarnehageplassStatus": "skalBegynneIBarnehage",
     "harBarnehageplass": "JA",
@@ -46,6 +40,12 @@
     "annenForelderBoddEllerJobbetINorgeMinstFemAarForklaring": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder",
     "boddEllerJobbetINorgeMinstFemAar": "jaIEOS",
     "boddEllerJobbetINorgeMinstFemAarForklaring": "Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder hvor man mottok eller fortsatt mottar ytelser fra utlandet"
+  },
+  "arbeidIUtlandet": {
+    "arbeiderIUtlandetEllerKontinentalsokkel": "NEI",
+    "arbeiderIUtlandetEllerKontinentalsokkelForklaring":"Søker oppgir land, utenlandsk ID-nummer, adresse i landene og perioder",
+    "arbeiderAnnenForelderIUtlandet": "JA",
+    "arbeiderAnnenForelderIUtlandetForklaring": "Annen forelder oppgir her land, utenlandsk ID-nummer, adresse i landene og perioder"
   },
   "utenlandskKontantstotte": {
     "mottarKontantstotteFraUtlandet": "NEI",

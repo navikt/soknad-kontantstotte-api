@@ -6,11 +6,19 @@ Backend for ny [kontantstøtte-søknad](https://github.com/navikt/soknad-kontant
 
 For å kjøre opp løsningen lokalt:
 
-For å kjøre opp løsningen lokalt, start [TestLauncher](src/test/java/no/nav/kontantstotte/api/TestLauncher.java). Her må man sette VM Options til `-Dspring.profiles.active=dev`
-eller lage en ny spring boot run-config med profile `dev`.
+###Med mock: 
+* Edit Configurations -> VM Options: ``-Dspring.profiles.active=dev,mockgen`` evt lage springboot run-config med profile `dev,mockgen`
+* Kommer til å resultere i output av en TEST.pdf fil som kun er dummy-malen.
+* Apper som må kjøre i tillegg til api-et: _soknad-kontantstotte-proxy_
+
+###Uten mock
+* Edit Configurations -> VM Options: ``-Dspring.profiles.active=dev`` evt lage springboot run-config med profile `dev`
+* TEST.pdf innholder data fylt inn fra frontenden
+* Apper som må kjøre i tillegg til api-et: _soknad-kontantstotte-proxy, soknad-html-generator, pdfgen_
 
 
-Lokal innlogging gjøre ved å kalle cookie-endepunktet til ```no.nav.security.oidc.test.support.jersey.TestTokenGeneratorResource``` som er http://localhost:8080/api/local/cookie
+####Lokal innlogging 
+* Kalle cookie-endepunktet til ```no.nav.security.oidc.test.support.jersey.TestTokenGeneratorResource``` som er http://localhost:8080/api/local/cookie
 
 ## Bygging og publisering
 

@@ -2,26 +2,32 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 
 
 import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.kontantstotte.innsending.steg.Person;
 
 import java.util.List;
 import java.util.Map;
 
-class SoknadOppsummering {
+import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.BEKREFTELSE;
+import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.INNSENDING_LABEL;
+import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.TITTEL;
 
+class SoknadOppsummering {
     private Soknad soknad;
-    private String fnr;
-    private String innsendingsTidspunkt;
+    private MetaData metaData;
     private List<Bolk> bolker;
     private Map<String, String> tekster;
 
-    public SoknadOppsummering(){
+    public SoknadOppsummering() {
 
     }
 
     public SoknadOppsummering(Soknad soknad, String fnr, String innsendingsTidspunkt, List<Bolk> bolker, Map<String, String> tekster) {
+        MetaDataElement metaDataInnsendingsTidspunkt = new MetaDataElement(tekster.get(INNSENDING_LABEL.getNokkel()), innsendingsTidspunkt);
+        Person person = new Person(fnr);
+        MetaDataElement metaDataBekreftelse = new MetaDataElement(tekster.get(BEKREFTELSE.getNokkel()), null);
+
+        this.metaData = new MetaData(tekster.get(TITTEL.getNokkel()), metaDataInnsendingsTidspunkt, person, metaDataBekreftelse);
         this.soknad = soknad;
-        this.fnr = fnr;
-        this.innsendingsTidspunkt = innsendingsTidspunkt;
         this.bolker = bolker;
         this.tekster = tekster;
     }
@@ -30,12 +36,8 @@ class SoknadOppsummering {
         return soknad;
     }
 
-    public String getInnsendingsTidspunkt() {
-        return innsendingsTidspunkt;
-    }
-
-    public String getFnr() {
-        return fnr;
+    public MetaData getMetaData() {
+        return metaData;
     }
 
     public List<Bolk> getBolker() {
