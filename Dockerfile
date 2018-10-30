@@ -7,4 +7,5 @@ RUN mkdir -p /app/appdynamics \
 ADD ./VERSION /app/VERSION
 COPY ./target/soknad-kontantstotte-api.jar "/app/app.jar"
 
-ADD ./init-appdynamics.sh /app/init-scripts
+copy run-java.sh /
+RUN chmd +x /run-java.sh
