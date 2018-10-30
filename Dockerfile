@@ -8,4 +8,4 @@ ADD ./VERSION /app/VERSION
 COPY ./target/soknad-kontantstotte-api.jar "/app/app.jar"
 
 copy run-java.sh /
-RUN chmd +x /run-java.sh
+RUN chmod +x /run-java.sh
