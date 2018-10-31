@@ -16,13 +16,16 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 
+import javax.annotation.PostConstruct;
 import javax.ws.rs.WebApplicationException;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 @Import({ApplicationConfig.class, OppsummeringTestConfiguration.class})
@@ -59,9 +62,12 @@ public class TestLauncher {
     @Bean
     @Primary
     public PersonService personService() {
-        PersonService personService= mock(PersonService.class);
-        when(personService.hentPersonInfo(any())).thenReturn(new Person.Builder().build());
-        return personService;
+        return mock(PersonService.class);
+    }
+
+    @PostConstruct
+    public void enableOriginHeaderForHttpClients() {
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }
 
 }

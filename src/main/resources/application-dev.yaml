@@ -20,8 +20,9 @@ SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD: anything
 
 logging:
   level:
+    org.eclipse.jetty: INFO
     org.springframework: INFO
-    org.glassfish.jersey: WARN
+    org.glassfish.jersey: INFO
     org.glassfish.jersey.logging.LoggingFeature: DEBUG
     com.fasterxml: WARN
   config: classpath:logback-spring-test.xml
