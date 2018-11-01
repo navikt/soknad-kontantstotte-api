@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.api.rest;
 
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
+import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.person.domain.Person;
 import no.nav.kontantstotte.person.domain.PersonService;
 import no.nav.security.oidc.api.ProtectedWithClaims;
@@ -13,6 +14,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_INTEGRASJON;
 
 
 @Component
@@ -32,8 +35,13 @@ public class SokerResource {
 
     @GET
     public SokerDto hentInfoOmSoker() {
-        Person person = personService.hentPersonInfo(hentFnrFraToken());
-        return new SokerDto(hentFnrFraToken(), person.getFornavn(), person.getNavn());
+        String fnr = hentFnrFraToken();
+        if(UnleashProvider.get().isEnabled(BRUK_TPS_INTEGRASJON)) {
+            Person person = personService.hentPersonInfo(fnr);
+            return new SokerDto(fnr, person.getFornavn(), person.getNavn());
+        } else {
+            return new SokerDto(fnr, null, null);
+        }
     }
 
     public static String hentFnrFraToken() {

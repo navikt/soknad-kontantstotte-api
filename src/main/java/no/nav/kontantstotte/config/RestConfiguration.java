@@ -5,7 +5,6 @@ import no.nav.kontantstotte.api.rest.*;
 import no.nav.kontantstotte.api.rest.exceptionmapper.PersonOppslagExceptionMapper;
 import no.nav.kontantstotte.api.rest.exceptionmapper.SkjermetAdresseExceptionMapper;
 import no.nav.kontantstotte.api.rest.exceptionmapper.WebApplicationExceptionMapper;
-import no.nav.kontantstotte.person.domain.SkjermetAdresseException;
 import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
