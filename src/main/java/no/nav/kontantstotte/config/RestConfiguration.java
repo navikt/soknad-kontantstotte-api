@@ -20,7 +20,6 @@ public class RestConfiguration extends ResourceConfig {
         register(MultiPartFeature.class);
         // Resources
         register(TeksterResource.class);
-        register(PersonResource.class);
         register(SokerResource.class);
         register(InnsendingResource.class);
         register(InnloggingStatusResource.class);
