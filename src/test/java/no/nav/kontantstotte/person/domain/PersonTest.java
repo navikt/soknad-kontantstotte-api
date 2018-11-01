@@ -9,39 +9,39 @@ public class PersonTest {
     @Test
     public void fulltnavn_ikke_produserer_mellomromsfeil_ved_null_verdier() {
 
-        assertThat(personMedNavn("Barefornavn", null, null).getNavn())
+        assertThat(personMedNavn("Barefornavn", null, null).getFulltnavn())
                 .isEqualTo("Barefornavn");
-        assertThat(personMedNavn(null, "Baremellomnavn", null).getNavn())
+        assertThat(personMedNavn(null, "Baremellomnavn", null).getFulltnavn())
                 .isEqualTo("Baremellomnavn");
-        assertThat(personMedNavn(null, null, "Bareslektsnavn").getNavn())
+        assertThat(personMedNavn(null, null, "Bareslektsnavn").getFulltnavn())
                 .isEqualTo("Bareslektsnavn");
 
-        assertThat(personMedNavn("Fornavn", "Mellomnavn", null).getNavn())
+        assertThat(personMedNavn("Fornavn", "Mellomnavn", null).getFulltnavn())
                 .isEqualTo("Fornavn Mellomnavn");
-        assertThat(personMedNavn("Fornavn", null, "Slektsnavn").getNavn())
+        assertThat(personMedNavn("Fornavn", null, "Slektsnavn").getFulltnavn())
                 .isEqualTo("Fornavn Slektsnavn");
-        assertThat(personMedNavn(null, "Mellomnavn", "Slektsnavn").getNavn())
+        assertThat(personMedNavn(null, "Mellomnavn", "Slektsnavn").getFulltnavn())
                 .isEqualTo("Mellomnavn Slektsnavn");
 
-        assertThat(personMedNavn("Fornavn", "Mellomnavn", "Slektsnavn").getNavn())
+        assertThat(personMedNavn("Fornavn", "Mellomnavn", "Slektsnavn").getFulltnavn())
                 .isEqualTo("Fornavn Mellomnavn Slektsnavn");
     }
 
     @Test
     public void fulltnavn_ikke_produserer_mellomromsfeil_ved_blanke_verdier() {
 
-        assertThat(personMedNavn("Barefornavn", "", "").getNavn())
+        assertThat(personMedNavn("Barefornavn", "", "").getFulltnavn())
                 .isEqualTo("Barefornavn");
-        assertThat(personMedNavn("", "Baremellomnavn", "").getNavn())
+        assertThat(personMedNavn("", "Baremellomnavn", "").getFulltnavn())
                 .isEqualTo("Baremellomnavn");
-        assertThat(personMedNavn("", "", "Bareslektsnavn").getNavn())
+        assertThat(personMedNavn("", "", "Bareslektsnavn").getFulltnavn())
                 .isEqualTo("Bareslektsnavn");
 
-        assertThat(personMedNavn("Fornavn", "Mellomnavn", "").getNavn())
+        assertThat(personMedNavn("Fornavn", "Mellomnavn", "").getFulltnavn())
                 .isEqualTo("Fornavn Mellomnavn");
-        assertThat(personMedNavn("Fornavn", "", "Slektsnavn").getNavn())
+        assertThat(personMedNavn("Fornavn", "", "Slektsnavn").getFulltnavn())
                 .isEqualTo("Fornavn Slektsnavn");
-        assertThat(personMedNavn("", "Mellomnavn", "Slektsnavn").getNavn())
+        assertThat(personMedNavn("", "Mellomnavn", "Slektsnavn").getFulltnavn())
                 .isEqualTo("Mellomnavn Slektsnavn");
 
     }

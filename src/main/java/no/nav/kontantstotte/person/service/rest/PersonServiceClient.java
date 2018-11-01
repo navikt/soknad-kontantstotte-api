@@ -17,7 +17,7 @@ import static no.nav.kontantstotte.person.service.rest.PersonConverter.personinf
 
 class PersonServiceClient implements PersonService {
 
-    private static final String CONSUMER_ID = "soknad-kontantstotte-proxy";
+    private static final String CONSUMER_ID = "soknad-kontantstotte-api";
 
     private final Client client;
 

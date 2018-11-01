@@ -29,7 +29,7 @@ public class Person {
         return slektsnavn;
     }
 
-    public String getNavn() {
+    public String getFulltnavn() {
 
         return Stream.of(fornavn, mellomnavn, slektsnavn)
                 .filter(Objects::nonNull)

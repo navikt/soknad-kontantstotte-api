@@ -38,7 +38,7 @@ public class SokerResource {
         String fnr = hentFnrFraToken();
         if(UnleashProvider.get().isEnabled(BRUK_TPS_INTEGRASJON)) {
             Person person = personService.hentPersonInfo(fnr);
-            return new SokerDto(fnr, person.getFornavn(), person.getNavn());
+            return new SokerDto(fnr, person.getFornavn(), person.getFulltnavn());
         } else {
             return new SokerDto(fnr, null, null);
         }
