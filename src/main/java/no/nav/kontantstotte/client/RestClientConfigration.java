@@ -17,57 +17,20 @@ import javax.ws.rs.ext.ContextResolver;
 @Configuration
 public class RestClientConfigration {
 
-    @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME}")
-    private String kontantstotteProxyApiKeyUsername;
-
-    @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}")
-    private String kontantstotteProxyApiKeyPassword;
-
-    @Value("${SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}")
-    private String tpsProxyApiKeyUsername;
-
-    @Value("${SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}")
-    private String tpsProxyApiKeyPassword;
-
     @Bean(name = "client")
-    public Client client() {
+    public Client client(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
 
         return ClientBuilder.newBuilder()
                 .register(new ClientLogFilter(ClientLogFilter.ClientLogFilterConfig.builder()
                         .metricName("soknad-kontantstotte-api").build()))
                 .register(OidcClientRequestFilter.class)
-                .register(objectMapperResolver())
+                .register(clientObjectMapperResolver)
                 .register(new LoggingFeature())
                 .build();
     }
 
-    @Bean(name = "kontantstotteProxyClient")
-    public Client kontantstotteProxyClient() {
-
-        return ClientBuilder.newBuilder()
-                .register(new ClientLogFilter(ClientLogFilter.ClientLogFilterConfig.builder()
-                        .metricName("soknad-kontantstotte-api").build()))
-                .register(OidcClientRequestFilter.class)
-                .register(objectMapperResolver())
-                .register(new ProxyHeaderRequestFilter(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword))
-                .register(new LoggingFeature())
-                .build();
-    }
-
-    @Bean(name = "tpsProxyClient")
-    public Client tpsProxyClient() {
-
-        return ClientBuilder.newBuilder()
-                .register(new ClientLogFilter(ClientLogFilter.ClientLogFilterConfig.builder()
-                        .metricName("soknad-kontantstotte-api").build()))
-                .register(OidcClientRequestFilter.class)
-                .register(objectMapperResolver())
-                .register(new ProxyHeaderRequestFilter(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword))
-                .register(new LoggingFeature())
-                .build();
-    }
-
-    private ContextResolver<ObjectMapper> objectMapperResolver() {
+    @Bean
+    public ContextResolver<ObjectMapper> clientObjectMapperResolver() {
         return new ContextResolver<ObjectMapper>() {
             @Override
             public ObjectMapper getContext(Class<?> type) {
