@@ -23,7 +23,7 @@ public class FeatureToggleConfig {
     private static final String FASIT_ENVIRONMENT_NAME = "${FASIT_ENVIRONMENT_NAME}";
 
     public static final String KONTANTSTOTTE_OPPSUMMERING_ADVARSEL = "kontantstotte.oppsummering.advarsel";
-    public static final String BRUK_TPS_INTEGRASJON = "bruk.tps.integrasjon";
+    public static final String BRUK_TPS_INTEGRASJON = "kontantstotte.bruk.tps.integrasjon";
 
     @Inject
     private Unleash unleash;
