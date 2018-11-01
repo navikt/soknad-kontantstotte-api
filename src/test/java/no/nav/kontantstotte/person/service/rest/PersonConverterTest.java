@@ -19,20 +19,44 @@ public class PersonConverterTest {
     public ExpectedException exception = none();
 
     @Test
-    public void at_spesiell_opplysning_kaster_exception() {
+    public void at_kode6_kaster_exception() {
         exception.expect(SkjermetAdresseException.class);
 
         PersoninfoDto dto = person1();
-        dto.setSpesiellOpplysning(spesiellOpplysning("KODE6"));
+        dto.setSpesiellOpplysning(spesiellOpplysning("SPSF"));
 
         PersonConverter.personinfoDtoToPerson.apply(dto);
+    }
+
+    @Test
+    public void at_kode7_kaster_exception() {
+        exception.expect(SkjermetAdresseException.class);
+
+        PersoninfoDto dto = person1();
+        dto.setSpesiellOpplysning(spesiellOpplysning("SPFO"));
+
+        PersonConverter.personinfoDtoToPerson.apply(dto);
+    }
+
+    @Test
+    public void at_annen_kode_enn_6_og_7_ikke_kaster_exception() {
+
+        PersoninfoDto dto = person1();
+        dto.setSpesiellOpplysning(spesiellOpplysning("UFB"));
+
+        Person p = PersonConverter.personinfoDtoToPerson.apply(dto);
+
+        assertThat(p.getFornavn()).isEqualTo(dto.getNavn().getFornavn());
+        assertThat(p.getMellomnavn()).isEqualTo(dto.getNavn().getMellomnavn());
+        assertThat(p.getSlektsnavn()).isEqualTo(dto.getNavn().getSlektsnavn());
+
     }
 
     @Test
     public void at_personer_uten_spesiell_opplysning_konverteres() {
 
         PersoninfoDto dto = person1();
-        Person p =PersonConverter.personinfoDtoToPerson.apply(dto);
+        Person p = PersonConverter.personinfoDtoToPerson.apply(dto);
 
         assertThat(p.getFornavn()).isEqualTo(dto.getNavn().getFornavn());
         assertThat(p.getMellomnavn()).isEqualTo(dto.getNavn().getMellomnavn());
