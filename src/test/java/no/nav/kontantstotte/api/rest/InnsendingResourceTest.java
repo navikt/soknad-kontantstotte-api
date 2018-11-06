@@ -2,6 +2,7 @@ package no.nav.kontantstotte.api.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
 import org.glassfish.jersey.client.ClientConfig;
@@ -24,6 +25,7 @@ import javax.ws.rs.core.Response;
 import static java.time.Instant.now;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import static javax.ws.rs.core.MediaType.MEDIA_TYPE_WILDCARD;
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.OK;
@@ -42,15 +44,16 @@ public class InnsendingResourceTest extends JerseyTest {
 
     @Test
     public void at_innsending_av_soknad_er_ok_med_bekreftelse() throws JsonProcessingException {
-        when(innsendingService.sendInnSoknad(any(Soknad.class)))
-                .thenReturn(Response.ok().build());
-
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+
+        when(innsendingService.sendInnSoknad(any(Soknad.class)))
+                .thenReturn(soknadMedBekreftelse);
 
         Response response = target()
                 .path("sendinn")
                 .request()
+                .accept(APPLICATION_JSON_TYPE)
                 .post(Entity.entity(multipart(soknadMedBekreftelse), MULTIPART_FORM_DATA_TYPE));
 
         assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
@@ -59,11 +62,11 @@ public class InnsendingResourceTest extends JerseyTest {
 
     @Test
     public void at_soknad_markeres_med_innsendingstidspunkt() throws JsonProcessingException {
-        when(innsendingService.sendInnSoknad(any(Soknad.class)))
-                .thenReturn(Response.ok().build());
-
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+
+        when(innsendingService.sendInnSoknad(any(Soknad.class)))
+                .thenReturn(soknadMedBekreftelse);
 
         target().path("sendinn")
                 .request()
