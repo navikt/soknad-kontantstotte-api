@@ -4,6 +4,7 @@ import no.finn.unleash.FakeUnleash;
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringTestConfiguration;
+import no.nav.kontantstotte.person.domain.PersonService;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -14,7 +15,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
+import javax.annotation.PostConstruct;
+
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_INTEGRASJON;
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
+import static org.mockito.Mockito.mock;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 @Import({ApplicationConfig.class, OppsummeringTestConfiguration.class})
@@ -38,7 +43,7 @@ public class TestLauncher {
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();
         fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
-
+        fakeUnleash.enable(BRUK_TPS_INTEGRASJON);
         return fakeUnleash;
     }
 
@@ -46,6 +51,17 @@ public class TestLauncher {
     @Primary
     public ResourceConfig proxyConfig() {
         return new TestRestConfiguration();
+    }
+
+    @Bean
+    @Primary
+    public PersonService personService() {
+        return mock(PersonService.class);
+    }
+
+    @PostConstruct
+    public void enableOriginHeaderForHttpClients() {
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }
 
 }

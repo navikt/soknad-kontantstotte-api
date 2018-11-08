@@ -17,44 +17,20 @@ import javax.ws.rs.ext.ContextResolver;
 @Configuration
 public class RestClientConfigration {
 
-    @Value("${apikeys.key:x-nav-apiKey}")
-    private String key;
-
-    @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}")
-    private String proxyApiKey;
-
     @Bean(name = "client")
-    public Client client() {
+    public Client client(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
 
         return ClientBuilder.newBuilder()
                 .register(new ClientLogFilter(ClientLogFilter.ClientLogFilterConfig.builder()
                         .metricName("soknad-kontantstotte-api").build()))
                 .register(OidcClientRequestFilter.class)
-                .register(objectMapperResolver())
-                .register(new LoggingFeature())
-                .build();
-    }
-
-    @Bean(name = "proxyClient")
-    public Client proxyClient(ProxyHeaderRequestFilter proxyHeaderRequestFilter) {
-
-        return ClientBuilder.newBuilder()
-                .register(new ClientLogFilter(ClientLogFilter.ClientLogFilterConfig.builder()
-                        .metricName("soknad-kontantstotte-api").build()))
-                .register(OidcClientRequestFilter.class)
-                .register(objectMapperResolver())
-                .register(proxyHeaderRequestFilter)
+                .register(clientObjectMapperResolver)
                 .register(new LoggingFeature())
                 .build();
     }
 
     @Bean
-    public ProxyHeaderRequestFilter proxyHeaderRequestFilter() {
-
-        return new ProxyHeaderRequestFilter(key, proxyApiKey);
-    }
-
-    private ContextResolver<ObjectMapper> objectMapperResolver() {
+    public ContextResolver<ObjectMapper> clientObjectMapperResolver() {
         return new ContextResolver<ObjectMapper>() {
             @Override
             public ObjectMapper getContext(Class<?> type) {

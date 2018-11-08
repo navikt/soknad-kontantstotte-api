@@ -13,7 +13,7 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
 
     @Override
     public Response toResponse(WebApplicationException e) {
-        logger.warn(e.getMessage());
+        logger.warn(e.getMessage(), e);
         return e.getResponse();
     }
 }
