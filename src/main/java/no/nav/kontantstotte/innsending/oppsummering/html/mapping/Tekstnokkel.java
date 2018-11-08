@@ -4,6 +4,7 @@ public enum Tekstnokkel {
     TITTEL("kontantstotte.tittel"),
     BEKREFTELSE("oppsummering.bekreftelse.label"),
     INNSENDING_LABEL("oppsummering.innsendingsdato"),
+    FASTSATT_LABEL("kontantstotte.fastsattdato.label"),
     SVAR_NEI("svar.nei"),
     SVAR_JA("svar.ja"),
     SVAR_JA_I_NORGE("tilknytningTilUtland.svar.jaINorge"),

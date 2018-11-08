@@ -7,15 +7,15 @@ import no.nav.kontantstotte.innsending.steg.Person;
 import java.util.List;
 import java.util.Map;
 
-import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.BEKREFTELSE;
-import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.INNSENDING_LABEL;
-import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.TITTEL;
+import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 class SoknadOppsummering {
     private Soknad soknad;
     private MetaData metaData;
     private List<Bolk> bolker;
     private Map<String, String> tekster;
+    private static String SKJEMANUMMER = "NAV 34-00.08";
+    private static String FASTSATTDATO = "00.2000";
 
     public SoknadOppsummering() {
 
@@ -26,7 +26,9 @@ class SoknadOppsummering {
         Person person = new Person(fnr);
         MetaDataElement metaDataBekreftelse = new MetaDataElement(tekster.get(BEKREFTELSE.getNokkel()), null);
 
-        this.metaData = new MetaData(tekster.get(TITTEL.getNokkel()), metaDataInnsendingsTidspunkt, person, metaDataBekreftelse);
+        MetaDataElement metaDataFastsattDato = new MetaDataElement(tekster.get(FASTSATT_LABEL.getNokkel()),FASTSATTDATO);
+
+        this.metaData = new MetaData(tekster.get(TITTEL.getNokkel()), metaDataInnsendingsTidspunkt, person, metaDataBekreftelse, SKJEMANUMMER, metaDataFastsattDato);
         this.soknad = soknad;
         this.bolker = bolker;
         this.tekster = tekster;
