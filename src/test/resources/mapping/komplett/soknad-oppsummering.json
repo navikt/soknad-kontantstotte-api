@@ -66,6 +66,11 @@
   },
   "metaData": {
     "tittel": "Søknad om kontantstøtte",
+    "skjemanummer": "NAV 34-00.08",
+    "fastsattdato": {
+      "tekst": "Fastsatt ",
+      "verdi": "00.2000"
+    },
     "innsendingsTidspunkt": {
       "tekst": "Sendt inn:",
       "verdi": "10.10.2018 - 13.23"
@@ -369,6 +374,7 @@
     "feilside.innsending.knapp": "Start på nytt",
     "feilside.innsending.tittel": "Obs!",
     "kontantstotte.tittel": "Søknad om kontantstøtte",
+    "kontantstotte.fastsattdato.label": "Fastsatt ",
     "kvittering.seOgsa": "Se også",
     "kvittering.soknadLokasjon": "Du finner søknaden din under",
     "kvittering.soknadSendt": "Du har sendt inn søknaden",
