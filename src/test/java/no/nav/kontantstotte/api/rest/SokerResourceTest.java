@@ -6,7 +6,7 @@ import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.person.domain.Person;
 import no.nav.kontantstotte.person.domain.PersonOppslagException;
 import no.nav.kontantstotte.person.domain.PersonService;
-import no.nav.kontantstotte.person.domain.SkjermetAdresseException;
+import no.nav.kontantstotte.person.domain.FortroligAdresseException;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
@@ -71,7 +71,7 @@ public class SokerResourceTest {
 
     @Test
     public void at_skjermet_adresse_gir_403() {
-        when(personServiceMock.hentPersonInfo(any())).thenThrow(new SkjermetAdresseException("Skjermet adresse"));
+        when(personServiceMock.hentPersonInfo(any())).thenThrow(new FortroligAdresseException("Skjermet adresse"));
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.FORBIDDEN.getStatusCode());
     }
@@ -85,7 +85,7 @@ public class SokerResourceTest {
 
     @Test
     public void at_skjermet_adresse_feil_legger_pa_cors_filter() {
-        when(personServiceMock.hentPersonInfo(any())).thenThrow(new SkjermetAdresseException("Skjermet adresse"));
+        when(personServiceMock.hentPersonInfo(any())).thenThrow(new FortroligAdresseException("Skjermet adresse"));
         Response response = kallEndepunkt();
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
     }

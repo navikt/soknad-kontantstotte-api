@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.person.service.rest;
 
 import no.nav.kontantstotte.person.domain.Person;
-import no.nav.kontantstotte.person.domain.SkjermetAdresseException;
+import no.nav.kontantstotte.person.domain.FortroligAdresseException;
 import no.nav.tps.person.KodeDto;
 import no.nav.tps.person.KodeMedDatoOgKildeDto;
 import no.nav.tps.person.NavnDto;
@@ -20,7 +20,7 @@ public class PersonConverterTest {
 
     @Test
     public void at_kode6_kaster_exception() {
-        exception.expect(SkjermetAdresseException.class);
+        exception.expect(FortroligAdresseException.class);
 
         PersoninfoDto dto = person1();
         dto.setSpesiellOpplysning(spesiellOpplysning("SPSF"));
@@ -30,7 +30,7 @@ public class PersonConverterTest {
 
     @Test
     public void at_kode7_kaster_exception() {
-        exception.expect(SkjermetAdresseException.class);
+        exception.expect(FortroligAdresseException.class);
 
         PersoninfoDto dto = person1();
         dto.setSpesiellOpplysning(spesiellOpplysning("SPFO"));

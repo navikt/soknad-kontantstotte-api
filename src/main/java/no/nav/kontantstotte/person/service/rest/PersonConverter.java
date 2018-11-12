@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.person.service.rest;
 
 import no.nav.kontantstotte.person.domain.Person;
-import no.nav.kontantstotte.person.domain.SkjermetAdresseException;
+import no.nav.kontantstotte.person.domain.FortroligAdresseException;
 import no.nav.tps.person.KodeDto;
 import no.nav.tps.person.KodeMedDatoOgKildeDto;
 import no.nav.tps.person.PersoninfoDto;
@@ -36,7 +36,7 @@ class PersonConverter {
                 .map(KodeDto::getVerdi)
                 .flatMap(SpesiellOpplysning::fraTpsKode)
                 .ifPresent((kode) -> {
-                    throw new SkjermetAdresseException("Personen er registrert med spesreg, " + kode);
+                    throw new FortroligAdresseException("Personen er registrert med spesreg, " + kode);
                 });
 
         return new Person.Builder()
