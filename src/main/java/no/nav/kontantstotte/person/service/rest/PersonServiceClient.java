@@ -1,5 +1,7 @@
 package no.nav.kontantstotte.person.service.rest;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.person.domain.Person;
 import no.nav.kontantstotte.person.domain.PersonOppslagException;
 import no.nav.kontantstotte.person.domain.PersonService;
@@ -18,6 +20,9 @@ import static no.nav.kontantstotte.person.service.rest.PersonConverter.personinf
 class PersonServiceClient implements PersonService {
 
     private static final String CONSUMER_ID = "soknad-kontantstotte-api";
+
+    private final Counter tpsOppslagSuccess = Metrics.counter("soknad.kontantstotte.tpsoppslag", "response", "success");
+    private final Counter tpsOppslagFailure = Metrics.counter("soknad.kontantstotte.tpsoppslag", "response", "failure");
 
     private final Client client;
 
@@ -40,10 +45,12 @@ class PersonServiceClient implements PersonService {
                 .get();
 
         if(!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+            tpsOppslagFailure.increment();
             throw new PersonOppslagException(response.readEntity(String.class));
         }
 
         PersoninfoDto dto = response.readEntity(PersoninfoDto.class);
+        tpsOppslagSuccess.increment();
         return personinfoDtoToPerson.apply(dto);
     }
 

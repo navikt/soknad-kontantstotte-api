@@ -1,5 +1,7 @@
 package no.nav.kontantstotte.api.rest;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
@@ -26,6 +28,9 @@ public class InnsendingResource {
 
     private final Logger logger = LoggerFactory.getLogger(InnsendingResource.class);
 
+    private final Counter soknadSendtInn = Metrics.counter("soknad.kontantstotte", "innsending", "mottatt");
+    private final Counter soknadSendtInnUgyldig = Metrics.counter("soknad.kontantstotte", "innsending", "ugyldig");
+
     @Inject
     public InnsendingResource(InnsendingService innsendingService) {
         this.innsendingService = innsendingService;
@@ -37,10 +42,12 @@ public class InnsendingResource {
 
         if (!soknad.erGyldig()) {
             logger.warn("Noen har forsøkt å sende inn en ugyldig søknad.");
+            soknadSendtInnUgyldig.increment();
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         soknad.markerInnsendingsTidspunkt();
+        soknadSendtInn.increment();
         innsendingService.sendInnSoknad(soknad);
 
         return new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString());

@@ -1,9 +1,10 @@
 package no.nav.kontantstotte.innsending;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
-import org.springframework.web.server.NotAcceptableStatusException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -20,6 +21,8 @@ class ArkivInnsendingService implements InnsendingService {
     private final Client client;
 
     private final OppsummeringPdfGenerator oppsummeringPdfGenerator;
+
+    private final Counter soknadSendtInnSendtProxy = Metrics.counter("soknad.kontantstotte", "innsending", "sendtproxy");
 
     ArkivInnsendingService(Client client,
                            URI proxyServiceUri,
@@ -40,9 +43,10 @@ class ArkivInnsendingService implements InnsendingService {
                 .invoke();
 
         if (response.getStatus() != 200) {
-            throw new NotAcceptableStatusException("Response fra proxy: "+ response.getStatus());
+            throw new InnsendingException("Response fra proxy: "+ response.getStatus() + ". Response.entity: " + response.readEntity(String.class));
         }
 
+        soknadSendtInnSendtProxy.increment();
         return soknad;
     }
 

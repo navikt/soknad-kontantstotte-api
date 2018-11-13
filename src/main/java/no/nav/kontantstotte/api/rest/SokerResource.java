@@ -1,5 +1,7 @@
 package no.nav.kontantstotte.api.rest;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.person.domain.Person;
@@ -28,6 +30,8 @@ public class SokerResource {
 
     private final PersonService personService;
 
+    private final Counter soknadApnet = Metrics.counter("soknad.kontantstotte.apnet");
+
     @Inject
     public SokerResource(PersonService personService) {
         this.personService = personService;
@@ -38,6 +42,7 @@ public class SokerResource {
         String fnr = hentFnrFraToken();
         if(UnleashProvider.get().isEnabled(BRUK_TPS_INTEGRASJON)) {
             Person person = personService.hentPersonInfo(fnr);
+            soknadApnet.increment();
             return new SokerDto(fnr, person.getFornavn(), person.getFulltnavn());
         } else {
             return new SokerDto(fnr, null, null);

@@ -1,10 +1,14 @@
 package no.nav.kontantstotte.innsending.oppsummering.html;
 
+import no.nav.kontantstotte.innsending.InnsendingException;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+
+import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 class HtmlConverter {
     private URI url;
@@ -25,6 +29,10 @@ class HtmlConverter {
                 .request()
                 .buildPost(Entity.entity(oppsummering, MediaType.APPLICATION_JSON_TYPE))
                 .invoke();
+
+        if(!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+            throw new InnsendingException("Response fra html-generator: "+ response.getStatus() + ". Response.entity: " + response.readEntity(String.class));
+        }
 
         return response.readEntity(byte[].class);
     }
