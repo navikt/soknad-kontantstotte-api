@@ -41,7 +41,7 @@ public class InnsendingResource {
     public InnsendingsResponsDto sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
 
         if (!soknad.erGyldig()) {
-            logger.warn("Noen har forsøkt å sende inn en ugyldig søknad.");
+            logger.info("Noen har forsøkt å sende inn en ugyldig søknad.");
             soknadSendtInnUgyldig.increment();
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }

@@ -13,7 +13,7 @@ public class FortroligAdresseExceptionMapper implements ExceptionMapper<Fortroli
 
     @Override
     public Response toResponse(FortroligAdresseException e) {
-        logger.warn(e.getMessage(), e);
+        logger.info(e.getMessage(), e);
         return Response.status(Response.Status.FORBIDDEN).build();
     }
 }

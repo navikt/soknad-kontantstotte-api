@@ -14,7 +14,7 @@ public class InnsendingExceptionMapper implements ExceptionMapper<InnsendingExce
 
     @Override
     public Response toResponse(InnsendingException e) {
-        logger.warn(e.getMessage(), e);
+        logger.error(e.getMessage(), e);
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 }

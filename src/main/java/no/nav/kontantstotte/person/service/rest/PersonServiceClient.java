@@ -9,7 +9,6 @@ import no.nav.log.MDCConstants;
 import no.nav.tps.person.PersoninfoDto;
 import org.slf4j.MDC;
 
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.Response;
 import java.net.URI;
