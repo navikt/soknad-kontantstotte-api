@@ -69,7 +69,11 @@
     "skjemanummer": "NAV 34-00.08",
     "fastsattdato": {
       "tekst": "Fastsatt ",
-      "verdi": "00.2000"
+      "verdi": "06.2003"
+    },
+    "endretDato": {
+      "tekst": "Endret ",
+      "verdi": "08.2018"
     },
     "innsendingsTidspunkt": {
       "tekst": "Sendt inn:",
@@ -296,6 +300,9 @@
     "feilside.innsending.knapp": "Start på nytt",
     "feilside.innsending.tittel": "Obs!",
     "kontantstotte.tittel": "Søknad om kontantstøtte",
+    "kontantstotte.endretDato": "08.2018",
+    "kontantstotte.endretDato.label": "Endret ",
+    "kontantstotte.fastsattdato": "06.2003",
     "kontantstotte.fastsattdato.label": "Fastsatt ",
     "kvittering.seOgsa": "Se også",
     "kvittering.soknadLokasjon": "Du finner søknaden din under",

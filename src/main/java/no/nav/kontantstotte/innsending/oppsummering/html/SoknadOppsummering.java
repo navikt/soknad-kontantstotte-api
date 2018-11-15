@@ -15,7 +15,6 @@ class SoknadOppsummering {
     private List<Bolk> bolker;
     private Map<String, String> tekster;
     private static String SKJEMANUMMER = "NAV 34-00.08";
-    private static String FASTSATTDATO = "00.2000";
 
     public SoknadOppsummering() {
 
@@ -26,9 +25,19 @@ class SoknadOppsummering {
         Person person = new Person(fnr);
         MetaDataElement metaDataBekreftelse = new MetaDataElement(tekster.get(BEKREFTELSE.getNokkel()), null);
 
-        MetaDataElement metaDataFastsattDato = new MetaDataElement(tekster.get(FASTSATT_LABEL.getNokkel()),FASTSATTDATO);
+        MetaDataElement metaDataFastsattDato = new MetaDataElement(tekster.get(FASTSATT_LABEL.getNokkel()), tekster.get(FASTSATTDATO.getNokkel()));
+        MetaDataElement metaDataEndretDato = new MetaDataElement(tekster.get(ENDRET_LABEL.getNokkel()), tekster.get(ENDRET_DATO.getNokkel()));
 
-        this.metaData = new MetaData(tekster.get(TITTEL.getNokkel()), metaDataInnsendingsTidspunkt, person, metaDataBekreftelse, SKJEMANUMMER, metaDataFastsattDato);
+        this.metaData = new MetaData.Builder()
+                .tittel(tekster.get(TITTEL.getNokkel()))
+                .innsendingsTidspunkt(metaDataInnsendingsTidspunkt)
+                .person(person)
+                .bekreftelse(metaDataBekreftelse)
+                .skjemanummer(SKJEMANUMMER)
+                .endretDato(metaDataEndretDato)
+                .fastsattdato(metaDataFastsattDato)
+                .build();
+
         this.soknad = soknad;
         this.bolker = bolker;
         this.tekster = tekster;
