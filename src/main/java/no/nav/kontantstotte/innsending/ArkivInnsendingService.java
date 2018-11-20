@@ -48,7 +48,7 @@ class ArkivInnsendingService implements InnsendingService {
                 .buildPost(Entity.entity(soknadDto, MediaType.APPLICATION_JSON))
                 .invoke();
 
-        if (SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+        if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
             throw new InnsendingException("Response fra proxy: "+ response.getStatus() + ". Response.entity: " + response.readEntity(String.class));
         }
 
