@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending.steg;
 
-
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;

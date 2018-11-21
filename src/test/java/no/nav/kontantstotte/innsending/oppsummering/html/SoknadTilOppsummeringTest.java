@@ -4,6 +4,7 @@ import no.finn.unleash.FakeUnleash;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
+import no.nav.kontantstotte.innsending.steg.*;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class SoknadTilOppsummeringTest {
     @Test
     public void bolkerIRettRekkefølge() {
         String fnr = "XXXXXXXXXX";
-        Soknad soknad = new Soknad();
+        Soknad soknad = tomSoknad();
         soknad.markerInnsendingsTidspunkt();
 
         TekstProvider mock = mock(TekstProvider.class);
@@ -70,6 +71,22 @@ public class SoknadTilOppsummeringTest {
                         tuple(null, UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel())
                 );
         assertThat(oppsummering.getMetaData().getPerson().fnr).isEqualTo(fnr);
+    }
+
+    private Soknad tomSoknad() {
+        return new Soknad.Builder()
+                .person(new Person())
+                .kravTilSoker(new SokerKrav(null, null, null, null, null, null))
+                .familieforhold(new Familieforhold(null, null, null))
+                .barnehageplass(new Barnehageplass())
+                .arbeidIUtlandet(new ArbeidIUtlandet(null, null, null, null))
+                .utenlandskKontantstotte(new UtenlandskKontantstotte(null, null))
+                .mineBarn(new Barn(null, null))
+                .tilknytningTilUtland(new TilknytningTilUtland(null, null, null, null))
+                .utenlandskeYtelser(new UtenlandskeYtelser(null, null, null, null))
+                .oppsummering(new Oppsummering(null))
+                .sprak("")
+                .build();
     }
 
     private Map<String, String> tekster(AbstractMap.SimpleEntry<String, String>... tekst) {

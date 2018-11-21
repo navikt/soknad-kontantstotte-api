@@ -21,7 +21,7 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
     public Bolk map(Soknad soknad) {
         Bolk tilknytningTilUtlandBolk = new Bolk();
 
-        TilknytningTilUtland tilknytningTilUtland = soknad.tilknytningTilUtland;
+        TilknytningTilUtland tilknytningTilUtland = soknad.getTilknytningTilUtland();
         tilknytningTilUtlandBolk.tittel = tekster.get(TILKNYTNING_TIL_UTLAND_TITTEL.getNokkel());
         tilknytningTilUtlandBolk.elementer = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
                 break;
         }
 
-        if ("JA".equalsIgnoreCase(soknad.familieforhold.borForeldreneSammenMedBarnet)) {
+        if ("JA".equalsIgnoreCase(soknad.getFamilieforhold().borForeldreneSammenMedBarnet)) {
 
             switch(annenForelderBoddEllerJobbetINorgeMinstFemAar){
                 case "JAINORGE":

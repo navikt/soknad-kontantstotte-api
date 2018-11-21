@@ -3,6 +3,7 @@ package no.nav.kontantstotte.api.rest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
+import no.nav.kontantstotte.api.rest.dto.SoknadDto;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
 import org.glassfish.jersey.client.ClientConfig;
@@ -14,6 +15,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
+import org.mockito.Answers;
 import org.mockito.ArgumentCaptor;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.context.support.StaticApplicationContext;
@@ -30,6 +32,7 @@ import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -44,11 +47,11 @@ public class InnsendingResourceTest extends JerseyTest {
 
     @Test
     public void at_innsending_av_soknad_er_ok_med_bekreftelse() throws JsonProcessingException {
-        Soknad soknadMedBekreftelse = new Soknad();
+        SoknadDto soknadMedBekreftelse = new SoknadDto();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
 
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
-                .thenReturn(soknadMedBekreftelse);
+                .then(returnsFirstArg());
 
         Response response = target()
                 .path("sendinn")
@@ -62,11 +65,11 @@ public class InnsendingResourceTest extends JerseyTest {
 
     @Test
     public void at_soknad_markeres_med_innsendingstidspunkt() throws JsonProcessingException {
-        Soknad soknadMedBekreftelse = new Soknad();
+        SoknadDto soknadMedBekreftelse = new SoknadDto();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
 
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
-                .thenReturn(soknadMedBekreftelse);
+                .thenAnswer(returnsFirstArg());
 
         target().path("sendinn")
                 .request()
@@ -75,8 +78,8 @@ public class InnsendingResourceTest extends JerseyTest {
         ArgumentCaptor<Soknad> captor = ArgumentCaptor.forClass(Soknad.class);
         verify(innsendingService).sendInnSoknad(captor.capture());
 
-        assertThat(captor.getValue().innsendingsTidspunkt).isBefore(now());
-        assertThat(captor.getValue().innsendingsTidspunkt).isAfter(now().minus(5, MINUTES));
+        assertThat(captor.getValue().getInnsendingsTidspunkt()).isBefore(now());
+        assertThat(captor.getValue().getInnsendingsTidspunkt()).isAfter(now().minus(5, MINUTES));
 
 
     }
@@ -87,14 +90,14 @@ public class InnsendingResourceTest extends JerseyTest {
         Response response = target()
                 .path("sendinn")
                 .request()
-                .post(Entity.entity(multipart(new Soknad()), MULTIPART_FORM_DATA_TYPE));
+                .post(Entity.entity(multipart(new SoknadDto()), MULTIPART_FORM_DATA_TYPE));
 
         assertThat(response.getStatus()).isEqualTo(BAD_REQUEST.getStatusCode());
 
         verifyNoMoreInteractions(innsendingService);
     }
 
-    private MultiPart multipart(Soknad soknad) throws JsonProcessingException {
+    private MultiPart multipart(SoknadDto soknad) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         return new FormDataMultiPart()

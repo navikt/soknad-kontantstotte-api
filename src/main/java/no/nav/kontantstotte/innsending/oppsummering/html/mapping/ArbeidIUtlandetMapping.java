@@ -19,7 +19,7 @@ public class ArbeidIUtlandetMapping extends BolkMapping {
     public Bolk map(Soknad soknad) {
         Bolk arbeidIUtlandetBolk = new Bolk();
 
-        ArbeidIUtlandet arbeidIUtlandet = soknad.arbeidIUtlandet;
+        ArbeidIUtlandet arbeidIUtlandet = soknad.getArbeidIUtlandet();
         arbeidIUtlandetBolk.tittel = tekster.get(ARBEID_I_UTLANDET_TITTEL.getNokkel());
         arbeidIUtlandetBolk.elementer = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class ArbeidIUtlandetMapping extends BolkMapping {
             arbeidIUtlandetBolk.elementer.add(nyttElementMedVerdisvar.apply(ARBEID_I_UTLANDET_FORKLARING, arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkelForklaring));
         }
 
-        if ("JA".equalsIgnoreCase(soknad.familieforhold.borForeldreneSammenMedBarnet)) {
+        if ("JA".equalsIgnoreCase(soknad.getFamilieforhold().borForeldreneSammenMedBarnet)) {
             if ("NEI".equalsIgnoreCase(arbeidIUtlandet.arbeiderAnnenForelderIUtlandet)) {
                 arbeidIUtlandetBolk.elementer.add(nyttElementMedTekstsvar.apply(ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET, SVAR_NEI));
             } else {

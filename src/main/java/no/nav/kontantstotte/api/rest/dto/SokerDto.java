@@ -36,4 +36,5 @@ public class SokerDto {
     public String getFulltnavn() {
         return fulltnavn;
     }
+
 }

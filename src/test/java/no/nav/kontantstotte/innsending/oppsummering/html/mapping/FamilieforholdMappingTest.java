@@ -30,10 +30,9 @@ public class FamilieforholdMappingTest {
                 tekst(FAMILIEFORHOLD_BOR_SAMMEN, sporsmal),
                 tekst(SVAR_NEI, NEI));
 
-        Soknad soknad = new Soknad();
-        Familieforhold familieforhold = new Familieforhold();
-        familieforhold.borForeldreneSammenMedBarnet = "NEI";
-        soknad.familieforhold = familieforhold;
+        Soknad soknad = new Soknad.Builder()
+                .familieforhold(new Familieforhold("NEI", null, null))
+                .build();
 
         Bolk bolk = new FamilieforholdMapping(tekster).map(soknad);
         assertThat(bolk)
@@ -59,12 +58,9 @@ public class FamilieforholdMappingTest {
                 tekst(FAMILIEFORHOLD_FNR_ANNEN_FORELDER, sporsmal_fnr),
                 tekst(SVAR_JA, JA));
 
-        Soknad soknad = new Soknad();
-        Familieforhold familieforhold = new Familieforhold();
-        familieforhold.borForeldreneSammenMedBarnet = "JA";
-        familieforhold.annenForelderNavn = "NN";
-        familieforhold.annenForelderFodselsnummer = "XXXXXX";
-        soknad.familieforhold = familieforhold;
+        Familieforhold familieforhold = new Familieforhold("JA", "NN", "XXXXXX");
+
+        Soknad soknad = new Soknad.Builder().familieforhold(familieforhold).build();
 
         Bolk bolk = new FamilieforholdMapping(tekster).map(soknad);
 

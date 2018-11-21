@@ -40,7 +40,7 @@ class ArkivInnsendingService implements InnsendingService {
     }
 
     public Soknad sendInnSoknad(Soknad soknad) {
-        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), soknad.innsendingsTidspunkt);
+        SoknadDto soknadDto = new SoknadDto(hentFnrFraToken(), oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), soknad.getInnsendingsTidspunkt());
 
         Response response = client.target(proxyServiceUri)
                 .path("soknad")

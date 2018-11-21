@@ -36,15 +36,15 @@ public class KravTilSokerMappingTest {
                 tekst(KRAV_TIL_SOKER_NORSK_STATSBORGER, kravTilSokerNorskStatsborger),
                 tekst(KRAV_TIL_SOKER_SKAL_BO_MED_BARNET_I_NORGE_NESTE_TOLV_MAANEDER, kravTilSokerSkalBoMedBarnetINorgeNesteTolvMaaneder));
 
-        Soknad soknad = new Soknad();
-        SokerKrav kravTilSoker = new SokerKrav();
-        kravTilSoker.barnIkkeHjemme = "JA";
-        kravTilSoker.boddEllerJobbetINorgeSisteFemAar = "JA";
-        kravTilSoker.borSammenMedBarnet = "JA";
-        kravTilSoker.ikkeAvtaltDeltBosted = "JA";
-        kravTilSoker.norskStatsborger = "JA";
-        kravTilSoker.skalBoMedBarnetINorgeNesteTolvMaaneder = "JA";
-        soknad.kravTilSoker = kravTilSoker;
+        Soknad soknad = new Soknad.Builder()
+                .kravTilSoker(new SokerKrav(
+                        "JA",
+                        "JA",
+                        "JA",
+                        "JA",
+                        "JA",
+                        "JA"))
+                .build();
 
         Bolk kravTilSokerBolk = new KravTilSokerMapping(tekster).map(soknad);
 

@@ -18,7 +18,7 @@ public class BarnMapping extends BolkMapping {
     @Override
     public Bolk map(Soknad soknad) {
         Bolk barneBolk = new Bolk();
-        Barn barn = soknad.mineBarn;
+        Barn barn = soknad.getMineBarn();
 
         barneBolk.tittel = tekster.get(BARN_TITTEL.getNokkel());
         barneBolk.undertittel = tekster.get(BARN_UNDERTITTEL.getNokkel());

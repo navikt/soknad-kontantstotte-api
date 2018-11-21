@@ -33,11 +33,12 @@ public class UtenlandskeYtelserMappingTest {
 
     @Test
     public void utenlandskeYtelser_nar_foreldre_ikke_bor_sammen() {
-        Soknad soknad = hentUtenlandskeYtelserSoknad();
-
-        Familieforhold familieforhold = new Familieforhold();
-        familieforhold.borForeldreneSammenMedBarnet = "NEI";
-        soknad.familieforhold = familieforhold;
+        Soknad soknad = hentUtenlandskeYtelserSoknad()
+                .familieforhold(new Familieforhold(
+                        "NEI",
+                        null,
+                        null))
+                .build();
 
         Bolk bolk = new UtenlandskeYtelserMapping(tekster).map(soknad);
 
@@ -52,11 +53,12 @@ public class UtenlandskeYtelserMappingTest {
 
     @Test
     public void utenlandskeYtelser_nar_foreldre_bor_sammen() {
-        Soknad soknad = hentUtenlandskeYtelserSoknad();
-
-        Familieforhold familieforhold = new Familieforhold();
-        familieforhold.borForeldreneSammenMedBarnet = "JA";
-        soknad.familieforhold = familieforhold;
+        Soknad soknad = hentUtenlandskeYtelserSoknad()
+                .familieforhold(new Familieforhold(
+                        "JA",
+                        null,
+                        null))
+                .build();
 
         Bolk bolk = new UtenlandskeYtelserMapping(tekster).map(soknad);
 
@@ -70,15 +72,13 @@ public class UtenlandskeYtelserMappingTest {
                 );
     }
 
-    private Soknad hentUtenlandskeYtelserSoknad() {
-        Soknad soknad = new Soknad();
-        UtenlandskeYtelser utenlandskeYtelser = new UtenlandskeYtelser();
-        utenlandskeYtelser.mottarYtelserFraUtland = "JA";
-        utenlandskeYtelser.mottarYtelserFraUtlandForklaring = tileggsSvar;
-        utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland = "NEI";
-        utenlandskeYtelser.mottarAnnenForelderYtelserFraUtlandForklaring = "";
-        soknad.utenlandskeYtelser = utenlandskeYtelser;
-
-        return soknad;
+    private Soknad.Builder hentUtenlandskeYtelserSoknad() {
+        return new Soknad.Builder()
+                .utenlandskeYtelser(new UtenlandskeYtelser(
+                "JA",
+                tileggsSvar,
+                "NEI",
+                ""
+        ));
     }
 }

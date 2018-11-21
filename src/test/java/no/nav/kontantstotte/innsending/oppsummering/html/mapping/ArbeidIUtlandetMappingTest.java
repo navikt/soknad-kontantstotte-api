@@ -36,11 +36,10 @@ public class ArbeidIUtlandetMappingTest {
 
     @Test
     public void arbeidIUtlandet_nar_foreldre_ikke_bor_sammen() {
-        Soknad soknad = hentArbeidIUtlandetSoknad();
 
-        Familieforhold familieforhold = new Familieforhold();
-        familieforhold.borForeldreneSammenMedBarnet = "NEI";
-        soknad.familieforhold = familieforhold;
+        Familieforhold familieforhold = new Familieforhold("NEI", null, null);
+        Soknad soknad = hentArbeidIUtlandetSoknad().familieforhold(familieforhold).build();
+
 
         Bolk bolk = new ArbeidIUtlandetMapping(tekster).map(soknad);
 
@@ -55,11 +54,9 @@ public class ArbeidIUtlandetMappingTest {
 
     @Test
     public void arbeidIUtlandet_nar_foreldre_bor_sammen() {
-        Soknad soknad = hentArbeidIUtlandetSoknad();
 
-        Familieforhold familieforhold = new Familieforhold();
-        familieforhold.borForeldreneSammenMedBarnet = "JA";
-        soknad.familieforhold = familieforhold;
+        Familieforhold familieforhold = new Familieforhold("JA", null, null);
+        Soknad soknad = hentArbeidIUtlandetSoknad().familieforhold(familieforhold).build();
 
         Bolk bolk = new ArbeidIUtlandetMapping(tekster).map(soknad);
 
@@ -73,15 +70,13 @@ public class ArbeidIUtlandetMappingTest {
                 );
     }
 
-    private Soknad hentArbeidIUtlandetSoknad() {
-        Soknad soknad = new Soknad();
-        ArbeidIUtlandet arbeidIUtlandet = new ArbeidIUtlandet();
-        arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkel = "JA";
-        arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkelForklaring = tileggsSvar;
-        arbeidIUtlandet.arbeiderAnnenForelderIUtlandet = "NEI";
-        arbeidIUtlandet.arbeiderAnnenForelderIUtlandetForklaring = "";
-        soknad.arbeidIUtlandet = arbeidIUtlandet;
-
-        return soknad;
+    private Soknad.Builder hentArbeidIUtlandetSoknad() {
+        return new Soknad.Builder()
+                .arbeidIUtlandet(new ArbeidIUtlandet(
+                        "JA",
+                        tileggsSvar,
+                        "NEI",
+                        ""
+                ));
     }
 }

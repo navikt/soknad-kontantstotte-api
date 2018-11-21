@@ -37,10 +37,10 @@ class SoknadTilOppsummering {
     }
 
     public SoknadOppsummering map(Soknad soknad, String fnr) {
-        Map<String, String> tekster = tekstProvider.hentTekster(soknad.sprak);
-        return new SoknadOppsummering(soknad,
+        Map<String, String> tekster = tekstProvider.hentTekster(soknad.getSprak());
+        return new SoknadOppsummering(
                 fnr,
-                FORMATTER.format(soknad.innsendingsTidspunkt),
+                FORMATTER.format(soknad.getInnsendingsTidspunkt()),
                 mapBolker(soknad, tekster),
                 tekster);
     }

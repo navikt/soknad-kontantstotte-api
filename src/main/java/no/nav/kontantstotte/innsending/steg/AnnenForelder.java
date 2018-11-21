@@ -9,4 +9,10 @@ public class AnnenForelder {
     public String personnummer;
     @JsonProperty("annenForelderYrkesaktivINorgeEOSIMinstFemAar")
     public String yrkesaktivINorgeEOSIMinstFemAar;
+
+    public AnnenForelder(String navn, String personnummer, String yrkesaktivINorgeEOSIMinstFemAar) {
+        this.navn = navn;
+        this.personnummer = personnummer;
+        this.yrkesaktivINorgeEOSIMinstFemAar = yrkesaktivINorgeEOSIMinstFemAar;
+    }
 }

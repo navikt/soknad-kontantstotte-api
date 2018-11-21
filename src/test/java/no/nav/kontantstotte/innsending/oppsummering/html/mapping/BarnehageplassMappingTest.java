@@ -54,8 +54,9 @@ public class BarnehageplassMappingTest {
         UnleashProvider.initialize(fakeUnleash);
 
         barnehageplass = new Barnehageplass();
-        soknad = new Soknad();
-        soknad.barnehageplass = barnehageplass;
+        soknad = new Soknad.Builder()
+                .barnehageplass(barnehageplass)
+                .build();
         barnehageplassMapping = new BarnehageplassMapping(TEKSTER);
     }
 

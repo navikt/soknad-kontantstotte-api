@@ -30,11 +30,8 @@ public class BarnMappingTest {
                 tekst(BARN_NAVN, navn),
                 tekst(BARN_FODSELSDATO, fodselsdato));
 
-        Soknad soknad = new Soknad();
-        Barn innsendtBarn = new Barn();
-        innsendtBarn.navn = "Barnets navn";
-        innsendtBarn.fodselsdato = "01.01.2019";
-        soknad.mineBarn = innsendtBarn;
+        Barn innsendtBarn = new Barn("Barnets navn", "01.01.2019");
+        Soknad soknad = new Soknad.Builder().mineBarn(innsendtBarn).build();
 
         Bolk bolk = new BarnMapping(tekster).map(soknad);
         assertThat(bolk)

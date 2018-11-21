@@ -19,7 +19,7 @@ public class UtenlandskeYtelserMapping extends BolkMapping {
     public Bolk map(Soknad soknad) {
         Bolk utenlandskeYtelserBolk = new Bolk();
 
-        UtenlandskeYtelser utenlandskeYtelser = soknad.utenlandskeYtelser;
+        UtenlandskeYtelser utenlandskeYtelser = soknad.getUtenlandskeYtelser();
         utenlandskeYtelserBolk.tittel = tekster.get(UTENLANDSKE_YTELSER_TITTEL.getNokkel());
         utenlandskeYtelserBolk.elementer = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class UtenlandskeYtelserMapping extends BolkMapping {
             utenlandskeYtelserBolk.elementer.add(nyttElementMedVerdisvar.apply(UTENLANDSKE_YTELSER_FORKLARING, utenlandskeYtelser.mottarYtelserFraUtlandForklaring));
         }
 
-        if ("JA".equalsIgnoreCase(soknad.familieforhold.borForeldreneSammenMedBarnet)) {
+        if ("JA".equalsIgnoreCase(soknad.getFamilieforhold().borForeldreneSammenMedBarnet)) {
             if ("NEI".equalsIgnoreCase(utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland)) {
                 utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND, SVAR_NEI));
             } else {

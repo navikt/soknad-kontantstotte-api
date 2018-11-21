@@ -17,7 +17,7 @@ public class FamilieforholdMapping extends BolkMapping {
     @Override
     public Bolk map(Soknad soknad) {
         Bolk bolk = new Bolk();
-        Familieforhold familieforhold = soknad.familieforhold;
+        Familieforhold familieforhold = soknad.getFamilieforhold();
         bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL.getNokkel());
         bolk.elementer = new ArrayList<>();
 

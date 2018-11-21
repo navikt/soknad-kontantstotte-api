@@ -52,11 +52,12 @@ public class TilknytningTilUtlandMappingTest {
 
         @Test
     public void tilknytningTilUtland_nar_foreldre_ikke_bor_sammen() {
-        Soknad soknad = hentTilknytningTilUtlandSoknad();
-
-        Familieforhold familieforhold = new Familieforhold();
-        familieforhold.borForeldreneSammenMedBarnet = "NEI";
-        soknad.familieforhold = familieforhold;
+        Soknad soknad = hentTilknytningTilUtlandSoknad()
+                .familieforhold(new Familieforhold(
+                        "NEI",
+                        null,
+                        null))
+                .build();
 
         Bolk bolk = new TilknytningTilUtlandMapping(tekster).map(soknad);
 
@@ -71,11 +72,12 @@ public class TilknytningTilUtlandMappingTest {
 
     @Test
     public void tilknytningTilUtland_nar_foreldre_bor_sammen() {
-        Soknad soknad = hentTilknytningTilUtlandSoknad();
-
-        Familieforhold familieforhold = new Familieforhold();
-        familieforhold.borForeldreneSammenMedBarnet = "JA";
-        soknad.familieforhold = familieforhold;
+        Soknad soknad = hentTilknytningTilUtlandSoknad()
+                .familieforhold(new Familieforhold(
+                        "JA",
+                        null,
+                        null))
+                .build();
 
         Bolk bolk = new TilknytningTilUtlandMapping(tekster).map(soknad);
 
@@ -89,15 +91,13 @@ public class TilknytningTilUtlandMappingTest {
                 );
     }
 
-    private Soknad hentTilknytningTilUtlandSoknad() {
-        Soknad soknad = new Soknad();
-        TilknytningTilUtland tilknytningTilUtland = new TilknytningTilUtland();
-        tilknytningTilUtland.boddEllerJobbetINorgeMinstFemAar = "JAIEOS";
-        tilknytningTilUtland.boddEllerJobbetINorgeMinstFemAarForklaring = tileggsSvar;
-        tilknytningTilUtland.annenForelderBoddEllerJobbetINorgeMinstFemAar = "NEI";
-        tilknytningTilUtland.annenForelderBoddEllerJobbetINorgeMinstFemAarForklaring = "";
-        soknad.tilknytningTilUtland = tilknytningTilUtland;
-
-        return soknad;
+    private Soknad.Builder hentTilknytningTilUtlandSoknad() {
+        return new Soknad.Builder()
+                .tilknytningTilUtland(new TilknytningTilUtland(
+                        "NEI",
+                        "",
+                        "JAIEOS",
+                        tileggsSvar
+                ));
     }
 }

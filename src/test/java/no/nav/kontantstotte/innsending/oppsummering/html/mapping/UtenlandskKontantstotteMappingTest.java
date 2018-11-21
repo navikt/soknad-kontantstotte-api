@@ -32,9 +32,9 @@ public class UtenlandskKontantstotteMappingTest {
 
     @Before
     public void setUp() {
-        soknad = new Soknad();
-        utenlandskKontantstotte = new UtenlandskKontantstotte();
-        soknad.utenlandskKontantstotte = utenlandskKontantstotte;
+        soknad = new Soknad.Builder()
+                .utenlandskKontantstotte(new UtenlandskKontantstotte(null, null))
+                .build();
 
         tekster = mockTekster(
                 tekst(UTENLANDSK_KONTANTSTOTTE_TITTEL, TITTEL),
@@ -46,8 +46,8 @@ public class UtenlandskKontantstotteMappingTest {
     }
 
     @Test
-    public void skal_ha_rett_tittel_og_undertitteø() {
-        Bolk bolk = mapping.map(soknad);
+    public void skal_ha_rett_tittel_og_undertitte() {
+        Bolk bolk = mapping.map(utenlandskKontantstotteSoknad(null, null));
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(TITTEL, null);
@@ -55,9 +55,7 @@ public class UtenlandskKontantstotteMappingTest {
 
     @Test
     public void mottar_ikke_utenlandsk_kontantstotte() {
-        utenlandskKontantstotte.mottarKontantstotteFraUtlandet = "NEI";
-
-        Bolk bolk = mapping.map(soknad);
+        Bolk bolk = mapping.map(utenlandskKontantstotteSoknad("NEI", null));
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -70,9 +68,7 @@ public class UtenlandskKontantstotteMappingTest {
     public void mottar_utenlandsk_kontantstotte() {
         String fritekstsvar = "Utfyllende info fra soker";
 
-        utenlandskKontantstotte.mottarKontantstotteFraUtlandet = "JA";
-        utenlandskKontantstotte.mottarKontantstotteFraUtlandetTilleggsinfo = fritekstsvar;
-        Bolk bolk = mapping.map(soknad);
+        Bolk bolk = mapping.map(utenlandskKontantstotteSoknad("JA", fritekstsvar));
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -80,6 +76,12 @@ public class UtenlandskKontantstotteMappingTest {
                 .contains(
                         tuple(SPORSMAL, JA),
                         tuple(FRITEKSTSPORSMAL, fritekstsvar));
+    }
+
+    private Soknad utenlandskKontantstotteSoknad(String mottarKontantstotteFraUtlandet, String fritekstsvar) {
+        return new Soknad.Builder()
+                .utenlandskKontantstotte(new UtenlandskKontantstotte(mottarKontantstotteFraUtlandet, fritekstsvar))
+                .build();
     }
 
 }

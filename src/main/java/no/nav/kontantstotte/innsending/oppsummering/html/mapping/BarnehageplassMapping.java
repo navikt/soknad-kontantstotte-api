@@ -21,7 +21,7 @@ public class BarnehageplassMapping extends BolkMapping {
     @Override
     public Bolk map(Soknad soknad) {
         Bolk barnehageplassBolk = new Bolk();
-        Barnehageplass barnehageplass = soknad.barnehageplass;
+        Barnehageplass barnehageplass = soknad.getBarnehageplass();
 
         barnehageplassBolk.tittel = tekster.get(BARNEHAGEPLASS_TITTEL.getNokkel());
         barnehageplassBolk.elementer = new ArrayList<>();
