@@ -54,7 +54,7 @@ public class TilknytningTilUtlandMappingTest {
     public void tilknytningTilUtland_nar_foreldre_ikke_bor_sammen() {
         Soknad soknad = hentTilknytningTilUtlandSoknad()
                 .familieforhold(new Familieforhold(
-                        "NEI",
+                        false,
                         null,
                         null))
                 .build();
@@ -74,7 +74,7 @@ public class TilknytningTilUtlandMappingTest {
     public void tilknytningTilUtland_nar_foreldre_bor_sammen() {
         Soknad soknad = hentTilknytningTilUtlandSoknad()
                 .familieforhold(new Familieforhold(
-                        "JA",
+                        true,
                         null,
                         null))
                 .build();

@@ -38,12 +38,12 @@ public class KravTilSokerMappingTest {
 
         Soknad soknad = new Soknad.Builder()
                 .kravTilSoker(new SokerKrav(
-                        "JA",
-                        "JA",
-                        "JA",
-                        "JA",
-                        "JA",
-                        "JA"))
+                        true,
+                        true,
+                        true,
+                        true,
+                        true,
+                        true))
                 .build();
 
         Bolk kravTilSokerBolk = new KravTilSokerMapping(tekster).map(soknad);

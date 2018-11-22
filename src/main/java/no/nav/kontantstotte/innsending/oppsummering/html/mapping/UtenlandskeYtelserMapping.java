@@ -23,19 +23,19 @@ public class UtenlandskeYtelserMapping extends BolkMapping {
         utenlandskeYtelserBolk.tittel = tekster.get(UTENLANDSKE_YTELSER_TITTEL.getNokkel());
         utenlandskeYtelserBolk.elementer = new ArrayList<>();
 
-        if ("NEI".equalsIgnoreCase(utenlandskeYtelser.mottarYtelserFraUtland)) {
-            utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND, SVAR_NEI));
-        } else {
+        if (utenlandskeYtelser.mottarYtelserFraUtland) {
             utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND, SVAR_JA));
             utenlandskeYtelserBolk.elementer.add(nyttElementMedVerdisvar.apply(UTENLANDSKE_YTELSER_FORKLARING, utenlandskeYtelser.mottarYtelserFraUtlandForklaring));
+        } else {
+            utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND, SVAR_NEI));
         }
 
-        if ("JA".equalsIgnoreCase(soknad.getFamilieforhold().borForeldreneSammenMedBarnet)) {
-            if ("NEI".equalsIgnoreCase(utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland)) {
-                utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND, SVAR_NEI));
-            } else {
+        if (soknad.getFamilieforhold().borForeldreneSammenMedBarnet) {
+            if (utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland) {
                 utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND, SVAR_JA));
                 utenlandskeYtelserBolk.elementer.add(nyttElementMedVerdisvar.apply(UTENLANDSKE_YTELSER_FORKLARING, utenlandskeYtelser.mottarAnnenForelderYtelserFraUtlandForklaring));
+            } else {
+                utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND, SVAR_NEI));
             }
         }
 

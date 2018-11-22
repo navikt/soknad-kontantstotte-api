@@ -10,7 +10,7 @@ public class SoknadTest {
     @Test
     public void at_soknad_er_gyldig_ved_bekreftelse() {
         Soknad soknad = new Soknad.Builder()
-                .oppsummering(new Oppsummering("JA"))
+                .oppsummering(new Oppsummering(true))
                 .build();
         assertThat(soknad.erGyldig()).isTrue();
     }

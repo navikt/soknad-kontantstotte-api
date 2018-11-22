@@ -1,11 +1,11 @@
 package no.nav.kontantstotte.innsending.steg;
 
 public class UtenlandskKontantstotte {
-    public String mottarKontantstotteFraUtlandet; 
+    public boolean mottarKontantstotteFraUtlandet;
     public String mottarKontantstotteFraUtlandetTilleggsinfo;
 
     public UtenlandskKontantstotte(
-            String mottarKontantstotteFraUtlandet,
+            boolean mottarKontantstotteFraUtlandet,
             String mottarKontantstotteFraUtlandetTilleggsinfo) {
         this.mottarKontantstotteFraUtlandet = mottarKontantstotteFraUtlandet;
         this.mottarKontantstotteFraUtlandetTilleggsinfo = mottarKontantstotteFraUtlandetTilleggsinfo;

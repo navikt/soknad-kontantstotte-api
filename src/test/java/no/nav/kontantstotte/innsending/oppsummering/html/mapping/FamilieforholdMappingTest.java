@@ -31,7 +31,7 @@ public class FamilieforholdMappingTest {
                 tekst(SVAR_NEI, NEI));
 
         Soknad soknad = new Soknad.Builder()
-                .familieforhold(new Familieforhold("NEI", null, null))
+                .familieforhold(new Familieforhold(false, null, null))
                 .build();
 
         Bolk bolk = new FamilieforholdMapping(tekster).map(soknad);
@@ -58,7 +58,7 @@ public class FamilieforholdMappingTest {
                 tekst(FAMILIEFORHOLD_FNR_ANNEN_FORELDER, sporsmal_fnr),
                 tekst(SVAR_JA, JA));
 
-        Familieforhold familieforhold = new Familieforhold("JA", "NN", "XXXXXX");
+        Familieforhold familieforhold = new Familieforhold(true, "NN", "XXXXXX");
 
         Soknad soknad = new Soknad.Builder().familieforhold(familieforhold).build();
 

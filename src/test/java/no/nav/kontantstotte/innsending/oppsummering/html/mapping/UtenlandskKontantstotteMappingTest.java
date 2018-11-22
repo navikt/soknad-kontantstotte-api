@@ -33,7 +33,7 @@ public class UtenlandskKontantstotteMappingTest {
     @Before
     public void setUp() {
         soknad = new Soknad.Builder()
-                .utenlandskKontantstotte(new UtenlandskKontantstotte(null, null))
+                .utenlandskKontantstotte(new UtenlandskKontantstotte(false, null))
                 .build();
 
         tekster = mockTekster(
@@ -47,7 +47,7 @@ public class UtenlandskKontantstotteMappingTest {
 
     @Test
     public void skal_ha_rett_tittel_og_undertitte() {
-        Bolk bolk = mapping.map(utenlandskKontantstotteSoknad(null, null));
+        Bolk bolk = mapping.map(utenlandskKontantstotteSoknad(false, null));
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(TITTEL, null);
@@ -55,7 +55,7 @@ public class UtenlandskKontantstotteMappingTest {
 
     @Test
     public void mottar_ikke_utenlandsk_kontantstotte() {
-        Bolk bolk = mapping.map(utenlandskKontantstotteSoknad("NEI", null));
+        Bolk bolk = mapping.map(utenlandskKontantstotteSoknad(false, null));
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -68,7 +68,7 @@ public class UtenlandskKontantstotteMappingTest {
     public void mottar_utenlandsk_kontantstotte() {
         String fritekstsvar = "Utfyllende info fra soker";
 
-        Bolk bolk = mapping.map(utenlandskKontantstotteSoknad("JA", fritekstsvar));
+        Bolk bolk = mapping.map(utenlandskKontantstotteSoknad(true, fritekstsvar));
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -78,7 +78,7 @@ public class UtenlandskKontantstotteMappingTest {
                         tuple(FRITEKSTSPORSMAL, fritekstsvar));
     }
 
-    private Soknad utenlandskKontantstotteSoknad(String mottarKontantstotteFraUtlandet, String fritekstsvar) {
+    private Soknad utenlandskKontantstotteSoknad(boolean mottarKontantstotteFraUtlandet, String fritekstsvar) {
         return new Soknad.Builder()
                 .utenlandskKontantstotte(new UtenlandskKontantstotte(mottarKontantstotteFraUtlandet, fritekstsvar))
                 .build();

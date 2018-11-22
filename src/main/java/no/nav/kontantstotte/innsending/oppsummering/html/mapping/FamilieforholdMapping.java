@@ -21,10 +21,10 @@ public class FamilieforholdMapping extends BolkMapping {
         bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL.getNokkel());
         bolk.elementer = new ArrayList<>();
 
-        if("NEI".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
+        if(!familieforhold.borForeldreneSammenMedBarnet){
             bolk.elementer.add(nyttElementMedTekstsvar.apply(FAMILIEFORHOLD_BOR_SAMMEN, SVAR_NEI));
         }
-        if("JA".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){
+        if(familieforhold.borForeldreneSammenMedBarnet){
             bolk.elementer.add(nyttElementMedTekstsvar.apply(FAMILIEFORHOLD_BOR_SAMMEN, SVAR_JA));
             bolk.elementer.add(nyttElementMedVerdisvar.apply(FAMILIEFORHOLD_NAVN_ANNEN_FORELDER, familieforhold.annenForelderNavn));
             bolk.elementer.add(nyttElementMedVerdisvar.apply(FAMILIEFORHOLD_FNR_ANNEN_FORELDER, familieforhold.annenForelderFodselsnummer));

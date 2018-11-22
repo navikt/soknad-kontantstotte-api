@@ -57,7 +57,7 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
                 break;
         }
 
-        if ("JA".equalsIgnoreCase(soknad.getFamilieforhold().borForeldreneSammenMedBarnet)) {
+        if (soknad.getFamilieforhold().borForeldreneSammenMedBarnet) {
 
             switch(annenForelderBoddEllerJobbetINorgeMinstFemAar){
                 case "JAINORGE":

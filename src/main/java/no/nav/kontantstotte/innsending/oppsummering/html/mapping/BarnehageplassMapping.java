@@ -26,11 +26,7 @@ public class BarnehageplassMapping extends BolkMapping {
         barnehageplassBolk.tittel = tekster.get(BARNEHAGEPLASS_TITTEL.getNokkel());
         barnehageplassBolk.elementer = new ArrayList<>();
 
-        if("NEI".equalsIgnoreCase(barnehageplass.harBarnehageplass)){
-            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS, SVAR_NEI));
-        } else {
-            barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS, SVAR_JA));
-        }
+        barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS, barnehageplass.harBarnehageplass ? SVAR_JA : SVAR_NEI));
 
         if (barnehageplass.barnBarnehageplassStatus != null) {
             barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(BARN_BARNEHAGEPLASS_STATUS, barnehageplass.barnBarnehageplassStatus.getTekstNokkel()));

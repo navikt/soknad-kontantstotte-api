@@ -1,8 +1,12 @@
 package no.nav.kontantstotte.api.rest;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import no.nav.kontantstotte.api.rest.dto.SoknadDto;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
@@ -15,7 +19,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
-import org.mockito.Answers;
 import org.mockito.ArgumentCaptor;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.context.support.StaticApplicationContext;
@@ -24,10 +27,11 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
+import java.io.IOException;
+
 import static java.time.Instant.now;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
-import static javax.ws.rs.core.MediaType.MEDIA_TYPE_WILDCARD;
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.OK;
@@ -48,7 +52,7 @@ public class InnsendingResourceTest extends JerseyTest {
     @Test
     public void at_innsending_av_soknad_er_ok_med_bekreftelse() throws JsonProcessingException {
         SoknadDto soknadMedBekreftelse = new SoknadDto();
-        soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+        soknadMedBekreftelse.oppsummering.bekreftelse = true;
 
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
                 .then(returnsFirstArg());
@@ -66,7 +70,7 @@ public class InnsendingResourceTest extends JerseyTest {
     @Test
     public void at_soknad_markeres_med_innsendingstidspunkt() throws JsonProcessingException {
         SoknadDto soknadMedBekreftelse = new SoknadDto();
-        soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+        soknadMedBekreftelse.oppsummering.bekreftelse = true;
 
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenAnswer(returnsFirstArg());
@@ -99,6 +103,15 @@ public class InnsendingResourceTest extends JerseyTest {
 
     private MultiPart multipart(SoknadDto soknad) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
+        SimpleModule booleanAsJaNeiModule = new SimpleModule("BooleanAsJaNei", new Version(1, 0, 0, null, null, null));
+        booleanAsJaNeiModule.addSerializer(boolean.class, new JsonSerializer<Boolean>() {
+            @Override
+            public void serialize(Boolean value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+                gen.writeString(value ? "JA" : "NEI");
+            }
+        });
+        objectMapper.registerModule(booleanAsJaNeiModule);
+
 
         return new FormDataMultiPart()
                 .field("soknad", objectMapper.writeValueAsString(soknad), APPLICATION_JSON_TYPE)

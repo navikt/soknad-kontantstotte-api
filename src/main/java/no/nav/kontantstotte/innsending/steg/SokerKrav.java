@@ -1,19 +1,19 @@
 package no.nav.kontantstotte.innsending.steg;
 
 public class SokerKrav {
-    public String barnIkkeHjemme;
-    public String boddEllerJobbetINorgeSisteFemAar;
-    public String borSammenMedBarnet;
-    public String ikkeAvtaltDeltBosted;
-    public String norskStatsborger;
-    public String skalBoMedBarnetINorgeNesteTolvMaaneder;
+    public boolean barnIkkeHjemme;
+    public boolean boddEllerJobbetINorgeSisteFemAar;
+    public boolean borSammenMedBarnet;
+    public boolean ikkeAvtaltDeltBosted;
+    public boolean norskStatsborger;
+    public boolean skalBoMedBarnetINorgeNesteTolvMaaneder;
 
-    public SokerKrav(String barnIkkeHjemme,
-                     String boddEllerJobbetINorgeSisteFemAar,
-                     String borSammenMedBarnet,
-                     String ikkeAvtaltDeltBosted,
-                     String norskStatsborger,
-                     String skalBoMedBarnetINorgeNesteTolvMaaneder) {
+    public SokerKrav(boolean barnIkkeHjemme,
+                     boolean boddEllerJobbetINorgeSisteFemAar,
+                     boolean borSammenMedBarnet,
+                     boolean ikkeAvtaltDeltBosted,
+                     boolean norskStatsborger,
+                     boolean skalBoMedBarnetINorgeNesteTolvMaaneder) {
         this.barnIkkeHjemme = barnIkkeHjemme;
         this.boddEllerJobbetINorgeSisteFemAar = boddEllerJobbetINorgeSisteFemAar;
         this.borSammenMedBarnet = borSammenMedBarnet;

@@ -2,6 +2,7 @@ package no.nav.kontantstotte.api.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SoknadDto {
@@ -35,7 +36,8 @@ public class SoknadDto {
     }
 
     public static class Barnehageplass {
-        public String harBarnehageplass;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean harBarnehageplass;
         public BarnehageplassVerdier barnBarnehageplassStatus;
         public String harBarnehageplassAntallTimer;
         public String harBarnehageplassDato;
@@ -60,7 +62,8 @@ public class SoknadDto {
     }
 
     public static class Familieforhold {
-        public String borForeldreneSammenMedBarnet;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean borForeldreneSammenMedBarnet;
         public String annenForelderNavn;
         public String annenForelderFodselsnummer;
     }
@@ -73,45 +76,50 @@ public class SoknadDto {
     }
 
     public static class UtenlandskeYtelser {
-        public String mottarYtelserFraUtland;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean mottarYtelserFraUtland;
         public String mottarYtelserFraUtlandForklaring;
-        public String mottarAnnenForelderYtelserFraUtland;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean mottarAnnenForelderYtelserFraUtland;
         public String mottarAnnenForelderYtelserFraUtlandForklaring;
     }
 
     public static class UtenlandskKontantstotte {
-        public String mottarKontantstotteFraUtlandet;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean mottarKontantstotteFraUtlandet;
         public String mottarKontantstotteFraUtlandetTilleggsinfo;
     }
 
     public static class SokerKrav {
-        public String barnIkkeHjemme;
-        public String boddEllerJobbetINorgeSisteFemAar;
-        public String borSammenMedBarnet;
-        public String ikkeAvtaltDeltBosted;
-        public String norskStatsborger;
-        public String skalBoMedBarnetINorgeNesteTolvMaaneder;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean barnIkkeHjemme;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean boddEllerJobbetINorgeSisteFemAar;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean borSammenMedBarnet;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean ikkeAvtaltDeltBosted;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean norskStatsborger;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean skalBoMedBarnetINorgeNesteTolvMaaneder;
     }
 
     public static class Person {
         public String fnr;
-
-        public Person() {
-        }
-
-        public Person(String fnr) {
-            this.fnr = fnr;
-        }
     }
 
     public static class Oppsummering {
-        public String bekreftelse;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean bekreftelse;
     }
 
     public static class ArbeidIUtlandet {
-        public String arbeiderIUtlandetEllerKontinentalsokkel;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean arbeiderIUtlandetEllerKontinentalsokkel;
         public String arbeiderIUtlandetEllerKontinentalsokkelForklaring;
-        public String arbeiderAnnenForelderIUtlandet;
+        @JsonDeserialize(using = JaNeiBooleanDeserializer.class)
+        public boolean arbeiderAnnenForelderIUtlandet;
         public String arbeiderAnnenForelderIUtlandetForklaring;
     }
 }

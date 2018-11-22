@@ -1,12 +1,12 @@
 package no.nav.kontantstotte.innsending.steg;
 
 public class Familieforhold {
-    public String borForeldreneSammenMedBarnet;
+    public boolean borForeldreneSammenMedBarnet;
     public String annenForelderNavn;
     public String annenForelderFodselsnummer;
 
     public Familieforhold(
-            String borForeldreneSammenMedBarnet,
+            boolean borForeldreneSammenMedBarnet,
             String annenForelderNavn,
             String annenForelderFodselsnummer) {
         this.borForeldreneSammenMedBarnet = borForeldreneSammenMedBarnet;

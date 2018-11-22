@@ -37,7 +37,7 @@ public class ArbeidIUtlandetMappingTest {
     @Test
     public void arbeidIUtlandet_nar_foreldre_ikke_bor_sammen() {
 
-        Familieforhold familieforhold = new Familieforhold("NEI", null, null);
+        Familieforhold familieforhold = new Familieforhold(false, null, null);
         Soknad soknad = hentArbeidIUtlandetSoknad().familieforhold(familieforhold).build();
 
 
@@ -55,7 +55,7 @@ public class ArbeidIUtlandetMappingTest {
     @Test
     public void arbeidIUtlandet_nar_foreldre_bor_sammen() {
 
-        Familieforhold familieforhold = new Familieforhold("JA", null, null);
+        Familieforhold familieforhold = new Familieforhold(true, null, null);
         Soknad soknad = hentArbeidIUtlandetSoknad().familieforhold(familieforhold).build();
 
         Bolk bolk = new ArbeidIUtlandetMapping(tekster).map(soknad);
@@ -73,9 +73,9 @@ public class ArbeidIUtlandetMappingTest {
     private Soknad.Builder hentArbeidIUtlandetSoknad() {
         return new Soknad.Builder()
                 .arbeidIUtlandet(new ArbeidIUtlandet(
-                        "JA",
+                        true,
                         tileggsSvar,
-                        "NEI",
+                        false,
                         ""
                 ));
     }

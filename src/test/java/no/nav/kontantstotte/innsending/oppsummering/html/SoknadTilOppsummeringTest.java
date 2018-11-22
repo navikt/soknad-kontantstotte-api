@@ -76,15 +76,15 @@ public class SoknadTilOppsummeringTest {
     private Soknad tomSoknad() {
         return new Soknad.Builder()
                 .person(new Person())
-                .kravTilSoker(new SokerKrav(null, null, null, null, null, null))
-                .familieforhold(new Familieforhold(null, null, null))
+                .kravTilSoker(new SokerKrav(false, false, false, false, false, false))
+                .familieforhold(new Familieforhold(false, null, null))
                 .barnehageplass(new Barnehageplass())
-                .arbeidIUtlandet(new ArbeidIUtlandet(null, null, null, null))
-                .utenlandskKontantstotte(new UtenlandskKontantstotte(null, null))
+                .arbeidIUtlandet(new ArbeidIUtlandet(false, null, false, null))
+                .utenlandskKontantstotte(new UtenlandskKontantstotte(false, null))
                 .mineBarn(new Barn(null, null))
                 .tilknytningTilUtland(new TilknytningTilUtland(null, null, null, null))
-                .utenlandskeYtelser(new UtenlandskeYtelser(null, null, null, null))
-                .oppsummering(new Oppsummering(null))
+                .utenlandskeYtelser(new UtenlandskeYtelser(false, null, false, null))
+                .oppsummering(new Oppsummering(false))
                 .sprak("")
                 .build();
     }

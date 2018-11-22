@@ -5,7 +5,7 @@ import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class Barnehageplass {
-    public String harBarnehageplass;
+    public boolean harBarnehageplass;
     public BarnehageplassVerdier barnBarnehageplassStatus;
     public String harBarnehageplassAntallTimer;
     public String harBarnehageplassDato;

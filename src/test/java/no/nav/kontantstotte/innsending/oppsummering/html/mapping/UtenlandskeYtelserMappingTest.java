@@ -35,7 +35,7 @@ public class UtenlandskeYtelserMappingTest {
     public void utenlandskeYtelser_nar_foreldre_ikke_bor_sammen() {
         Soknad soknad = hentUtenlandskeYtelserSoknad()
                 .familieforhold(new Familieforhold(
-                        "NEI",
+                        false,
                         null,
                         null))
                 .build();
@@ -55,7 +55,7 @@ public class UtenlandskeYtelserMappingTest {
     public void utenlandskeYtelser_nar_foreldre_bor_sammen() {
         Soknad soknad = hentUtenlandskeYtelserSoknad()
                 .familieforhold(new Familieforhold(
-                        "JA",
+                        true,
                         null,
                         null))
                 .build();
@@ -75,9 +75,9 @@ public class UtenlandskeYtelserMappingTest {
     private Soknad.Builder hentUtenlandskeYtelserSoknad() {
         return new Soknad.Builder()
                 .utenlandskeYtelser(new UtenlandskeYtelser(
-                "JA",
+                true,
                 tileggsSvar,
-                "NEI",
+                false,
                 ""
         ));
     }

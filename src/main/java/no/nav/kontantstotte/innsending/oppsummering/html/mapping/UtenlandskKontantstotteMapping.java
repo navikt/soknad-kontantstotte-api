@@ -21,10 +21,11 @@ public class UtenlandskKontantstotteMapping extends BolkMapping {
         Bolk bolk = new Bolk();
         bolk.tittel = tekster.get(UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel());
         bolk.elementer = new ArrayList<>();
-        if("NEI".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)){
+        if(!utenlandskKontantstotte.mottarKontantstotteFraUtlandet){
             bolk.elementer.add(Element.nyttSvar(tekster.get(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
                     tekster.get(SVAR_NEI.getNokkel())));
-        }if("JA".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)){
+        }
+        if(utenlandskKontantstotte.mottarKontantstotteFraUtlandet){
             bolk.elementer.add(Element.nyttSvar(tekster.get(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
                     tekster.get(SVAR_JA.getNokkel())));
             bolk.elementer.add(Element.nyttSvar(tekster.get(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO.getNokkel()),

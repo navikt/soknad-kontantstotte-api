@@ -108,7 +108,7 @@ public class BarnehageplassMappingTest {
 
     @Test
     public void skal_ha_rett_tekstnokler_naar_barnet_ikke_gaar_i_barnehage() {
-        barnehageplass.harBarnehageplass = "NEI";
+        barnehageplass.harBarnehageplass = false;
         barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.garIkkeIBarnehage;
 
         Bolk bolk = barnehageplassMapping.map(soknad);

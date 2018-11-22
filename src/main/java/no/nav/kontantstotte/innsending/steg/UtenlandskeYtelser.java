@@ -1,15 +1,15 @@
 package no.nav.kontantstotte.innsending.steg;
 
 public class UtenlandskeYtelser {
-    public String mottarYtelserFraUtland;
+    public boolean mottarYtelserFraUtland;
     public String mottarYtelserFraUtlandForklaring;
-    public String mottarAnnenForelderYtelserFraUtland;
+    public boolean mottarAnnenForelderYtelserFraUtland;
     public String mottarAnnenForelderYtelserFraUtlandForklaring;
 
     public UtenlandskeYtelser(
-            String mottarYtelserFraUtland,
+            boolean mottarYtelserFraUtland,
             String mottarYtelserFraUtlandForklaring,
-            String mottarAnnenForelderYtelserFraUtland,
+            boolean mottarAnnenForelderYtelserFraUtland,
             String mottarAnnenForelderYtelserFraUtlandForklaring) {
         this.mottarYtelserFraUtland = mottarYtelserFraUtland;
         this.mottarYtelserFraUtlandForklaring = mottarYtelserFraUtlandForklaring;
