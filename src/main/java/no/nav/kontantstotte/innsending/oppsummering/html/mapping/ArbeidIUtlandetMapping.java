@@ -4,7 +4,6 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.steg.ArbeidIUtlandet;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
@@ -16,28 +15,27 @@ public class ArbeidIUtlandetMapping extends BolkMapping {
 
     @Override
     public Bolk map(Soknad soknad) {
-        Bolk arbeidIUtlandetBolk = new Bolk();
+        Bolk bolk = new Bolk()
+                .medTittel(tekst(ARBEID_I_UTLANDET_TITTEL));
 
         ArbeidIUtlandet arbeidIUtlandet = soknad.getArbeidIUtlandet();
-        arbeidIUtlandetBolk.tittel = tekster.get(ARBEID_I_UTLANDET_TITTEL.getNokkel());
-        arbeidIUtlandetBolk.elementer = new ArrayList<>();
 
         if (arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkel) {
-            arbeidIUtlandetBolk.elementer.add(nyttElementMedTekstsvar.apply(ARBEID_I_UTLANDET_ELLER_KONTINENTALSOKKEL, SVAR_JA));
-            arbeidIUtlandetBolk.elementer.add(nyttElementMedVerdisvar.apply(ARBEID_I_UTLANDET_FORKLARING, arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkelForklaring));
+            bolk.add(svar(ARBEID_I_UTLANDET_ELLER_KONTINENTALSOKKEL, SVAR_JA));
+            bolk.add(svar(ARBEID_I_UTLANDET_FORKLARING, arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkelForklaring));
         } else {
-            arbeidIUtlandetBolk.elementer.add(nyttElementMedTekstsvar.apply(ARBEID_I_UTLANDET_ELLER_KONTINENTALSOKKEL, SVAR_NEI));
+            bolk.add(svar(ARBEID_I_UTLANDET_ELLER_KONTINENTALSOKKEL, SVAR_NEI));
         }
 
         if (soknad.getFamilieforhold().borForeldreneSammenMedBarnet) {
             if (arbeidIUtlandet.arbeiderAnnenForelderIUtlandet) {
-                arbeidIUtlandetBolk.elementer.add(nyttElementMedTekstsvar.apply(ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET, SVAR_JA));
-                arbeidIUtlandetBolk.elementer.add(nyttElementMedVerdisvar.apply(ARBEID_I_UTLANDET_FORKLARING, arbeidIUtlandet.arbeiderAnnenForelderIUtlandetForklaring));
+                bolk.add(svar(ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET, SVAR_JA));
+                bolk.add(svar(ARBEID_I_UTLANDET_FORKLARING, arbeidIUtlandet.arbeiderAnnenForelderIUtlandetForklaring));
             } else {
-                arbeidIUtlandetBolk.elementer.add(nyttElementMedTekstsvar.apply(ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET, SVAR_NEI));
+                bolk.add(svar(ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET, SVAR_NEI));
             }
         }
 
-        return arbeidIUtlandetBolk;
+        return bolk;
     }
 }

@@ -2,6 +2,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bolk {
@@ -26,5 +27,24 @@ public class Bolk {
                 ", undertittel='" + undertittel + '\'' +
                 ", antall elementer=" + elementer.size() +
                 '}';
+    }
+
+    public Bolk add(Element element) {
+        if(elementer == null) {
+            elementer = new ArrayList<>();
+        }
+
+        elementer.add(element);
+        return this;
+    }
+
+    public Bolk medTittel(String tittel) {
+        this.tittel = tittel;
+        return this;
+    }
+
+    public Bolk medUndertittel(String undertittel) {
+        this.undertittel = undertittel;
+        return this;
     }
 }

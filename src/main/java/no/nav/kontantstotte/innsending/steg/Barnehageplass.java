@@ -7,17 +7,17 @@ import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnok
 public class Barnehageplass {
     public boolean harBarnehageplass;
     public BarnehageplassVerdier barnBarnehageplassStatus;
-    public String harBarnehageplassAntallTimer;
+    public Integer harBarnehageplassAntallTimer;
     public String harBarnehageplassDato;
     public String harBarnehageplassKommune;
     public String harSluttetIBarnehageKommune;
-    public String harSluttetIBarnehageAntallTimer;
+    public Integer harSluttetIBarnehageAntallTimer;
     public String harSluttetIBarnehageDato;
     public String skalBegynneIBarnehageKommune;
-    public String skalBegynneIBarnehageAntallTimer;
+    public Integer skalBegynneIBarnehageAntallTimer;
     public String skalBegynneIBarnehageDato;
     public String skalSlutteIBarnehageKommune;
-    public String skalSlutteIBarnehageAntallTimer;
+    public Integer skalSlutteIBarnehageAntallTimer;
     public String skalSlutteIBarnehageDato;
 
     public enum BarnehageplassVerdier {

@@ -70,7 +70,7 @@ public class BarnehageplassMappingTest {
         fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
 
         barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.harBarnehageplass;
-        barnehageplass.harBarnehageplassAntallTimer = "34";
+        barnehageplass.harBarnehageplassAntallTimer = 34;
 
         List<Element> elementer = barnehageplassMapping.map(soknad).elementer;
 
@@ -86,7 +86,7 @@ public class BarnehageplassMappingTest {
         fakeUnleash.disable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
 
         barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.harBarnehageplass;
-        barnehageplass.harBarnehageplassAntallTimer = "34";
+        barnehageplass.harBarnehageplassAntallTimer = 34;
 
         List<Element> elementer = barnehageplassMapping.map(soknad).elementer;
 

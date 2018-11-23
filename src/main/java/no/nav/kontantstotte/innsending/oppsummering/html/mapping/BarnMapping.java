@@ -4,7 +4,6 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.steg.Barn;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
@@ -17,14 +16,13 @@ public class BarnMapping extends BolkMapping {
 
     @Override
     public Bolk map(Soknad soknad) {
-        Bolk barneBolk = new Bolk();
         Barn barn = soknad.getMineBarn();
 
-        barneBolk.tittel = tekster.get(BARN_TITTEL.getNokkel());
-        barneBolk.undertittel = tekster.get(BARN_UNDERTITTEL.getNokkel());
-        barneBolk.elementer = new ArrayList<>();
-        barneBolk.elementer.add(nyttElementMedVerdisvar.apply(BARN_NAVN, barn.navn));
-        barneBolk.elementer.add(nyttElementMedVerdisvar.apply(BARN_FODSELSDATO, barn.fodselsdato));
-        return barneBolk;
+        return new Bolk()
+                .medTittel(tekst(BARN_TITTEL))
+                .medUndertittel(tekst(BARN_UNDERTITTEL))
+                .add(svar(BARN_NAVN, barn.navn))
+                .add(svar(BARN_FODSELSDATO, barn.fodselsdato));
+
     }
 }
