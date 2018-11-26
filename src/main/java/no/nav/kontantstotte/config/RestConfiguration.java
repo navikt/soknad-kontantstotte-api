@@ -20,6 +20,7 @@ public class RestConfiguration extends ResourceConfig {
         // Resources
         register(TeksterResource.class);
         register(SokerResource.class);
+        register(BarnResource.class);
         register(InnsendingResource.class);
         register(InnloggingStatusResource.class);
         // ExceptionMappers
