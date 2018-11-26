@@ -1,8 +1,8 @@
-package no.nav.kontantstotte.person.service.rest;
+package no.nav.kontantstotte.innsyn.service.rest;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
-import no.nav.kontantstotte.person.domain.PersonService;
+import no.nav.kontantstotte.innsyn.domain.IInnsynClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
@@ -12,31 +12,31 @@ import org.springframework.core.env.Environment;
 
 import java.util.Arrays;
 
-class PersonRestHealthIndicator implements HealthIndicator, EnvironmentAware {
+class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PersonRestHealthIndicator.class);
+    private static final Logger LOG = LoggerFactory.getLogger(InnsynRestHealthIndicator.class);
 
-    private final Counter tpsPersonSuccess = Metrics.counter("tps.person.health", "response", "success");
-    private final Counter tpsPersonFailure = Metrics.counter("tps.person.health", "response", "failure");
-    private final PersonService personService;
+    private final Counter tpsPersonSuccess = Metrics.counter("tps.innsyn.health", "response", "success");
+    private final Counter tpsPersonFailure = Metrics.counter("tps.innsyn.health", "response", "failure");
+    private final IInnsynClient innsynClient;
 
     private Environment env;
 
-    PersonRestHealthIndicator(PersonService personService) {
-        this.personService = personService;
+    InnsynRestHealthIndicator(IInnsynClient innsynClient) {
+        this.innsynClient = innsynClient;
     }
 
     @Override
     public Health health() {
 
-        LOG.info("Pinging TPS person service");
+        LOG.info("Pinging TPS innsyn service");
         try {
-            personService.ping();
+            innsynClient.ping();
             tpsPersonSuccess.increment();
             return up();
         } catch (Exception e) {
             tpsPersonFailure.increment();
-            LOG.warn("Could not verify health of TPS person service ", e);
+            LOG.warn("Could not verify health of TPS innsyn service ", e);
             return isPreprod() ? downWithDetails(e) : up();
         }
     }
@@ -46,7 +46,7 @@ class PersonRestHealthIndicator implements HealthIndicator, EnvironmentAware {
     }
 
     private Health downWithDetails(Exception e) {
-        return Health.down().withDetail("TPS person service", personService.toString()).withException(e).build();
+        return Health.down().withDetail("TPS innsyn service", innsynClient.toString()).withException(e).build();
     }
 
     private boolean isPreprod() {
@@ -62,12 +62,12 @@ class PersonRestHealthIndicator implements HealthIndicator, EnvironmentAware {
     }
 
     private Health upWithDetails() {
-        return Health.up().withDetail("TPS person service", personService.toString()).build();
+        return Health.up().withDetail("TPS innsyn service", innsynClient.toString()).build();
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " [pinger=" + personService.toString() + ", activeProfiles "
+        return getClass().getSimpleName() + " [pinger=" + innsynClient.toString() + ", activeProfiles "
                 + Arrays.toString(env.getActiveProfiles()) + "]";
     }
 

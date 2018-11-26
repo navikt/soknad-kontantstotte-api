@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.api.rest.exceptionmapper;
 
-import no.nav.kontantstotte.person.domain.SkjermetAdresseException;
+import no.nav.kontantstotte.innsyn.domain.SkjermetAdresseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

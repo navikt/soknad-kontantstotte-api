@@ -3,10 +3,10 @@ package no.nav.kontantstotte.api.rest;
 import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.config.ApplicationConfig;
-import no.nav.kontantstotte.person.domain.Person;
-import no.nav.kontantstotte.person.domain.PersonOppslagException;
-import no.nav.kontantstotte.person.domain.PersonService;
-import no.nav.kontantstotte.person.domain.SkjermetAdresseException;
+import no.nav.kontantstotte.innsyn.domain.IInnsynService;
+import no.nav.kontantstotte.innsyn.domain.Person;
+import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
+import no.nav.kontantstotte.innsyn.domain.SkjermetAdresseException;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
@@ -44,18 +44,20 @@ public class SokerResourceTest {
     private String contextPath;
 
     @Inject
-    private PersonService personServiceMock;
+    private IInnsynService innsynServiceMock;
 
     @After
     public void tearDown() {
-        reset(personServiceMock);
+        reset(innsynServiceMock);
     }
 
     @Test
     public void at_uthenting_av_sokerinformasjon_er_korrekt() {
-        when(personServiceMock.hentPersonInfo(any())).thenReturn(new Person.Builder().build());
+        when(innsynServiceMock.hentPersonInfo(any())).thenReturn(new Person.Builder().build());
 
         Response response = kallEndepunkt();
+        System.out.println(response);
+        System.out.println(response.getEntity());
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
         SokerDto soker = response.readEntity(SokerDto.class);
@@ -64,28 +66,28 @@ public class SokerResourceTest {
 
     @Test
     public void at_tps_feil_gir_500() {
-        when(personServiceMock.hentPersonInfo(any())).thenThrow(new PersonOppslagException("Feil i tps"));
+        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
     }
 
     @Test
     public void at_skjermet_adresse_gir_403() {
-        when(personServiceMock.hentPersonInfo(any())).thenThrow(new SkjermetAdresseException("Skjermet adresse"));
+        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new SkjermetAdresseException("Skjermet adresse"));
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.FORBIDDEN.getStatusCode());
     }
 
     @Test
     public void at_tps_feil_legger_pa_cors_filter() {
-        when(personServiceMock.hentPersonInfo(any())).thenThrow(new PersonOppslagException("Feil i tps"));
+        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
         Response response = kallEndepunkt();
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
     }
 
     @Test
     public void at_skjermet_adresse_feil_legger_pa_cors_filter() {
-        when(personServiceMock.hentPersonInfo(any())).thenThrow(new SkjermetAdresseException("Skjermet adresse"));
+        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new SkjermetAdresseException("Skjermet adresse"));
         Response response = kallEndepunkt();
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
     }
@@ -102,6 +104,5 @@ public class SokerResourceTest {
                 .header("Origin", "https://soknad-kontantstotte-t.nav.no")
                 .get();
     }
-
 }
 
