@@ -42,11 +42,11 @@
                         </goals>
                         <configuration>
 
-                            <inputSpec>${project.basedir}/src/main/resources/tps/person-swagger.json</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/tps/innsyn-swagger.json</inputSpec>
                             <language>jaxrs</language>
                             <generateApis>false</generateApis>
 
-                            <modelPackage>no.nav.tps.person</modelPackage>
+                            <modelPackage>no.nav.tps.innsyn</modelPackage>
                             <modelNameSuffix>Dto</modelNameSuffix>
 
                             <generateSupportingFiles>false</generateSupportingFiles>
@@ -54,7 +54,7 @@
                             <configOptions>
                                 <java8>true</java8>
                                 <useBeanValidation>false</useBeanValidation>
-                                <sourceFolder>person</sourceFolder>
+                                <sourceFolder>innsyn</sourceFolder>
                             </configOptions>
 
                         </configuration>

@@ -49,9 +49,7 @@ public class BarnResource {
                             barn.getFodselsdato()))
                     .collect(Collectors.toList());
         } else {
-            return new ArrayList<BarnDto>() {{
-                add(new BarnDto(null, null, null));
-            }};
+            return new ArrayList<>();
         }
     }
 

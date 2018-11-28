@@ -16,8 +16,8 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
 
     private static final Logger LOG = LoggerFactory.getLogger(InnsynRestHealthIndicator.class);
 
-    private final Counter tpsPersonSuccess = Metrics.counter("tps.innsyn.health", "response", "success");
-    private final Counter tpsPersonFailure = Metrics.counter("tps.innsyn.health", "response", "failure");
+    private final Counter tpsInnysynSuccess = Metrics.counter("tps.innsyn.health", "response", "success");
+    private final Counter tpsInnsynFailure = Metrics.counter("tps.innsyn.health", "response", "failure");
     private final IInnsynClient innsynClient;
 
     private Environment env;
@@ -32,10 +32,10 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
         LOG.info("Pinging TPS innsyn service");
         try {
             innsynClient.ping();
-            tpsPersonSuccess.increment();
+            tpsInnysynSuccess.increment();
             return up();
         } catch (Exception e) {
-            tpsPersonFailure.increment();
+            tpsInnsynFailure.increment();
             LOG.warn("Could not verify health of TPS innsyn service ", e);
             return isPreprod() ? downWithDetails(e) : up();
         }
