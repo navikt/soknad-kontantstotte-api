@@ -6,7 +6,7 @@ import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsyn.domain.IInnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
-import no.nav.kontantstotte.innsyn.domain.SkjermetAdresseException;
+import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
@@ -73,7 +73,7 @@ public class SokerResourceTest {
 
     @Test
     public void at_skjermet_adresse_gir_403() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new SkjermetAdresseException("Skjermet adresse"));
+        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new FortroligAdresseException("Skjermet adresse"));
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.FORBIDDEN.getStatusCode());
     }
@@ -87,7 +87,7 @@ public class SokerResourceTest {
 
     @Test
     public void at_skjermet_adresse_feil_legger_pa_cors_filter() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new SkjermetAdresseException("Skjermet adresse"));
+        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new FortroligAdresseException("Skjermet adresse"));
         Response response = kallEndepunkt();
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
     }

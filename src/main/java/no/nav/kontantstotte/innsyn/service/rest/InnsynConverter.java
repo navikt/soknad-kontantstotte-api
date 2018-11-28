@@ -2,7 +2,7 @@ package no.nav.kontantstotte.innsyn.service.rest;
 
 import no.nav.kontantstotte.innsyn.domain.Barn;
 import no.nav.kontantstotte.innsyn.domain.Person;
-import no.nav.kontantstotte.innsyn.domain.SkjermetAdresseException;
+import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
 import no.nav.tps.innsyn.KodeDto;
 import no.nav.tps.innsyn.KodeMedDatoOgKildeDto;
 import no.nav.tps.innsyn.PersoninfoDto;
@@ -38,7 +38,7 @@ class InnsynConverter {
                 .map(KodeDto::getVerdi)
                 .flatMap(SpesiellOpplysning::fraTpsKode)
                 .ifPresent((kode) -> {
-                    throw new SkjermetAdresseException("Personen er registrert med spesreg, " + kode);
+                    throw new FortroligAdresseException("Personen er registrert med spesreg, " + kode);
                 });
 
         return new Person.Builder()

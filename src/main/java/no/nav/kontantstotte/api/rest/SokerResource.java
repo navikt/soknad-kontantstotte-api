@@ -1,5 +1,7 @@
 package no.nav.kontantstotte.api.rest;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsyn.domain.IInnsynService;
@@ -27,6 +29,8 @@ public class SokerResource {
 
     private final IInnsynService innsynService;
 
+    private final Counter soknadApnet = Metrics.counter("soknad.kontantstotte.apnet");
+
     @Inject
     public SokerResource(IInnsynService innsynService) {
         this.innsynService = innsynService;
@@ -37,6 +41,7 @@ public class SokerResource {
         String fnr = hentFnrFraToken();
         if(UnleashProvider.get().isEnabled(BRUK_TPS_INTEGRASJON)) {
             Person person = innsynService.hentPersonInfo(fnr);
+            soknadApnet.increment();
             return new SokerDto(fnr, person.getFornavn(), person.getFulltnavn());
         } else {
             return new SokerDto(fnr, null, null);

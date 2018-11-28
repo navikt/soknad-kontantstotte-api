@@ -2,7 +2,7 @@ package no.nav.kontantstotte.innsyn.service.rest;
 
 import no.nav.kontantstotte.innsyn.domain.Barn;
 import no.nav.kontantstotte.innsyn.domain.Person;
-import no.nav.kontantstotte.innsyn.domain.SkjermetAdresseException;
+import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
 import no.nav.tps.innsyn.*;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class InnsynConverterTest {
 
     @Test
     public void at_kode6_kaster_exception_person() {
-        exception.expect(SkjermetAdresseException.class);
+        exception.expect(FortroligAdresseException.class);
 
         PersoninfoDto dto = person1();
         dto.setSpesiellOpplysning(spesiellOpplysning("SPSF"));
@@ -33,7 +33,7 @@ public class InnsynConverterTest {
 
     @Test
     public void at_kode7_kaster_exception_person() {
-        exception.expect(SkjermetAdresseException.class);
+        exception.expect(FortroligAdresseException.class);
 
         PersoninfoDto dto = person1();
         dto.setSpesiellOpplysning(spesiellOpplysning("SPFO"));
