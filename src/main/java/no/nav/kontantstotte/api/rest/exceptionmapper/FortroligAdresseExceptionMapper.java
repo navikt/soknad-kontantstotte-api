@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.api.rest.exceptionmapper;
 
-import no.nav.kontantstotte.person.domain.FortroligAdresseException;
+import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

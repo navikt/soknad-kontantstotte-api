@@ -1,17 +1,16 @@
 package no.nav.kontantstotte.api.rest;
 
 import com.nimbusds.jwt.SignedJWT;
-import no.nav.kontantstotte.api.rest.dto.SokerDto;
+import no.nav.kontantstotte.api.rest.dto.BarnDto;
 import no.nav.kontantstotte.config.ApplicationConfig;
-import no.nav.kontantstotte.innsyn.domain.IInnsynService;
-import no.nav.kontantstotte.innsyn.domain.Person;
-import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
-import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
+import no.nav.kontantstotte.innsyn.domain.*;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
+import no.nav.tps.innsyn.RelasjonDto;
 import org.glassfish.jersey.logging.LoggingFeature;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,8 +21,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.inject.Inject;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,7 +37,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class SokerResourceTest {
+public class BarnResourceTest {
 
     public static final String INNLOGGET_BRUKER = "12345678911";
     @Value("${local.server.port}")
@@ -52,42 +55,31 @@ public class SokerResourceTest {
     }
 
     @Test
-    public void at_uthenting_av_sokerinformasjon_er_korrekt() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenReturn(new Person.Builder().build());
+    public void at_uthenting_av_barninformasjon_er_korrekt() {
+        Barn barn = barn1();
+        when(innsynServiceMock.hentBarnInfo(any())).thenReturn(new ArrayList<Barn>() {{
+            add(barn);
+        }});
 
         Response response = kallEndepunkt();
-        System.out.println(response);
-        System.out.println(response.getEntity());
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
-        SokerDto soker = response.readEntity(SokerDto.class);
-        assertThat(soker.getInnloggetSom()).isEqualTo(INNLOGGET_BRUKER);
+        List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
+        barnDtoList.forEach(dto -> assertThat(dto.getFodselsnummer()).isEqualTo(barn.getFodselsnummer()));
+        barnDtoList.forEach(dto -> assertThat(dto.getFulltnavn()).isEqualTo(barn.getFulltnavn()));
+        barnDtoList.forEach(dto -> assertThat(dto.getFodselsdato()).isEqualTo(barn.getFodselsdato()));
     }
 
     @Test
     public void at_tps_feil_gir_500() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
+        when(innsynServiceMock.hentBarnInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
     }
 
     @Test
-    public void at_skjermet_adresse_gir_403() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new FortroligAdresseException("Skjermet adresse"));
-        Response response = kallEndepunkt();
-        assertThat(response.getStatus()).isEqualTo(Response.Status.FORBIDDEN.getStatusCode());
-    }
-
-    @Test
     public void at_tps_feil_legger_pa_cors_filter() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
-        Response response = kallEndepunkt();
-        assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
-    }
-
-    @Test
-    public void at_skjermet_adresse_feil_legger_pa_cors_filter() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new FortroligAdresseException("Skjermet adresse"));
+        when(innsynServiceMock.hentBarnInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
         Response response = kallEndepunkt();
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
     }
@@ -96,7 +88,7 @@ public class SokerResourceTest {
 
         WebTarget target = ClientBuilder.newClient().register(LoggingFeature.class).target("http://localhost:" + port + contextPath);
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
-        return target.path("/soker")
+        return target.path("/barn")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
@@ -104,5 +96,14 @@ public class SokerResourceTest {
                 .header("Origin", "https://soknad-kontantstotte-t.nav.no")
                 .get();
     }
+
+    private Barn barn1() {
+        return new Barn.Builder()
+                .fulltnavn("fornavn1 etternavn1")
+                .fodselsdato("11.11.1111")
+                .fodselsnummer("11111111111")
+                .build();
+    }
+
 }
 
