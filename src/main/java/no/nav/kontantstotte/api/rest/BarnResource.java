@@ -3,7 +3,7 @@ package no.nav.kontantstotte.api.rest;
 import no.nav.kontantstotte.api.rest.dto.BarnDto;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsyn.domain.Barn;
-import no.nav.kontantstotte.innsyn.domain.IInnsynService;
+import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
@@ -29,18 +29,18 @@ public class BarnResource {
 
     private static final String SELVBETJENING = "selvbetjening";
 
-    private final IInnsynService innsynService;
+    private final IInnsynServiceClient innsynServiceClient;
 
     @Inject
-    public BarnResource(IInnsynService innsynService) {
-        this.innsynService = innsynService;
+    public BarnResource(IInnsynServiceClient innsynServiceClient) {
+        this.innsynServiceClient = innsynServiceClient;
     }
 
     @GET
     public List<BarnDto> hentBarnInfoOmSoker() {
         String fnr = hentFnrFraToken();
         if(UnleashProvider.get().isEnabled(BRUK_TPS_INTEGRASJON)) {
-            List<Barn> sokerBarn = innsynService.hentBarnInfo(fnr);
+            List<Barn> sokerBarn = innsynServiceClient.hentBarnInfo(fnr);
             return sokerBarn
                     .stream()
                     .map(barn -> new BarnDto(

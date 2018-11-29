@@ -2,7 +2,8 @@ package no.nav.kontantstotte.innsyn.service.rest;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
-import no.nav.kontantstotte.innsyn.domain.IInnsynClient;
+import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
@@ -18,12 +19,12 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
 
     private final Counter tpsInnysynSuccess = Metrics.counter("tps.innsyn.health", "response", "success");
     private final Counter tpsInnsynFailure = Metrics.counter("tps.innsyn.health", "response", "failure");
-    private final IInnsynClient innsynClient;
+    private final IInnsynServiceClient innsynServiceClient;
 
     private Environment env;
 
-    InnsynRestHealthIndicator(IInnsynClient innsynClient) {
-        this.innsynClient = innsynClient;
+    InnsynRestHealthIndicator(IInnsynServiceClient innsynServiceClient) {
+        this.innsynServiceClient = innsynServiceClient;
     }
 
     @Override
@@ -31,7 +32,7 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
 
         LOG.info("Pinging TPS innsyn service");
         try {
-            innsynClient.ping();
+            innsynServiceClient.ping();
             tpsInnysynSuccess.increment();
             return up();
         } catch (Exception e) {
@@ -46,7 +47,7 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
     }
 
     private Health downWithDetails(Exception e) {
-        return Health.down().withDetail("TPS innsyn service", innsynClient.toString()).withException(e).build();
+        return Health.down().withDetail("TPS innsyn service", innsynServiceClient.toString()).withException(e).build();
     }
 
     private boolean isPreprod() {
@@ -62,12 +63,12 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
     }
 
     private Health upWithDetails() {
-        return Health.up().withDetail("TPS innsyn service", innsynClient.toString()).build();
+        return Health.up().withDetail("TPS innsyn service", innsynServiceClient.toString()).build();
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " [pinger=" + innsynClient.toString() + ", activeProfiles "
+        return getClass().getSimpleName() + " [pinger=" + innsynServiceClient.toString() + ", activeProfiles "
                 + Arrays.toString(env.getActiveProfiles()) + "]";
     }
 
