@@ -4,7 +4,7 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
-import no.nav.kontantstotte.innsyn.domain.IInnsynService;
+import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import no.nav.security.oidc.context.OIDCValidationContext;
@@ -27,12 +27,12 @@ public class SokerResource {
 
     private static final String SELVBETJENING = "selvbetjening";
 
-    private final IInnsynService innsynService;
+    private final IInnsynServiceClient innsynService;
 
     private final Counter soknadApnet = Metrics.counter("soknad.kontantstotte.apnet");
 
     @Inject
-    public SokerResource(IInnsynService innsynService) {
+    public SokerResource(IInnsynServiceClient innsynService) {
         this.innsynService = innsynService;
     }
 

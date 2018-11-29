@@ -3,7 +3,7 @@ package no.nav.kontantstotte.api.rest;
 import no.nav.kontantstotte.api.rest.dto.BarnDto;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsyn.domain.Barn;
-import no.nav.kontantstotte.innsyn.domain.IInnsynService;
+import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
@@ -29,10 +29,10 @@ public class BarnResource {
 
     private static final String SELVBETJENING = "selvbetjening";
 
-    private final IInnsynService innsynService;
+    private final IInnsynServiceClient innsynService;
 
     @Inject
-    public BarnResource(IInnsynService innsynService) {
+    public BarnResource(IInnsynServiceClient innsynService) {
         this.innsynService = innsynService;
     }
 
