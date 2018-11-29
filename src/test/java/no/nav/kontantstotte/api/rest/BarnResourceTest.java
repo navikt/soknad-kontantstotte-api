@@ -7,7 +7,6 @@ import no.nav.kontantstotte.innsyn.domain.*;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
-import no.nav.tps.innsyn.RelasjonDto;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.junit.After;
 import org.junit.Test;
@@ -47,7 +46,7 @@ public class BarnResourceTest {
     private String contextPath;
 
     @Inject
-    private IInnsynService innsynServiceMock;
+    private IInnsynServiceClient innsynServiceMock;
 
     @After
     public void tearDown() {
