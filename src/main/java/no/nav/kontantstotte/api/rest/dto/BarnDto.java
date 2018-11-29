@@ -18,7 +18,7 @@ public class BarnDto {
     public BarnDto(
             @JsonProperty("fodselsnummer") String fodselsnummer,
             @JsonProperty("fulltnavn") String fulltnavn,
-            @JsonProperty("fodelsdato") String fodselsdato) {
+            @JsonProperty("fodselsdato") String fodselsdato) {
 
         this.fodselsnummer = fodselsnummer;
         this.fulltnavn = fulltnavn;
