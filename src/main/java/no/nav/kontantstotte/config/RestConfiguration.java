@@ -3,7 +3,7 @@ package no.nav.kontantstotte.config;
 import no.nav.kontantstotte.api.filter.CORSResponseFilter;
 import no.nav.kontantstotte.api.rest.*;
 import no.nav.kontantstotte.api.rest.exceptionmapper.InnsendingExceptionMapper;
-import no.nav.kontantstotte.api.rest.exceptionmapper.PersonOppslagExceptionMapper;
+import no.nav.kontantstotte.api.rest.exceptionmapper.InnsynOppslagExceptionMapper;
 import no.nav.kontantstotte.api.rest.exceptionmapper.FortroligAdresseExceptionMapper;
 import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -20,11 +20,12 @@ public class RestConfiguration extends ResourceConfig {
         // Resources
         register(TeksterResource.class);
         register(SokerResource.class);
+        register(BarnResource.class);
         register(InnsendingResource.class);
         register(InnloggingStatusResource.class);
         // ExceptionMappers
         register(FortroligAdresseExceptionMapper.class);
-        register(PersonOppslagExceptionMapper.class);
+        register(InnsynOppslagExceptionMapper.class);
         register(InnsendingExceptionMapper.class);
         // Filters
         register(CORSResponseFilter.class);

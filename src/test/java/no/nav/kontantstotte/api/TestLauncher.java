@@ -4,7 +4,7 @@ import no.finn.unleash.FakeUnleash;
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringTestConfiguration;
-import no.nav.kontantstotte.person.domain.PersonService;
+import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -55,8 +55,8 @@ public class TestLauncher {
 
     @Bean
     @Primary
-    public PersonService personService() {
-        return mock(PersonService.class);
+    public IInnsynServiceClient innsynServiceClient() {
+        return mock(IInnsynServiceClient.class);
     }
 
     @PostConstruct
