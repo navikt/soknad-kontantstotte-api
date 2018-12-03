@@ -1,16 +1,18 @@
-package no.nav.kontantstotte.person.service.rest;
+package no.nav.kontantstotte.innsyn.service.rest;
 
-import no.nav.kontantstotte.person.domain.Person;
-import no.nav.kontantstotte.person.domain.FortroligAdresseException;
-import no.nav.tps.person.KodeDto;
-import no.nav.tps.person.KodeMedDatoOgKildeDto;
-import no.nav.tps.person.PersoninfoDto;
+import no.nav.kontantstotte.innsyn.domain.Barn;
+import no.nav.kontantstotte.innsyn.domain.Person;
+import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
+import no.nav.tps.innsyn.KodeDto;
+import no.nav.tps.innsyn.KodeMedDatoOgKildeDto;
+import no.nav.tps.innsyn.PersoninfoDto;
+import no.nav.tps.innsyn.RelasjonDto;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
 
-class PersonConverter {
+class InnsynConverter {
 
     private enum SpesiellOpplysning {
         KODE6("SPSF"),
@@ -46,6 +48,9 @@ class PersonConverter {
                 .build();
     };
 
-
-
+    static Function<RelasjonDto, Barn> relasjonDtoToBarn = dto -> new Barn.Builder()
+                .fodselsnummer(dto.getIdent())
+                .fulltnavn(dto.getForkortetNavn())
+                .fodselsdato(dto.getFoedselsdato())
+                .build();
 }
