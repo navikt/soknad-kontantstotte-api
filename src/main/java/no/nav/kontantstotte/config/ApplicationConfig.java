@@ -8,6 +8,7 @@ import no.nav.log.LogFilter;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
+import org.eclipse.jetty.server.handler.StatisticsHandler;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,7 @@ import java.util.EnumSet;
 public class ApplicationConfig implements EnvironmentAware {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
+    private int WAIT_BEFORE_SHUTDOWN = 5000;
 
     private Environment env;
 
@@ -44,6 +46,13 @@ public class ApplicationConfig implements EnvironmentAware {
         JettyServletWebServerFactory serverFactory = new JettyServletWebServerFactory();
 
         serverFactory.setPort(8080);
+        serverFactory.addServerCustomizers((server) -> {
+            StatisticsHandler handler = new StatisticsHandler();
+            handler.setHandler(server.getHandler());
+            server.setHandler(handler);
+            server.setStopTimeout(WAIT_BEFORE_SHUTDOWN);
+                }
+        );
 
         return serverFactory;
     }
