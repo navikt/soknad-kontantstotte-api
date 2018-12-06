@@ -63,9 +63,9 @@ public enum Tekstnokkel {
     ARBEID_I_UTLANDET_FORKLARING("arbeidIUtlandet.forklaring.hjelpetekst"),
 
     UTENLANDSKE_YTELSER_TITTEL("utenlandskeYtelser.tittel"),
-    UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND("oppsummering.utenlandskeYtelser.mottarYtelserFraUtland"),
-    UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND("oppsummering.utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland"),
-    UTENLANDSKE_YTELSER_FORKLARING("oppsummering.utenlandskeYtelser.forklaring.label"),
+    UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND("utenlandskeYtelser.mottarYtelserFraUtland.sporsmal"),
+    UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND("utenlandskeYtelser.mottarAnnenForelderYtelserFraUtland.sporsmal"),
+    UTENLANDSKE_YTELSER_FORKLARING("utenlandskeYtelser.forklaring.hjelpetekst"),
 
     UTENLANDSK_KONTANTSTOTTE_TITTEL("utenlandskKontantstotte.tittel"),
     UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE("utenlandskKontantstotte.mottarKontantstotteFraUtlandet.sporsmal"),
