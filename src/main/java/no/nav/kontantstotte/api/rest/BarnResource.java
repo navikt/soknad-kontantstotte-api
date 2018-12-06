@@ -44,7 +44,6 @@ public class BarnResource {
             return sokerBarn
                     .stream()
                     .map(barn -> new BarnDto(
-                            barn.getFodselsnummer(),
                             barn.getFulltnavn(),
                             barn.getFodselsdato()))
                     .collect(Collectors.toList());
