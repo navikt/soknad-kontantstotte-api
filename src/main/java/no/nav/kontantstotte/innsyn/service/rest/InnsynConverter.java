@@ -49,7 +49,6 @@ class InnsynConverter {
     };
 
     static Function<RelasjonDto, Barn> relasjonDtoToBarn = dto -> new Barn.Builder()
-                .fodselsnummer(dto.getIdent())
                 .fulltnavn(dto.getForkortetNavn())
                 .fodselsdato(dto.getFoedselsdato())
                 .build();
