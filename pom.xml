@@ -21,6 +21,7 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <unleash.version>3.1.0</unleash.version>
         <jackson.version>2.9.7</jackson.version>
+        <aws-java-sdk-s3>1.11.448</aws-java-sdk-s3>
     </properties>
 
     <build>
@@ -188,6 +189,13 @@
             <version>1.5.0</version>
         </dependency>
 
+        <!-- S3 storage -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>${aws-java-sdk-s3}</version>
+        </dependency>
+
         <!-- Test -->
 
         <dependency>
@@ -208,6 +216,13 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-multipart</artifactId>
             <version>2.26</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>localstack</artifactId>
+            <version>1.7.2</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- div -->

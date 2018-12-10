@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_INTEGRASJON;
+import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 
 @Component
@@ -52,12 +53,5 @@ public class BarnResource {
             return new ArrayList<>();
         }
     }
-
-    public static String hentFnrFraToken() {
-        OIDCValidationContext context = OidcRequestContext.getHolder().getOIDCValidationContext();
-        return context.getClaims(SELVBETJENING).getClaimSet().getSubject();
-    }
-
-
 
 }

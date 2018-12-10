@@ -7,8 +7,6 @@ import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.security.oidc.api.ProtectedWithClaims;
-import no.nav.security.oidc.context.OIDCValidationContext;
-import no.nav.security.oidc.jaxrs.OidcRequestContext;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -16,7 +14,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_INTEGRASJON;
+import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 
 @Component
@@ -24,8 +24,6 @@ import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_IN
 @Path("soker")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class SokerResource {
-
-    private static final String SELVBETJENING = "selvbetjening";
 
     private final IInnsynServiceClient innsynServiceClient;
 
@@ -48,8 +46,4 @@ public class SokerResource {
         }
     }
 
-    public static String hentFnrFraToken() {
-        OIDCValidationContext context = OidcRequestContext.getHolder().getOIDCValidationContext();
-        return context.getClaims(SELVBETJENING).getClaimSet().getSubject();
-    }
 }
