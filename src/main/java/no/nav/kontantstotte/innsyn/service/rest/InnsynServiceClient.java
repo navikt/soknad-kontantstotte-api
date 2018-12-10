@@ -11,6 +11,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,10 @@ import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.personinf
 class InnsynServiceClient implements IInnsynServiceClient {
 
     private static final String CONSUMER_ID = "soknad-kontantstotte-api";
+
+    private static final Integer MIN_ALDER_I_MANEDER = 10;
+
+    private static final Integer MAKS_ALDER_I_MANEDER = 28;
 
     private URI tpsInnsynServiceUri;
 
@@ -40,6 +46,12 @@ class InnsynServiceClient implements IInnsynServiceClient {
         return personinfoDtoToPerson.apply(dto);
     }
 
+    public static boolean erIKontantstotteAlder(String fodselsdato) {
+        Period diff = Period.between(LocalDate.parse(fodselsdato), LocalDate.now());
+        Integer alderIManeder = diff.getYears() * 12 + diff.getMonths();
+        return (alderIManeder >= MIN_ALDER_I_MANEDER) && (alderIManeder <= MAKS_ALDER_I_MANEDER && diff.getDays() == 0);
+    }
+
     @Override
     public List<Barn> hentBarnInfo(String fnr) {
         Response response = getInnsynResponse("barn", fnr);
@@ -47,6 +59,7 @@ class InnsynServiceClient implements IInnsynServiceClient {
         List<RelasjonDto> dtoList = response.readEntity(new GenericType<List<RelasjonDto>>() {});
         return dtoList
                 .stream()
+                .filter(dto -> erIKontantstotteAlder(dto.getFoedselsdato()))
                 .map(dto -> relasjonDtoToBarn.apply(dto))
                 .collect(Collectors.toList());
     }
