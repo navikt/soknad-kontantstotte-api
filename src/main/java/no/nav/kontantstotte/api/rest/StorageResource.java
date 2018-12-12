@@ -3,11 +3,15 @@ package no.nav.kontantstotte.api.rest;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.security.oidc.api.ProtectedWithClaims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+
+import java.io.ByteArrayInputStream;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM;
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
@@ -18,6 +22,8 @@ import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 @Path("vedlegg")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class StorageResource {
+
+    private static final Logger log = LoggerFactory.getLogger(StorageResource.class);
 
     private final Storage storage;
 
@@ -38,22 +44,22 @@ public class StorageResource {
 
         String directory = soknadsId + hentFnrFraToken();
 
-        storage.put(directory, filnavn, data.toString());
+        storage.put(directory, filnavn, new ByteArrayInputStream(data));
     }
 
     @GET
     @Produces(APPLICATION_OCTET_STREAM)
     @Path("{soknadsId}/{filnavn}")
-    public String getAttachment(
+    public byte[] getAttachment(
             @PathParam("soknadsId") String soknadsId,
-            @PathParam("filnavn") String filnavn,
-            byte[] data) {
+            @PathParam("filnavn") String filnavn) {
 
         toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(() -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build()));
 
         String directory = soknadsId + hentFnrFraToken();
-
-        return storage.get(directory, filnavn).orElse("");
+        byte[] data = storage.get(directory, filnavn).orElse(null);
+        log.debug("Loaded file with {}" + data);
+        return data;
     }
 
 }

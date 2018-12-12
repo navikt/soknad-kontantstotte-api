@@ -2,12 +2,13 @@ package no.nav.kontantstotte.storage;
 
 import com.amazonaws.services.s3.AmazonS3;
 import no.finn.unleash.FakeUnleash;
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.testcontainers.containers.localstack.LocalStackContainer;
+
+import java.io.ByteArrayInputStream;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -34,11 +35,11 @@ public class S3StorageTest {
         FakeUnleash fakeUnleash = new FakeUnleash();
         fakeUnleash.enable(KONTANTSTOTTE_VEDLEGG);
         UnleashProvider.initialize(fakeUnleash);
-        storage.put("dir", "file", "asdfasdf");
-        storage.put("dir", "file2", "asdfasdf2");
+        storage.put("dir", "file", new ByteArrayInputStream("asdfasdf".getBytes()));
+        storage.put("dir", "file2", new ByteArrayInputStream("asdfasdf2".getBytes()));
 
-        assertThat(storage.get("dir", "file").orElse(null)).isEqualTo("asdfasdf");
-        assertThat(storage.get("dir", "file2").orElse(null)).isEqualTo("asdfasdf2");
+        assertThat(storage.get("dir", "file").orElse(null)).isEqualTo("asdfasdf".getBytes());
+        assertThat(storage.get("dir", "file2").orElse(null)).isEqualTo("asdfasdf2".getBytes());
     }
 
 }
