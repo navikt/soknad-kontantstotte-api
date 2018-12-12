@@ -1,13 +1,11 @@
 package no.nav.kontantstotte.storage;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.amazonaws.services.s3.model.S3Object;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Optional;
@@ -28,6 +26,8 @@ public class S3Storage implements Storage {
         this.s3 = s3;
 
         new S3Initializer(s3).initializeBucket(VEDLEGG_BUCKET);
+
+        log.debug("S3 Storage initialized");
     }
 
     @Override

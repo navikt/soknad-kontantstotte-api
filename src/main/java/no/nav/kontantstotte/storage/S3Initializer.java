@@ -5,8 +5,12 @@ import com.amazonaws.services.s3.model.BucketLifecycleConfiguration;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class S3Initializer {
+
+    private static final Logger log = LoggerFactory.getLogger(S3Initializer.class);
 
     private final AmazonS3 s3;
 
@@ -16,10 +20,11 @@ class S3Initializer {
 
     void initializeBucket(String bucketName) {
 
-        if(s3.listBuckets().stream().noneMatch(bucket -> bucket.getName().equals(bucketName))) {
+        if (s3.listBuckets().stream().noneMatch(bucket -> bucket.getName().equals(bucketName))) {
             createBucket(bucketName);
         }
 
+        log.info("Initializing bucket {}", bucketName);
         s3.setBucketLifecycleConfiguration(bucketName,
                 new BucketLifecycleConfiguration().withRules(
                         new BucketLifecycleConfiguration.Rule()
@@ -32,6 +37,7 @@ class S3Initializer {
     }
 
     private void createBucket(String bucketName) {
+        log.info("Bucket {} doesn't exist. Creating", bucketName);
         s3.createBucket(new CreateBucketRequest(bucketName).withCannedAcl(CannedAccessControlList.Private));
     }
 
