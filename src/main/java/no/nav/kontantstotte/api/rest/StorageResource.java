@@ -36,13 +36,24 @@ public class StorageResource {
 
         toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(() -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build()));
 
-        if(!UnleashProvider.get().isEnabled(KONTANTSTOTTE_VEDLEGG)) {
-            throw new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build());
-        }
-
         String directory = soknadsId + hentFnrFraToken();
 
         storage.put(directory, filnavn, data.toString());
+    }
+
+    @GET
+    @Produces(APPLICATION_OCTET_STREAM)
+    @Path("{soknadsId}/{filnavn}")
+    public String getAttachment(
+            @PathParam("soknadsId") String soknadsId,
+            @PathParam("filnavn") String filnavn,
+            byte[] data) {
+
+        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(() -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build()));
+
+        String directory = soknadsId + hentFnrFraToken();
+
+        return storage.get(directory, filnavn).orElse("");
     }
 
 }
