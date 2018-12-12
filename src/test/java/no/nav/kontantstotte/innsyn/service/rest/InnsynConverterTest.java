@@ -73,10 +73,10 @@ public class InnsynConverterTest {
         List<Barn> barnList = dtoList.stream()
                 .map(dto -> relasjonDtoToBarn.apply(dto))
                 .collect(Collectors.toList());
-        for(int i = 0; i < dtoList.size(); i++){
-            assertThat(barnList.get(i).getFulltnavn()).isEqualTo(dtoList.get(i).getForkortetNavn());
-            assertThat(barnList.get(i).getFodselsdato()).isEqualTo(dtoList.get(i).getFoedselsdato());
-        }
+        assertThat(barnList.get(0).getFulltnavn()).isEqualTo(dtoList.get(0).getForkortetNavn());
+        assertThat(barnList.get(0).getFodselsdato()).isEqualTo("01.01.2018");
+        assertThat(barnList.get(1).getFulltnavn()).isEqualTo(dtoList.get(1).getForkortetNavn());
+        assertThat(barnList.get(1).getFodselsdato()).isEqualTo("02.02.2018");
     }
 
     private KodeMedDatoOgKildeDto spesiellOpplysning(String kodeVerdi) {
@@ -102,7 +102,7 @@ public class InnsynConverterTest {
         RelasjonDto dto = new RelasjonDto();
         dto.setIdent("11111111111");
         dto.setForkortetNavn("fornavn1 etternavn1");
-        dto.setFoedselsdato("11.11.1111");
+        dto.setFoedselsdato("2018-01-01");
         return dto;
     }
 
@@ -110,7 +110,7 @@ public class InnsynConverterTest {
         RelasjonDto dto = new RelasjonDto();
         dto.setIdent("22222222222");
         dto.setForkortetNavn("fornavn2 etternavn2");
-        dto.setFoedselsdato("22.22.2222");
+        dto.setFoedselsdato("2018-02-02");
         return dto;
     }
 
