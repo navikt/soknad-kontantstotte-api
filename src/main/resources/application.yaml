@@ -38,5 +38,5 @@ SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://pdf-gen.default/api
 SOKNAD_HTML_GENERATOR_URL: http://soknad-html-generator/api
 
 # S3
-SOKNAD_KONTANTSTOTTE_S3_ENDPOINT: http://s3.nais
+SOKNAD_KONTANTSTOTTE_S3_ENDPOINT: http://s3.nais-rook
 SOKNAD_KONTANTSTOTTE_API_S3_REGION: us-east-1
