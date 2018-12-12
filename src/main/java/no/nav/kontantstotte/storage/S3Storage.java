@@ -36,7 +36,7 @@ public class S3Storage implements Storage {
     public void put(String directory, String key, InputStream data) {
 
         toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
-                () -> new IllegalStateException("Vedleggsfunksjonalitet er deaktivert"));
+                () -> new StorageException("Vedleggsfunksjonalitet er deaktivert"));
 
         PutObjectResult result = s3.putObject(VEDLEGG_BUCKET, fileName(directory, key), data, new ObjectMetadata());
         log.debug("Stored file with size {}", result.getMetadata().getContentLength());
@@ -46,7 +46,7 @@ public class S3Storage implements Storage {
     public Optional<byte[]> get(String directory, String key) {
 
         toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
-                () -> new IllegalStateException("Vedleggsfunksjonalitet er deaktivert"));
+                () -> new StorageException("Vedleggsfunksjonalitet er deaktivert"));
 
         return Optional.ofNullable(readString(fileName(directory, key)));
     }
@@ -66,8 +66,7 @@ public class S3Storage implements Storage {
 
             return buffer.toByteArray();
         } catch (IOException e) {
-            log.error("Unable parse " + filename, e);
-            return null; // TODO Throw proper exception
+            throw new StorageException("Unable parse " + filename, e);
         }
 
     }
@@ -78,9 +77,8 @@ public class S3Storage implements Storage {
             S3Object object = s3.getObject(VEDLEGG_BUCKET, filename);
             log.debug("Loading file with size {}", object.getObjectMetadata().getContentLength());
             return object.getObjectContent();
-        } catch (AmazonS3Exception ex) {
-            log.error("Unable to retrieve " + filename + ", it probably doesn't exist", ex);
-            return null; // TODO Throw proper exception
+        } catch (AmazonS3Exception e) {
+            throw new StorageException("Unable to retrieve " + filename + ", it probably doesn't exist", e);
         }
 
     }
