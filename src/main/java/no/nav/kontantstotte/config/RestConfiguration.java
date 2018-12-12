@@ -23,6 +23,7 @@ public class RestConfiguration extends ResourceConfig {
         register(BarnResource.class);
         register(InnsendingResource.class);
         register(InnloggingStatusResource.class);
+        register(StorageResource.class);
         // ExceptionMappers
         register(FortroligAdresseExceptionMapper.class);
         register(InnsynOppslagExceptionMapper.class);
