@@ -49,7 +49,9 @@ class InnsynServiceClient implements IInnsynServiceClient {
     public static boolean erIKontantstotteAlder(String fodselsdato) {
         Period diff = Period.between(LocalDate.parse(fodselsdato), LocalDate.now());
         Integer alderIManeder = diff.getYears() * 12 + diff.getMonths();
-        return (alderIManeder >= MIN_ALDER_I_MANEDER) && (alderIManeder <= MAKS_ALDER_I_MANEDER && diff.getDays() == 0);
+        return (alderIManeder >= MIN_ALDER_I_MANEDER) &&
+                (alderIManeder <= MAKS_ALDER_I_MANEDER) &&
+                !(alderIManeder == MAKS_ALDER_I_MANEDER && diff.getDays() > 0);
     }
 
     @Override
