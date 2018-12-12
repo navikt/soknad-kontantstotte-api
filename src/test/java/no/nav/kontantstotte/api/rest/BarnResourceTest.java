@@ -64,7 +64,6 @@ public class BarnResourceTest {
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
         List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
-        barnDtoList.forEach(dto -> assertThat(dto.getFodselsnummer()).isEqualTo(barn.getFodselsnummer()));
         barnDtoList.forEach(dto -> assertThat(dto.getFulltnavn()).isEqualTo(barn.getFulltnavn()));
         barnDtoList.forEach(dto -> assertThat(dto.getFodselsdato()).isEqualTo(barn.getFodselsdato()));
     }
@@ -100,7 +99,6 @@ public class BarnResourceTest {
         return new Barn.Builder()
                 .fulltnavn("fornavn1 etternavn1")
                 .fodselsdato("11.11.1111")
-                .fodselsnummer("11111111111")
                 .build();
     }
 

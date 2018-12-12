@@ -8,6 +8,8 @@ import no.nav.tps.innsyn.KodeMedDatoOgKildeDto;
 import no.nav.tps.innsyn.PersoninfoDto;
 import no.nav.tps.innsyn.RelasjonDto;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
@@ -31,6 +33,11 @@ class InnsynConverter {
         }
     }
 
+    static String formaterDato(String dato) {
+        DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return LocalDate.parse(dato).format(pattern);
+    }
+
     static Function<PersoninfoDto, Person> personinfoDtoToPerson = dto -> {
 
         Optional.ofNullable(dto.getSpesiellOpplysning())
@@ -49,8 +56,7 @@ class InnsynConverter {
     };
 
     static Function<RelasjonDto, Barn> relasjonDtoToBarn = dto -> new Barn.Builder()
-                .fodselsnummer(dto.getIdent())
                 .fulltnavn(dto.getForkortetNavn())
-                .fodselsdato(dto.getFoedselsdato())
+                .fodselsdato(formaterDato(dto.getFoedselsdato()))
                 .build();
 }
