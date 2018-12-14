@@ -1,11 +1,8 @@
 package no.nav.kontantstotte.innsending.oppsummering.html;
 
-import no.finn.unleash.FakeUnleash;
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
 import no.nav.kontantstotte.tekst.TekstProvider;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.AbstractMap;
@@ -24,15 +21,6 @@ import static org.mockito.Mockito.when;
 
 public class SoknadTilOppsummeringTest {
     public static final String NEI = "Nei";
-
-    private FakeUnleash fakeUnleash;
-
-    @Before
-    public void setUp() {
-
-        fakeUnleash = new FakeUnleash();
-        UnleashProvider.initialize(fakeUnleash);
-    }
 
     @Test
     public void bolkerIRettRekkefølge() {

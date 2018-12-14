@@ -3,6 +3,7 @@ package no.nav.kontantstotte.innsending;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
+import java.util.List;
 
 class SoknadDto {
 
@@ -15,10 +16,14 @@ class SoknadDto {
     @JsonProperty
     private final Instant innsendingsTidspunkt;
 
-    SoknadDto(String fnr, byte[] pdf, Instant innsendingsTidspunkt) {
+    @JsonProperty
+    private final List<VedleggDto> vedlegg;
+
+    SoknadDto(String fnr, byte[] pdf, Instant innsendingsTidspunkt, List<VedleggDto> vedlegg) {
         this.fnr = fnr;
         this.pdf = pdf;
         this.innsendingsTidspunkt = innsendingsTidspunkt;
+        this.vedlegg = vedlegg;
     }
 
     byte[] getPdf() {

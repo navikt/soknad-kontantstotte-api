@@ -3,11 +3,14 @@ package no.nav.kontantstotte.innsending;
 import no.nav.kontantstotte.innsending.steg.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.time.Instant.now;
 
 public class Soknad {
 
+    public String soknadsId;
     public Instant innsendingsTidspunkt;
     public Person person;
     public SokerKrav kravTilSoker;
@@ -20,6 +23,7 @@ public class Soknad {
     public UtenlandskeYtelser utenlandskeYtelser;
     public Oppsummering oppsummering;
     public String sprak;
+    public List<VedleggMetadata> vedlegg;
 
     public Soknad() {
         this.person = new Person();
@@ -32,6 +36,7 @@ public class Soknad {
         this.utenlandskKontantstotte = new UtenlandskKontantstotte();
         this.mineBarn = new Barn();
         this.tilknytningTilUtland = new TilknytningTilUtland();
+        this.vedlegg = new ArrayList<>();
     }
 
     public boolean erGyldig() {
