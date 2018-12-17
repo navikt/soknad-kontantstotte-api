@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
+import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 class ArkivInnsendingService implements InnsendingService {
 
@@ -56,11 +57,6 @@ class ArkivInnsendingService implements InnsendingService {
 
         soknadSendtInnSendtProxy.increment();
         return soknad;
-    }
-
-    public static String hentFnrFraToken() {
-        OIDCValidationContext context = OidcRequestContext.getHolder().getOIDCValidationContext();
-        return context.getClaims(SELVBETJENING).getClaimSet().getSubject();
     }
 
 }
