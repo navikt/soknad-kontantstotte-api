@@ -24,6 +24,7 @@ public class FeatureToggleConfig {
 
     public static final String KONTANTSTOTTE_OPPSUMMERING_ADVARSEL = "kontantstotte.oppsummering.advarsel";
     public static final String BRUK_TPS_INTEGRASJON = "kontantstotte.bruk.tps.integrasjon";
+    public static final String KONTANTSTOTTE_VEDLEGG = "kontantstotte.bruk.vedlegg";
 
     @Inject
     private Unleash unleash;

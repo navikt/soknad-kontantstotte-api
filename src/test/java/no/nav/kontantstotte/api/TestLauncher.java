@@ -5,6 +5,7 @@ import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringTestConfiguration;
 import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.storage.TestStorageConfiguration;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -22,7 +23,7 @@ import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOT
 import static org.mockito.Mockito.mock;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
-@Import({ApplicationConfig.class, OppsummeringTestConfiguration.class})
+@Import({ApplicationConfig.class, OppsummeringTestConfiguration.class, TestStorageConfiguration.class})
 public class TestLauncher {
 
     public static void main(String... args) {

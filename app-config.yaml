@@ -52,3 +52,6 @@ fasitResources:
     resourceType: restservice
   - alias: soknad-kontantstotte-api-tps-proxy.api.v1.innsyn-apiKey
     resourceType: credential
+# s3
+  - alias: soknad-kontantstotte-api-s3-credential
+    resourceType: credential
