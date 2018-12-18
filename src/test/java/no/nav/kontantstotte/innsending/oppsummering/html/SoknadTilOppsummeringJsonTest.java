@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import no.finn.unleash.FakeUnleash;
+import no.nav.kontantstotte.EnableFeatureToggle;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.File;
@@ -22,12 +24,11 @@ public class SoknadTilOppsummeringJsonTest {
     private ObjectMapper mapper;
     private SoknadTilOppsummering soknadTilOppsummering;
 
-    private FakeUnleash fakeUnleash = new FakeUnleash();
+    @Rule
+    public EnableFeatureToggle enableFeatureToggle = new EnableFeatureToggle(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
 
     @Before
     public void setup() {
-        fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
-        UnleashProvider.initialize(fakeUnleash);
 
         soknadTilOppsummering = new SoknadTilOppsummering(new TekstProvider("mapping_tekster", "nb"));
 
