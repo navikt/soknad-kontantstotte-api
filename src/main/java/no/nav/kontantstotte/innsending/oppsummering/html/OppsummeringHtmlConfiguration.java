@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.innsending.oppsummering.html;
 
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.service.rest.InnsynRestConfiguration;
 import no.nav.kontantstotte.tekst.DefaultTekstProvider;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,7 @@ import java.net.URI;
 public class OppsummeringHtmlConfiguration {
 
     @Bean
-    public SoknadTilOppsummering soknadTilOppsummering(IInnsynServiceClient innsynServiceClient) {
+    public SoknadTilOppsummering soknadTilOppsummering(InnsynService innsynServiceClient) {
         return new SoknadTilOppsummering(new DefaultTekstProvider(), innsynServiceClient);
     }
 

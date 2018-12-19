@@ -3,11 +3,10 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import no.finn.unleash.FakeUnleash;
 import no.nav.kontantstotte.EnableFeatureToggle;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import org.junit.After;
@@ -32,7 +31,7 @@ public class SoknadTilOppsummeringJsonTest {
     @Rule
     public EnableFeatureToggle enableFeatureToggle = new EnableFeatureToggle(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
 
-    private IInnsynServiceClient innsynServiceClient = mock(IInnsynServiceClient.class);
+    private InnsynService innsynServiceClient = mock(InnsynService.class);
 
     @Before
     public void setup() {

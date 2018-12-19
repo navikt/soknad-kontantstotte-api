@@ -3,7 +3,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.*;
 import no.nav.kontantstotte.innsending.steg.Person;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.tekst.TekstProvider;
 
 import java.time.ZoneId;
@@ -34,9 +34,9 @@ class SoknadTilOppsummering {
 
     private final TekstProvider tekstProvider;
 
-    private final IInnsynServiceClient innsynServiceClient;
+    private final InnsynService innsynServiceClient;
 
-    public SoknadTilOppsummering(TekstProvider tekstProvider, IInnsynServiceClient innsynServiceClient) {
+    public SoknadTilOppsummering(TekstProvider tekstProvider, InnsynService innsynServiceClient) {
         this.tekstProvider = tekstProvider;
         this.innsynServiceClient = innsynServiceClient;
     }

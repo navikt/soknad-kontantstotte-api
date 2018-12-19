@@ -2,7 +2,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import org.junit.Test;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class SoknadTilOppsummeringTest {
     public static final String NEI = "Nei";
 
-    private final IInnsynServiceClient innsynServiceClient = mock(IInnsynServiceClient.class);
+    private final InnsynService innsynServiceClient = mock(InnsynService.class);
 
     @Test
     public void bolkerIRettRekkefølge() {

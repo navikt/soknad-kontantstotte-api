@@ -46,7 +46,7 @@ public class BarnResourceTest {
     private String contextPath;
 
     @Inject
-    private IInnsynServiceClient innsynServiceMock;
+    private InnsynService innsynServiceMock;
 
     @After
     public void tearDown() {
