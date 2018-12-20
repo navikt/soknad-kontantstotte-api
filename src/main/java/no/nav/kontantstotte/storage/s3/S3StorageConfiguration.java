@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.storage;
+package no.nav.kontantstotte.storage.s3;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -7,6 +7,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import no.nav.kontantstotte.storage.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,9 +15,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class StorageConfiguration {
+public class S3StorageConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(StorageConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(S3StorageConfiguration.class);
 
     @Bean
     public AmazonS3 s3(
@@ -52,7 +53,7 @@ public class StorageConfiguration {
     }
 
 
-    @Bean
+    @Bean(name = "s3storage")
     public Storage storage(AmazonS3 s3) {
         return new S3Storage(s3);
     }

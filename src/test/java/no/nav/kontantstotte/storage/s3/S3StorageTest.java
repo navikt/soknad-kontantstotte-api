@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.storage;
+package no.nav.kontantstotte.storage.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import no.finn.unleash.FakeUnleash;
@@ -23,7 +23,7 @@ public class S3StorageTest {
 
     @Before
     public void setUp() {
-        AmazonS3 s3 = new StorageConfiguration().s3(
+        AmazonS3 s3 = new S3StorageConfiguration().s3(
                 localStackContainer.getEndpointConfiguration(S3),
                 localStackContainer.getDefaultCredentialsProvider());
 

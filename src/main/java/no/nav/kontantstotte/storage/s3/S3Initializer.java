@@ -1,4 +1,4 @@
-package no.nav.kontantstotte.storage;
+package no.nav.kontantstotte.storage.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.BucketLifecycleConfiguration;
