@@ -1,7 +1,5 @@
 package no.nav.kontantstotte;
 
-import no.finn.unleash.FakeUnleash;
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.security.oidc.context.OIDCClaims;
 import no.nav.security.oidc.context.OIDCValidationContext;
 import no.nav.security.oidc.jaxrs.OidcRequestContext;
