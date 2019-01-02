@@ -1,10 +1,12 @@
-package no.nav.kontantstotte.storage;
+package no.nav.kontantstotte.storage.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
+import no.nav.kontantstotte.storage.Storage;
+import no.nav.kontantstotte.storage.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

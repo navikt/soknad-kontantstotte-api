@@ -1,7 +1,8 @@
-package no.nav.kontantstotte.storage;
+package no.nav.kontantstotte.storage.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import no.nav.kontantstotte.storage.s3.S3Storage;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
