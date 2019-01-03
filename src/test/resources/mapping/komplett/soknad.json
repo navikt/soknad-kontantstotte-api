@@ -30,7 +30,8 @@
   },
   "mineBarn": {
     "fodselsdato": "12.12.2018",
-    "navn": "Jakob"
+    "navn": "Jakob",
+    "erFlerling": "NEI"
   },
   "oppsummering": {
     "bekreftelse": "JA"

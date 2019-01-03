@@ -2,6 +2,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
+import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Barn;
 
 import java.util.ArrayList;
@@ -23,8 +24,16 @@ public class BarnMapping extends BolkMapping {
         barneBolk.tittel = tekster.get(BARN_TITTEL.getNokkel());
         barneBolk.undertittel = tekster.get(BARN_UNDERTITTEL.getNokkel());
         barneBolk.elementer = new ArrayList<>();
-        barneBolk.elementer.add(nyttElementMedVerdisvar.apply(BARN_NAVN, barn.navn));
+
+        Element innsendtBarn = "JA".equalsIgnoreCase(barn.erFlerling)
+                ? Element.nyttSvar(
+                        tekster.get(BARN_NAVN.getNokkel()),
+                        barn.navn,
+                        tekster.get(BARN_ADVARSEL.getNokkel()))
+                : nyttElementMedVerdisvar.apply(BARN_NAVN, barn.navn);
+        barneBolk.elementer.add(innsendtBarn);
         barneBolk.elementer.add(nyttElementMedVerdisvar.apply(BARN_FODSELSDATO, barn.fodselsdato));
+
         return barneBolk;
     }
 }
