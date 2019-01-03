@@ -112,23 +112,22 @@ public class BarnResource {
     }
 
     private static BarnDto genererFlerlingBarn(Set<BarnDto> flerlinger) {
-        List<String> utenSlektsnavn = new ArrayList<>();
+        List<String> navnUtenSlektsnavn = new ArrayList<>();
         List<String> fodselsdatoer = new ArrayList<>();
         flerlinger.forEach( flerling -> {
-            utenSlektsnavn.add(flerling.getFulltnavn().replaceAll(".*? ", ""));
+            navnUtenSlektsnavn.add(flerling.getFulltnavn().replaceAll(".*? ", ""));
             fodselsdatoer.add(flerling.getFodselsdato());
         });
-        String joinetNavn;
-        String joinetFodselsdatoer;
-        if (flerlinger.size() > 2) {
-            joinetNavn = String.join(", ", utenSlektsnavn.subList(0,utenSlektsnavn.size() - 1)) + " og " + utenSlektsnavn.get(utenSlektsnavn.size() - 1);
-            joinetFodselsdatoer = String.join(", ", fodselsdatoer.subList(0,fodselsdatoer.size() - 1)) + " og " + fodselsdatoer.get(fodselsdatoer.size() - 1);
-        }
-        else {
-            joinetNavn = String.join(" og ", utenSlektsnavn);
-            joinetFodselsdatoer = String.join(" og ", fodselsdatoer);
-        }
-        return new BarnDto(joinetNavn, joinetFodselsdatoer, true);
+        return new BarnDto(
+                joinAttributter(navnUtenSlektsnavn, flerlinger.size()),
+                joinAttributter(fodselsdatoer, flerlinger.size()),
+                true);
+    }
+
+    private static String joinAttributter(List<String> attributter, int antallFlerlinger) {
+        return antallFlerlinger > 2
+                ? String.join(", ", attributter.subList(0, attributter.size() - 1)) + " og " + attributter.get(attributter.size() - 1)
+                : String.join(" og ", attributter);
     }
 
     private static boolean datoerInnenforIntervall(LocalDate dato1, LocalDate dato2) {
