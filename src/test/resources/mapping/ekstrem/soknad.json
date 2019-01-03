@@ -29,8 +29,9 @@
     "skalBoMedBarnetINorgeNesteTolvMaaneder": "JA"
   },
   "mineBarn": {
-    "fodselsdato": "12.12.2018",
-    "navn": "Jakob"
+    "fodselsdato": "12.12.2018 og 12.12.2018",
+    "navn": "Jakob og Anne",
+    "erFlerling": "JA"
   },
   "oppsummering": {
     "bekreftelse": "JA"
