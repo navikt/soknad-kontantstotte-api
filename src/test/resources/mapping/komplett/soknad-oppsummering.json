@@ -45,7 +45,8 @@
     },
     "mineBarn": {
       "navn": "Jakob",
-      "fodselsdato": "12.12.2018"
+      "fodselsdato": "12.12.2018",
+      "erFlerling": "NEI"
     },
     "tilknytningTilUtland": {
       "annenForelderBoddEllerJobbetINorgeMinstFemAar": "jaLeggerSammenPerioderEOS",
@@ -145,6 +146,12 @@
         {
           "sporsmal": "Fødselsdato (dd.mm.åååå)",
           "svar": "12.12.2018",
+          "advarsel": null,
+          "underelementer": null
+        },
+        {
+          "sporsmal": "Søkes det for flere barn samtidig?",
+          "svar": "NEI",
           "advarsel": null,
           "underelementer": null
         }
@@ -337,6 +344,7 @@
     "barn.navn": "Navn",
     "barn.subtittel": "Oppgi barnets navn og fødselsdato",
     "barn.tittel": "Barn",
+    "barn.erFlerling": "Søkes det for flere barn samtidig?",
     "barnehageplass.antallTimer": "Hvor mange timer i uken går barnet i barnehage?",
     "barnehageplass.barnBarnehageplassStatus": "Barnet mitt",
     "barnehageplass.garIkkeIBarnehage": "går ikke i barnehage",

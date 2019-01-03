@@ -27,6 +27,8 @@ public enum Tekstnokkel {
     BARN_UNDERTITTEL("oppsummering.barn.subtittel"),
     BARN_NAVN("barn.navn"),
     BARN_FODSELSDATO("barn.fodselsdato"),
+    BARN_ERFLERLING("barn.erFlerling"),
+    BARN_ERFLERLING_ADVARSEL("advarsel.flerebarn"),
     FAMILIEFORHOLD_TITTEL("familieforhold.tittel"),
     FAMILIEFORHOLD_BOR_SAMMEN("familieforhold.borForeldreneSammenMedBarnet.sporsmal"),
     FAMILIEFORHOLD_NAVN_ANNEN_FORELDER("oppsummering.familieforhold.annenForelderNavn.label"),
