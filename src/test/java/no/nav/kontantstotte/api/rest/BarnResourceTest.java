@@ -25,8 +25,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -71,38 +70,35 @@ public class BarnResourceTest {
     }
 
     @Test
-    public void at_uthenting_av_flerlinginformasjon_er_korrekt_for_flerlinger() {
-        Barn flerling1 = flerling1();
-        Barn flerling2 = flerling2();
-        Barn flerling3 = flerling3();
+    public void at_uthenting_av_flerlinginformasjon_er_korrekt() {
         when(innsynServiceMock.hentBarnInfo(any())).thenReturn(new ArrayList<Barn>() {{
-            add(flerling1);
-            add(flerling2);
-            add(flerling3);
+            add(tvilling1());
+            add(tvilling2());
+            add(trilling1());
+            add(trilling2());
+            add(trilling3());
         }});
 
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 
         List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
+        assertThat(barnDtoList.size()).isEqualTo(7);
 
-        assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(flerling1.getFulltnavn());
-        assertThat(barnDtoList.get(0).getFodselsdato()).isEqualTo(flerling1.getFodselsdato());
-        assertThat(barnDtoList.get(0).getErFlerling()).isEqualTo(false);
+        for ( int i = 0 ; i < 5 ; i++ ) {
+            assertThat(barnDtoList.get(i).getFulltnavn()).matches("NAVNESEN T[VR]ILLING[123]");
+            assertThat(barnDtoList.get(i).getFodselsdato()).matches("0[1-7].01.2018");
+            assertThat(barnDtoList.get(i).getErFlerling()).isEqualTo(false);
+        }
 
-        assertThat(barnDtoList.get(1).getFulltnavn()).isEqualTo(flerling2.getFulltnavn());
-        assertThat(barnDtoList.get(1).getFodselsdato()).isEqualTo(flerling2.getFodselsdato());
-        assertThat(barnDtoList.get(1).getErFlerling()).isEqualTo(false);
-
-
-        assertThat(barnDtoList.get(2).getFulltnavn()).isEqualTo(flerling3.getFulltnavn());
-        assertThat(barnDtoList.get(2).getFodselsdato()).isEqualTo(flerling3.getFodselsdato());
-        assertThat(barnDtoList.get(2).getErFlerling()).isEqualTo(false);
-
-        // Rekkefølge kan variere fordi Set er brukt i BarnResource
-        assertThat(barnDtoList.get(3).getFulltnavn()).matches("GUTTEBARN[1-3], GUTTEBARN[1-3] og GUTTEBARN[1-3]");
-        assertThat(barnDtoList.get(3).getFodselsdato()).matches("0[1-3].01.2018, 0[1-3].01.2018 og 0[1-3].01.2018");
-        assertThat(barnDtoList.get(3).getErFlerling()).isEqualTo(true);
+        int tvillingIndex = barnDtoList.get(5).getFodselsdato().length() > 24 ? 6 : 5;
+        int trillingIndex = tvillingIndex == 5 ? 6 : 5;
+        assertThat(barnDtoList.get(tvillingIndex).getFulltnavn()).matches("TVILLING[12] og TVILLING[12]");
+        assertThat(barnDtoList.get(tvillingIndex).getFodselsdato()).matches("01.01.2018 og 01.01.2018");
+        assertThat(barnDtoList.get(tvillingIndex).getErFlerling()).isEqualTo(true);
+        assertThat(barnDtoList.get(trillingIndex).getFulltnavn()).matches("TRILLING[123], TRILLING[123] og TRILLING[123]");
+        assertThat(barnDtoList.get(trillingIndex).getFodselsdato()).matches("0[5-7].01.2018, 0[5-7].01.2018 og 0[5-7].01.2018");
+        assertThat(barnDtoList.get(trillingIndex).getErFlerling()).isEqualTo(true);
     }
 
     @Test
@@ -117,6 +113,23 @@ public class BarnResourceTest {
         when(innsynServiceMock.hentBarnInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
         Response response = kallEndepunkt();
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
+    }
+
+    @Test
+    public void at_powerset_gir_korrekte_kombinasjoner() {
+        BarnDto barnA = new BarnDto("A","XX.XX.XXXX",false);
+        BarnDto barnB = new BarnDto("B","XX.XX.XXXX",false);
+        List<BarnDto> barnDtoList = new ArrayList<BarnDto>() {{
+            add(barnA);
+            add(barnB);
+        }};
+        Set<Set<BarnDto>> barnDtoSet = BarnResource.powerSet(barnDtoList);
+        assertThat(barnDtoSet).isEqualTo(new HashSet<Set<BarnDto>>() {{
+            add(new HashSet<>());
+            add(new HashSet<>(Arrays.asList(barnA)));
+            add(new HashSet<>(Arrays.asList(barnB)));
+            add(new HashSet<>(Arrays.asList(barnA, barnB)));
+        }});
     }
 
     private Response kallEndepunkt() {
@@ -134,29 +147,42 @@ public class BarnResourceTest {
     private Barn barn1() {
         return new Barn.Builder()
                 .fulltnavn("NAVNESEN JENTEBARN")
-                .fodselsdato("01.01.2017")
+                .fodselsdato("01.02.2018")
                 .build();
     }
 
-    private Barn flerling1() {
+    private Barn tvilling1() {
         return new Barn.Builder()
-                .fulltnavn("NAVNESEN GUTTEBARN1")
+                .fulltnavn("NAVNESEN TVILLING1")
                 .fodselsdato("01.01.2018")
                 .build();
     }
 
-    private Barn flerling2() {
+    private Barn tvilling2() {
         return new Barn.Builder()
-                .fulltnavn("NAVNESEN GUTTEBARN2")
-                .fodselsdato("02.01.2018")
+                .fulltnavn("NAVNESEN TVILLING2")
+                .fodselsdato("01.01.2018")
                 .build();
     }
 
-    private Barn flerling3() {
+    private Barn trilling1() {
         return new Barn.Builder()
-                .fulltnavn("NAVNESEN GUTTEBARN3")
-                .fodselsdato("03.01.2018")
+                .fulltnavn("NAVNESEN TRILLING1")
+                .fodselsdato("05.01.2018")
+                .build();
+    }
+
+    private Barn trilling2() {
+        return new Barn.Builder()
+                .fulltnavn("NAVNESEN TRILLING2")
+                .fodselsdato("06.01.2018")
+                .build();
+    }
+
+    private Barn trilling3() {
+        return new Barn.Builder()
+                .fulltnavn("NAVNESEN TRILLING3")
+                .fodselsdato("07.01.2018")
                 .build();
     }
 }
-
