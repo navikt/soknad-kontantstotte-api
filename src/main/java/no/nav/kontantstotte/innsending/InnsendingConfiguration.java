@@ -60,7 +60,7 @@ public class InnsendingConfiguration {
     }
 
     @Bean
-    public VedleggProvider vedleggProvider(Storage storage) {
+    public VedleggProvider vedleggProvider(@Named("encryptedStorage") Storage storage) {
         return new VedleggProvider(storage);
     }
 

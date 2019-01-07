@@ -20,9 +20,8 @@ class SoknadOppsummering {
 
     }
 
-    public SoknadOppsummering(Soknad soknad, String fnr, String innsendingsTidspunkt, List<Bolk> bolker, Map<String, String> tekster) {
+    public SoknadOppsummering(Soknad soknad, Person person, String innsendingsTidspunkt, List<Bolk> bolker, Map<String, String> tekster) {
         MetaDataElement metaDataInnsendingsTidspunkt = new MetaDataElement(tekster.get(INNSENDING_LABEL.getNokkel()), innsendingsTidspunkt);
-        Person person = new Person(fnr);
         MetaDataElement metaDataBekreftelse = new MetaDataElement(tekster.get(BEKREFTELSE.getNokkel()), null);
 
         MetaDataElement metaDataFastsattDato = new MetaDataElement(tekster.get(FASTSATT_LABEL.getNokkel()), tekster.get(FASTSATTDATO.getNokkel()));
