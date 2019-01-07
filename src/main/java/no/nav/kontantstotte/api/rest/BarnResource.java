@@ -115,7 +115,7 @@ public class BarnResource {
         List<String> navnUtenSlektsnavn = new ArrayList<>();
         List<String> fodselsdatoer = new ArrayList<>();
         flerlinger.forEach( flerling -> {
-            navnUtenSlektsnavn.add(flerling.getFulltnavn().replaceAll(".*? ", ""));
+            navnUtenSlektsnavn.add(flerling.getFulltnavn().substring(flerling.getFulltnavn().indexOf(" ") + 1));
             fodselsdatoer.add(flerling.getFodselsdato());
         });
         return new BarnDto(

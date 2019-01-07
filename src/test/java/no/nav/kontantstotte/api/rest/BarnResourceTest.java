@@ -66,39 +66,48 @@ public class BarnResourceTest {
         List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
         assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(barn.getFulltnavn());
         assertThat(barnDtoList.get(0).getFodselsdato()).isEqualTo(barn.getFodselsdato());
-        assertThat(barnDtoList.get(0).getErFlerling()).isEqualTo(false);
+        assertThat(barnDtoList.get(0).getErFlerling()).isFalse();
     }
 
     @Test
     public void at_uthenting_av_flerlinginformasjon_er_korrekt() {
+        Barn tvilling1 = tvilling1();
+        Barn tvilling2 = tvilling2();
         when(innsynServiceMock.hentBarnInfo(any())).thenReturn(new ArrayList<Barn>() {{
-            add(tvilling1());
-            add(tvilling2());
-            add(trilling1());
-            add(trilling2());
-            add(trilling3());
+            add(tvilling1);
+            add(tvilling2);
         }});
 
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 
         List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
-        assertThat(barnDtoList.size()).isEqualTo(7);
+        assertThat(barnDtoList.size()).isEqualTo(3);
+        assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(tvilling1.getFulltnavn());
+        assertThat(barnDtoList.get(0).getFodselsdato()).isEqualTo(tvilling1.getFodselsdato());
+        assertThat(barnDtoList.get(0).getErFlerling()).isFalse();
+        assertThat(barnDtoList.get(1).getFulltnavn()).isEqualTo(tvilling2.getFulltnavn());
+        assertThat(barnDtoList.get(1).getFodselsdato()).isEqualTo(tvilling2.getFodselsdato());
+        assertThat(barnDtoList.get(1).getErFlerling()).isFalse();
+        assertThat(barnDtoList.get(2).getFulltnavn().equals("TVILLING1 og TVILLING2 MELLOMNAVN")
+                || barnDtoList.get(2).getFulltnavn().equals("TVILLING2 MELLOMNAVN og TVILLING1"));
+        assertThat(barnDtoList.get(2).getFodselsdato()).isEqualTo("01.01.2018 og 01.01.2018");
+        assertThat(barnDtoList.get(2).getErFlerling()).isTrue();
 
-        for ( int i = 0 ; i < 5 ; i++ ) {
-            assertThat(barnDtoList.get(i).getFulltnavn()).matches("NAVNESEN T[VR]ILLING[123]");
-            assertThat(barnDtoList.get(i).getFodselsdato()).matches("0[1-7].01.2018");
-            assertThat(barnDtoList.get(i).getErFlerling()).isEqualTo(false);
-        }
+        when(innsynServiceMock.hentBarnInfo(any())).thenReturn(new ArrayList<Barn>() {{
+            add(trilling1());
+            add(trilling2());
+            add(trilling3());
+        }});
 
-        int tvillingIndex = barnDtoList.get(5).getFodselsdato().length() > 24 ? 6 : 5;
-        int trillingIndex = tvillingIndex == 5 ? 6 : 5;
-        assertThat(barnDtoList.get(tvillingIndex).getFulltnavn()).matches("TVILLING[12] og TVILLING[12]");
-        assertThat(barnDtoList.get(tvillingIndex).getFodselsdato()).matches("01.01.2018 og 01.01.2018");
-        assertThat(barnDtoList.get(tvillingIndex).getErFlerling()).isEqualTo(true);
-        assertThat(barnDtoList.get(trillingIndex).getFulltnavn()).matches("TRILLING[123], TRILLING[123] og TRILLING[123]");
-        assertThat(barnDtoList.get(trillingIndex).getFodselsdato()).matches("0[5-7].01.2018, 0[5-7].01.2018 og 0[5-7].01.2018");
-        assertThat(barnDtoList.get(trillingIndex).getErFlerling()).isEqualTo(true);
+        response = kallEndepunkt();
+        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
+
+        barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
+        assertThat(barnDtoList.size()).isEqualTo(4);
+        assertThat(barnDtoList.get(3).getFulltnavn()).matches("TRILLING[123], TRILLING[123] og TRILLING[123]");
+        assertThat(barnDtoList.get(3).getFodselsdato()).matches("0[5-7].01.2018, 0[5-7].01.2018 og 0[5-7].01.2018");
+        assertThat(barnDtoList.get(3).getErFlerling()).isTrue();
     }
 
     @Test
@@ -160,7 +169,7 @@ public class BarnResourceTest {
 
     private Barn tvilling2() {
         return new Barn.Builder()
-                .fulltnavn("NAVNESEN TVILLING2")
+                .fulltnavn("NAVNESEN TVILLING2 MELLOMNAVN")
                 .fodselsdato("01.01.2018")
                 .build();
     }
