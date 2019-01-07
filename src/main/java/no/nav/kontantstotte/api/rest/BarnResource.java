@@ -2,7 +2,7 @@ package no.nav.kontantstotte.api.rest;
 
 import no.nav.kontantstotte.api.rest.dto.BarnDto;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.springframework.stereotype.Component;
 
@@ -29,10 +29,10 @@ public class BarnResource {
 
     private static final DateTimeFormatter DATO_PATTERN_SOKNAD = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    private final IInnsynServiceClient innsynServiceClient;
+    private final InnsynService innsynServiceClient;
 
     @Inject
-    public BarnResource(IInnsynServiceClient innsynServiceClient) {
+    public BarnResource(InnsynService innsynServiceClient) {
         this.innsynServiceClient = innsynServiceClient;
     }
 

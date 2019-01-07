@@ -77,7 +77,8 @@
       "verdi": "10.10.2018 - 13.23"
     },
     "person": {
-      "fnr": "XXXXXXXXXX"
+      "fnr": "XXXXXXXXXX",
+      "navn": "NAVN NAVNESEN"
     },
     "bekreftelse": {
       "tekst": "Opplysningene jeg har oppgitt er riktige, og jeg har ikke holdt tilbake opplysninger som har betydning for retten jeg har til kontantstøtte",

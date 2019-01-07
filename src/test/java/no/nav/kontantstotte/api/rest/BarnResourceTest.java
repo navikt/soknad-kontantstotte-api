@@ -4,7 +4,7 @@ import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.api.rest.dto.BarnDto;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsyn.domain.Barn;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
@@ -46,7 +46,7 @@ public class BarnResourceTest {
     private String contextPath;
 
     @Inject
-    private IInnsynServiceClient innsynServiceMock;
+    private InnsynService innsynServiceMock;
 
     @After
     public void tearDown() {
