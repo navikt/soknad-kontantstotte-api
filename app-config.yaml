@@ -55,3 +55,5 @@ fasitResources:
 # s3
   - alias: soknad-kontantstotte-api-s3-credential
     resourceType: credential
+  - alias: soknad-kontantstotte-storage-encryption
+    resourceType: credential

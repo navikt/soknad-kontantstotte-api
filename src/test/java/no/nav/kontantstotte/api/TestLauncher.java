@@ -5,7 +5,7 @@ import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringTestConfiguration;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
-import no.nav.kontantstotte.storage.TestStorageConfiguration;
+import no.nav.kontantstotte.storage.s3.TestStorageConfiguration;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.server.ResourceConfig;
