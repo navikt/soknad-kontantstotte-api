@@ -2,6 +2,8 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
+import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import org.junit.Test;
 
@@ -22,13 +24,15 @@ import static org.mockito.Mockito.when;
 public class SoknadTilOppsummeringTest {
     public static final String NEI = "Nei";
 
+    private final InnsynService innsynServiceClient = mock(InnsynService.class);
+
     @Test
     public void bolkerIRettRekkefølge() {
         String fnr = "XXXXXXXXXX";
         Soknad soknad = new Soknad();
         soknad.markerInnsendingsTidspunkt();
 
-        TekstProvider mock = mock(TekstProvider.class);
+        TekstProvider tekstProvider = mock(TekstProvider.class);
         Map<String, String> tekster = tekster(
                 tekst(KRAV_TIL_SOKER_TITTEL),
                 tekst(BARN_TITTEL),
@@ -39,9 +43,10 @@ public class SoknadTilOppsummeringTest {
                 tekst(UTENLANDSKE_YTELSER_TITTEL),
                 tekst(UTENLANDSK_KONTANTSTOTTE_TITTEL)
         );
-        when(mock.hentTekster(any())).thenReturn(tekster);
+        when(tekstProvider.hentTekster(any())).thenReturn(tekster);
+        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().build());
 
-        SoknadOppsummering oppsummering = new SoknadTilOppsummering(mock).map(
+        SoknadOppsummering oppsummering = new SoknadTilOppsummering(tekstProvider, innsynServiceClient).map(
                 soknad,
                 fnr);
 

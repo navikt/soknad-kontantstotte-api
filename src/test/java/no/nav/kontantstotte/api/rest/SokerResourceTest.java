@@ -3,7 +3,7 @@ package no.nav.kontantstotte.api.rest;
 import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.config.ApplicationConfig;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
@@ -44,7 +44,7 @@ public class SokerResourceTest {
     private String contextPath;
 
     @Inject
-    private IInnsynServiceClient innsynServiceMock;
+    private InnsynService innsynServiceMock;
 
     @After
     public void tearDown() {
