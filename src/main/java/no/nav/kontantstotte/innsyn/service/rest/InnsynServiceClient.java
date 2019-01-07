@@ -20,7 +20,7 @@ import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.relasjonDtoToBarn;
 import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.personinfoDtoToPerson;
 
-class InnsynServiceClient implements IInnsynServiceClient {
+class InnsynServiceClient implements InnsynService {
 
     private static final String CONSUMER_ID = "soknad-kontantstotte-api";
 
@@ -87,7 +87,7 @@ class InnsynServiceClient implements IInnsynServiceClient {
                 '}';
     }
 
-    public Response getInnsynResponse(String path, String fnr) {
+    private Response getInnsynResponse(String path, String fnr) {
         Response response = client.target(tpsInnsynServiceUri)
                 .path(path)
                 .request()

@@ -2,7 +2,7 @@ package no.nav.kontantstotte.innsyn.service.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.kontantstotte.client.RestClientConfigration;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.sbl.rest.ClientLogFilter;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -29,14 +29,14 @@ public class InnsynRestConfiguration {
     private String tpsProxyApiKeyPassword;
 
     @Bean
-    public IInnsynServiceClient innsynServiceRest(
+    public InnsynService innsynServiceRest(
             @Named("tpsProxyClient") Client client,
             @Value("${TPS-PROXY_API_V1_INNSYN_URL}") URI tpsInnsynServiceUri) {
         return new InnsynServiceClient(client, tpsInnsynServiceUri);
     }
 
     @Bean
-    public InnsynRestHealthIndicator innsynServiceHealthIndicator(IInnsynServiceClient innsynServiceClient) {
+    public InnsynRestHealthIndicator innsynServiceHealthIndicator(InnsynService innsynServiceClient) {
         return new InnsynRestHealthIndicator(innsynServiceClient);
     }
 

@@ -4,7 +4,7 @@ import no.finn.unleash.FakeUnleash;
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringTestConfiguration;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.storage.s3.TestStorageConfiguration;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
@@ -56,8 +56,8 @@ public class TestLauncher {
 
     @Bean
     @Primary
-    public IInnsynServiceClient innsynServiceClient() {
-        return mock(IInnsynServiceClient.class);
+    public InnsynService innsynServiceClient() {
+        return mock(InnsynService.class);
     }
 
     @PostConstruct

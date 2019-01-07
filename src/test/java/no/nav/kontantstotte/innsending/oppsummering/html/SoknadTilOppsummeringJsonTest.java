@@ -3,10 +3,11 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import no.finn.unleash.FakeUnleash;
 import no.nav.kontantstotte.EnableFeatureToggle;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
+import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import org.junit.After;
 import org.junit.Before;
@@ -18,6 +19,9 @@ import java.io.IOException;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SoknadTilOppsummeringJsonTest {
 
@@ -27,10 +31,12 @@ public class SoknadTilOppsummeringJsonTest {
     @Rule
     public EnableFeatureToggle enableFeatureToggle = new EnableFeatureToggle(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
 
+    private InnsynService innsynServiceClient = mock(InnsynService.class);
+
     @Before
     public void setup() {
 
-        soknadTilOppsummering = new SoknadTilOppsummering(new TekstProvider("mapping_tekster", "nb"));
+        soknadTilOppsummering = new SoknadTilOppsummering(new TekstProvider("mapping_tekster", "nb"), innsynServiceClient);
 
         mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
@@ -47,6 +53,7 @@ public class SoknadTilOppsummeringJsonTest {
         Soknad soknad = mapper.readValue(new File(getFile("mapping/enkel/soknad.json")), Soknad.class);
         SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/enkel/soknad-oppsummering.json")), SoknadOppsummering.class);
 
+        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").build());
         SoknadOppsummering actual = soknadTilOppsummering.map(soknad, "XXXXXXXXXX");
 
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(oppsummering);
@@ -57,6 +64,7 @@ public class SoknadTilOppsummeringJsonTest {
         Soknad soknad = mapper.readValue(new File(getFile("mapping/komplett/soknad.json")), Soknad.class);
         SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/komplett/soknad-oppsummering.json")), SoknadOppsummering.class);
 
+        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").build());
         SoknadOppsummering actual = soknadTilOppsummering.map(soknad, "XXXXXXXXXX");
 
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(oppsummering);
@@ -67,6 +75,7 @@ public class SoknadTilOppsummeringJsonTest {
         Soknad soknad = mapper.readValue(new File(getFile("mapping/ekstrem/soknad.json")), Soknad.class);
         SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/ekstrem/soknad-oppsummering.json")), SoknadOppsummering.class);
 
+        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").build());
         SoknadOppsummering actual = soknadTilOppsummering.map(soknad, "XXXXXXXXXX");
 
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(oppsummering);

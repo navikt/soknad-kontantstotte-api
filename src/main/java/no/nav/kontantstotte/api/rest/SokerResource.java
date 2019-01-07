@@ -4,7 +4,7 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.springframework.stereotype.Component;
@@ -25,12 +25,12 @@ import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class SokerResource {
 
-    private final IInnsynServiceClient innsynServiceClient;
+    private final InnsynService innsynServiceClient;
 
     private final Counter soknadApnet = Metrics.counter("soknad.kontantstotte.apnet");
 
     @Inject
-    public SokerResource(IInnsynServiceClient innsynServiceClient) {
+    public SokerResource(InnsynService innsynServiceClient) {
         this.innsynServiceClient = innsynServiceClient;
     }
 
