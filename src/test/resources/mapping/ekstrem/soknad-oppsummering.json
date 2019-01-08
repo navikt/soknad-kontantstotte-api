@@ -31,8 +31,9 @@
       "skalBoMedBarnetINorgeNesteTolvMaaneder": "JA"
     },
     "mineBarn": {
-      "fodselsdato": "12.12.2018",
-      "navn": "Jakob"
+      "fodselsdato": "12.12.2018 og 12.12.2018",
+      "navn": "Jakob og Anne",
+      "erFlerling": "JA"
     },
     "oppsummering": {
       "bekreftelse": "JA"
@@ -136,13 +137,13 @@
       "elementer": [
         {
           "sporsmal": "Navn",
-          "svar": "Jakob",
-          "advarsel": null,
+          "svar": "Jakob og Anne",
+          "advarsel": "Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller søke på papir.",
           "underelementer": null
         },
         {
           "sporsmal": "Fødselsdato (dd.mm.åååå)",
-          "svar": "12.12.2018",
+          "svar": "12.12.2018 og 12.12.2018",
           "advarsel": null,
           "underelementer": null
         }
@@ -301,6 +302,7 @@
   ],
   "tekster": {
     "advarsel.barnehageplass.timerIBarnehage": "Du får ikke kontantstøtte hvis barnet har barnehageplass med mer enn 33 timer i uken. Det betyr at du ikke trenger å sende inn denne søknaden.",
+    "advarsel.flerebarn": "Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller søke på papir.",
     "app.avbryt": "Avbryt",
     "app.avbrytmodal.tekst": "Er du sikker på at du vil avbryte?",
     "app.avbrytmodal.avbryt": "Ja",
