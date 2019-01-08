@@ -2,6 +2,8 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.*;
+import no.nav.kontantstotte.innsending.steg.Person;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.tekst.TekstProvider;
 
 import java.time.ZoneId;
@@ -32,14 +34,18 @@ class SoknadTilOppsummering {
 
     private final TekstProvider tekstProvider;
 
-    public SoknadTilOppsummering(TekstProvider tekstProvider) {
+    private final InnsynService innsynServiceClient;
+
+    public SoknadTilOppsummering(TekstProvider tekstProvider, InnsynService innsynServiceClient) {
         this.tekstProvider = tekstProvider;
+        this.innsynServiceClient = innsynServiceClient;
     }
 
     public SoknadOppsummering map(Soknad soknad, String fnr) {
         Map<String, String> tekster = tekstProvider.hentTekster(soknad.sprak);
+        Person person = new Person(fnr, innsynServiceClient.hentPersonInfo(fnr).getFulltnavn());
         return new SoknadOppsummering(soknad,
-                fnr,
+                person,
                 FORMATTER.format(soknad.innsendingsTidspunkt),
                 mapBolker(soknad, tekster),
                 tekster);

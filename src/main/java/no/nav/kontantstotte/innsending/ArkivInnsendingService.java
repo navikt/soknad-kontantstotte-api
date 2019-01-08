@@ -3,9 +3,6 @@ package no.nav.kontantstotte.innsending;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
-import no.nav.kontantstotte.storage.Storage;
-import no.nav.security.oidc.context.OIDCValidationContext;
-import no.nav.security.oidc.jaxrs.OidcRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +11,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
-import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 class ArkivInnsendingService implements InnsendingService {

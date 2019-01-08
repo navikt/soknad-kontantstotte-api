@@ -11,13 +11,18 @@ public class BarnDto {
     @JsonProperty
     private final String fodselsdato;
 
+    @JsonProperty
+    private final boolean erFlerling;
+
     @JsonCreator
     public BarnDto(
             @JsonProperty("fulltnavn") String fulltnavn,
-            @JsonProperty("fodselsdato") String fodselsdato) {
+            @JsonProperty("fodselsdato") String fodselsdato,
+            @JsonProperty("flerling") boolean erFlerling) {
 
         this.fulltnavn = fulltnavn;
         this.fodselsdato = fodselsdato;
+        this.erFlerling = erFlerling;
     }
 
     public String getFulltnavn() {
@@ -26,6 +31,10 @@ public class BarnDto {
 
     public String getFodselsdato() {
         return fodselsdato;
+    }
+
+    public boolean getErFlerling() {
+        return erFlerling;
     }
 
 }
