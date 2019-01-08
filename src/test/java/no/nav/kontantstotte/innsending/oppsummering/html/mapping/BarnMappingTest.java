@@ -4,32 +4,27 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Barn;
+import no.nav.kontantstotte.tekst.DefaultTekstProvider;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.TekstHelper.mockTekster;
-import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.TekstHelper.tekst;
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 public class BarnMappingTest {
 
-    private static final String TITTEL = "BARN";
-    private static final String UNDERTITTEL = "Barn du søker kontantstøtte for";
-    private static final String NAVN = "Navn";
-    private static final String FODSELSDATO = "Fødselsdato";
-    private static final String ADVARSEL = "Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller søke på papir.";
+    private static final Map<String, String> TEKSTER = new DefaultTekstProvider().hentTekster("nb");
+    private static final String hentTekst(Tekstnokkel tekstnokkel) { return TEKSTER.get(tekstnokkel.getNokkel()); }
 
-    private static final  Map<String, String> TEKSTER = mockTekster(
-            tekst(BARN_TITTEL, TITTEL),
-            tekst(BARN_UNDERTITTEL, UNDERTITTEL),
-            tekst(BARN_NAVN, NAVN),
-            tekst(BARN_FODSELSDATO, FODSELSDATO),
-            tekst(BARN_ADVARSEL, ADVARSEL));
+    private static final String TITTEL = hentTekst(BARN_TITTEL);
+    private static final String UNDERTITTEL = hentTekst(BARN_UNDERTITTEL);
+    private static final String NAVN = hentTekst(BARN_NAVN);
+    private static final String FODSELSDATO = hentTekst(BARN_FODSELSDATO);
+    private static final String ADVARSEL = hentTekst(BARN_ADVARSEL);
 
     private Soknad soknad;
     private Barn innsendtBarn;

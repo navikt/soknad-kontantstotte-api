@@ -5,29 +5,30 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.UtenlandskKontantstotte;
+import no.nav.kontantstotte.tekst.DefaultTekstProvider;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static no.nav.kontantstotte.innsending.oppsummering.html.SoknadTilOppsummeringTest.NEI;
-import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.TekstHelper.mockTekster;
-import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.TekstHelper.tekst;
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 public class UtenlandskKontantstotteMappingTest {
 
-    private static final String JA = "Ja";
-    private static final String TITTEL = "Utenlandsk kontantstotte";
-    private static final String SPORSMAL = "Får du kontantstøtte fra andre land enn Norge??";
-    private static final String FRITEKSTSPORSMAL = "Oppgi landene, beløpet du får utbetalt og perioden for utbetalingen";
+    private static final Map<String, String> TEKSTER = new DefaultTekstProvider().hentTekster("nb");
+    private static final String hentTekst(Tekstnokkel tekstnokkel) { return TEKSTER.get(tekstnokkel.getNokkel()); }
+
+    private static final String JA = hentTekst(SVAR_JA);
+    private static final String TITTEL = hentTekst(UTENLANDSK_KONTANTSTOTTE_TITTEL);
+    private static final String SPORSMAL = hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE);
+    private static final String FRITEKSTSPORSMAL = hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO);
+    private static final String NEI = hentTekst(SVAR_NEI);
 
     private Soknad soknad;
     private UtenlandskKontantstotte utenlandskKontantstotte;
-    private Map<String, String> tekster;
     private UtenlandskKontantstotteMapping mapping;
 
     @Before
@@ -36,13 +37,7 @@ public class UtenlandskKontantstotteMappingTest {
         utenlandskKontantstotte = new UtenlandskKontantstotte();
         soknad.utenlandskKontantstotte = utenlandskKontantstotte;
 
-        tekster = mockTekster(
-                tekst(UTENLANDSK_KONTANTSTOTTE_TITTEL, TITTEL),
-                tekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE, SPORSMAL),
-                tekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO, FRITEKSTSPORSMAL),
-                tekst(SVAR_NEI, NEI), tekst(SVAR_JA, JA));
-
-        mapping = new UtenlandskKontantstotteMapping(tekster);
+        mapping = new UtenlandskKontantstotteMapping(TEKSTER);
     }
 
     @Test
