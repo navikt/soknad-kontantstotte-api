@@ -2,8 +2,7 @@ package no.nav.kontantstotte.innsyn.service.rest;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
-import no.nav.kontantstotte.innsyn.domain.IInnsynServiceClient;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
@@ -19,11 +18,11 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
 
     private final Counter tpsInnysynSuccess = Metrics.counter("tps.innsyn.health", "response", "success");
     private final Counter tpsInnsynFailure = Metrics.counter("tps.innsyn.health", "response", "failure");
-    private final IInnsynServiceClient innsynServiceClient;
+    private final InnsynService innsynServiceClient;
 
     private Environment env;
 
-    InnsynRestHealthIndicator(IInnsynServiceClient innsynServiceClient) {
+    InnsynRestHealthIndicator(InnsynService innsynServiceClient) {
         this.innsynServiceClient = innsynServiceClient;
     }
 

@@ -33,10 +33,7 @@ class InnsynConverter {
         }
     }
 
-    static String formaterDato(String dato) {
-        DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        return LocalDate.parse(dato).format(pattern);
-    }
+    static final DateTimeFormatter DATO_PATTERN_SOKNAD = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     static Function<PersoninfoDto, Person> personinfoDtoToPerson = dto -> {
 
@@ -57,6 +54,6 @@ class InnsynConverter {
 
     static Function<RelasjonDto, Barn> relasjonDtoToBarn = dto -> new Barn.Builder()
                 .fulltnavn(dto.getForkortetNavn())
-                .fodselsdato(formaterDato(dto.getFoedselsdato()))
+                .fodselsdato(LocalDate.parse(dto.getFoedselsdato()).format(DATO_PATTERN_SOKNAD))
                 .build();
 }
