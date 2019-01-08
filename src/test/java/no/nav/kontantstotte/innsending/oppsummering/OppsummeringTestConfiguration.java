@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering;
 
-import no.nav.kontantstotte.innsending.oppsummering.html.OppsummeringHtmlGenerator;
 import no.nav.kontantstotte.innsending.oppsummering.html.OppsummeringHtmlTestConfiguration;
 import org.springframework.context.annotation.*;
 
@@ -24,13 +23,6 @@ public class OppsummeringTestConfiguration {
         byte[] b = readFile("oppsummering.pdf");
         when(service.genererPdf(any())).thenReturn(b);
         return service;
-    }
-
-    @Bean
-    public OppsummeringPdfGenerator oppsummeringService(
-            OppsummeringHtmlGenerator oppsummeringHtmlGenerator,
-            PdfConverter pdfConverter) {
-        return new OppsummeringPdfLagringOgGenerator(oppsummeringHtmlGenerator, pdfConverter);
     }
 
 

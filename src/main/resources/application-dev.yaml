@@ -5,6 +5,10 @@ no.nav.security.oidc:
      accepted_audience: aud-localhost
      cookie_name: localhost-idtoken
 
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
 UNLEASH_API_URL: http://localhost
 APP_NAME: soknad-kontantstotte-api
 
@@ -31,3 +35,4 @@ logging:
     org.glassfish.jersey.logging.LoggingFeature: DEBUG
     com.fasterxml: WARN
   config: classpath:logback-spring-test.xml
+
