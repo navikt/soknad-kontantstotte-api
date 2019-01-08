@@ -302,7 +302,8 @@
   ],
   "tekster": {
     "advarsel.barnehageplass.timerIBarnehage": "Du får ikke kontantstøtte hvis barnet har barnehageplass med mer enn 33 timer i uken. Det betyr at du ikke trenger å sende inn denne søknaden.",
-    "advarsel.flerebarn": "Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller søke på papir.",
+    "advarsel.flerebarn.utenlink": "Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller søke på papir.",
+    "advarsel.flerebarn.medlink": "<span>Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller <a href='https://www.nav.no/no/Person/Skjemaer-for-privatpersoner/skjemaveileder/vedlegg?key=235029&veiledertype=privatperson&method=mail' target='_blank'>søke på papir</a>.</span>",
     "app.avbryt": "Avbryt",
     "app.avbrytmodal.tekst": "Er du sikker på at du vil avbryte?",
     "app.avbrytmodal.avbryt": "Ja",
