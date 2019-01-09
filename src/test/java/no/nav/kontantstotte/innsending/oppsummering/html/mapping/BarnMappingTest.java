@@ -67,13 +67,13 @@ public class BarnMappingTest {
         assertThat(elementer)
                 .extracting("sporsmal", "svar", "advarsel")
                 .contains(
-                        tuple(NAVN, null, ADVARSEL));
+                        tuple(FODSELSDATO, null, ADVARSEL));
 
         innsendtBarn.erFlerling = "NEI";
         elementer = barnMapping.map(soknad).elementer;
         assertThat(elementer)
                 .extracting("sporsmal", "svar", "advarsel")
                 .contains(
-                        tuple(NAVN, null, null));
+                        tuple(FODSELSDATO, null, null));
     }
 }

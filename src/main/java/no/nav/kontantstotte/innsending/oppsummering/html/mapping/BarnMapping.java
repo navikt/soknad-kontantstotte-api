@@ -27,12 +27,12 @@ public class BarnMapping extends BolkMapping {
 
         Element innsendtBarn = "JA".equalsIgnoreCase(barn.erFlerling)
                 ? Element.nyttSvar(
-                        tekster.get(BARN_NAVN.getNokkel()),
-                        barn.navn,
+                        tekster.get(BARN_FODSELSDATO.getNokkel()),
+                        barn.fodselsdato,
                         tekster.get(BARN_ADVARSEL.getNokkel()))
-                : nyttElementMedVerdisvar.apply(BARN_NAVN, barn.navn);
+                : nyttElementMedVerdisvar.apply(BARN_FODSELSDATO, barn.fodselsdato);
+        barneBolk.elementer.add(nyttElementMedVerdisvar.apply(BARN_NAVN, barn.navn));
         barneBolk.elementer.add(innsendtBarn);
-        barneBolk.elementer.add(nyttElementMedVerdisvar.apply(BARN_FODSELSDATO, barn.fodselsdato));
 
         return barneBolk;
     }
