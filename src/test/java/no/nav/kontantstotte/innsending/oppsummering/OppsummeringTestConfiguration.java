@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 public class OppsummeringTestConfiguration {
 
     @Bean
-    @Profile("mockgen")
+    @Profile("mockgen-pdf")
     @Primary
     PdfConverter pdfGenService() throws IOException {
         PdfConverter service = mock(PdfConverter.class);

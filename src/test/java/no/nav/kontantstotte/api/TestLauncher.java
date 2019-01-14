@@ -4,6 +4,7 @@ import no.finn.unleash.FakeUnleash;
 import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringTestConfiguration;
+import no.nav.kontantstotte.innsyn.InnsynTestConfiguration;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.storage.s3.TestStorageConfiguration;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 
 import javax.annotation.PostConstruct;
 
@@ -23,7 +25,7 @@ import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOT
 import static org.mockito.Mockito.mock;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
-@Import({ApplicationConfig.class, OppsummeringTestConfiguration.class, TestStorageConfiguration.class})
+@Import({ApplicationConfig.class, OppsummeringTestConfiguration.class, InnsynTestConfiguration.class, TestStorageConfiguration.class})
 public class TestLauncher {
 
     public static void main(String... args) {
@@ -55,6 +57,7 @@ public class TestLauncher {
     }
 
     @Bean
+    @Profile("!mockgen-tps")
     @Primary
     public InnsynService innsynServiceClient() {
         return mock(InnsynService.class);
