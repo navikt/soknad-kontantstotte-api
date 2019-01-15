@@ -7,8 +7,8 @@ Backend for ny [kontantstøtte-søknad](https://github.com/navikt/soknad-kontant
 For å kjøre opp løsningen lokalt:
 
 ###Med mock: 
-* Edit Configurations -> VM Options: ``-Dspring.profiles.active=dev,mockgen`` evt lage springboot run-config med profile `dev,mockgen`
-* Kommer til å resultere i output av en TEST.pdf fil som kun er dummy-malen.
+* Edit Configurations -> VM Options: ``-Dspring.profiles.active=dev,mockgen-pdf,mockgen-tps`` evt lage springboot run-config med profile `dev,mockgen-pdf,mockgen-tps`
+* Kommer til å resultere i tvillinger uthentet i søknad (``mockgen-tps``) og output av en TEST.pdf fil som kun er dummy-malen (``mockgen-pdf``).
 * Apper som må kjøre i tillegg til api-et: _soknad-kontantstotte-proxy_
 
 ###Uten mock
