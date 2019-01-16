@@ -1,6 +1,6 @@
 FROM navikt/java:8-appdynamics
 
-COPY appdynamics.sh /init-scripts/
+COPY run-java.sh /init-scripts/
 
-ADD ./VERSION /app/VERSION
-COPY ./target/soknad-kontantstotte-api.jar "/app/app.jar"
+ADD ./VERSION VERSION
+COPY ./target/soknad-kontantstotte-api.jar app.jar
