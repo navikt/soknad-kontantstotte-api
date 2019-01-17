@@ -1,7 +1,6 @@
 FROM navikt/java:8-appdynamics
 
-ENV APPD_NAME=APP_NAME
-ADD run-java.sh run-java.sh
+COPY 20-appdynamics.sh /init-scripts/
 
-ADD ./VERSION VERSION
-COPY ./target/soknad-kontantstotte-api.jar app.jar
+ADD ./VERSION /app/VERSION
+COPY ./target/soknad-kontantstotte-api.jar "/app/app.jar"
