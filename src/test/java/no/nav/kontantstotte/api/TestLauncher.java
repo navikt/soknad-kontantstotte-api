@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_INTEGRASJON;
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
+import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
 import static org.mockito.Mockito.mock;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
