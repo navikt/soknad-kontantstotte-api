@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class BarnehageplassMapping extends BolkMapping {
@@ -55,7 +53,7 @@ public class BarnehageplassMapping extends BolkMapping {
                     );
                     break;
                 case harBarnehageplass:
-                    Element harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 && UnleashProvider.get().isEnabled(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL) ?
+                    Element harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 ?
                             Element.nyttSvar(
                                     tekster.get(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel()),
                                     barnehageplass.harBarnehageplassAntallTimer,

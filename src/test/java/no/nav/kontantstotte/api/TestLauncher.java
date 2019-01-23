@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Profile;
 import javax.annotation.PostConstruct;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_INTEGRASJON;
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static org.mockito.Mockito.mock;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
@@ -45,7 +44,6 @@ public class TestLauncher {
     @Bean
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();
-        fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
         fakeUnleash.enable(BRUK_TPS_INTEGRASJON);
         return fakeUnleash;
     }
