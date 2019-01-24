@@ -20,7 +20,7 @@ public class OppsummeringTestConfiguration {
     @Primary
     PdfConverter pdfGenService() throws IOException {
         PdfConverter service = mock(PdfConverter.class);
-        byte[] b = readFile("oppsummering.pdf");
+        byte[] b = readFile("dummy/pdf_dummy.pdf");
         when(service.genererPdf(any())).thenReturn(b);
         return service;
     }

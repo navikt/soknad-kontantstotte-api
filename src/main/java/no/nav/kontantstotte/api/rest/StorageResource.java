@@ -31,7 +31,7 @@ public class StorageResource {
     private final Storage storage;
 
     @Inject
-    StorageResource(@Named("encryptedStorage") Storage storage) {
+    StorageResource(@Named("attachmentStorage") Storage storage) {
         this.storage = storage;
     }
 
@@ -67,7 +67,7 @@ public class StorageResource {
 
         String directory = soknadsId + hentFnrFraToken();
         byte[] data = storage.get(directory, vedleggsId).orElse(null);
-        log.debug("Loaded file with {}" + data);
+        log.debug("Loaded file with {}", data);
         return data;
     }
 

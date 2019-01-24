@@ -1,20 +1,16 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.FakeUnleash;
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 import no.nav.kontantstotte.tekst.DefaultTekstProvider;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_OPPSUMMERING_ADVARSEL;
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
@@ -36,13 +32,8 @@ public class BarnehageplassMappingTest {
     private Barnehageplass barnehageplass;
     private BarnehageplassMapping barnehageplassMapping;
 
-    private FakeUnleash fakeUnleash;
-
     @Before
     public void setUp() {
-
-        fakeUnleash = new FakeUnleash();
-        UnleashProvider.initialize(fakeUnleash);
 
         barnehageplass = new Barnehageplass();
         soknad = new Soknad();
@@ -50,14 +41,8 @@ public class BarnehageplassMappingTest {
         barnehageplassMapping = new BarnehageplassMapping(TEKSTER);
     }
 
-    @After
-    public void tearDown() {
-        UnleashProvider.initialize(null);
-    }
-
     @Test
-    public void at_oppsummering_advarsel_paa_gir_advarsel() {
-        fakeUnleash.enable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
+    public void at_over_34_timer_gir_advarsel() {
 
         barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.harBarnehageplass;
         barnehageplass.harBarnehageplassAntallTimer = "34";
@@ -68,22 +53,6 @@ public class BarnehageplassMappingTest {
                 .extracting("sporsmal", "svar", "advarsel")
                 .contains(
                         tuple(ANTALL_TIMER, "34", HOYT_TIMEANTALL_ADVARSEL));
-
-    }
-
-    @Test
-    public void at_oppsummering_advarsel_av_ikke_gir_advarsel() {
-        fakeUnleash.disable(KONTANTSTOTTE_OPPSUMMERING_ADVARSEL);
-
-        barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.harBarnehageplass;
-        barnehageplass.harBarnehageplassAntallTimer = "34";
-
-        List<Element> elementer = barnehageplassMapping.map(soknad).elementer;
-
-        assertThat(elementer)
-                .extracting("sporsmal", "svar", "advarsel")
-                .contains(
-                        tuple(ANTALL_TIMER, "34", null));
 
     }
 

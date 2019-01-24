@@ -21,7 +21,7 @@ public class OppsummeringHtmlTestConfiguration {
     @Primary
     HtmlConverter htmlConverter() throws IOException {
         HtmlConverter service = mock(HtmlConverter.class);
-        byte[] b = readFile("oppsummering.html");
+        byte[] b = readFile("dummy/html_dummy.html");
         when(service.genererHtml(any())).thenReturn(b);
         return service;
     }

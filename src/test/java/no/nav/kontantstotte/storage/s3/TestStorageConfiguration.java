@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class TestStorageConfiguration {
 
-    @Bean(name = {"s3storage", "encryptedStorage"})
+    @Bean(name = {"s3storage", "encryptedStorage", "attachmentStorage"})
     @Primary
     public Storage storage() {
         return Mockito.mock(Storage.class);

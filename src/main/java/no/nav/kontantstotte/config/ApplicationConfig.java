@@ -4,6 +4,7 @@ import no.nav.kontantstotte.api.filter.SecurityHttpHeaderFilter;
 import no.nav.kontantstotte.config.toggle.FeatureToggleConfig;
 import no.nav.kontantstotte.innsending.InnsendingConfiguration;
 import no.nav.kontantstotte.innsyn.service.rest.InnsynRestConfiguration;
+import no.nav.kontantstotte.storage.attachment.AttachmentConfiguration;
 import no.nav.kontantstotte.storage.encryption.EncryptedStorageConfiguration;
 import no.nav.log.LogFilter;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
@@ -30,7 +31,7 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
-@Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class, EncryptedStorageConfiguration.class})
+@Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class, EncryptedStorageConfiguration.class, AttachmentConfiguration.class})
 @ComponentScan({"no.nav.kontantstotte.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 public class ApplicationConfig implements EnvironmentAware {
