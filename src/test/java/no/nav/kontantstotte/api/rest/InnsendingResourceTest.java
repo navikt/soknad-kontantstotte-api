@@ -44,6 +44,7 @@ public class InnsendingResourceTest extends JerseyTest {
     public void at_innsending_av_soknad_er_ok_med_bekreftelse() throws JsonProcessingException {
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+        soknadMedBekreftelse.veiledning.bekreftelse = "JA";
 
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenReturn(soknadMedBekreftelse);
@@ -62,6 +63,8 @@ public class InnsendingResourceTest extends JerseyTest {
     public void at_soknad_markeres_med_innsendingstidspunkt() throws JsonProcessingException {
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+        soknadMedBekreftelse.veiledning.bekreftelse = "JA";
+
 
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenReturn(soknadMedBekreftelse);

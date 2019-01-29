@@ -2,7 +2,8 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 public enum Tekstnokkel {
     TITTEL("kontantstotte.tittel"),
-    BEKREFTELSE("oppsummering.bekreftelse.label"),
+    BEKREFTELSE_PLIKTER("veiledningsside.bekreftelse.oppsummering"),
+    BEKREFTELSE_OPPLYSNINGER("oppsummering.bekreftelse.label"),
     INNSENDING_LABEL("oppsummering.innsendingsdato"),
     ENDRET_DATO("kontantstotte.endretDato"),
     ENDRET_LABEL("kontantstotte.endretDato.label"),
