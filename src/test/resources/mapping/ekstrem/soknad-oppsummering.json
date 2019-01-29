@@ -1,6 +1,9 @@
 {
   "soknad": {
     "innsendingsTidspunkt": "2018-10-10T11:23:03.181Z",
+    "veiledning": {
+      "bekreftelse": "JA"
+    },
     "barnehageplass": {
       "barnBarnehageplassStatus": "skalBegynneIBarnehage",
       "harBarnehageplass": "JA",
@@ -82,7 +85,7 @@
       "navn": "NAVN NAVNESEN"
     },
     "bekreftelse": {
-      "tekst": "Opplysningene jeg har oppgitt er riktige, og jeg har ikke holdt tilbake opplysninger som har betydning for retten jeg har til kontantstøtte",
+      "tekst": "Opplysningene jeg har oppgitt er riktige, og jeg har ikke holdt tilbake opplysninger som har betydning for retten jeg har til kontantstøtte<br><br>Jeg bekrefter at jeg har lest og forstått mine plikter",
       "verdi": null
     }
   },
@@ -457,11 +460,17 @@
     "utenlandskKontantstotte.mottarKontantstotteFraUtlandet.tilleggsinfo.sporsmal": "Oppgi land, beløp du får utbetalt og periode for utbetalingen",
     "utenlandskKontantstotte.tittel": "Kontantstøtte fra utlandet",
     "veiledningsside.knapp": "GÅ TIL SØKNAD",
+    "veiledningsside.bekreftelse.oppsummering": "Jeg bekrefter at jeg har lest og forstått mine plikter",
+    "veiledningsside.bekreftelse.oppsummering.hyperlenke": "Jeg bekrefter at jeg har lest og forstått <a href='https://www.nav.no/no/Person/Familie/Barnetrygd+og+kontantstotte/kontantstøtte#chapter-7' class='lenke' rel='noopener noreferrer' target='_blank'>mine plikter</a>",
+    "veiledningsside.bekreftelse.label": "Jeg bekrefter at jeg har lest og forstått",
+    "veiledningsside.bekreftelse.innhold": "For å gå videre med søknaden må du bekrefte at du har lest og forstått <a href='https://www.nav.no/no/Person/Familie/Barnetrygd+og+kontantstotte/kontantstøtte#chapter-7' class='lenke' rel='noopener noreferrer' target='_blank'>dine plikter</a>.",
+    "veiledningsside.bekreftelse.feilmelding": "Du må bekrefte at du har lest og forstått dine plikter for å gå videre.",
+    "veiledningsside.bekreftelse.tittel": "Plikter",
     "veiledningsside.personopplysning.innhold": "<h3>Slik behandler vi personopplysningene dine</h3><p>Vi innhenter og mottar opplysninger om deg når du sender inn en søknad. Det er nødvendig for at du skal kunne få riktige tjenester og ytelser.</p><p>Du har valgt å søke om kontantstøtte. Vilkårene står på <a href='https://www.nav.no/kontantstotte' target='_blank'>nav.no/kontantstotte</a>.</p><p>For å behandle søknaden din henter vi inn opplysninger om:</p><ul><li>arbeidsforholdene dine og inntekten din</li><li>barnet og den andre forelderen</li>    <li>tilknytningen din til Norge</li><li>trygdeordninger du kan ha rett til i andre land</li></ul><p>Vi kan også sende opplysninger om deg til trygdeordninger i andre land.</p><p>Hvis du sender inn søknaden, blir opplysningene du har gitt lagret i tråd med arkivloven. Hvis du avbryter søknaden, blir opplysningene du har registrert slettet.</p><p>Du kan lese mer om hvordan vi behandler personopplysninger i personvernerklæring på <a href='https://www.nav.no/personvern' target='_blank'>nav.no/personvern</a></p>",
     "veiledningsside.personopplysning.knapp": "Lukk",
     "veiledningsside.personopplysning.lenke": "Les mer om hvordan vi behandler personopplysninger",
-    "veiledningsside.veileder.hei": "Hei",
-    "veiledningsside.veileder.melding": "Her kan du prøve den nye søknaden vår på kontantstøtte",
+    "veiledningsside.veileder.hei": "Hei,",
+    "veiledningsside.veileder.melding": "Her kan du prøve den nye søknaden vår om kontantstøtte",
     "veiledningsside.vilkaar.info": "Før du søker ber vi deg lese vilkårene for å motta kontantstøtte. <a href='https://www.nav.no/no/Person/Familie/Barnetrygd+og+kontantstotte/kontantst%C3%B8tte' target='_blank'>Les mer om kontantstøtte.</a>"
   }
 }
