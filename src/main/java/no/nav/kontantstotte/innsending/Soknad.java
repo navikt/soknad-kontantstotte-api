@@ -10,6 +10,7 @@ import static java.time.Instant.now;
 
 public class Soknad {
 
+    public Veiledning veiledning;
     public String soknadsId;
     public Instant innsendingsTidspunkt;
     public Person person;
@@ -26,6 +27,7 @@ public class Soknad {
     public List<VedleggMetadata> vedlegg;
 
     public Soknad() {
+        this.veiledning = new Veiledning();
         this.person = new Person();
         this.kravTilSoker = new SokerKrav();
         this.familieforhold = new Familieforhold();
@@ -39,9 +41,11 @@ public class Soknad {
         this.vedlegg = new ArrayList<>();
     }
 
-    public boolean erGyldig() {
-        return this.oppsummering.erGyldig();
+    public boolean harBekreftetOpplysninger() {
+        return this.oppsummering.harBekreftetOpplysninger();
     }
+
+    public boolean harBekreftetPlikter() { return this.veiledning.harBekreftetPlikter(); }
 
     public void markerInnsendingsTidspunkt() {
         innsendingsTidspunkt = now();
