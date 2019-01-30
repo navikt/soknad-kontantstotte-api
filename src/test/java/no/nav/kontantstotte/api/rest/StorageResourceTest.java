@@ -12,6 +12,9 @@ import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.glassfish.jersey.logging.LoggingFeature;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.MultiPart;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,9 +32,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.Optional;
 
 import static javax.ws.rs.core.Response.Status.OK;
@@ -49,7 +50,6 @@ public class StorageResourceTest {
 
     public static final String INNLOGGET_BRUKER = "12345678911";
     private static final String VEDLEGGS_ID = "UUID123";
-    private static final String SOKNADS_ID = "SOKNAD123";
     private static final String TESTDATA = "TESTDATA123";
 
     @Value("${local.server.port}")
@@ -74,25 +74,25 @@ public class StorageResourceTest {
     }
 
     @Test
-    public void at_vedlegg_puttes_korrekt() throws UnsupportedEncodingException {
+    public void at_vedlegg_puttes_korrekt() throws IOException {
         Response response = postKall();
         AssertionsForClassTypes.assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
 
-        ArgumentCaptor<ByteArrayInputStream> streamCaptor = ArgumentCaptor.forClass(ByteArrayInputStream.class);
-        verify(attachmentStorage).put(eq(SOKNADS_ID+INNLOGGET_BRUKER), any(String.class), streamCaptor.capture());
+        ArgumentCaptor<InputStream> streamCaptor = ArgumentCaptor.forClass(InputStream.class);
+        verify(attachmentStorage).put(eq(INNLOGGET_BRUKER), any(String.class), streamCaptor.capture());
         String capturedStream = readStream(streamCaptor.getValue()).toString("UTF-8");
         assertThat(capturedStream).isEqualTo(TESTDATA);
     }
 
     @Test
-    public void at_vedlegg_hentes_korrekt() {
+    public void at_vedlegg_hentes_korrekt() throws IOException {
         byte[] streamedTestData = readStream(new ByteArrayInputStream(TESTDATA.getBytes())).toByteArray();
         when(attachmentStorage.get(any(), any())).thenReturn(Optional.ofNullable(streamedTestData));
 
         Response response = getKall();
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 
-        verify(attachmentStorage).get(eq(SOKNADS_ID+INNLOGGET_BRUKER), eq(VEDLEGGS_ID));
+        verify(attachmentStorage).get(eq(INNLOGGET_BRUKER), eq(VEDLEGGS_ID));
         assertThat(response.readEntity(String.class)).isEqualTo(TESTDATA);
     }
 
@@ -111,15 +111,20 @@ public class StorageResourceTest {
     }
 
     private Response postKall() {
-        WebTarget target = ClientBuilder.newClient().register(LoggingFeature.class).target("http://localhost:" + port + contextPath);
+        WebTarget target = ClientBuilder.newClient().register(LoggingFeature.class).register(MultiPartFeature.class).target("http://localhost:" + port + contextPath);
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
+
+        MultiPart multiPart = new MultiPart();
+        FormDataBodyPart bodyPart = new FormDataBodyPart("file", TESTDATA.getBytes(), MediaType.APPLICATION_OCTET_STREAM_TYPE);
+        multiPart.bodyPart(bodyPart);
+
         return target
-                .path("/vedlegg/"+SOKNADS_ID+"/filnavn.pdf")
+                .path("/vedlegg/")
                 .request()
                 .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
                 .header("Referer", "https://soknad-kontantstotte-t.nav.no/")
                 .header("Origin", "https://soknad-kontantstotte-t.nav.no")
-                .post(Entity.entity(TESTDATA.getBytes(), MediaType.APPLICATION_OCTET_STREAM));
+                .post(Entity.entity(multiPart, MediaType.MULTIPART_FORM_DATA_TYPE));
     }
 
 
@@ -127,7 +132,7 @@ public class StorageResourceTest {
         WebTarget target = ClientBuilder.newClient().register(LoggingFeature.class).target("http://localhost:" + port + contextPath);
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
         return target
-                .path("/vedlegg/"+SOKNADS_ID+"/"+VEDLEGGS_ID)
+                .path("/vedlegg/" + VEDLEGGS_ID)
                 .request(MediaType.APPLICATION_OCTET_STREAM)
                 .accept(MediaType.APPLICATION_OCTET_STREAM)
                 .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
@@ -136,7 +141,7 @@ public class StorageResourceTest {
                 .get();
     }
 
-    private ByteArrayOutputStream readStream(ByteArrayInputStream inputStream) {
+    private ByteArrayOutputStream readStream(InputStream inputStream) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int read;
         byte[] data = new byte[65536];
