@@ -41,11 +41,9 @@ public class Soknad {
         this.vedlegg = new ArrayList<>();
     }
 
-    public boolean harBekreftetOpplysninger() {
-        return this.oppsummering.harBekreftetOpplysninger();
+    public boolean erGyldig() {
+        return this.veiledning.erGyldig() && this.oppsummering.erGyldig();
     }
-
-    public boolean harBekreftetPlikter() { return this.veiledning.harBekreftetPlikter(); }
 
     public void markerInnsendingsTidspunkt() {
         innsendingsTidspunkt = now();

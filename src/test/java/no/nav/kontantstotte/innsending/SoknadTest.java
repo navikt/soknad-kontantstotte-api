@@ -15,15 +15,13 @@ public class SoknadTest {
         soknad.oppsummering.bekreftelse = "JA";
         soknad.veiledning = new Veiledning();
         soknad.veiledning.bekreftelse = "JA";
-        assertThat(soknad.harBekreftetOpplysninger()).isTrue();
-        assertThat(soknad.harBekreftetPlikter()).isTrue();
+        assertThat(soknad.erGyldig()).isTrue();
     }
 
     @Test
     public void at_soknad_er_ugyldig_uten_bekreftelse() {
         Soknad soknad = new Soknad();
-        assertThat(soknad.harBekreftetOpplysninger()).isFalse();
-        assertThat(soknad.harBekreftetPlikter()).isFalse();
+        assertThat(soknad.erGyldig()).isFalse();
     }
 
 }

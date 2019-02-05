@@ -40,7 +40,7 @@ public class InnsendingResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public InnsendingsResponsDto sendInnSoknad(@FormDataParam("soknad") Soknad soknad) {
 
-        if (!soknad.harBekreftetOpplysninger() || !soknad.harBekreftetPlikter()) {
+        if (!soknad.erGyldig()) {
             logger.info("Noen har forsøkt å sende inn en ugyldig søknad.");
             soknadSendtInnUgyldig.increment();
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
