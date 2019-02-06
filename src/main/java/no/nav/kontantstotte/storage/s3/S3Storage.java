@@ -10,6 +10,7 @@ import no.nav.kontantstotte.storage.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +41,7 @@ public class S3Storage implements Storage {
         toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
                 () -> new StorageException("Vedleggsfunksjonalitet er deaktivert"));
 
-        PutObjectResult result = s3.putObject(VEDLEGG_BUCKET, fileName(directory, key), data, new ObjectMetadata());
+        PutObjectResult result = s3.putObject(VEDLEGG_BUCKET, fileName(directory, key), new BufferedInputStream(data), new ObjectMetadata());
         log.debug("Stored file with size {}", result.getMetadata().getContentLength());
     }
 
