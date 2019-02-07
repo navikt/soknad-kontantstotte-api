@@ -1,19 +1,13 @@
 package no.nav.kontantstotte.storage.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectResult;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.*;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Optional;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
@@ -41,7 +35,11 @@ public class S3Storage implements Storage {
         toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
                 () -> new StorageException("Vedleggsfunksjonalitet er deaktivert"));
 
-        PutObjectResult result = s3.putObject(VEDLEGG_BUCKET, fileName(directory, key), new BufferedInputStream(data), new ObjectMetadata());
+        PutObjectRequest request = new PutObjectRequest(VEDLEGG_BUCKET, fileName(directory, key), data, new ObjectMetadata());
+        request.getRequestClientOptions().setReadLimit(50*1024*1024); // 50mb
+
+        PutObjectResult result = s3.putObject(request);
+
         log.debug("Stored file with size {}", result.getMetadata().getContentLength());
     }
 
