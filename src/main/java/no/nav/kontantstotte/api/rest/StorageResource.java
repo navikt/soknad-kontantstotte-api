@@ -6,13 +6,14 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -30,25 +31,36 @@ public class StorageResource {
     private static final Logger log = LoggerFactory.getLogger(StorageResource.class);
 
     private final Storage storage;
+    private int maxFileSize;
 
     @Inject
-    StorageResource(@Named("attachmentStorage") Storage storage) {
+    StorageResource(@Named("attachmentStorage") Storage storage,
+                    @Value("${attachment.max.size.mb}") int maxFileSize) {
         this.storage = storage;
+        this.maxFileSize = maxFileSize * 1024 * 1024;
     }
 
     @POST
     @Consumes(MULTIPART_FORM_DATA)
     @Produces(APPLICATION_JSON)
     public Map<String, String> addAttachment(
-            @FormDataParam("file") InputStream file,
+            @FormDataParam("file") byte[] bytes,
             @FormDataParam("file") FormDataContentDisposition fileDisposition
     ) {
 
+        log.debug("Vedlegg med lastet opp med størrelse: " +bytes.length);
+
         toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(() -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build()));
+
+        if (bytes.length > this.maxFileSize) {
+            throw new WebApplicationException(Response.status(Response.Status.REQUEST_ENTITY_TOO_LARGE).build());
+        }
 
         String directory = hentFnrFraToken();
 
         String uuid = UUID.randomUUID().toString();
+
+        ByteArrayInputStream file = new ByteArrayInputStream(bytes);
 
         storage.put(directory, uuid, file);
 

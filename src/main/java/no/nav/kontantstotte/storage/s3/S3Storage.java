@@ -18,14 +18,16 @@ public class S3Storage implements Storage {
     private static final Logger log = LoggerFactory.getLogger(S3Storage.class);
 
     private static final String VEDLEGG_BUCKET = "kontantstottevedlegg";
+    private final int maxFileSizeAfterEncryption;
+    private final static double ENCRYPTION_SIZE_FACTOR = 1.5;
 
     private final AmazonS3 s3;
 
-    S3Storage(AmazonS3 s3) {
+    S3Storage(AmazonS3 s3, int sizeMb) {
         this.s3 = s3;
 
         new S3Initializer(s3).initializeBucket(VEDLEGG_BUCKET);
-
+        maxFileSizeAfterEncryption = (int) (sizeMb * 1024 * 1024 * ENCRYPTION_SIZE_FACTOR);
         log.debug("S3 Storage initialized");
     }
 
@@ -36,7 +38,7 @@ public class S3Storage implements Storage {
                 () -> new StorageException("Vedleggsfunksjonalitet er deaktivert"));
 
         PutObjectRequest request = new PutObjectRequest(VEDLEGG_BUCKET, fileName(directory, key), data, new ObjectMetadata());
-        request.getRequestClientOptions().setReadLimit(50*1024*1024); // 50mb
+        request.getRequestClientOptions().setReadLimit(maxFileSizeAfterEncryption);
 
         PutObjectResult result = s3.putObject(request);
 

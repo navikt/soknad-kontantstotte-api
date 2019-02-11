@@ -31,10 +31,10 @@ public class S3InitializerTest {
     public void bucketIsCreatedwhenMissing() {
         assertThat(s3.listBuckets()).hasSize(0);
 
-        new S3Storage(s3);
+        new S3Storage(s3, 20);
         assertThat(s3.listBuckets()).hasSize(1);
 
-        new S3Storage(s3);
+        new S3Storage(s3, 20);
         assertThat(s3.listBuckets()).hasSize(1);
 
     }

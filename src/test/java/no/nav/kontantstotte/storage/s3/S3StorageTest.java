@@ -27,7 +27,7 @@ public class S3StorageTest {
                 localStackContainer.getEndpointConfiguration(S3),
                 localStackContainer.getDefaultCredentialsProvider());
 
-        storage = new S3Storage(s3);
+        storage = new S3Storage(s3, 20);
     }
 
     @Test
