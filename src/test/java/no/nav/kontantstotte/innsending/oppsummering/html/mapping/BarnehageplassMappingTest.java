@@ -38,7 +38,7 @@ public class BarnehageplassMappingTest {
         barnehageplass = new Barnehageplass();
         soknad = new Soknad();
         soknad.barnehageplass = barnehageplass;
-        barnehageplassMapping = new BarnehageplassMapping(TEKSTER);
+        barnehageplassMapping = new BarnehageplassMapping(new Tekster(TEKSTER));
     }
 
     @Test

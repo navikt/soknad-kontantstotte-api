@@ -35,7 +35,7 @@ public class UtenlandskeYtelserMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new UtenlandskeYtelserMapping(TEKSTER).map(soknad);
+        Bolk bolk = new UtenlandskeYtelserMapping(new Tekster(TEKSTER)).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -54,7 +54,7 @@ public class UtenlandskeYtelserMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new UtenlandskeYtelserMapping(TEKSTER).map(soknad);
+        Bolk bolk = new UtenlandskeYtelserMapping(new Tekster(TEKSTER)).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)

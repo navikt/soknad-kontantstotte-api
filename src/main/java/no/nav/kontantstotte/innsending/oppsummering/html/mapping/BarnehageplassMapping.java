@@ -7,21 +7,23 @@ import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class BarnehageplassMapping extends BolkMapping {
-    public BarnehageplassMapping(Map<String, String> tekster) {
+    public BarnehageplassMapping(Tekster tekster) {
         super(tekster);
     }
 
     @Override
     public Bolk map(Soknad soknad) {
         Bolk barnehageplassBolk = new Bolk();
-        Barnehageplass barnehageplass = soknad.barnehageplass;
 
-        barnehageplassBolk.tittel = tekster.get(BARNEHAGEPLASS_TITTEL.getNokkel());
+        boolean erFlerling = "JA".equalsIgnoreCase(soknad.mineBarn.erFlerling);
+        this.setBrukFlertall(erFlerling);
+
+        Barnehageplass barnehageplass = soknad.barnehageplass;
+        barnehageplassBolk.tittel = tekster.hentTekst(BARNEHAGEPLASS_TITTEL.getNokkel());
         barnehageplassBolk.elementer = new ArrayList<>();
 
         if("NEI".equalsIgnoreCase(barnehageplass.harBarnehageplass)){
@@ -55,9 +57,9 @@ public class BarnehageplassMapping extends BolkMapping {
                 case harBarnehageplass:
                     Element harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 ?
                             Element.nyttSvar(
-                                    tekster.get(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel()),
+                                    tekster.hentTekst(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel(), erFlerling),
                                     barnehageplass.harBarnehageplassAntallTimer,
-                                    tekster.get(BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL.getNokkel())
+                                    tekster.hentTekst(BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL.getNokkel(), erFlerling)
                             ) :
                             nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_ANTALL_TIMER, barnehageplass.harBarnehageplassAntallTimer);
 

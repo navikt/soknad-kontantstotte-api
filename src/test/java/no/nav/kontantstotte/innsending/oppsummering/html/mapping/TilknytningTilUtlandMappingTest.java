@@ -53,7 +53,7 @@ public class TilknytningTilUtlandMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new TilknytningTilUtlandMapping(TEKSTER).map(soknad);
+        Bolk bolk = new TilknytningTilUtlandMapping(new Tekster(TEKSTER)).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -72,7 +72,7 @@ public class TilknytningTilUtlandMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new TilknytningTilUtlandMapping(TEKSTER).map(soknad);
+        Bolk bolk = new TilknytningTilUtlandMapping(new Tekster(TEKSTER)).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
