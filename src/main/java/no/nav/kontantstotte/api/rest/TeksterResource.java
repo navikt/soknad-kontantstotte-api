@@ -3,13 +3,13 @@ package no.nav.kontantstotte.api.rest;
 import no.nav.kontantstotte.tekst.DefaultTekstProvider;
 import no.nav.kontantstotte.tekst.TekstProvider;
 import no.nav.security.oidc.api.Unprotected;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Map;
 
 @Component
@@ -20,6 +20,8 @@ public class TeksterResource {
 
     private final TekstProvider tekstProvider;
 
+    private final Logger logger = LoggerFactory.getLogger(TeksterResource.class);
+
     public TeksterResource() {
         this.tekstProvider = new DefaultTekstProvider();
     }
@@ -27,7 +29,12 @@ public class TeksterResource {
     @GET
     @Path("{language}")
     public Map<String, String> tekster(@PathParam("language") String sprak) {
-        return tekstProvider.hentTekster(sprak);
+        Map<String, String> tekster = tekstProvider.hentTekster(sprak);
+        if (tekster.isEmpty()) {
+            logger.info("Forsøkt å hente språk som ikke er støttet. Forsøkt språk: " + sprak);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return tekster;
     }
 
 }
