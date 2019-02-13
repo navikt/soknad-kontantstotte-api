@@ -1,4 +1,7 @@
 {
+  "veiledning": {
+    "bekreftelse": "JA"
+  },
   "barnehageplass": {
     "barnBarnehageplassStatus": "harBarnehageplass",
     "harBarnehageplass": "JA",

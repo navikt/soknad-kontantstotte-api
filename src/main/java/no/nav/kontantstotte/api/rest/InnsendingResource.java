@@ -45,7 +45,6 @@ public class InnsendingResource {
             soknadSendtInnUgyldig.increment();
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-
         soknad.markerInnsendingsTidspunkt();
         soknadSendtInn.increment();
         innsendingService.sendInnSoknad(soknad);
