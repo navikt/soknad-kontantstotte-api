@@ -49,6 +49,7 @@ class InnsynConverter {
                 .fornavn(dto.getNavn().getFornavn())
                 .mellomnavn(dto.getNavn().getMellomnavn())
                 .slektsnavn(dto.getNavn().getSlektsnavn())
+                .statsborgerskap(dto.getStatsborgerskap().getKode().getVerdi())
                 .build();
     };
 
