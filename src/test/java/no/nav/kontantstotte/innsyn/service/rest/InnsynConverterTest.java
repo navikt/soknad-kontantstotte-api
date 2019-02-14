@@ -52,6 +52,7 @@ public class InnsynConverterTest {
         assertThat(p.getFornavn()).isEqualTo(dto.getNavn().getFornavn());
         assertThat(p.getMellomnavn()).isEqualTo(dto.getNavn().getMellomnavn());
         assertThat(p.getSlektsnavn()).isEqualTo(dto.getNavn().getSlektsnavn());
+        assertThat(p.getStatsborgerskap()).isEqualTo(dto.getStatsborgerskap().getKode().getVerdi());
 
     }
 
@@ -64,6 +65,7 @@ public class InnsynConverterTest {
         assertThat(p.getFornavn()).isEqualTo(dto.getNavn().getFornavn());
         assertThat(p.getMellomnavn()).isEqualTo(dto.getNavn().getMellomnavn());
         assertThat(p.getSlektsnavn()).isEqualTo(dto.getNavn().getSlektsnavn());
+        assertThat(p.getStatsborgerskap()).isEqualTo(dto.getStatsborgerskap().getKode().getVerdi());
     }
 
     @Test
@@ -89,12 +91,21 @@ public class InnsynConverterTest {
         return dto;
     }
 
+    private KodeMedDatoOgKildeDto statsborgerskap1() {
+        KodeMedDatoOgKildeDto statsborgerskap = new KodeMedDatoOgKildeDto();
+        statsborgerskap.setKode(new KodeDto());
+        statsborgerskap.setDatoFraOgMed("");
+        statsborgerskap.setKilde("");
+        return statsborgerskap;
+    }
+
     private PersoninfoDto person1() {
         PersoninfoDto dto = new PersoninfoDto();
         NavnDto navn = new NavnDto();
         navn.setFornavn("fornavn1");
         navn.setSlektsnavn("etternavn1");
         dto.setNavn(navn);
+        dto.setStatsborgerskap(statsborgerskap1());
         return dto;
     }
 

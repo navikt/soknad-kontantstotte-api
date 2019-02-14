@@ -40,9 +40,9 @@ public class SokerResource {
         if(UnleashProvider.get().isEnabled(BRUK_TPS_INTEGRASJON)) {
             Person person = innsynServiceClient.hentPersonInfo(fnr);
             soknadApnet.increment();
-            return new SokerDto(fnr, person.getFornavn(), person.getFulltnavn());
+            return new SokerDto(fnr, person.getFornavn(), person.getFulltnavn(), person.getStatsborgerskap());
         } else {
-            return new SokerDto(fnr, null, null);
+            return new SokerDto(fnr, null, null, null);
         }
     }
 
