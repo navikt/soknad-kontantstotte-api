@@ -35,7 +35,7 @@ public class BarnMappingTest {
         innsendtBarn = new Barn();
         soknad = new Soknad();
         soknad.mineBarn = innsendtBarn;
-        barnMapping = new BarnMapping(TEKSTER);
+        barnMapping = new BarnMapping(new Tekster(TEKSTER));
     }
 
     @Test

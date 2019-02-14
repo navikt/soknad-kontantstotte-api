@@ -37,7 +37,7 @@ public class UtenlandskKontantstotteMappingTest {
         utenlandskKontantstotte = new UtenlandskKontantstotte();
         soknad.utenlandskKontantstotte = utenlandskKontantstotte;
 
-        mapping = new UtenlandskKontantstotteMapping(TEKSTER);
+        mapping = new UtenlandskKontantstotteMapping(new Tekster(TEKSTER));
     }
 
     @Test

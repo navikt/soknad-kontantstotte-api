@@ -6,12 +6,11 @@ import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.UtenlandskKontantstotte;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class UtenlandskKontantstotteMapping extends BolkMapping {
-    public UtenlandskKontantstotteMapping(Map<String, String> tekster) {
+    public UtenlandskKontantstotteMapping(Tekster tekster) {
         super(tekster);
     }
 
@@ -19,15 +18,15 @@ public class UtenlandskKontantstotteMapping extends BolkMapping {
     public Bolk map(Soknad soknad) {
         UtenlandskKontantstotte utenlandskKontantstotte = soknad.utenlandskKontantstotte;
         Bolk bolk = new Bolk();
-        bolk.tittel = tekster.get(UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel());
+        bolk.tittel = tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel());
         bolk.elementer = new ArrayList<>();
         if("NEI".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.get(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
-                    tekster.get(SVAR_NEI.getNokkel())));
+            bolk.elementer.add(Element.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
+                    tekster.hentTekst(SVAR_NEI.getNokkel())));
         }if("JA".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.get(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
-                    tekster.get(SVAR_JA.getNokkel())));
-            bolk.elementer.add(Element.nyttSvar(tekster.get(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO.getNokkel()),
+            bolk.elementer.add(Element.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
+                    tekster.hentTekst(SVAR_JA.getNokkel())));
+            bolk.elementer.add(Element.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO.getNokkel()),
                     utenlandskKontantstotte.mottarKontantstotteFraUtlandetTilleggsinfo));
         }
         return bolk;

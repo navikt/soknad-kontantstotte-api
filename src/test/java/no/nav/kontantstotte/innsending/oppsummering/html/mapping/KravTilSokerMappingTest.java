@@ -39,7 +39,7 @@ public class KravTilSokerMappingTest {
         kravTilSoker.skalBoMedBarnetINorgeNesteTolvMaaneder = "JA";
         soknad.kravTilSoker = kravTilSoker;
 
-        Bolk kravTilSokerBolk = new KravTilSokerMapping(TEKSTER).map(soknad);
+        Bolk kravTilSokerBolk = new KravTilSokerMapping(new Tekster(TEKSTER)).map(soknad);
 
         assertThat(kravTilSokerBolk)
                 .extracting("tittel", "undertittel")

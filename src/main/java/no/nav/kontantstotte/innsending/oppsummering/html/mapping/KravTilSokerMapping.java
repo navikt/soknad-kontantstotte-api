@@ -5,12 +5,11 @@ import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class KravTilSokerMapping extends BolkMapping {
-    public KravTilSokerMapping(Map<String, String> tekster) {
+    public KravTilSokerMapping(Tekster tekster) {
         super(tekster);
     }
 
@@ -18,7 +17,7 @@ public class KravTilSokerMapping extends BolkMapping {
     public Bolk map(Soknad soknad) {
         Bolk kravTilSokerBolk = new Bolk();
 
-        kravTilSokerBolk.tittel = tekster.get(KRAV_TIL_SOKER_TITTEL.getNokkel());
+        kravTilSokerBolk.tittel = tekster.hentTekst(KRAV_TIL_SOKER_TITTEL.getNokkel());
         kravTilSokerBolk.elementer = new ArrayList<>();
         kravTilSokerBolk.elementer.addAll(
                 Arrays.asList(

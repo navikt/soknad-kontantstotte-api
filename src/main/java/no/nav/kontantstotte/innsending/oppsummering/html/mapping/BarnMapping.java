@@ -6,13 +6,12 @@ import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Barn;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 
 public class BarnMapping extends BolkMapping {
-    public BarnMapping(Map<String, String> tekster) {
+    public BarnMapping(Tekster tekster) {
         super(tekster);
     }
 
@@ -21,15 +20,15 @@ public class BarnMapping extends BolkMapping {
         Bolk barneBolk = new Bolk();
         Barn barn = soknad.mineBarn;
 
-        barneBolk.tittel = tekster.get(BARN_TITTEL.getNokkel());
-        barneBolk.undertittel = tekster.get(BARN_UNDERTITTEL.getNokkel());
+        barneBolk.tittel = tekster.hentTekst(BARN_TITTEL.getNokkel());
+        barneBolk.undertittel = tekster.hentTekst(BARN_UNDERTITTEL.getNokkel());
         barneBolk.elementer = new ArrayList<>();
 
         Element innsendtBarn = "JA".equalsIgnoreCase(barn.erFlerling)
                 ? Element.nyttSvar(
-                        tekster.get(BARN_FODSELSDATO.getNokkel()),
+                        tekster.hentTekst(BARN_FODSELSDATO.getNokkel()),
                         barn.fodselsdato,
-                        tekster.get(BARN_ADVARSEL.getNokkel()))
+                        tekster.hentTekst(BARN_ADVARSEL.getNokkel()))
                 : nyttElementMedVerdisvar.apply(BARN_FODSELSDATO, barn.fodselsdato);
         barneBolk.elementer.add(nyttElementMedVerdisvar.apply(BARN_NAVN, barn.navn));
         barneBolk.elementer.add(innsendtBarn);
