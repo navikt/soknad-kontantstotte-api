@@ -56,8 +56,6 @@ public class SokerResourceTest {
         when(innsynServiceMock.hentPersonInfo(any())).thenReturn(new Person.Builder().build());
 
         Response response = kallEndepunkt();
-        System.out.println(response);
-        System.out.println(response.getEntity());
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
         SokerDto soker = response.readEntity(SokerDto.class);
@@ -90,6 +88,17 @@ public class SokerResourceTest {
         when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new FortroligAdresseException("Skjermet adresse"));
         Response response = kallEndepunkt();
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
+    }
+
+    @Test
+    public void at_land_mappes_korrekt() {
+        when(innsynServiceMock.hentPersonInfo(any())).thenReturn(new Person.Builder().statsborgerskap("NOR").build());
+
+        Response response = kallEndepunkt();
+
+        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
+        SokerDto soker = response.readEntity(SokerDto.class);
+        assertThat(soker.getStatsborgerskap()).isEqualTo("Norge");
     }
 
     private Response kallEndepunkt() {
