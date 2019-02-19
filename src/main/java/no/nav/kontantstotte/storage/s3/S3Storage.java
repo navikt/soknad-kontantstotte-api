@@ -27,7 +27,7 @@ public class S3Storage implements Storage {
         this.s3 = s3;
 
         new S3Initializer(s3).initializeBucket(VEDLEGG_BUCKET);
-        maxFileSizeAfterEncryption = (int) (sizeMb * 1024 * 1024 * ENCRYPTION_SIZE_FACTOR);
+        maxFileSizeAfterEncryption = (int) (sizeMb * 1000 * 1000 * ENCRYPTION_SIZE_FACTOR);
         log.debug("S3 Storage initialized");
     }
 

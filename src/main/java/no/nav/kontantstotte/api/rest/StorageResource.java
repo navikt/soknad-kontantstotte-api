@@ -37,7 +37,7 @@ public class StorageResource {
     StorageResource(@Named("attachmentStorage") Storage storage,
                     @Value("${attachment.max.size.mb}") int maxFileSize) {
         this.storage = storage;
-        this.maxFileSize = maxFileSize * 1024 * 1024;
+        this.maxFileSize = maxFileSize * 1000 * 1000;
     }
 
     @POST
