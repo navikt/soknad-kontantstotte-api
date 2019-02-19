@@ -35,7 +35,7 @@ public class FamilieforholdMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new FamilieforholdMapping(TEKSTER).map(soknad);
+        Bolk bolk = new FamilieforholdMapping(new Tekster(TEKSTER)).map(soknad);
         assertThat(bolk)
                 .extracting("tittel", "undertittel")
                 .containsExactly(TITTEL, null);
@@ -57,7 +57,7 @@ public class FamilieforholdMappingTest {
         familieforhold.annenForelderFodselsnummer = "XXXXXX";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new FamilieforholdMapping(TEKSTER).map(soknad);
+        Bolk bolk = new FamilieforholdMapping(new Tekster(TEKSTER)).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)

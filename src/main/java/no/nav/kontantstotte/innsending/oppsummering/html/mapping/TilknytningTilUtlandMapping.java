@@ -6,12 +6,11 @@ import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.TilknytningTilUtland;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class TilknytningTilUtlandMapping extends BolkMapping {
-    public TilknytningTilUtlandMapping(Map<String, String> tekster) {
+    public TilknytningTilUtlandMapping(Tekster tekster) {
         super(tekster);
     }
 
@@ -20,7 +19,7 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
         Bolk tilknytningTilUtlandBolk = new Bolk();
 
         TilknytningTilUtland tilknytningTilUtland = soknad.tilknytningTilUtland;
-        tilknytningTilUtlandBolk.tittel = tekster.get(TILKNYTNING_TIL_UTLAND_TITTEL.getNokkel());
+        tilknytningTilUtlandBolk.tittel = tekster.hentTekst(TILKNYTNING_TIL_UTLAND_TITTEL.getNokkel());
         tilknytningTilUtlandBolk.elementer = new ArrayList<>();
 
         String sokerBoddEllerJobbetINorgeMinstFemAar = tilknytningTilUtland.boddEllerJobbetINorgeMinstFemAar != null ?
@@ -43,9 +42,9 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
             case "NEI":
                 tilknytningTilUtlandBolk.elementer.add(
                                 Element.nyttSvar(
-                                        tekster.get(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR.getNokkel()),
+                                        tekster.hentTekst(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR.getNokkel()),
                                         tilknytningTilUtland.boddEllerJobbetINorgeMinstFemAar,
-                                        tekster.get(TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE_ADVARSEL.getNokkel())
+                                        tekster.hentTekst(TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE_ADVARSEL.getNokkel())
                                 )
                 );
                 break;
@@ -70,9 +69,9 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
                 case "NEI":
                     tilknytningTilUtlandBolk.elementer.add(
                                     Element.nyttSvar(
-                                            tekster.get(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR_ANNEN_FORELDER.getNokkel()),
-                                            tekster.get(TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE.getNokkel()),
-                                            tekster.get(TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE_ADVARSEL.getNokkel())
+                                            tekster.hentTekst(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR_ANNEN_FORELDER.getNokkel()),
+                                            tekster.hentTekst(TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE.getNokkel()),
+                                            tekster.hentTekst(TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE_ADVARSEL.getNokkel())
                                     )
                     );
                     break;

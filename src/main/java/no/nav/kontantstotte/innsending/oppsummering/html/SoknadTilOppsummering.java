@@ -47,11 +47,11 @@ class SoknadTilOppsummering {
         return new SoknadOppsummering(soknad,
                 person,
                 FORMATTER.format(soknad.innsendingsTidspunkt),
-                mapBolker(soknad, tekster),
+                mapBolker(soknad, new Tekster(tekster)),
                 tekster);
     }
 
-    private List<Bolk> mapBolker(Soknad soknad, Map<String, String> tekster) {
+    private List<Bolk> mapBolker(Soknad soknad, Tekster tekster) {
         return Arrays.asList(
                 new KravTilSokerMapping(tekster).map(soknad),
                 new BarnMapping(tekster).map(soknad),

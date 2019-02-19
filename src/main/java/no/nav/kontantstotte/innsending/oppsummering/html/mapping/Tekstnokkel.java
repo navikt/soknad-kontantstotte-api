@@ -34,7 +34,7 @@ public enum Tekstnokkel {
     FAMILIEFORHOLD_NAVN_ANNEN_FORELDER("oppsummering.familieforhold.annenForelderNavn.label"),
     FAMILIEFORHOLD_FNR_ANNEN_FORELDER("oppsummering.familieforhold.annenForelderFodselsnummer.label"),
     BARNEHAGEPLASS_TITTEL("barnehageplass.tittel"),
-    HAR_BARNEHAGEPLASS("oppsummering.barnehageplass.harBarnehageplass"),
+    HAR_BARNEHAGEPLASS("barnehageplass.harPlass"),
     BARN_BARNEHAGEPLASS_STATUS("barnehageplass.barnBarnehageplassStatus"),
     BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL("advarsel.barnehageplass.timerIBarnehage"),
     GAR_IKKE_I_BARNEHAGE("barnehageplass.garIkkeIBarnehage"),

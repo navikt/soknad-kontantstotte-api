@@ -1,17 +1,15 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.steg.ArbeidIUtlandet;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class ArbeidIUtlandetMapping extends BolkMapping {
-    public ArbeidIUtlandetMapping(Map<String, String> tekster) {
+    public ArbeidIUtlandetMapping(Tekster tekster) {
         super(tekster);
     }
 
@@ -20,7 +18,7 @@ public class ArbeidIUtlandetMapping extends BolkMapping {
         Bolk arbeidIUtlandetBolk = new Bolk();
 
         ArbeidIUtlandet arbeidIUtlandet = soknad.arbeidIUtlandet;
-        arbeidIUtlandetBolk.tittel = tekster.get(ARBEID_I_UTLANDET_TITTEL.getNokkel());
+        arbeidIUtlandetBolk.tittel = tekster.hentTekst(ARBEID_I_UTLANDET_TITTEL.getNokkel());
         arbeidIUtlandetBolk.elementer = new ArrayList<>();
 
         if ("NEI".equalsIgnoreCase(arbeidIUtlandet.arbeiderIUtlandetEllerKontinentalsokkel)) {

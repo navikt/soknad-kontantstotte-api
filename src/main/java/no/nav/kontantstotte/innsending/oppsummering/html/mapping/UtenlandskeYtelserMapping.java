@@ -5,12 +5,11 @@ import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.steg.UtenlandskeYtelser;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class UtenlandskeYtelserMapping extends BolkMapping {
-    public UtenlandskeYtelserMapping(Map<String, String> tekster) {
+    public UtenlandskeYtelserMapping(Tekster tekster) {
         super(tekster);
     }
 
@@ -20,7 +19,7 @@ public class UtenlandskeYtelserMapping extends BolkMapping {
         Bolk utenlandskeYtelserBolk = new Bolk();
 
         UtenlandskeYtelser utenlandskeYtelser = soknad.utenlandskeYtelser;
-        utenlandskeYtelserBolk.tittel = tekster.get(UTENLANDSKE_YTELSER_TITTEL.getNokkel());
+        utenlandskeYtelserBolk.tittel = tekster.hentTekst(UTENLANDSKE_YTELSER_TITTEL.getNokkel());
         utenlandskeYtelserBolk.elementer = new ArrayList<>();
 
         if ("NEI".equalsIgnoreCase(utenlandskeYtelser.mottarYtelserFraUtland)) {

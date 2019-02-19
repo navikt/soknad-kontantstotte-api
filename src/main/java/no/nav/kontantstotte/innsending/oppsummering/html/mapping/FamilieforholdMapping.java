@@ -5,20 +5,22 @@ import no.nav.kontantstotte.innsending.steg.Familieforhold;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class FamilieforholdMapping extends BolkMapping {
-    public FamilieforholdMapping(Map<String, String> tekster) {
+    public FamilieforholdMapping(Tekster tekster) {
         super(tekster);
     }
 
     @Override
     public Bolk map(Soknad soknad) {
         Bolk bolk = new Bolk();
+
+        this.setBrukFlertall( "JA".equalsIgnoreCase(soknad.mineBarn.erFlerling));
+
         Familieforhold familieforhold = soknad.familieforhold;
-        bolk.tittel = tekster.get(FAMILIEFORHOLD_TITTEL.getNokkel());
+        bolk.tittel = tekster.hentTekst(FAMILIEFORHOLD_TITTEL.getNokkel());
         bolk.elementer = new ArrayList<>();
 
         if("NEI".equalsIgnoreCase(familieforhold.borForeldreneSammenMedBarnet)){

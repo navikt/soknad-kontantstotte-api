@@ -35,7 +35,7 @@ public class ArbeidIUtlandetMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "NEI";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new ArbeidIUtlandetMapping(TEKSTER).map(soknad);
+        Bolk bolk = new ArbeidIUtlandetMapping(new Tekster(TEKSTER)).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
@@ -54,7 +54,7 @@ public class ArbeidIUtlandetMappingTest {
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         soknad.familieforhold = familieforhold;
 
-        Bolk bolk = new ArbeidIUtlandetMapping(TEKSTER).map(soknad);
+        Bolk bolk = new ArbeidIUtlandetMapping(new Tekster(TEKSTER)).map(soknad);
 
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
