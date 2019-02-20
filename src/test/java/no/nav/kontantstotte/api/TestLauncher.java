@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Profile;
 
 import javax.annotation.PostConstruct;
 
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_INTEGRASJON;
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
 import static org.mockito.Mockito.mock;
 
@@ -45,7 +44,6 @@ public class TestLauncher {
     @Bean
     Unleash fakeUnleash() {
         FakeUnleash fakeUnleash = new FakeUnleash();
-        fakeUnleash.enable(BRUK_TPS_INTEGRASJON);
         fakeUnleash.enable(KONTANTSTOTTE_VEDLEGG);
         return fakeUnleash;
     }

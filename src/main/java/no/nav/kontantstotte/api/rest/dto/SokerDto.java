@@ -14,15 +14,20 @@ public class SokerDto {
     @JsonProperty
     private final String fulltnavn;
 
+    @JsonProperty
+    private final String statsborgerskap;
+
     @JsonCreator
     public SokerDto(
             @JsonProperty("innloggetSom") String innloggetSom,
             @JsonProperty("fornavn") String fornavn,
-            @JsonProperty("fulltnavn") String fulltnavn) {
+            @JsonProperty("fulltnavn") String fulltnavn,
+            @JsonProperty("statsborgerskap") String statsborgerskap) {
 
         this.innloggetSom = innloggetSom;
         this.fornavn = fornavn;
         this.fulltnavn = fulltnavn;
+        this.statsborgerskap = statsborgerskap;
     }
 
     public String getInnloggetSom() {
@@ -35,5 +40,9 @@ public class SokerDto {
 
     public String getFulltnavn() {
         return fulltnavn;
+    }
+
+    public String getStatsborgerskap() {
+        return statsborgerskap;
     }
 }

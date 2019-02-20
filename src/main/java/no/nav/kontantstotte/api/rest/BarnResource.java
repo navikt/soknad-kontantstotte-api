@@ -1,7 +1,6 @@
 package no.nav.kontantstotte.api.rest;
 
 import no.nav.kontantstotte.api.rest.dto.BarnDto;
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_INTEGRASJON;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 
@@ -39,18 +37,14 @@ public class BarnResource {
     @GET
     public List<BarnDto> hentBarnInfoOmSoker() {
         String fnr = hentFnrFraToken();
-        if(UnleashProvider.get().isEnabled(BRUK_TPS_INTEGRASJON)) {
-            List<BarnDto> sokerBarn = innsynServiceClient.hentBarnInfo(fnr)
-                    .stream()
-                    .map(barn -> new BarnDto(
-                            barn.getFulltnavn(),
-                            barn.getFodselsdato(),
-                            false))
-                    .collect(Collectors.toList());
-            return genererReturBarn(sokerBarn);
-        } else {
-            return new ArrayList<>();
-        }
+        List<BarnDto> sokerBarn = innsynServiceClient.hentBarnInfo(fnr)
+                .stream()
+                .map(barn -> new BarnDto(
+                        barn.getFulltnavn(),
+                        barn.getFodselsdato(),
+                        false))
+                .collect(Collectors.toList());
+        return genererReturBarn(sokerBarn);
     }
 
     public static Set<Set<BarnDto>> powerSet(List<BarnDto> barnList) {
