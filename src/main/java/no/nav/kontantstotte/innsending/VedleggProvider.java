@@ -23,7 +23,7 @@ class VedleggProvider {
             return null;
         }
 
-        String directory = soknad.soknadsId + hentFnrFraToken();
+        String directory = hentFnrFraToken();
 
         return soknad.vedlegg.stream()
                 .map(v -> new VedleggDto(

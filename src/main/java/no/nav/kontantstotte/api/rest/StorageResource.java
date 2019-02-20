@@ -2,8 +2,11 @@ package no.nav.kontantstotte.api.rest;
 
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.security.oidc.api.ProtectedWithClaims;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -15,57 +18,72 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM;
+import static javax.ws.rs.core.MediaType.*;
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
 import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 @Component
 @Path("vedlegg")
-@ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
+@ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class StorageResource {
 
     private static final Logger log = LoggerFactory.getLogger(StorageResource.class);
 
     private final Storage storage;
+    private final int maxFileSize;
 
     @Inject
-    StorageResource(@Named("attachmentStorage") Storage storage) {
+    StorageResource(@Named("attachmentStorage") Storage storage,
+                    @Value("${attachment.max.size.mb}") int maxFileSizeMB) {
         this.storage = storage;
+        this.maxFileSize = maxFileSizeMB * 1000 * 1000;
     }
 
     @POST
-    @Consumes(APPLICATION_OCTET_STREAM)
+    @Consumes(MULTIPART_FORM_DATA)
     @Produces(APPLICATION_JSON)
-    @Path("{soknadsId}/{filnavn}")
     public Map<String, String> addAttachment(
-            @PathParam("soknadsId") String soknadsId,
-            byte[] data) {
+            @FormDataParam("file") byte[] bytes,
+            @FormDataParam("file") FormDataContentDisposition fileMetadata
+    ) {
 
-        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(() -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build()));
+        log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
 
-        String directory = soknadsId + hentFnrFraToken();
+        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
+                () -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build())
+        );
+
+        if (bytes.length > this.maxFileSize) {
+            throw new WebApplicationException(Response.status(Response.Status.REQUEST_ENTITY_TOO_LARGE).build());
+        }
+
+        String directory = hentFnrFraToken();
 
         String uuid = UUID.randomUUID().toString();
 
-        storage.put(directory, uuid, new ByteArrayInputStream(data));
+        ByteArrayInputStream file = new ByteArrayInputStream(bytes);
+
+        storage.put(directory, uuid, file);
 
         return new HashMap<String, String>() {{
             put("vedleggsId", uuid);
+            put("filnavn", fileMetadata.getFileName());
         }};
     }
 
     @GET
     @Produces(APPLICATION_OCTET_STREAM)
-    @Path("{soknadsId}/{vedleggsId}")
+    @Path("{vedleggsId}")
     public byte[] getAttachment(
-            @PathParam("soknadsId") String soknadsId,
-            @PathParam("vedleggsId") String vedleggsId) {
+            @PathParam("vedleggsId") String vedleggsId
+    ) {
 
-        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(() -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build()));
+        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
+                () -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build())
+        );
 
-        String directory = soknadsId + hentFnrFraToken();
+        String directory = hentFnrFraToken();
         byte[] data = storage.get(directory, vedleggsId).orElse(null);
         log.debug("Loaded file with {}", data);
         return data;
