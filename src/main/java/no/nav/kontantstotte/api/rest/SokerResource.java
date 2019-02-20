@@ -39,11 +39,19 @@ public class SokerResource {
 
     private final Counter soknadApnet = Metrics.counter("soknad.kontantstotte.apnet");
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static Map<String, String> landMap;
 
     @Inject
     public SokerResource(InnsynService innsynServiceClient) {
         this.innsynServiceClient = innsynServiceClient;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            this.landMap = mapper.readValue(
+                    SokerResource.class.getClassLoader().getResourceAsStream("tps/land-mapping.json"), new TypeReference<Map<String, String>>() {
+                    });
+        } catch (IOException e) {
+            logger.warn("Kunne ikke lese land-mapping. Statsborgerskap vil returneres som ISO-kode.");
+        }
     }
 
     @GET
@@ -59,15 +67,6 @@ public class SokerResource {
     }
 
     private String kodeTilLand(String landkode) {
-        String land = null;
-        try {
-            Map<String, String> landMap = mapper.readValue(
-                    SokerResource.class.getClassLoader().getResourceAsStream("tps/land-mapping.json"), new TypeReference<Map<String, String>>() {
-            });
-            land = landMap.get(landkode);
-        } catch (IOException e) {
-            logger.info("Kunne ikke mappe land. Landkode " + landkode + " returnert.");
-        }
-        return land != null ? land : landkode;
+        return landMap != null && landMap.containsKey(landkode) ? landMap.get(landkode) : landkode;
     }
 }
