@@ -12,6 +12,7 @@ import static org.testcontainers.containers.localstack.LocalStackContainer.Servi
 
 public class S3InitializerTest {
 
+    public static final int SIZE_MB = 20;
     @Rule
     public LocalStackContainer localStackContainer = new LocalStackContainer().withServices(S3);
 
@@ -31,10 +32,10 @@ public class S3InitializerTest {
     public void bucketIsCreatedwhenMissing() {
         assertThat(s3.listBuckets()).hasSize(0);
 
-        new S3Storage(s3);
+        new S3Storage(s3, SIZE_MB);
         assertThat(s3.listBuckets()).hasSize(1);
 
-        new S3Storage(s3);
+        new S3Storage(s3, SIZE_MB);
         assertThat(s3.listBuckets()).hasSize(1);
 
     }

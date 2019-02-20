@@ -1,18 +1,13 @@
 package no.nav.kontantstotte.storage.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectResult;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.*;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Optional;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
@@ -23,14 +18,16 @@ public class S3Storage implements Storage {
     private static final Logger log = LoggerFactory.getLogger(S3Storage.class);
 
     private static final String VEDLEGG_BUCKET = "kontantstottevedlegg";
+    private final int maxFileSizeAfterEncryption;
+    private final static double ENCRYPTION_SIZE_FACTOR = 1.5;
 
     private final AmazonS3 s3;
 
-    S3Storage(AmazonS3 s3) {
+    S3Storage(AmazonS3 s3, int maxFileSizeMB) {
         this.s3 = s3;
 
         new S3Initializer(s3).initializeBucket(VEDLEGG_BUCKET);
-
+        maxFileSizeAfterEncryption = (int) (maxFileSizeMB * 1000 * 1000 * ENCRYPTION_SIZE_FACTOR);
         log.debug("S3 Storage initialized");
     }
 
@@ -40,7 +37,11 @@ public class S3Storage implements Storage {
         toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
                 () -> new StorageException("Vedleggsfunksjonalitet er deaktivert"));
 
-        PutObjectResult result = s3.putObject(VEDLEGG_BUCKET, fileName(directory, key), data, new ObjectMetadata());
+        PutObjectRequest request = new PutObjectRequest(VEDLEGG_BUCKET, fileName(directory, key), data, new ObjectMetadata());
+        request.getRequestClientOptions().setReadLimit(maxFileSizeAfterEncryption);
+
+        PutObjectResult result = s3.putObject(request);
+
         log.debug("Stored file with size {}", result.getMetadata().getContentLength());
     }
 
