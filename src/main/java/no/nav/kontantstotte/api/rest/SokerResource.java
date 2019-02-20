@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.security.oidc.api.ProtectedWithClaims;
@@ -23,7 +22,6 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.Map;
 
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.BRUK_TPS_INTEGRASJON;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 
@@ -56,13 +54,10 @@ public class SokerResource {
     @GET
     public SokerDto hentPersonInfoOmSoker() {
         String fnr = hentFnrFraToken();
-        if(UnleashProvider.get().isEnabled(BRUK_TPS_INTEGRASJON)) {
-            Person person = innsynServiceClient.hentPersonInfo(fnr);
-            soknadApnet.increment();
-            return new SokerDto(fnr, person.getFornavn(), person.getFulltnavn(), kodeTilLand(person.getStatsborgerskap()));
-        } else {
-            return new SokerDto(fnr, null, null, null);
-        }
+
+        Person person = innsynServiceClient.hentPersonInfo(fnr);
+        soknadApnet.increment();
+        return new SokerDto(fnr, person.getFornavn(), person.getFulltnavn(), kodeTilLand(person.getStatsborgerskap()));
     }
 
     private String kodeTilLand(String landkode) {

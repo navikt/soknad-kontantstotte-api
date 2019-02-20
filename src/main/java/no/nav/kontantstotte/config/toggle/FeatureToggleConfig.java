@@ -22,7 +22,6 @@ public class FeatureToggleConfig {
     private static final String UNLEASH_API_URL_PROPERTY_NAME = "${UNLEASH_API_URL}";
     private static final String FASIT_ENVIRONMENT_NAME = "${FASIT_ENVIRONMENT_NAME}";
 
-    public static final String BRUK_TPS_INTEGRASJON = "kontantstotte.bruk.tps.integrasjon";
     public static final String KONTANTSTOTTE_VEDLEGG = "kontantstotte.bruk.vedlegg";
 
     @Inject
