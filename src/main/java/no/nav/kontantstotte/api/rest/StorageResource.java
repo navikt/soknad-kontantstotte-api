@@ -25,19 +25,19 @@ import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 @Component
 @Path("vedlegg")
-@ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
+@ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class StorageResource {
 
     private static final Logger log = LoggerFactory.getLogger(StorageResource.class);
 
     private final Storage storage;
-    private int maxFileSize;
+    private final int maxFileSize;
 
     @Inject
     StorageResource(@Named("attachmentStorage") Storage storage,
-                    @Value("${attachment.max.size.mb}") int maxFileSize) {
+                    @Value("${attachment.max.size.mb}") int maxFileSizeMB) {
         this.storage = storage;
-        this.maxFileSize = maxFileSize * 1000 * 1000;
+        this.maxFileSize = maxFileSizeMB * 1000 * 1000;
     }
 
     @POST
@@ -45,12 +45,14 @@ public class StorageResource {
     @Produces(APPLICATION_JSON)
     public Map<String, String> addAttachment(
             @FormDataParam("file") byte[] bytes,
-            @FormDataParam("file") FormDataContentDisposition fileDisposition
+            @FormDataParam("file") FormDataContentDisposition fileMetadata
     ) {
 
-        log.debug("Vedlegg med lastet opp med størrelse: " +bytes.length);
+        log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
 
-        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(() -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build()));
+        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
+                () -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build())
+        );
 
         if (bytes.length > this.maxFileSize) {
             throw new WebApplicationException(Response.status(Response.Status.REQUEST_ENTITY_TOO_LARGE).build());
@@ -66,7 +68,7 @@ public class StorageResource {
 
         return new HashMap<String, String>() {{
             put("vedleggsId", uuid);
-            put("filnavn", fileDisposition.getFileName());
+            put("filnavn", fileMetadata.getFileName());
         }};
     }
 
@@ -77,7 +79,9 @@ public class StorageResource {
             @PathParam("vedleggsId") String vedleggsId
     ) {
 
-        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(() -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build()));
+        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
+                () -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build())
+        );
 
         String directory = hentFnrFraToken();
         byte[] data = storage.get(directory, vedleggsId).orElse(null);
