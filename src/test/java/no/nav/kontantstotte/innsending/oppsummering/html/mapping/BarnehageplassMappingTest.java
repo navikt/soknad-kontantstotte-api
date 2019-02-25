@@ -4,7 +4,7 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
-import no.nav.kontantstotte.tekst.DefaultTekstProvider;
+import no.nav.kontantstotte.tekst.TekstService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.tuple;
 
 public class BarnehageplassMappingTest {
 
-    private static final Map<String, String> TEKSTER = new DefaultTekstProvider().hentTekster("nb");
+    private static final Map<String, String> TEKSTER = new TekstService().hentTekster("nb");
     private static final String hentTekst(Tekstnokkel tekstnokkel) { return TEKSTER.get(tekstnokkel.getNokkel()); }
 
     private static final String NEI = hentTekst(SVAR_NEI);

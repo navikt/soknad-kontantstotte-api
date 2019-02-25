@@ -7,7 +7,7 @@ import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
-import no.nav.kontantstotte.tekst.TekstProvider;
+import no.nav.kontantstotte.tekst.TekstService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +30,7 @@ public class SoknadTilOppsummeringJsonTest {
     @Before
     public void setup() {
 
-        soknadTilOppsummering = new SoknadTilOppsummering(new TekstProvider("mapping_tekster", "nb"), innsynServiceClient);
+        soknadTilOppsummering = new SoknadTilOppsummering(new TekstService("mapping_tekster", "mapping_land", "nb"), innsynServiceClient);
 
         mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());

@@ -7,7 +7,7 @@ import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Familieforhold;
 import no.nav.kontantstotte.innsending.steg.TilknytningTilUtland;
-import no.nav.kontantstotte.tekst.DefaultTekstProvider;
+import no.nav.kontantstotte.tekst.TekstService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.tuple;
 
 public class TilknytningTilUtlandMappingTest {
 
-    private static final Map<String, String> TEKSTER = new DefaultTekstProvider().hentTekster("nb");
+    private static final Map<String, String> TEKSTER = new TekstService().hentTekster("nb");
     private static final String hentTekst(Tekstnokkel tekstnokkel) { return TEKSTER.get(tekstnokkel.getNokkel()); }
 
     private final String sporsmal = hentTekst(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR);

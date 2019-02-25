@@ -4,7 +4,8 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
-import no.nav.kontantstotte.tekst.TekstProvider;
+import no.nav.kontantstotte.tekst.TekstService;
+import no.nav.kontantstotte.tekst.TekstService;
 import org.junit.Test;
 
 import java.util.AbstractMap;
@@ -32,7 +33,7 @@ public class SoknadTilOppsummeringTest {
         Soknad soknad = new Soknad();
         soknad.markerInnsendingsTidspunkt();
 
-        TekstProvider tekstProvider = mock(TekstProvider.class);
+        TekstService tekstService = mock(TekstService.class);
         Map<String, String> tekster = tekster(
                 tekst(KRAV_TIL_SOKER_TITTEL),
                 tekst(BARN_TITTEL),
@@ -43,10 +44,10 @@ public class SoknadTilOppsummeringTest {
                 tekst(UTENLANDSKE_YTELSER_TITTEL),
                 tekst(UTENLANDSK_KONTANTSTOTTE_TITTEL)
         );
-        when(tekstProvider.hentTekster(any())).thenReturn(tekster);
+        when(tekstService.hentTekster(any())).thenReturn(tekster);
         when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().build());
 
-        SoknadOppsummering oppsummering = new SoknadTilOppsummering(tekstProvider, innsynServiceClient).map(
+        SoknadOppsummering oppsummering = new SoknadTilOppsummering(tekstService, innsynServiceClient).map(
                 soknad,
                 fnr);
 
