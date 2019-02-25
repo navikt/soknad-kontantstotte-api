@@ -13,27 +13,27 @@ import java.util.Map;
 
 @Component
 @Produces(MediaType.APPLICATION_JSON)
-@Path("tekster")
+@Path("land")
 @Unprotected
-public class TeksterResource {
+public class LandResource {
 
     private final TekstService tekstService;
 
-    private final Logger logger = LoggerFactory.getLogger(TeksterResource.class);
+    private final Logger logger = LoggerFactory.getLogger(LandResource.class);
 
-    public TeksterResource() {
+    public LandResource() {
         this.tekstService = new TekstService();
     }
 
     @GET
     @Path("{language}")
     public Map<String, String> tekster(@PathParam("language") String sprak) {
-        Map<String, String> tekster = tekstService.hentTekster(sprak);
-        if (tekster == null) {
-            logger.info("Forsøkt å hente tekster på språk som ikke er støttet. Forsøkt språk: " + sprak);
+        Map<String, String> landMap = tekstService.hentLand(sprak);
+        if (landMap == null) {
+            logger.info("Forsøkt å hente land på språk som ikke er støttet. Forsøkt språk: " + sprak);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
-        return tekster;
+        return landMap;
     }
 
 }
