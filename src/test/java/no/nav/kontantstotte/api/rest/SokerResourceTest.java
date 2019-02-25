@@ -90,17 +90,6 @@ public class SokerResourceTest {
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
     }
 
-    @Test
-    public void at_land_mappes_korrekt() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenReturn(new Person.Builder().statsborgerskap("NOR").build());
-
-        Response response = kallEndepunkt();
-
-        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
-        SokerDto soker = response.readEntity(SokerDto.class);
-        assertThat(soker.getStatsborgerskap()).isEqualTo("Norge");
-    }
-
     private Response kallEndepunkt() {
 
         WebTarget target = ClientBuilder.newClient().register(LoggingFeature.class).target("http://localhost:" + port + contextPath);
