@@ -18,6 +18,13 @@ public class Element {
         return element;
     }
 
+    public static Element nyttSvar(String sporsmal, List<String> svarListe) {
+        Element element = new Element();
+        element.sporsmal = sporsmal;
+        element.svarListe = svarListe;
+        return element;
+    }
+
     @JsonProperty("sporsmal")
     public String sporsmal;
 
@@ -27,6 +34,9 @@ public class Element {
     @JsonProperty("advarsel")
     public String advarsel;
 
+    @JsonProperty("svarListe")
+    public List<String> svarListe;
+
     @JsonProperty("underelementer")
     public List<Element> underelementer;
 
@@ -35,6 +45,7 @@ public class Element {
         return "Element{" +
                 "sporsmal='" + sporsmal + '\'' +
                 ", svar='" + svar + '\'' +
+                ", svarListe='" + svarListe.toString() + '\'' +
                 ", underelementer=" + underelementer +
                 '}';
     }

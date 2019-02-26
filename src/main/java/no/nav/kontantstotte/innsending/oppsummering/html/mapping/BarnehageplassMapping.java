@@ -1,12 +1,14 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.kontantstotte.innsending.VedleggMetadata;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
@@ -41,7 +43,8 @@ public class BarnehageplassMapping extends BolkMapping {
                         Arrays.asList(
                             nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_DATO, barnehageplass.harSluttetIBarnehageDato),
                             nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_ANTALL_TIMER, barnehageplass.harSluttetIBarnehageAntallTimer),
-                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_KOMMUNE, barnehageplass.harSluttetIBarnehageKommune)
+                            nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_KOMMUNE, barnehageplass.harSluttetIBarnehageKommune),
+                            nyttElementMedListe.apply(HAR_SLUTTET_I_BARNEHAGE_VEDLEGG, barnehageplass.harSluttetIBarnehageVedlegg.stream().map(VedleggMetadata::getFilnavn).collect(Collectors.toList()))
                         )
                     );
                     break;
@@ -50,7 +53,8 @@ public class BarnehageplassMapping extends BolkMapping {
                         Arrays.asList(
                             nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_DATO, barnehageplass.skalSlutteIBarnehageDato),
                             nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER, barnehageplass.skalSlutteIBarnehageAntallTimer),
-                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE, barnehageplass.skalSlutteIBarnehageKommune)
+                            nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE, barnehageplass.skalSlutteIBarnehageKommune),
+                            nyttElementMedListe.apply(SKAL_SLUTTE_I_BARNEHAGE_VEDLEGG, barnehageplass.skalSlutteIBarnehageVedlegg.stream().map(VedleggMetadata::getFilnavn).collect(Collectors.toList()))
                         )
                     );
                     break;
