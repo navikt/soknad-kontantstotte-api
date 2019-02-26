@@ -15,11 +15,11 @@ class VedleggDto {
 
     VedleggDto(
             byte[] data,
-            String tittel,
-            String dokumenttype) {
+            String tittel
+    ) {
         this.data = data;
         this.tittel = tittel;
-        this.dokumenttype = dokumenttype;
+        this.dokumenttype = "PDF";
     }
 
     byte[] getData() {
@@ -28,10 +28,6 @@ class VedleggDto {
 
     String getTittel() {
         return tittel;
-    }
-
-    String getDokumenttype() {
-        return dokumenttype;
     }
 
 }
