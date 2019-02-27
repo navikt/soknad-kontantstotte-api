@@ -1,7 +1,11 @@
 package no.nav.kontantstotte.innsending.steg;
 
 
+import no.nav.kontantstotte.innsending.VedleggMetadata;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
@@ -14,12 +18,19 @@ public class Barnehageplass {
     public String harSluttetIBarnehageKommune;
     public String harSluttetIBarnehageAntallTimer;
     public String harSluttetIBarnehageDato;
+    public List<VedleggMetadata> harSluttetIBarnehageVedlegg;
     public String skalBegynneIBarnehageKommune;
     public String skalBegynneIBarnehageAntallTimer;
     public String skalBegynneIBarnehageDato;
     public String skalSlutteIBarnehageKommune;
     public String skalSlutteIBarnehageAntallTimer;
     public String skalSlutteIBarnehageDato;
+    public List<VedleggMetadata> skalSlutteIBarnehageVedlegg;
+
+    public Barnehageplass() {
+        this.harSluttetIBarnehageVedlegg = new ArrayList<>();
+        this.skalSlutteIBarnehageVedlegg = new ArrayList<>();
+    }
 
     public enum BarnehageplassVerdier {
         garIkkeIBarnehage("garIkkeIBarnehage", GAR_IKKE_I_BARNEHAGE),

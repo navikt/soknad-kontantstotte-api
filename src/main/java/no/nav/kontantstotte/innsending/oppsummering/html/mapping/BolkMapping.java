@@ -4,6 +4,7 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -12,6 +13,7 @@ public abstract class BolkMapping {
     Function<Tekstnokkel, Element> nyttElementMedSvar;
     BiFunction<Tekstnokkel, Tekstnokkel, Element> nyttElementMedTekstsvar;
     BiFunction<Tekstnokkel, String, Element> nyttElementMedVerdisvar;
+    BiFunction<Tekstnokkel, List<String>, Element> nyttElementMedListe;
     static boolean brukFlertall;
 
     BolkMapping(Tekster tekster) {
@@ -19,6 +21,7 @@ public abstract class BolkMapping {
         this.nyttElementMedSvar = opprettElementMedSvar(tekster);
         this.nyttElementMedTekstsvar = opprettElementMedTekster(tekster);
         this.nyttElementMedVerdisvar = opprettElementMedVerdier(tekster);
+        this.nyttElementMedListe = opprettElementMedListe(tekster);
     }
 
     abstract Bolk map(Soknad soknad);
@@ -43,6 +46,14 @@ public abstract class BolkMapping {
                 Element.nyttSvar(
                         tekster.hentTekst(sporsmal.getNokkel(), brukFlertall),
                         svar);
+    }
+
+    public static BiFunction<Tekstnokkel, List<String>, Element> opprettElementMedListe(Tekster tekster) {
+        return (Tekstnokkel sporsmal, List<String> list) ->
+                Element.nyttSvar(
+                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall),
+                        list
+                );
     }
 
     public void setBrukFlertall(boolean brukFlertall) {
