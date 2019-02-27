@@ -10,16 +10,12 @@ class VedleggDto {
     @JsonProperty
     private final String tittel;
 
-    @JsonProperty
-    private final String dokumenttype;
-
     VedleggDto(
             byte[] data,
             String tittel
     ) {
         this.data = data;
         this.tittel = tittel;
-        this.dokumenttype = "PDF";
     }
 
     byte[] getData() {
