@@ -47,7 +47,7 @@ public class SoknadTilOppsummeringJsonTest {
         Soknad soknad = mapper.readValue(new File(getFile("mapping/enkel/soknad.json")), Soknad.class);
         SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/enkel/soknad-oppsummering.json")), SoknadOppsummering.class);
 
-        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").build());
+        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").statsborgerskap("NOR").build());
         SoknadOppsummering actual = soknadTilOppsummering.map(soknad, "XXXXXXXXXX");
 
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(oppsummering);
@@ -58,7 +58,7 @@ public class SoknadTilOppsummeringJsonTest {
         Soknad soknad = mapper.readValue(new File(getFile("mapping/komplett/soknad.json")), Soknad.class);
         SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/komplett/soknad-oppsummering.json")), SoknadOppsummering.class);
 
-        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").build());
+        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").statsborgerskap("NOR").build());
         SoknadOppsummering actual = soknadTilOppsummering.map(soknad, "XXXXXXXXXX");
 
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(oppsummering);
@@ -69,7 +69,7 @@ public class SoknadTilOppsummeringJsonTest {
         Soknad soknad = mapper.readValue(new File(getFile("mapping/ekstrem/soknad.json")), Soknad.class);
         SoknadOppsummering oppsummering = mapper.readValue(new File(getFile("mapping/ekstrem/soknad-oppsummering.json")), SoknadOppsummering.class);
 
-        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").build());
+        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").statsborgerskap("NOR").build());
         SoknadOppsummering actual = soknadTilOppsummering.map(soknad, "XXXXXXXXXX");
 
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(oppsummering);

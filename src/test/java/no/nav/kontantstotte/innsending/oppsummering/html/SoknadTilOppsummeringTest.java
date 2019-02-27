@@ -5,7 +5,6 @@ import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.kontantstotte.tekst.TekstService;
-import no.nav.kontantstotte.tekst.TekstService;
 import org.junit.Test;
 
 import java.util.AbstractMap;
