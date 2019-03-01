@@ -4,30 +4,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class VedleggMetadata {
 
-    private final String vedleggsId;
+    private final String filreferanse;
 
-    private final String tittel;
-
-    private final String dokumenttype;
+    private final String filnavn;
 
     public VedleggMetadata(
-            @JsonProperty("vedleggsId") String vedleggsId,
-            @JsonProperty("tittel") String tittel,
-            @JsonProperty("dokumenttype") String dokumenttype) {
-        this.vedleggsId = vedleggsId;
-        this.tittel = tittel;
-        this.dokumenttype = dokumenttype;
+            @JsonProperty("filreferanse") String filreferanse,
+            @JsonProperty("filnavn") String filnavn
+    ) {
+        this.filreferanse = filreferanse;
+        this.filnavn = filnavn;
     }
 
-    public String getVedleggsId() {
-        return vedleggsId;
+    public String getFilreferanse() {
+        return filreferanse;
     }
 
-    public String getTittel() {
-        return tittel;
-    }
-
-    public String getDokumenttype() {
-        return dokumenttype;
+    public String getFilnavn() {
+        return filnavn;
     }
 }

@@ -43,9 +43,10 @@ public class VedleggProviderTest {
 
         Soknad soknad = new Soknad();
 
-        soknad.vedlegg = Arrays.asList(
-                new VedleggMetadata("abc", "tittel1", "vedlegg1"),
-                new VedleggMetadata("ced", "tittel2", "vedlegg2"));
+        soknad.barnehageplass.skalSlutteIBarnehageVedlegg = Arrays.asList(
+                new VedleggMetadata("1234-1234-1234", "fil1.pdf"),
+                new VedleggMetadata("5678-5678-5678", "fil2.pdf")
+        );
 
         when(storage.get(any(), any())).thenReturn(Optional.of("test".getBytes()));
 

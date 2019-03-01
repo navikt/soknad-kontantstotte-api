@@ -50,6 +50,7 @@ public enum Tekstnokkel {
     HAR_SLUTTET_I_BARNEHAGE_DATO("barnehageplass.harSluttetIBarnehage.dato.sporsmal"),
     HAR_SLUTTET_I_BARNEHAGE_ANTALL_TIMER("barnehageplass.harSluttetIBarnehage.antallTimer.sporsmal"),
     HAR_SLUTTET_I_BARNEHAGE_KOMMUNE("barnehageplass.harSluttetIBarnehage.kommune.sporsmal"),
+    HAR_SLUTTET_I_BARNEHAGE_VEDLEGG("barnehageplass.harSluttetIBarnehage.vedlegg.sporsmal"),
 
     SKAL_BEGYNNE_I_BARNEHAGE_DATO("barnehageplass.skalBegynneIBarnehage.dato.sporsmal"),
     SKAL_BEGYNNE_I_BARNEHAGE_ANTALL_TIMER("barnehageplass.skalBegynneIBarnehage.antallTimer.sporsmal"),
@@ -58,6 +59,7 @@ public enum Tekstnokkel {
     SKAL_SLUTTE_I_BARNEHAGE_DATO("barnehageplass.skalSlutteIBarnehage.dato.sporsmal"),
     SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER("barnehageplass.skalSlutteIBarnehage.antallTimer.sporsmal"),
     SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE("barnehageplass.skalSlutteIBarnehage.kommune.sporsmal"),
+    SKAL_SLUTTE_I_BARNEHAGE_VEDLEGG("barnehageplass.skalSlutteIBarnehage.vedlegg.sporsmal"),
 
     ARBEID_I_UTLANDET_TITTEL("arbeidIUtlandet.tittel"),
     ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET("arbeidIUtlandet.arbeiderAnnenForelderIUtlandet.sporsmal"),

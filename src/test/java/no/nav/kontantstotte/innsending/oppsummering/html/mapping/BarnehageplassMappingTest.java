@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.kontantstotte.innsending.VedleggMetadata;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
@@ -8,6 +9,7 @@ import no.nav.kontantstotte.tekst.TekstService;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +29,8 @@ public class BarnehageplassMappingTest {
     private static final String BARN_BARNEHAGEPLASS_STATUS_SVAR = hentTekst(GAR_IKKE_I_BARNEHAGE);
     private static final String ANTALL_TIMER = hentTekst(HAR_BARNEHAGEPLASS_ANTALL_TIMER);
     private static final String HOYT_TIMEANTALL_ADVARSEL = hentTekst(BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL);
+    private static final String HAR_SLUTTET_VEDLEGG = hentTekst(HAR_SLUTTET_I_BARNEHAGE_VEDLEGG);
+    private static final String SKAL_SLUTTE_VEDLEGG = hentTekst(SKAL_SLUTTE_I_BARNEHAGE_VEDLEGG);
 
     private Soknad soknad;
     private Barnehageplass barnehageplass;
@@ -79,4 +83,41 @@ public class BarnehageplassMappingTest {
                         tuple(BARN_HAR_BARNEHAGEPLASS, NEI),
                         tuple(BARN_BARNEHAGEPLASS_STATUS_SPORMAL, BARN_BARNEHAGEPLASS_STATUS_SVAR));
     }
+
+    @Test
+    public void skal_ha_vedlegg_naar_barnet_har_sluttet_i_barnehage() {
+        barnehageplass.harBarnehageplass = "NEI";
+        barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.harSluttetIBarnehage;
+        barnehageplass.harSluttetIBarnehageVedlegg = Arrays.asList(
+                new VedleggMetadata("abcd", "file1.pdf"),
+                new VedleggMetadata("efgh", "file2.pdf")
+        );
+
+        Bolk bolk = barnehageplassMapping.map(soknad);
+        List<Element> elementer = bolk.elementer;
+        assertThat(elementer)
+                .extracting("sporsmal", "svarListe")
+                .contains(
+                        tuple(HAR_SLUTTET_VEDLEGG, Arrays.asList("file1.pdf", "file2.pdf"))
+                );
+    }
+
+    @Test
+    public void skal_ha_vedlegg_naar_barnet_skal_slutte_i_barnehage() {
+        barnehageplass.harBarnehageplass = "JA";
+        barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.skalSlutteIBarnehage;
+        barnehageplass.skalSlutteIBarnehageVedlegg = Arrays.asList(
+                new VedleggMetadata("abcd", "file1.pdf"),
+                new VedleggMetadata("efgh", "file2.pdf")
+        );
+
+        Bolk bolk = barnehageplassMapping.map(soknad);
+        List<Element> elementer = bolk.elementer;
+        assertThat(elementer)
+                .extracting("sporsmal", "svarListe")
+                .contains(
+                        tuple(SKAL_SLUTTE_VEDLEGG, Arrays.asList("file1.pdf", "file2.pdf"))
+                );
+    }
+
 }
