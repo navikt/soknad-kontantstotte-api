@@ -29,14 +29,6 @@ public class TeksterResource {
     }
 
     @GET
-    @Path("{language}")
-    public Map<String, Map<String, String>> tekster(@PathParam("language") String sprak) {
-        return new HashMap<String, Map<String,String>>() {{
-            put(sprak, teksterPaSprak(sprak));
-        }};
-    }
-
-    @GET
     public Map<String, Map<String, String>> tekster() {
         Map<String, Map<String,String>> teksterAlleSprak = new HashMap<>();
         for (String sprak : VALID_LANGUAGES) {

@@ -29,14 +29,6 @@ public class LandResource {
     }
 
     @GET
-    @Path("{language}")
-    public Map<String, Map<String, String>> land(@PathParam("language") String sprak) {
-        return new HashMap<String, Map<String,String>>() {{
-            put(sprak, landPaSprak(sprak));
-        }};
-    }
-
-    @GET
     public Map<String, Map<String, String>> land() {
         Map<String, Map<String,String>> landAlleSprak = new HashMap<>();
         for (String sprak : VALID_LANGUAGES) {
