@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.Map;
 
 @Component
@@ -16,6 +17,8 @@ import java.util.Map;
 @Path("tekster")
 @Unprotected
 public class TeksterResource {
+
+    private static final String[] VALID_LANGUAGES = { "nb", "nn" };
 
     private final TekstService tekstService;
 
@@ -27,7 +30,22 @@ public class TeksterResource {
 
     @GET
     @Path("{language}")
-    public Map<String, String> tekster(@PathParam("language") String sprak) {
+    public Map<String, Map<String, String>> tekster(@PathParam("language") String sprak) {
+        return new HashMap<String, Map<String,String>>() {{
+            put(sprak, teksterPaSprak(sprak));
+        }};
+    }
+
+    @GET
+    public Map<String, Map<String, String>> tekster() {
+        Map<String, Map<String,String>> teksterAlleSprak = new HashMap<>();
+        for (String sprak : VALID_LANGUAGES) {
+            teksterAlleSprak.put(sprak, teksterPaSprak(sprak));
+        }
+        return teksterAlleSprak;
+    }
+
+    private Map<String, String> teksterPaSprak(String sprak) {
         Map<String, String> tekster = tekstService.hentTekster(sprak);
         if (tekster == null) {
             logger.info("Forsøkt å hente tekster på språk som ikke er støttet. Forsøkt språk: " + sprak);
@@ -35,5 +53,4 @@ public class TeksterResource {
         }
         return tekster;
     }
-
 }

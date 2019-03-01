@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.Map;
 
 @Component
@@ -16,6 +17,8 @@ import java.util.Map;
 @Path("land")
 @Unprotected
 public class LandResource {
+
+    private static final String[] VALID_LANGUAGES = { "nb", "nn" };
 
     private final TekstService tekstService;
 
@@ -27,13 +30,28 @@ public class LandResource {
 
     @GET
     @Path("{language}")
-    public Map<String, String> tekster(@PathParam("language") String sprak) {
-        Map<String, String> landMap = tekstService.hentLand(sprak);
-        if (landMap == null) {
+    public Map<String, Map<String, String>> land(@PathParam("language") String sprak) {
+        return new HashMap<String, Map<String,String>>() {{
+            put(sprak, landPaSprak(sprak));
+        }};
+    }
+
+    @GET
+    public Map<String, Map<String, String>> land() {
+        Map<String, Map<String,String>> landAlleSprak = new HashMap<>();
+        for (String sprak : VALID_LANGUAGES) {
+            landAlleSprak.put(sprak, landPaSprak(sprak));
+        }
+        return landAlleSprak;
+    }
+
+    private Map<String, String> landPaSprak(String sprak) {
+        Map<String, String> land = tekstService.hentLand(sprak);
+        if (land == null) {
             logger.info("Forsøkt å hente land på språk som ikke er støttet. Forsøkt språk: " + sprak);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
-        return landMap;
+        return land;
     }
 
 }
