@@ -24,16 +24,18 @@ public class TeksterResource {
 
     private final Logger logger = LoggerFactory.getLogger(TeksterResource.class);
 
+    private Map<String, Map<String,String>> teksterAlleSprak;
+
     public TeksterResource() {
         this.tekstService = new TekstService();
+        this.teksterAlleSprak = new HashMap<>();
+        for (String sprak : VALID_LANGUAGES) {
+            teksterAlleSprak.put(sprak, teksterPaSprak(sprak));
+        }
     }
 
     @GET
     public Map<String, Map<String, String>> tekster() {
-        Map<String, Map<String,String>> teksterAlleSprak = new HashMap<>();
-        for (String sprak : VALID_LANGUAGES) {
-            teksterAlleSprak.put(sprak, teksterPaSprak(sprak));
-        }
         return teksterAlleSprak;
     }
 

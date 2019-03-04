@@ -24,16 +24,18 @@ public class LandResource {
 
     private final Logger logger = LoggerFactory.getLogger(LandResource.class);
 
+    private Map<String, Map<String,String>> landAlleSprak;
+
     public LandResource() {
         this.tekstService = new TekstService();
+        this.landAlleSprak = new HashMap<>();
+        for (String sprak : VALID_LANGUAGES) {
+            landAlleSprak.put(sprak, landPaSprak(sprak));
+        }
     }
 
     @GET
     public Map<String, Map<String, String>> land() {
-        Map<String, Map<String,String>> landAlleSprak = new HashMap<>();
-        for (String sprak : VALID_LANGUAGES) {
-            landAlleSprak.put(sprak, landPaSprak(sprak));
-        }
         return landAlleSprak;
     }
 

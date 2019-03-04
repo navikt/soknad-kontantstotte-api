@@ -4,9 +4,9 @@ import java.util.Map;
 
 public class TekstService {
 
-    private static TekstProvider teksterProvider;
+    private TekstProvider teksterProvider;
 
-    private static TekstProvider landProvider;
+    private TekstProvider landProvider;
 
     private static final String DEFAULT_TEKSTER_BUNDLE = "tekster";
 
