@@ -2,13 +2,10 @@ package no.nav.kontantstotte.api.rest;
 
 import no.nav.kontantstotte.tekst.TekstService;
 import no.nav.security.oidc.api.Unprotected;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,28 +19,18 @@ public class LandResource {
 
     private final TekstService tekstService;
 
-    private final Logger logger = LoggerFactory.getLogger(LandResource.class);
+    private Map<String, Map<String,String>> landAlleSprak;
 
     public LandResource() {
         this.tekstService = new TekstService();
+        this.landAlleSprak = new HashMap<>();
+        for (String sprak : VALID_LANGUAGES) {
+            landAlleSprak.put(sprak, tekstService.hentLand(sprak));
+        }
     }
 
     @GET
     public Map<String, Map<String, String>> land() {
-        Map<String, Map<String,String>> landAlleSprak = new HashMap<>();
-        for (String sprak : VALID_LANGUAGES) {
-            landAlleSprak.put(sprak, landPaSprak(sprak));
-        }
         return landAlleSprak;
     }
-
-    private Map<String, String> landPaSprak(String sprak) {
-        Map<String, String> land = tekstService.hentLand(sprak);
-        if (land == null) {
-            logger.info("Forsøkt å hente land på språk som ikke er støttet. Forsøkt språk: " + sprak);
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
-        return land;
-    }
-
 }
