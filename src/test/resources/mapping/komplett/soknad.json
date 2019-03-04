@@ -3,20 +3,31 @@
     "bekreftelse": "JA"
   },
   "barnehageplass": {
-    "barnBarnehageplassStatus": "harBarnehageplass",
+    "barnBarnehageplassStatus": "skalSlutteIBarnehage",
     "harBarnehageplass": "JA",
-    "harBarnehageplassAntallTimer": "40",
-    "harBarnehageplassDato": "01.01.2019",
-    "harBarnehageplassKommune": "Oslo",
+    "harBarnehageplassAntallTimer": "",
+    "harBarnehageplassDato": "",
+    "harBarnehageplassKommune": "",
     "harSluttetIBarnehageAntallTimer": "",
     "harSluttetIBarnehageDato": "",
     "harSluttetIBarnehageKommune": "",
+    "harSluttetIBarnehageVedlegg": [],
     "skalBegynneIBarnehageAntallTimer": "",
     "skalBegynneIBarnehageDato": "",
     "skalBegynneIBarnehageKommune": "",
-    "skalSlutteIBarnehageAntallTimer": "",
-    "skalSlutteIBarnehageDato": "",
-    "skalSlutteIBarnehageKommune": ""
+    "skalSlutteIBarnehageAntallTimer": "5",
+    "skalSlutteIBarnehageDato": "01.01.2019",
+    "skalSlutteIBarnehageKommune": "Oslo",
+    "skalSlutteIBarnehageVedlegg": [
+      {
+        "filnavn":"Vedlegg1.pdf",
+        "filreferanse":"AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"
+      },
+      {
+        "filnavn":"Vedlegg2.png",
+        "filreferanse":"AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAB"
+      }
+    ]
   },
   "familieforhold": {
     "annenForelderFodselsnummer": "ZZZZZZZZZZ",

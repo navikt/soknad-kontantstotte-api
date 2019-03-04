@@ -2,7 +2,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
-import no.nav.kontantstotte.innsending.oppsummering.html.Element;
+import no.nav.kontantstotte.innsending.oppsummering.html.SvarElement;
 import no.nav.kontantstotte.innsending.steg.UtenlandskKontantstotte;
 
 import java.util.ArrayList;
@@ -21,12 +21,12 @@ public class UtenlandskKontantstotteMapping extends BolkMapping {
         bolk.tittel = tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel());
         bolk.elementer = new ArrayList<>();
         if("NEI".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
+            bolk.elementer.add(SvarElement.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
                     tekster.hentTekst(SVAR_NEI.getNokkel())));
         }if("JA".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
+            bolk.elementer.add(SvarElement.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
                     tekster.hentTekst(SVAR_JA.getNokkel())));
-            bolk.elementer.add(Element.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO.getNokkel()),
+            bolk.elementer.add(SvarElement.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO.getNokkel()),
                     utenlandskKontantstotte.mottarKontantstotteFraUtlandetTilleggsinfo));
         }
         return bolk;

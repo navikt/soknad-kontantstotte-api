@@ -2,7 +2,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
-import no.nav.kontantstotte.innsending.oppsummering.html.Element;
+import no.nav.kontantstotte.innsending.oppsummering.html.SvarElement;
 import no.nav.kontantstotte.innsending.steg.TilknytningTilUtland;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
                 break;
             case "NEI":
                 tilknytningTilUtlandBolk.elementer.add(
-                                Element.nyttSvar(
+                                SvarElement.nyttSvar(
                                         tekster.hentTekst(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR.getNokkel()),
                                         tilknytningTilUtland.boddEllerJobbetINorgeMinstFemAar,
                                         tekster.hentTekst(TILKNYTNING_TIL_UTLAND_SOKER_IKKE_BODD_I_NORGE_ADVARSEL.getNokkel())
@@ -68,7 +68,7 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
                     break;
                 case "NEI":
                     tilknytningTilUtlandBolk.elementer.add(
-                                    Element.nyttSvar(
+                                    SvarElement.nyttSvar(
                                             tekster.hentTekst(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR_ANNEN_FORELDER.getNokkel()),
                                             tekster.hentTekst(TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE.getNokkel()),
                                             tekster.hentTekst(TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE_ADVARSEL.getNokkel())

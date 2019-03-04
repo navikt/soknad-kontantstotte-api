@@ -96,7 +96,7 @@ public class BarnehageplassMappingTest {
         Bolk bolk = barnehageplassMapping.map(soknad);
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
-                .extracting("sporsmal", "svarListe")
+                .extracting("sporsmal", "svar")
                 .contains(
                         tuple(HAR_SLUTTET_VEDLEGG, Arrays.asList("file1.pdf", "file2.pdf"))
                 );
@@ -114,7 +114,7 @@ public class BarnehageplassMappingTest {
         Bolk bolk = barnehageplassMapping.map(soknad);
         List<Element> elementer = bolk.elementer;
         assertThat(elementer)
-                .extracting("sporsmal", "svarListe")
+                .extracting("sporsmal", "svar")
                 .contains(
                         tuple(SKAL_SLUTTE_VEDLEGG, Arrays.asList("file1.pdf", "file2.pdf"))
                 );
