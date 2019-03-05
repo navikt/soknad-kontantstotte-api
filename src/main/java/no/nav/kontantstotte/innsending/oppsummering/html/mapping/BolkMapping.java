@@ -2,8 +2,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
-import no.nav.kontantstotte.innsending.oppsummering.html.SvarElement;
-import no.nav.kontantstotte.innsending.oppsummering.html.VedleggElement;
+import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -11,10 +10,10 @@ import java.util.function.Function;
 
 public abstract class BolkMapping {
     Tekster tekster;
-    Function<Tekstnokkel, SvarElement> nyttElementMedSvar;
-    BiFunction<Tekstnokkel, Tekstnokkel, SvarElement> nyttElementMedTekstsvar;
-    BiFunction<Tekstnokkel, String, SvarElement> nyttElementMedVerdisvar;
-    BiFunction<Tekstnokkel, List<String>, VedleggElement> nyttElementMedListe;
+    Function<Tekstnokkel, Element> nyttElementMedSvar;
+    BiFunction<Tekstnokkel, Tekstnokkel, Element> nyttElementMedTekstsvar;
+    BiFunction<Tekstnokkel, String, Element> nyttElementMedVerdisvar;
+    BiFunction<Tekstnokkel, List<String>, Element> nyttElementMedListe;
     static boolean brukFlertall;
 
     BolkMapping(Tekster tekster) {
@@ -27,29 +26,28 @@ public abstract class BolkMapping {
 
     abstract Bolk map(Soknad soknad);
 
-    public static Function<Tekstnokkel, SvarElement> opprettElementMedSvar(Tekster tekster) {
-        return (Tekstnokkel svar) -> SvarElement.nyttSvar(tekster.hentTekst(svar.getNokkel(), brukFlertall));
+    public static Function<Tekstnokkel, Element> opprettElementMedSvar(Tekster tekster) {
+        return (Tekstnokkel svar) -> Element.nyttSvar(tekster.hentTekst(svar.getNokkel(), brukFlertall));
     }
 
-    public static BiFunction<Tekstnokkel, Tekstnokkel, SvarElement> opprettElementMedTekster(Tekster tekster) {
+    public static BiFunction<Tekstnokkel, Tekstnokkel, Element> opprettElementMedTekster(Tekster tekster) {
         return (Tekstnokkel sporsmal, Tekstnokkel svar) ->
-                SvarElement.nyttSvar(
-                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall),
-                        tekster.hentTekst(svar.getNokkel(), brukFlertall));
+                Element.nyttSvar(
+                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall), tekster.hentTekst(svar.getNokkel(), brukFlertall)
+                );
     }
 
-    public static BiFunction<Tekstnokkel, String, SvarElement> opprettElementMedVerdier(Tekster tekster) {
+    public static BiFunction<Tekstnokkel, String, Element> opprettElementMedVerdier(Tekster tekster) {
         return (Tekstnokkel sporsmal, String svar) ->
-                SvarElement.nyttSvar(
-                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall),
-                        svar);
+                Element.nyttSvar(
+                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall), svar
+                );
     }
 
-    public static BiFunction<Tekstnokkel, List<String>, VedleggElement> opprettElementMedListe(Tekster tekster) {
+    public static BiFunction<Tekstnokkel, List<String>, Element> opprettElementMedListe(Tekster tekster) {
         return (Tekstnokkel sporsmal, List<String> list) ->
-                VedleggElement.nyttSvar(
-                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall),
-                        list
+                Element.nyttSvar(
+                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall), list
                 );
     }
 

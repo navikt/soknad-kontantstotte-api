@@ -3,7 +3,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.VedleggMetadata;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
-import no.nav.kontantstotte.innsending.oppsummering.html.SvarElement;
+import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 
 import java.util.ArrayList;
@@ -59,8 +59,8 @@ public class BarnehageplassMapping extends BolkMapping {
                     );
                     break;
                 case harBarnehageplass:
-                    SvarElement harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 ?
-                            SvarElement.nyttSvar(
+                    Element harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 ?
+                            Element.nyttSvar(
                                     tekster.hentTekst(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel(), erFlerling),
                                     barnehageplass.harBarnehageplassAntallTimer,
                                     tekster.hentTekst(BARNEHAGEPLASS_HOYT_TIMEANTALL_ADVARSEL.getNokkel(), erFlerling)
