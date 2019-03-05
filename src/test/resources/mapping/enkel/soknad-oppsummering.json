@@ -86,7 +86,8 @@
     },
     "person": {
       "fnr": "XXXXXXXXXX",
-      "navn": "NAVN NAVNESEN"
+      "navn": "NAVN NAVNESEN",
+      "statsborgerskap": "Norge"
     },
     "bekreftelse": {
       "tekst": "Opplysningene jeg har oppgitt er riktige, og jeg har ikke holdt tilbake opplysninger som har betydning for retten jeg har til kontantstøtte<br><br>Jeg bekrefter at jeg har lest og forstått mine plikter",

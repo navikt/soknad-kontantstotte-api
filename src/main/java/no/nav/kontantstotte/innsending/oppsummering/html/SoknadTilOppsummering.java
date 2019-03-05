@@ -4,7 +4,7 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.*;
 import no.nav.kontantstotte.innsending.steg.Person;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
-import no.nav.kontantstotte.tekst.TekstProvider;
+import no.nav.kontantstotte.tekst.TekstService;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -32,18 +32,23 @@ class SoknadTilOppsummering {
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
             .withZone(ZoneId.of("Europe/Paris"));
 
-    private final TekstProvider tekstProvider;
+    private final TekstService tekstService;
 
     private final InnsynService innsynServiceClient;
 
-    public SoknadTilOppsummering(TekstProvider tekstProvider, InnsynService innsynServiceClient) {
-        this.tekstProvider = tekstProvider;
+    public SoknadTilOppsummering(TekstService tekstService, InnsynService innsynServiceClient) {
+        this.tekstService = tekstService;
         this.innsynServiceClient = innsynServiceClient;
     }
 
     public SoknadOppsummering map(Soknad soknad, String fnr) {
-        Map<String, String> tekster = tekstProvider.hentTekster(soknad.sprak);
-        Person person = new Person(fnr, innsynServiceClient.hentPersonInfo(fnr).getFulltnavn());
+        Map<String, String> tekster = tekstService.hentTekster(soknad.sprak);
+        Map<String, String> land = tekstService.hentLand(soknad.sprak);
+
+        Person person = new Person(fnr,
+                innsynServiceClient.hentPersonInfo(fnr).getFulltnavn(),
+                land.get(innsynServiceClient.hentPersonInfo(fnr).getStatsborgerskap()));
+
         return new SoknadOppsummering(soknad,
                 person,
                 FORMATTER.format(soknad.innsendingsTidspunkt),

@@ -11,26 +11,26 @@ import java.util.Map;
 
 @Component
 @Produces(MediaType.APPLICATION_JSON)
-@Path("tekster")
+@Path("land")
 @Unprotected
-public class TeksterResource {
+public class LandResource {
 
     private static final String[] VALID_LANGUAGES = { "nb", "nn" };
 
     private final TekstService tekstService;
 
-    private Map<String, Map<String,String>> teksterAlleSprak;
+    private Map<String, Map<String,String>> landAlleSprak;
 
-    public TeksterResource() {
+    public LandResource() {
         this.tekstService = new TekstService();
-        this.teksterAlleSprak = new HashMap<>();
+        this.landAlleSprak = new HashMap<>();
         for (String sprak : VALID_LANGUAGES) {
-            teksterAlleSprak.put(sprak, tekstService.hentTekster(sprak));
+            landAlleSprak.put(sprak, tekstService.hentLand(sprak));
         }
     }
 
     @GET
-    public Map<String, Map<String, String>> tekster() {
-        return teksterAlleSprak;
+    public Map<String, Map<String, String>> land() {
+        return landAlleSprak;
     }
 }
