@@ -27,10 +27,8 @@
     },
     "kravTilSoker": {
       "barnIkkeHjemme": "JA",
-      "boddEllerJobbetINorgeSisteFemAar": "JA",
       "borSammenMedBarnet": "JA",
       "ikkeAvtaltDeltBosted": "JA",
-      "norskStatsborger": "JA",
       "skalBoMedBarnetINorgeNesteTolvMaaneder": "JA"
     },
     "mineBarn": {
@@ -96,18 +94,6 @@
       "tittel": "Kravene til elektronisk søknad",
       "undertittel": null,
       "elementer": [
-        {
-          "sporsmal": null,
-          "svar": "Jeg er statsborger i Norge eller i et annet EØS-land",
-          "advarsel": null,
-          "underelementer": null
-        },
-        {
-          "sporsmal": null,
-          "svar": "Jeg har bodd eller vært yrkesaktiv i Norge eller et annet EØS-land i minst fem år til sammen",
-          "advarsel": null,
-          "underelementer": null
-        },
         {
           "sporsmal": null,
           "svar": "Jeg bor i Norge sammen med barnet",
@@ -420,12 +406,10 @@
     "papirsoknad.feilmelding.veileder.fortrolig.adresse": "Vi ser at du er registrert med fortrolig adresse.",
     "papirsoknad.feilmelding.veileder.ingen.barn": "Vi finner ingen barn registrert på deg i NAVs systemer som er i riktig alder å søke kontantstøtte for. Du vil derfor ikke kunne søke elektronisk.",
     "startside.krav.barnIkkeHjemme": "Barnet er ikke adoptert, i fosterhjem eller på institusjon",
-    "startside.krav.boddEllerJobbetINorgeSisteFemAar": "Jeg har bodd eller vært yrkesaktiv i Norge eller et annet EØS-land i minst fem år til sammen",
     "startside.krav.borSammenMedBarnet": "Jeg bor i Norge sammen med barnet",
     "startside.krav.feil.advarsel": "For å kunne søke elektronisk om kontantstøtte, må du oppfylle alle kravene over.",
     "startside.krav.feilmeldingCheckbox": "Mangler svar",
     "startside.krav.ikkeAvtaltDeltBosted": "Jeg og den andre forelderen har ikke avtalt delt bosted for barnet det søkes kontantstøtte for",
-    "startside.krav.norskStatsborger": "Jeg er statsborger i Norge eller i et annet EØS-land",
     "startside.krav.skalBoMedBarnetINorgeNesteTolvMaaneder": "Jeg og barnet skal ikke oppholde oss i utlandet mer enn tre måneder de neste tolv månedene",
     "startside.krav.sporsmal": "Oppfyller du kravene under?",
     "startside.krav.veileder": "<span>For å søke elektronisk må du bekrefte at du oppfyller alle kravene under. Oppfyller du ikke disse må du <a href='https://www.nav.no/no/Person/Skjemaer-for-privatpersoner/skjemaveileder/vedlegg?key=235029&veiledertype=privatperson&method=mail' target='_blank'>søke på papir</a>.</span>",
