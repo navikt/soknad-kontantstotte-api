@@ -4,7 +4,7 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Familieforhold;
-import no.nav.kontantstotte.tekst.DefaultTekstProvider;
+import no.nav.kontantstotte.tekst.TekstService;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.tuple;
 
 public class FamilieforholdMappingTest {
 
-    private static final Map<String, String> TEKSTER = new DefaultTekstProvider().hentTekster("nb");
+    private static final Map<String, String> TEKSTER = new TekstService().hentTekster("nb");
     private static final String hentTekst(Tekstnokkel tekstnokkel) { return TEKSTER.get(tekstnokkel.getNokkel()); }
 
     private static final String JA = hentTekst(SVAR_JA);
