@@ -27,32 +27,27 @@ public abstract class BolkMapping {
     abstract Bolk map(Soknad soknad);
 
     public static Function<Tekstnokkel, Element> opprettElementMedSvar(Tekster tekster) {
-        return (Tekstnokkel svar) -> {
-            Element element = new Element();
-            element.svar = tekster.hentTekst(svar.getNokkel(), brukFlertall);
-            return element;
-        };
+        return (Tekstnokkel svar) -> Element.nyttSvar(tekster.hentTekst(svar.getNokkel(), brukFlertall));
     }
 
     public static BiFunction<Tekstnokkel, Tekstnokkel, Element> opprettElementMedTekster(Tekster tekster) {
         return (Tekstnokkel sporsmal, Tekstnokkel svar) ->
                 Element.nyttSvar(
-                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall),
-                        tekster.hentTekst(svar.getNokkel(), brukFlertall));
+                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall), tekster.hentTekst(svar.getNokkel(), brukFlertall)
+                );
     }
 
     public static BiFunction<Tekstnokkel, String, Element> opprettElementMedVerdier(Tekster tekster) {
         return (Tekstnokkel sporsmal, String svar) ->
                 Element.nyttSvar(
-                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall),
-                        svar);
+                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall), svar
+                );
     }
 
     public static BiFunction<Tekstnokkel, List<String>, Element> opprettElementMedListe(Tekster tekster) {
         return (Tekstnokkel sporsmal, List<String> list) ->
                 Element.nyttSvar(
-                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall),
-                        list
+                        tekster.hentTekst(sporsmal.getNokkel(), brukFlertall), list
                 );
     }
 

@@ -20,14 +20,21 @@ public class UtenlandskKontantstotteMapping extends BolkMapping {
         Bolk bolk = new Bolk();
         bolk.tittel = tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel());
         bolk.elementer = new ArrayList<>();
-        if("NEI".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
-                    tekster.hentTekst(SVAR_NEI.getNokkel())));
-        }if("JA".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)){
-            bolk.elementer.add(Element.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()),
-                    tekster.hentTekst(SVAR_JA.getNokkel())));
-            bolk.elementer.add(Element.nyttSvar(tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO.getNokkel()),
-                    utenlandskKontantstotte.mottarKontantstotteFraUtlandetTilleggsinfo));
+        if ("NEI".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)) {
+            bolk.elementer.add(
+                    Element.nyttSvar(
+                            tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()), tekster.hentTekst(SVAR_NEI.getNokkel())
+                    ));
+        }
+        if ("JA".equalsIgnoreCase(utenlandskKontantstotte.mottarKontantstotteFraUtlandet)) {
+            bolk.elementer.add(
+                    Element.nyttSvar(
+                            tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()), tekster.hentTekst(SVAR_JA.getNokkel())
+                    ));
+            bolk.elementer.add(
+                    Element.nyttSvar(
+                            tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO.getNokkel()), utenlandskKontantstotte.mottarKontantstotteFraUtlandetTilleggsinfo
+                    ));
         }
         return bolk;
     }

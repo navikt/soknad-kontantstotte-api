@@ -1,51 +1,55 @@
 package no.nav.kontantstotte.innsending.oppsummering.html;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import no.nav.kontantstotte.innsending.oppsummering.ElementJsonDeserializer;
 
 import java.util.List;
 
-public class Element {
-    public static Element nyttSvar(String sporsmal, String svar){
-        Element element = new Element();
-        element.sporsmal = sporsmal;
-        element.svar = svar;
-        return element;
+@JsonDeserialize(using = ElementJsonDeserializer.class)
+public class Element<T> {
+
+    public Element(String sporsmal, T svar, String advarsel, List<Element> underelementer) {
+        this.svar = svar;
+        this.sporsmal = sporsmal;
+        this.advarsel = advarsel;
+        this.underelementer = underelementer;
     }
 
-    public static Element nyttSvar(String sporsmal, String svar, String advarsel){
-        Element element = nyttSvar(sporsmal, svar);
-        element.advarsel = advarsel;
-        return element;
+    public static Element<String> nyttSvar(String svar) {
+        return new Element<>(null, svar, null, null);
     }
 
-    public static Element nyttSvar(String sporsmal, List<String> svarListe) {
-        Element element = new Element();
-        element.sporsmal = sporsmal;
-        element.svarListe = svarListe;
-        return element;
+    public static Element<String> nyttSvar(String sporsmal, String svar) {
+        return new Element<>(sporsmal, svar, null, null);
+    }
+
+    public static Element<String> nyttSvar(String sporsmal, String svar, String advarsel) {
+        return new Element<>(sporsmal, svar, advarsel, null);
+    }
+
+    public static Element<List<String>> nyttSvar(String sporsmal, List<String> svar) {
+        return new Element<>(sporsmal, svar, null , null);
     }
 
     @JsonProperty("sporsmal")
     public String sporsmal;
 
     @JsonProperty("svar")
-    public String svar;
+    public T svar;
 
     @JsonProperty("advarsel")
     public String advarsel;
 
-    @JsonProperty("svarListe")
-    public List<String> svarListe;
-
     @JsonProperty("underelementer")
     public List<Element> underelementer;
 
+
     @Override
     public String toString() {
-        return "Element{" +
+        return "SvarElement{" +
                 "sporsmal='" + sporsmal + '\'' +
-                ", svar='" + svar + '\'' +
-                ", svarListe='" + svarListe.toString() + '\'' +
+                ", svar='" + svar.toString() + '\'' +
                 ", underelementer=" + underelementer +
                 '}';
     }
