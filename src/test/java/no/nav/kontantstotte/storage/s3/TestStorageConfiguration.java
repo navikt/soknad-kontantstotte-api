@@ -8,12 +8,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 @Configuration
 public class TestStorageConfiguration {
 
     @Bean(name = {"s3storage", "encryptedStorage", "attachmentStorage"})
     @Primary
     public Storage storage() {
+        Storage storage = Mockito.mock(Storage.class);
+
+        when(storage.get(any(), any())).thenReturn(Optional.of("filinnhold".getBytes()));
+
         return Mockito.mock(Storage.class);
     }
 
