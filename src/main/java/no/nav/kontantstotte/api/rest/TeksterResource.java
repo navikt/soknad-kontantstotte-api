@@ -33,4 +33,10 @@ public class TeksterResource {
     public Map<String, Map<String, String>> tekster() {
         return teksterAlleSprak;
     }
+
+    @GET
+    @Path("{language}")
+    public Map<String, String> land(@PathParam("language") String sprak) {
+        return tekstService.hentTekster(sprak);
+    }
 }
