@@ -1,10 +1,9 @@
 package no.nav.kontantstotte.api.rest;
 
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.kontantstotte.metrics.MetricService;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
@@ -25,15 +24,14 @@ import javax.ws.rs.core.Response;
 public class InnsendingResource {
 
     private final InnsendingService innsendingService;
+    private final MetricService metricService;
 
     private final Logger logger = LoggerFactory.getLogger(InnsendingResource.class);
 
-    private final Counter soknadSendtInn = Metrics.counter("soknad.kontantstotte", "innsending", "mottatt");
-    private final Counter soknadSendtInnUgyldig = Metrics.counter("soknad.kontantstotte", "innsending", "ugyldig");
-
     @Inject
-    public InnsendingResource(InnsendingService innsendingService) {
+    public InnsendingResource(InnsendingService innsendingService, MetricService metricService) {
         this.innsendingService = innsendingService;
+        this.metricService = metricService;
     }
 
     @POST
@@ -42,11 +40,11 @@ public class InnsendingResource {
 
         if (!soknad.erGyldig()) {
             logger.info("Noen har forsøkt å sende inn en ugyldig søknad.");
-            soknadSendtInnUgyldig.increment();
+            metricService.getSoknadSendtInn().labels("ugyldig").inc();
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         soknad.markerInnsendingsTidspunkt();
-        soknadSendtInn.increment();
+        metricService.getSoknadSendtInn().labels("mottatt").inc();
         innsendingService.sendInnSoknad(soknad);
 
         return new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString());

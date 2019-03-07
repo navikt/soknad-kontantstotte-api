@@ -2,8 +2,11 @@ package no.nav.kontantstotte.api.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.prometheus.client.CollectorRegistry;
+import io.prometheus.client.Counter;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.kontantstotte.metrics.MetricService;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
@@ -39,6 +42,7 @@ public class InnsendingResourceTest extends JerseyTest {
     }
 
     private InnsendingService innsendingService = mock(InnsendingService.class);
+    private MetricService metricService = mock(MetricService.class);
 
     @Test
     public void at_innsending_av_soknad_er_ok_med_bekreftelse() throws JsonProcessingException {
@@ -48,6 +52,8 @@ public class InnsendingResourceTest extends JerseyTest {
 
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenReturn(soknadMedBekreftelse);
+        when(metricService.getSoknadSendtInn())
+                .thenReturn(testCounter());
 
         Response response = target()
                 .path("sendinn")
@@ -68,6 +74,8 @@ public class InnsendingResourceTest extends JerseyTest {
 
         when(innsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenReturn(soknadMedBekreftelse);
+        when(metricService.getSoknadSendtInn())
+                .thenReturn(testCounter());
 
         target().path("sendinn")
                 .request()
@@ -84,6 +92,8 @@ public class InnsendingResourceTest extends JerseyTest {
 
     @Test
     public void at_innsending_av_soknad_er_gir_400_ved_manglende_bekreftelse() throws JsonProcessingException {
+        when(metricService.getSoknadSendtInn())
+                .thenReturn(testCounter());
 
         Response response = target()
                 .path("sendinn")
@@ -103,11 +113,19 @@ public class InnsendingResourceTest extends JerseyTest {
                 .bodyPart(Entity.json(objectMapper.writeValueAsString(soknad)), APPLICATION_JSON_TYPE);
     }
 
+    private Counter testCounter() {
+        return Counter.build()
+                .name("test_metrikk")
+                .help("Testmetrikk")
+                .labelNames("status")
+                .register(new CollectorRegistry());
+    }
+
     @Override
     protected Application configure() {
 
         StaticApplicationContext staticApplicationContext = new StaticApplicationContext();
-        staticApplicationContext.registerBean(InnsendingResource.class, () -> new InnsendingResource(innsendingService));
+        staticApplicationContext.registerBean(InnsendingResource.class, () -> new InnsendingResource(innsendingService, metricService));
 
         forceSet(TestProperties.CONTAINER_PORT, "0"); // random port
         enable(TestProperties.DUMP_ENTITY);
