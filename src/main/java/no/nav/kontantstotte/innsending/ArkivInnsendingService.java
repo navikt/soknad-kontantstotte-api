@@ -1,7 +1,8 @@
 package no.nav.kontantstotte.innsending;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
-import no.nav.kontantstotte.metrics.MetricService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,8 @@ class ArkivInnsendingService implements InnsendingService {
 
     private static final Logger log = LoggerFactory.getLogger(ArkivInnsendingService.class);
 
+    private final Counter soknadSendtInnSendtProxy = Metrics.counter("soknad.kontantstotte", "innsending", "sendtproxy");
+
     private URI proxyServiceUri;
 
     private final Client client;
@@ -26,18 +29,14 @@ class ArkivInnsendingService implements InnsendingService {
 
     private final VedleggProvider vedleggProvider;
 
-    private final MetricService metricService;
-
     ArkivInnsendingService(Client client,
                            URI proxyServiceUri,
                            OppsummeringPdfGenerator oppsummeringPdfGenerator,
-                           VedleggProvider vedleggProvider,
-                           MetricService metricService) {
+                           VedleggProvider vedleggProvider) {
         this.client = client;
         this.proxyServiceUri = proxyServiceUri;
         this.oppsummeringPdfGenerator = oppsummeringPdfGenerator;
         this.vedleggProvider = vedleggProvider;
-        this.metricService = metricService;
     }
 
     public Soknad sendInnSoknad(Soknad soknad) {
@@ -59,7 +58,7 @@ class ArkivInnsendingService implements InnsendingService {
 
         log.info("Søknad sendt til proxy for innsending til arkiv");
 
-        metricService.getSoknadSendtInn().labels("sendtproxy").inc();
+        soknadSendtInnSendtProxy.increment();
         return soknad;
     }
 

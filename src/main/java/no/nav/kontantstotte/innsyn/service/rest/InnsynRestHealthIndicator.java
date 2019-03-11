@@ -1,7 +1,8 @@
 package no.nav.kontantstotte.innsyn.service.rest;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
-import no.nav.kontantstotte.metrics.MetricService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
@@ -15,14 +16,14 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
 
     private static final Logger LOG = LoggerFactory.getLogger(InnsynRestHealthIndicator.class);
 
+    private final Counter tpsInnysynSuccess = Metrics.counter("tps.innsyn.health", "response", "success");
+    private final Counter tpsInnsynFailure = Metrics.counter("tps.innsyn.health", "response", "failure");
     private final InnsynService innsynServiceClient;
-    private final MetricService metricService;
 
     private Environment env;
 
-    InnsynRestHealthIndicator(InnsynService innsynServiceClient, MetricService metricService) {
+    InnsynRestHealthIndicator(InnsynService innsynServiceClient) {
         this.innsynServiceClient = innsynServiceClient;
-        this.metricService = metricService;
     }
 
     @Override
@@ -31,10 +32,10 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
         LOG.info("Pinging TPS innsyn service");
         try {
             innsynServiceClient.ping();
-            metricService.getTpsInnsynHealth().inc();
+            tpsInnysynSuccess.increment();
             return up();
         } catch (Exception e) {
-            metricService.getTpsInnsynHealth().dec();
+            tpsInnsynFailure.increment();
             LOG.warn("Could not verify health of TPS innsyn service ", e);
             return isPreprod() ? downWithDetails(e) : up();
         }

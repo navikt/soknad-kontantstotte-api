@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.kontantstotte.client.RestClientConfigration;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringConfiguration;
-import no.nav.kontantstotte.metrics.MetricConfiguration;
-import no.nav.kontantstotte.metrics.MetricService;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.s3.S3StorageConfiguration;
 import no.nav.sbl.rest.ClientLogFilter;
@@ -26,8 +24,7 @@ import java.net.URI;
 @Configuration
 @Import({RestClientConfigration.class,
         OppsummeringConfiguration.class,
-        S3StorageConfiguration.class,
-        MetricConfiguration.class
+        S3StorageConfiguration.class
 })
 public class InnsendingConfiguration {
 
@@ -42,13 +39,11 @@ public class InnsendingConfiguration {
             @Named("kontantstotteProxyClient") Client client,
             @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI target,
             OppsummeringPdfGenerator oppsummeringPdfGenerator,
-            VedleggProvider vedleggProvider,
-            MetricService metricService) {
+            VedleggProvider vedleggProvider) {
         return new ArkivInnsendingService(client,
                 target,
                 oppsummeringPdfGenerator,
-                vedleggProvider,
-                metricService);
+                vedleggProvider);
     }
 
     @Bean(name = "kontantstotteProxyClient")
