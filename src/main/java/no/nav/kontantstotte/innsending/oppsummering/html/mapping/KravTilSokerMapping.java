@@ -21,8 +21,6 @@ public class KravTilSokerMapping extends BolkMapping {
         kravTilSokerBolk.elementer = new ArrayList<>();
         kravTilSokerBolk.elementer.addAll(
                 Arrays.asList(
-                        nyttElementMedSvar.apply(KRAV_TIL_SOKER_NORSK_STATSBORGER),
-                        nyttElementMedSvar.apply(KRAV_TIL_SOKER_BODD_ELLER_JOBBET_I_NORGE_SISTE_FEM_AAR),
                         nyttElementMedSvar.apply(KRAV_TIL_SOKER_BOR_SAMMEN_MED_BARNET),
                         nyttElementMedSvar.apply(KRAV_TIL_SOKER_BARN_IKKE_HJEMME),
                         nyttElementMedSvar.apply(KRAV_TIL_SOKER_IKKE_AVTALT_DELT_BOSTED),

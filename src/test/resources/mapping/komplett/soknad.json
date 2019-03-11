@@ -36,10 +36,8 @@
   },
   "kravTilSoker": {
     "barnIkkeHjemme": "JA",
-    "boddEllerJobbetINorgeSisteFemAar": "JA",
     "borSammenMedBarnet": "JA",
     "ikkeAvtaltDeltBosted": "JA",
-    "norskStatsborger": "JA",
     "skalBoMedBarnetINorgeNesteTolvMaaneder": "JA"
   },
   "mineBarn": {
