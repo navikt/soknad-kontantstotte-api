@@ -5,6 +5,7 @@ import no.nav.kontantstotte.innsending.VedleggMetadata;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
@@ -38,7 +39,7 @@ public class Barnehageplass {
         } else if( this.barnBarnehageplassStatus == BarnehageplassVerdier.skalSlutteIBarnehage) {
             return skalSlutteIBarnehageVedlegg;
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     public enum BarnehageplassVerdier {

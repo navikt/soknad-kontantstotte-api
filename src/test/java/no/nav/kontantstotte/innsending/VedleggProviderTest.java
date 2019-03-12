@@ -78,6 +78,6 @@ public class VedleggProviderTest {
 
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggFor(soknad);
 
-        assertThat(vedlegg).hasSize(0);
+        assertThat(vedlegg).isEmpty();
     }
 }
