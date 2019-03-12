@@ -32,6 +32,15 @@ public class Barnehageplass {
         this.skalSlutteIBarnehageVedlegg = new ArrayList<>();
     }
 
+    public List<VedleggMetadata> getRelevanteVedlegg() {
+        if (this.barnBarnehageplassStatus == BarnehageplassVerdier.harSluttetIBarnehage) {
+            return harSluttetIBarnehageVedlegg;
+        } else if( this.barnBarnehageplassStatus == BarnehageplassVerdier.skalSlutteIBarnehage) {
+            return skalSlutteIBarnehageVedlegg;
+        }
+        return new ArrayList<>();
+    }
+
     public enum BarnehageplassVerdier {
         garIkkeIBarnehage("garIkkeIBarnehage", GAR_IKKE_I_BARNEHAGE),
         harBarnehageplass("harBarnehageplass", GAR_I_BARNEHAGE),
