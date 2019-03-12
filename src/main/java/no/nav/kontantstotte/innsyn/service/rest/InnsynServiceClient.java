@@ -1,7 +1,9 @@
 package no.nav.kontantstotte.innsyn.service.rest;
 
 import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.Timer;
 import no.nav.kontantstotte.innsyn.domain.*;
 import no.nav.log.MDCConstants;
 import no.nav.tps.innsyn.PersoninfoDto;
@@ -16,6 +18,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
@@ -36,6 +39,7 @@ class InnsynServiceClient implements InnsynService {
 
     private final Counter sokerErIkkeKvalifisert = Metrics.counter("soknad.kontantstotte.kvalifisert", "status", "NEI");
     private final Counter sokerErKvalifisert = Metrics.counter("soknad.kontantstotte.kvalifisert", "status", "JA");
+    private final Timer tpsResponstid = Metrics.timer("tps.respons.tid");
 
     @Inject
     InnsynServiceClient(Client client, URI tpsInnsynServiceUri) {
@@ -45,7 +49,9 @@ class InnsynServiceClient implements InnsynService {
 
     @Override
     public Person hentPersonInfo(String fnr) {
+        long startTime = System.nanoTime();
         Response response = getInnsynResponse("person", fnr);
+        tpsResponstid.record(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
 
         PersoninfoDto dto = response.readEntity(PersoninfoDto.class);
         return personinfoDtoToPerson.apply(dto);
@@ -61,7 +67,9 @@ class InnsynServiceClient implements InnsynService {
 
     @Override
     public List<Barn> hentBarnInfo(String fnr) {
+        long startTime = System.nanoTime();
         Response response = getInnsynResponse("barn", fnr);
+        tpsResponstid.record(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
 
         List<RelasjonDto> dtoList = response.readEntity(new GenericType<List<RelasjonDto>>() {});
         List<Barn> returListe = dtoList

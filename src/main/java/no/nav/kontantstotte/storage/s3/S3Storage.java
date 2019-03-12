@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.Timer;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.StorageException;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
 import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
@@ -28,6 +30,8 @@ public class S3Storage implements Storage {
 
     private final Counter feilMotS3Put = Metrics.counter("soknad.kontantstotte.S3.feil", "operasjon", "put");
     private final Counter feilMotS3Get = Metrics.counter("soknad.kontantstotte.S3.feil", "operasjon", "get");
+    private final Timer S3PutResponstid = Metrics.timer("S3.respons.tid", "operasjon", "put");
+    private final Timer S3GetResponstid = Metrics.timer("S3.respons.tid", "operasjon", "get");
 
     S3Storage(AmazonS3 s3, int maxFileSizeMB) {
         this.s3 = s3;
@@ -47,7 +51,9 @@ public class S3Storage implements Storage {
         request.getRequestClientOptions().setReadLimit(maxFileSizeAfterEncryption);
 
         try {
+            long startTime = System.nanoTime();
             PutObjectResult result = s3.putObject(request);
+            S3PutResponstid.record(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
             log.debug("Stored file with size {}", result.getMetadata().getContentLength());
         } catch (SdkClientException e) {
             feilMotS3Put.increment();
@@ -86,7 +92,9 @@ public class S3Storage implements Storage {
     private InputStream fileContent(String filename) {
 
         try {
+            long startTime = System.nanoTime();
             S3Object object = s3.getObject(VEDLEGG_BUCKET, filename);
+            S3GetResponstid.record(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
             log.debug("Loading file with size {}", object.getObjectMetadata().getContentLength());
             return object.getObjectContent();
         } catch (SdkClientException e) {
