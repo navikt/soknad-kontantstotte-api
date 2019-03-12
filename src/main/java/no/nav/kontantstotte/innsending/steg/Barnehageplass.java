@@ -5,6 +5,7 @@ import no.nav.kontantstotte.innsending.VedleggMetadata;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
@@ -30,6 +31,15 @@ public class Barnehageplass {
     public Barnehageplass() {
         this.harSluttetIBarnehageVedlegg = new ArrayList<>();
         this.skalSlutteIBarnehageVedlegg = new ArrayList<>();
+    }
+
+    public List<VedleggMetadata> getRelevanteVedlegg() {
+        if (this.barnBarnehageplassStatus == BarnehageplassVerdier.harSluttetIBarnehage) {
+            return harSluttetIBarnehageVedlegg;
+        } else if( this.barnBarnehageplassStatus == BarnehageplassVerdier.skalSlutteIBarnehage) {
+            return skalSlutteIBarnehageVedlegg;
+        }
+        return Collections.emptyList();
     }
 
     public enum BarnehageplassVerdier {
