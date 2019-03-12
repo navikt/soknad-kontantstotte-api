@@ -26,7 +26,7 @@ public class SokerResource {
     private final InnsynService innsynServiceClient;
 
     private final Counter soknadApnet = Metrics.counter("soknad.kontantstotte.apnet");
-    private final Counter sokerErNorsk = Metrics.counter("soker.land", "land", "nor");
+    private final Counter sokerErNorsk = Metrics.counter("soker.land", "land", "NOR");
     private final Counter sokerErIkkeNorsk = Metrics.counter("soker.land", "land", "annet");
 
     @Inject

@@ -1,7 +1,10 @@
 package no.nav.kontantstotte.storage.s3;
 
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.StorageException;
 import org.slf4j.Logger;
@@ -23,6 +26,9 @@ public class S3Storage implements Storage {
 
     private final AmazonS3 s3;
 
+    private final Counter feilMotS3Put = Metrics.counter("soknad.kontantstotte.S3.feil", "operasjon", "put");
+    private final Counter feilMotS3Get = Metrics.counter("soknad.kontantstotte.S3.feil", "operasjon", "get");
+
     S3Storage(AmazonS3 s3, int maxFileSizeMB) {
         this.s3 = s3;
 
@@ -40,9 +46,12 @@ public class S3Storage implements Storage {
         PutObjectRequest request = new PutObjectRequest(VEDLEGG_BUCKET, fileName(directory, key), data, new ObjectMetadata());
         request.getRequestClientOptions().setReadLimit(maxFileSizeAfterEncryption);
 
-        PutObjectResult result = s3.putObject(request);
-
-        log.debug("Stored file with size {}", result.getMetadata().getContentLength());
+        try {
+            PutObjectResult result = s3.putObject(request);
+            log.debug("Stored file with size {}", result.getMetadata().getContentLength());
+        } catch (SdkClientException e) {
+            feilMotS3Put.increment();
+        }
     }
 
     @Override
@@ -80,7 +89,8 @@ public class S3Storage implements Storage {
             S3Object object = s3.getObject(VEDLEGG_BUCKET, filename);
             log.debug("Loading file with size {}", object.getObjectMetadata().getContentLength());
             return object.getObjectContent();
-        } catch (AmazonS3Exception e) {
+        } catch (SdkClientException e) {
+            feilMotS3Get.increment();
             throw new StorageException("Unable to retrieve " + filename + ", it probably doesn't exist", e);
         }
 
