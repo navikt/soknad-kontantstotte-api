@@ -1,5 +1,7 @@
 package no.nav.kontantstotte.innsyn.service.rest;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.innsyn.domain.*;
 import no.nav.log.MDCConstants;
 import no.nav.tps.innsyn.PersoninfoDto;
@@ -32,6 +34,9 @@ class InnsynServiceClient implements InnsynService {
 
     private final Client client;
 
+    private final Counter sokerErIkkeKvalifisert = Metrics.counter("soknad.kontantstotte.kvalifisert", "status", "NEI");
+    private final Counter sokerErKvalifisert = Metrics.counter("soknad.kontantstotte.kvalifisert", "status", "JA");
+
     @Inject
     InnsynServiceClient(Client client, URI tpsInnsynServiceUri) {
         this.client = client;
@@ -51,7 +56,7 @@ class InnsynServiceClient implements InnsynService {
         Integer alderIManeder = diff.getYears() * 12 + diff.getMonths();
         return (alderIManeder >= MIN_ALDER_I_MANEDER) &&
                 (alderIManeder <= MAKS_ALDER_I_MANEDER) &&
-                !(alderIManeder == MAKS_ALDER_I_MANEDER && diff.getDays() > 0);
+                !(alderIManeder.equals(MAKS_ALDER_I_MANEDER) && diff.getDays() > 0);
     }
 
     @Override
@@ -59,12 +64,20 @@ class InnsynServiceClient implements InnsynService {
         Response response = getInnsynResponse("barn", fnr);
 
         List<RelasjonDto> dtoList = response.readEntity(new GenericType<List<RelasjonDto>>() {});
-        return dtoList
+        List<Barn> returListe = dtoList
                 .stream()
                 .filter(dto -> erIKontantstotteAlder(dto.getFoedselsdato()))
-                .filter(dto -> dto.isHarSammeAdresse())
+                .filter(RelasjonDto::isHarSammeAdresse)
                 .map(dto -> relasjonDtoToBarn.apply(dto))
                 .collect(Collectors.toList());
+
+        if (returListe.isEmpty()) {
+            sokerErIkkeKvalifisert.increment();
+        } else {
+            sokerErKvalifisert.increment();
+        }
+
+        return returListe;
     }
 
     @Override
