@@ -4,6 +4,7 @@
 Prometheus støtter fire forskjellige metrikk-typer: Counter, Gauge, Summary og Histogram. Avsnittene under har en kort forklaring,
 samt kodesnutter laget med Prometheus-klienten vi bruker i kontantstøtte, *Micrometer*.
 
+#### Counter
 En counter er en monotont økende teller som kun blir resatt når applikasjonen redeployes. Vi har flere countere i
 kontantstøtte, de kan feks brukes til å telle antall feilede kall. En counter kan bare økes med 1 hver gang den blir
 trigget i koden. 
@@ -16,9 +17,11 @@ private final Counter tpsInnsynFailure = Metrics.counter("tps.innsyn.health", "r
 tpsInnysynSuccess.increment();
 ```
 
+#### Gauge
 En gauge er ganske lik en counter, men kan også minke. Denne kan for eksempel brukes for å måle hvor mange poder som
 kjører. Foreløpig bruker vi ikke gauges i kontantstøtte-metrikkene.
 
+#### Summary
 Et summary kan brukes til å måle observasjoner, ikke bare telle (som counter og gauge). Her kan man feks registrere
 meldingsstørrelser eller responstider.
 ```java
@@ -29,6 +32,7 @@ private final DistributionSummary dokmotMeldingStorrelse = Metrics.summary("dokm
 dokmotMeldingStorrelse.record(soknadXML.length());
 ```
 
+#### Histogram
 Et histogram er ganske likt som et summary, men her kan man også lage buckets for målingene. Vi har foreløpig ikke tatt i bruk
 histogram i kontantstotte. 
 
