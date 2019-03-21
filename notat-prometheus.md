@@ -22,7 +22,14 @@ I tillegg til custom labels du kan sette på metrikkene dine i koden, kommer NAI
 Dette inkluderer miljø, podenavn mm. 
 
 ### Best practices
+I prometheus vil hvert enkelt key-value-par for labels representere en vektor/serie med tidspunkter. Dette skalerer ganske dårlig,
+og dersom man kan få mange ulike verdier for en label, vil det øke hvor mye data som lagres og sannsynligvis smelle ganske fort.
+Et eksempel på dette er bruker-id/fødselsnummer. Skal man lagre det som en label i prometheus, vil du få en time series med 
+tilhørende indeks, det er en rimelig dårlig idé. 
 
+Dersom du ønsker å måle eller overvåke noe, er det bra å tenke igjennom om det faktisk bør være en metrikk, eller kanskje det
+heller bør være feks et logginnslag. Metrikkene er ikke ment å gi et fullstendig bilde over alle mulige situasjoner/scenarier for
+ appene eller brukerne våre.
 
 ## Endepunkt
 Prometheus-metrikkene blir eksponert på `localhost:8080/internal/prometheus`. Hvis du har lagd en ny metrikk, bør du finne
@@ -71,3 +78,4 @@ Hvis man på grafana gjør en `increase` for 15s, får man en increase på 3 ove
 får man en increase på 4.5. 
 
 Poenget er at man må merke seg at disse metrikkene er *estimater* og ikke nødvendigvis eksakte verdier for alle tidsintervall.
+
