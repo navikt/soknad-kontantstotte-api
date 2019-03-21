@@ -1,17 +1,36 @@
 # En liten intro til prometheus-metrikker
 
 ## Ulike typer metrikker
-Prometheus støtter fire forskjellige metrikk-typer: Counter, Gauge, Summary og Histogram. 
+Prometheus støtter fire forskjellige metrikk-typer: Counter, Gauge, Summary og Histogram. Avsnittene under har en kort forklaring,
+samt kodesnutter laget med Prometheus-klienten vi bruker i kontantstøtte, *Micrometer*.
 
 En counter er en monotont økende teller som kun blir resatt når applikasjonen redeployes. Vi har flere countere i
 kontantstøtte, de kan feks brukes til å telle antall feilede kall. En counter kan bare økes med 1 hver gang den blir
 trigget i koden. 
+```java
+//Opprette counter med labels
+private final Counter tpsInnysynSuccess = Metrics.counter("tps.innsyn.health", "response", "success");
+private final Counter tpsInnsynFailure = Metrics.counter("tps.innsyn.health", "response", "failure");
+
+//Øke verdi av counter
+tpsInnysynSuccess.increment();
+```
 
 En gauge er ganske lik en counter, men kan også minke. Denne kan for eksempel brukes for å måle hvor mange poder som
 kjører. Foreløpig bruker vi ikke gauges i kontantstøtte-metrikkene.
 
 Et summary kan brukes til å måle observasjoner, ikke bare telle (som counter og gauge). Her kan man feks registrere
 meldingsstørrelser eller responstider.
+```java
+//Opprette summary
+private final DistributionSummary dokmotMeldingStorrelse = Metrics.summary("dokmot.melding.storrelse");
+
+//Registrere ny verdi
+dokmotMeldingStorrelse.record(soknadXML.length());
+```
+
+Et histogram er ganske likt som et summary, men her kan man også lage buckets for målingene. Vi har foreløpig ikke tatt i bruk
+histogram i kontantstotte. 
 
 ## Bruk av labels
 I prometheus trenger man ikke alltid lage en helt ny metrikk for å måle et nytt scenarie. Man kan ha én metrikk med flere
@@ -70,9 +89,13 @@ Derfor må man ofte ekstrapolere dataene for å få de til å passe med det defi
 regner increase for en counter, vil man bare få heltall ut. Det stemmer ikke, og grunnen til det er denne ekstrapoleringen. 
 
 Ta for eksempel denne dataen:
-t=1 - 10
-t=6 - 12
-t=11 - 13
+
+| Tid | Verdi |
+|-----|-------|
+| t=1 |  10   |
+| t=6 |  12   |
+| t=11|  13   |
+
 
 Hvis man på grafana gjør en `increase` for 15s, får man en increase på 3 over 10s, og når man ekstrapolerer det til 15s,
 får man en increase på 4.5. 
