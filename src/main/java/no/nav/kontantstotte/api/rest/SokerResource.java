@@ -8,7 +8,6 @@ import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.springframework.stereotype.Component;
 
-
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -27,6 +26,8 @@ public class SokerResource {
     private final InnsynService innsynServiceClient;
 
     private final Counter soknadApnet = Metrics.counter("soknad.kontantstotte.apnet");
+    private final Counter sokerErNorsk = Metrics.counter("soker.land", "land", "NOR");
+    private final Counter sokerErIkkeNorsk = Metrics.counter("soker.land", "land", "annet");
 
     @Inject
     public SokerResource(InnsynService innsynServiceClient) {
@@ -39,6 +40,12 @@ public class SokerResource {
 
         Person person = innsynServiceClient.hentPersonInfo(fnr);
         soknadApnet.increment();
+        if ("NOR".equals(person.getStatsborgerskap())) {
+            sokerErNorsk.increment();
+        } else {
+            sokerErIkkeNorsk.increment();
+        }
+
         return new SokerDto(fnr, person.getFornavn(), person.getFulltnavn(), person.getStatsborgerskap());
     }
 }
