@@ -61,6 +61,21 @@ public class BarnehageplassMappingTest {
     }
 
     @Test
+    public void at_antall_timer_som_desimaltall_fungerer() {
+
+        barnehageplass.barnBarnehageplassStatus = Barnehageplass.BarnehageplassVerdier.harBarnehageplass;
+        barnehageplass.harBarnehageplassAntallTimer = "33.5";
+
+        List<Element> elementer = barnehageplassMapping.map(soknad).elementer;
+
+        assertThat(elementer)
+                .extracting("sporsmal", "svar", "advarsel")
+                .contains(
+                        tuple(ANTALL_TIMER, "33.5", HOYT_TIMEANTALL_ADVARSEL));
+
+    }
+
+    @Test
     public void skal_ha_rett_tittel_og_undertittel() {
         Bolk bolk = barnehageplassMapping.map(soknad);
         assertThat(bolk)

@@ -59,7 +59,7 @@ public class BarnehageplassMapping extends BolkMapping {
                     );
                     break;
                 case harBarnehageplass:
-                    Element harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 ?
+                    Element harBarnehageplassAntallTimer = Float.parseFloat(barnehageplass.harBarnehageplassAntallTimer) > 33.0 ?
                             Element.nyttSvar(
                                     tekster.hentTekst(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel(), erFlerling),
                                     barnehageplass.harBarnehageplassAntallTimer,
