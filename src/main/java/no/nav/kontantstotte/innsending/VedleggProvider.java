@@ -27,8 +27,7 @@ class VedleggProvider {
         String directory = hentFnrFraToken();
 
         List<List<VedleggMetadata>> alleVedlegg = Arrays.asList(
-                soknad.barnehageplass.harSluttetIBarnehageVedlegg,
-                soknad.barnehageplass.skalSlutteIBarnehageVedlegg
+                soknad.barnehageplass.getRelevanteVedlegg()
         );
 
         return alleVedlegg.stream()

@@ -37,7 +37,7 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
         } catch (Exception e) {
             tpsInnsynFailure.increment();
             LOG.warn("Could not verify health of TPS innsyn service ", e);
-            return isPreprod() ? downWithDetails(e) : up();
+            return isPreprod() ? downWithDetails(e) : down();
         }
     }
 
