@@ -5,6 +5,8 @@ import no.nav.kontantstotte.innsending.VedleggMetadata;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +15,9 @@ import java.util.stream.Collectors;
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 public class BarnehageplassMapping extends BolkMapping {
+
+    private static final Logger logger = LoggerFactory.getLogger(BarnehageplassMapping.class);
+
     public BarnehageplassMapping(Tekster tekster) {
         super(tekster);
     }
@@ -59,7 +64,14 @@ public class BarnehageplassMapping extends BolkMapping {
                     );
                     break;
                 case harBarnehageplass:
-                    Element harBarnehageplassAntallTimer = Integer.parseInt(barnehageplass.harBarnehageplassAntallTimer) > 33 ?
+                    Float antallTimer;
+                    try {
+                        antallTimer = Float.parseFloat(barnehageplass.harBarnehageplassAntallTimer);
+                    } catch (NumberFormatException e) {
+                        antallTimer = 0.0f;
+                        logger.warn("Klarte ikke å konvertere harBarnehageplassAntalTimer med verdi %s til et tall", barnehageplass.harBarnehageplassAntallTimer);
+                    }
+                    Element harBarnehageplassAntallTimer = antallTimer > 33.0 ?
                             Element.nyttSvar(
                                     tekster.hentTekst(HAR_BARNEHAGEPLASS_ANTALL_TIMER.getNokkel(), erFlerling),
                                     barnehageplass.harBarnehageplassAntallTimer,
