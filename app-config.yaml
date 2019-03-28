@@ -42,6 +42,9 @@ fasitResources:
       url: NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_DISCOVERYURL
   - alias: appres.cms
     resourceType: baseUrl
+#ingress/url-eksponering
+  - alias: loadbalancer:soknad-kontantstotte-api
+    resourceType: loadbalancerconfig
 # soknad-kontantsotte-proxy
   - alias: soknad-kontantstotte-proxy-api
     resourceType: restservice
