@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsending;
 
-import no.nav.kontantstotte.EnableFeatureToggle;
 import no.nav.kontantstotte.SetOidcClaimsWithSubject;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 import no.nav.kontantstotte.storage.Storage;
@@ -11,16 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class VedleggProviderTest {
-
-    @Rule
-    public EnableFeatureToggle enableFeatureToggle = new EnableFeatureToggle(KONTANTSTOTTE_VEDLEGG);
 
     @Rule
     public SetOidcClaimsWithSubject setOidcClaimsWithSubject = new SetOidcClaimsWithSubject("DUMMY_FNR");

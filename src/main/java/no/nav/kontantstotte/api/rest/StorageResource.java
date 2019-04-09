@@ -19,8 +19,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import static javax.ws.rs.core.MediaType.*;
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
-import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 @Component
@@ -50,10 +48,6 @@ public class StorageResource {
 
         log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
 
-        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
-                () -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build())
-        );
-
         if (bytes.length > this.maxFileSize) {
             throw new WebApplicationException(Response.status(Response.Status.REQUEST_ENTITY_TOO_LARGE).build());
         }
@@ -78,11 +72,6 @@ public class StorageResource {
     public byte[] getAttachment(
             @PathParam("vedleggsId") String vedleggsId
     ) {
-
-        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
-                () -> new WebApplicationException(Response.status(Response.Status.NOT_IMPLEMENTED).build())
-        );
-
         String directory = hentFnrFraToken();
         byte[] data = storage.get(directory, vedleggsId).orElse(null);
         log.debug("Loaded file with {}", data);

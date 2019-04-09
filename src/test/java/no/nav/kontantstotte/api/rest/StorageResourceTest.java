@@ -1,9 +1,7 @@
 package no.nav.kontantstotte.api.rest;
 
 import com.nimbusds.jwt.SignedJWT;
-import no.finn.unleash.FakeUnleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.InnsendingException;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.StorageException;
@@ -16,7 +14,6 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -32,11 +29,13 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 
 import static javax.ws.rs.core.Response.Status.OK;
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -60,13 +59,6 @@ public class StorageResourceTest {
 
     @Inject
     private Storage attachmentStorage;
-
-    @Before
-    public void setUp() {
-        FakeUnleash fakeUnleash = new FakeUnleash();
-        fakeUnleash.enable(KONTANTSTOTTE_VEDLEGG);
-        UnleashProvider.initialize(fakeUnleash);
-    }
 
     @After
     public void tearDown() {

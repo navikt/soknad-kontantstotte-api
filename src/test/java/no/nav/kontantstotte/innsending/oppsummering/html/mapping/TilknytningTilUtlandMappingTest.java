@@ -1,15 +1,11 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.finn.unleash.FakeUnleash;
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
 import no.nav.kontantstotte.innsending.steg.Familieforhold;
 import no.nav.kontantstotte.innsending.steg.TilknytningTilUtland;
 import no.nav.kontantstotte.tekst.TekstService;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -30,20 +26,6 @@ public class TilknytningTilUtlandMappingTest {
     private final String tileggsSvar = "Søker oppgir land, utenlandsk id-nummer, adresse i landene og perioder hvor man mottok eller fortsatt mottar ytelser fra utlandet";
     private final String annenForelderSporsmal =  hentTekst(TILKNYTNING_TIL_UTLAND_BODD_I_NORGE_MINST_FEM_AAR_ANNEN_FORELDER);
     private final String annenForelderSvar = hentTekst(TILKNYTNING_TIL_UTLAND_ANNEN_FORELDER_IKKE_BODD_I_NORGE);
-
-    private FakeUnleash fakeUnleash;
-
-    @Before
-    public void setUp() {
-
-        fakeUnleash = new FakeUnleash();
-        UnleashProvider.initialize(fakeUnleash);
-    }
-
-    @After
-    public void tearDown() {
-        UnleashProvider.initialize(null);
-    }
 
         @Test
     public void tilknytningTilUtland_nar_foreldre_ikke_bor_sammen() {

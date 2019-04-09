@@ -2,7 +2,10 @@ package no.nav.kontantstotte.storage.s3;
 
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.S3Object;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Timer;
@@ -11,12 +14,11 @@ import no.nav.kontantstotte.storage.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
-import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
 
 public class S3Storage implements Storage {
 
@@ -43,10 +45,6 @@ public class S3Storage implements Storage {
 
     @Override
     public void put(String directory, String key, InputStream data) {
-
-        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
-                () -> new StorageException("Vedleggsfunksjonalitet er deaktivert"));
-
         PutObjectRequest request = new PutObjectRequest(VEDLEGG_BUCKET, fileName(directory, key), data, new ObjectMetadata());
         request.getRequestClientOptions().setReadLimit(maxFileSizeAfterEncryption);
 
@@ -62,10 +60,6 @@ public class S3Storage implements Storage {
 
     @Override
     public Optional<byte[]> get(String directory, String key) {
-
-        toggle(KONTANTSTOTTE_VEDLEGG).throwIfDisabled(
-                () -> new StorageException("Vedleggsfunksjonalitet er deaktivert"));
-
         return Optional.ofNullable(readString(fileName(directory, key)));
     }
 

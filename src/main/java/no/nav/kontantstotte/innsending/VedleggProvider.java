@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static no.nav.kontantstotte.config.toggle.FeatureToggleConfig.KONTANTSTOTTE_VEDLEGG;
-import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 class VedleggProvider {
@@ -19,10 +17,6 @@ class VedleggProvider {
     }
 
     List<VedleggDto> hentVedleggFor(Soknad soknad) {
-
-        if (toggle(KONTANTSTOTTE_VEDLEGG).isDisabled()) {
-            return null;
-        }
 
         String directory = hentFnrFraToken();
 
