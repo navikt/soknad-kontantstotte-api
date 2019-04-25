@@ -4,8 +4,8 @@ import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.api.rest.dto.BarnDto;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsyn.domain.Barn;
-import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
+import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
@@ -25,7 +25,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -66,7 +67,6 @@ public class BarnResourceTest {
         List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
         assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(barn.getFulltnavn());
         assertThat(barnDtoList.get(0).getFodselsdato()).isEqualTo(barn.getFodselsdato());
-        assertThat(barnDtoList.get(0).getErFlerling()).isFalse();
     }
 
     @Test
@@ -82,32 +82,11 @@ public class BarnResourceTest {
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 
         List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
-        assertThat(barnDtoList.size()).isEqualTo(3);
+        assertThat(barnDtoList.size()).isEqualTo(2);
         assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(tvilling1.getFulltnavn());
         assertThat(barnDtoList.get(0).getFodselsdato()).isEqualTo(tvilling1.getFodselsdato());
-        assertThat(barnDtoList.get(0).getErFlerling()).isFalse();
         assertThat(barnDtoList.get(1).getFulltnavn()).isEqualTo(tvilling2.getFulltnavn());
         assertThat(barnDtoList.get(1).getFodselsdato()).isEqualTo(tvilling2.getFodselsdato());
-        assertThat(barnDtoList.get(1).getErFlerling()).isFalse();
-        assertThat(barnDtoList.get(2).getFulltnavn().equals("TVILLING1 og TVILLING2 MELLOMNAVN")
-                || barnDtoList.get(2).getFulltnavn().equals("TVILLING2 MELLOMNAVN og TVILLING1"));
-        assertThat(barnDtoList.get(2).getFodselsdato()).isEqualTo("01.01.2018 og 01.01.2018");
-        assertThat(barnDtoList.get(2).getErFlerling()).isTrue();
-
-        when(innsynServiceMock.hentBarnInfo(any())).thenReturn(new ArrayList<Barn>() {{
-            add(trilling1());
-            add(trilling2());
-            add(trilling3());
-        }});
-
-        response = kallEndepunkt();
-        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
-
-        barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
-        assertThat(barnDtoList.size()).isEqualTo(4);
-        assertThat(barnDtoList.get(3).getFulltnavn()).matches("TRILLING[123], TRILLING[123] og TRILLING[123]");
-        assertThat(barnDtoList.get(3).getFodselsdato()).matches("0[5-7].01.2018, 0[5-7].01.2018 og 0[5-7].01.2018");
-        assertThat(barnDtoList.get(3).getErFlerling()).isTrue();
     }
 
     @Test
@@ -122,23 +101,6 @@ public class BarnResourceTest {
         when(innsynServiceMock.hentBarnInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
         Response response = kallEndepunkt();
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
-    }
-
-    @Test
-    public void at_powerset_gir_korrekte_kombinasjoner() {
-        BarnDto barnA = new BarnDto("A","XX.XX.XXXX",false);
-        BarnDto barnB = new BarnDto("B","XX.XX.XXXX",false);
-        List<BarnDto> barnDtoList = new ArrayList<BarnDto>() {{
-            add(barnA);
-            add(barnB);
-        }};
-        Set<Set<BarnDto>> barnDtoSet = BarnResource.powerSet(barnDtoList);
-        assertThat(barnDtoSet).isEqualTo(new HashSet<Set<BarnDto>>() {{
-            add(new HashSet<>());
-            add(new HashSet<>(Arrays.asList(barnA)));
-            add(new HashSet<>(Arrays.asList(barnB)));
-            add(new HashSet<>(Arrays.asList(barnA, barnB)));
-        }});
     }
 
     private Response kallEndepunkt() {
@@ -171,27 +133,6 @@ public class BarnResourceTest {
         return new Barn.Builder()
                 .fulltnavn("NAVNESEN TVILLING2 MELLOMNAVN")
                 .fodselsdato("01.01.2018")
-                .build();
-    }
-
-    private Barn trilling1() {
-        return new Barn.Builder()
-                .fulltnavn("NAVNESEN TRILLING1")
-                .fodselsdato("05.01.2018")
-                .build();
-    }
-
-    private Barn trilling2() {
-        return new Barn.Builder()
-                .fulltnavn("NAVNESEN TRILLING2")
-                .fodselsdato("06.01.2018")
-                .build();
-    }
-
-    private Barn trilling3() {
-        return new Barn.Builder()
-                .fulltnavn("NAVNESEN TRILLING3")
-                .fodselsdato("07.01.2018")
                 .build();
     }
 }
