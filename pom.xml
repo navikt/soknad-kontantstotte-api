@@ -16,6 +16,7 @@
     <packaging>jar</packaging>
 
     <properties>
+        <java.version>11</java.version>
         <oidc-support.version>0.2.6</oidc-support.version>
         <common-java-modules.version>2018.10.02.19.54</common-java-modules.version>
         <commons-lang3.version>3.7</commons-lang3.version>
