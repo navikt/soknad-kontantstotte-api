@@ -1,4 +1,4 @@
-FROM navikt/java:8-appdynamics
+FROM navikt/java:11-appdynamics
 
 COPY 20-appdynamics.sh /init-scripts/
 
