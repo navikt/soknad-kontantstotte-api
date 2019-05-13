@@ -1,5 +1,5 @@
 name: soknad-kontantstotte-api
-team: team-soknad
+team: teamfamilie
 image: repo.adeo.no:5443/soknad/soknad-kontantstotte-api
 replicas:
   min: 2
