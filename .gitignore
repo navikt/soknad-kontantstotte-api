@@ -1,5 +1,8 @@
 .DS_Store
 *.iml
+.classpath
+.project
+.settings
 target/
 .idea
 VERSION
