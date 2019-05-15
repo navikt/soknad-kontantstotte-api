@@ -18,9 +18,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 
 @Configuration
 public class FeatureToggleConfig {
-    private static final String APP_NAME_PROPERTY_NAME = "${APP_NAME}";
+    private static final String APP_NAME_PROPERTY_NAME = "${NAIS_APP_NAME}";
     private static final String UNLEASH_API_URL_PROPERTY_NAME = "${UNLEASH_API_URL}";
-    private static final String FASIT_ENVIRONMENT_NAME = "${FASIT_ENVIRONMENT_NAME}";
+    private static final String ENVIRONMENT_NAME = "${ENVIRONMENT_NAME}";
 
     @Inject
     private Unleash unleash;
@@ -43,13 +43,13 @@ public class FeatureToggleConfig {
 
     @Profile("!dev")
     @Bean
-    public Strategy isNotProd(@Value(FASIT_ENVIRONMENT_NAME) String env){
+    public Strategy isNotProd(@Value(ENVIRONMENT_NAME) String env){
         return new IsNotProdStrategy(env);
     }
 
     @Profile("!dev")
     @Bean
-    public Strategy byEnvironment(@Value(FASIT_ENVIRONMENT_NAME) String env){
+    public Strategy byEnvironment(@Value(ENVIRONMENT_NAME) String env){
         return new ByEnvironmentStrategy(env);
     }
 

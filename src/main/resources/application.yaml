@@ -1,4 +1,6 @@
-server.servlet.path: /
+server:
+  servlet:
+    context-path: /
 
 spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
@@ -11,8 +13,8 @@ spring:
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
-    discoveryurl: <Hentes fra fasit>
-    acceptedaudience: <Hentes fra fasit>
+    discoveryurl: https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten
+    acceptedaudience: ${ACCEPTEDAUDIENCE}
     cookie_name: selvbetjening-idtoken
 
 management:
@@ -33,11 +35,45 @@ logging:
     org.glassfish: INFO
     no.nav: INFO
 
-
+# Pdf-generator
 SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://pdf-gen.default/api
 SOKNAD_HTML_GENERATOR_URL: http://soknad-html-generator/api
 
 # S3
 SOKNAD_KONTANTSTOTTE_S3_ENDPOINT: http://s3.nais-rook
 SOKNAD_KONTANTSTOTTE_API_S3_REGION: us-east-1
+#SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: <Ligger i vault>
+#SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_USERNAME: <Ligger i vault>
 attachment.max.size.mb: 20
+
+#Unleash
+UNLEASH_API_URL: https://unleashproxy.nais.oera.no/api/
+
+# Appdynamics
+APPDYNAMICS_AGENT_ACCOUNT_NAME: PROD
+APPDYNAMICS_CONTROLLER_HOST_NAME: appdynamics.adeo.no
+APPDYNAMICS_CONTROLLER_PORT: 443
+APPDYNAMICS_CONTROLLER_SSL_ENABLED: true
+#APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY: <Ligger i Vault>
+
+# Loadbalancer/ingress
+LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api.nav.no
+LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_POOLNAME: N/A
+
+# Api-gw/tjenester i FSS
+SOKNAD_KONTANTSTOTTE_PROXY_API_URL: https://api-gw.oera.no/soknad-kontantstotte-proxy/api/
+SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME}#<Ligger i vault>
+
+TPS-PROXY_API_V1_INNSYN_URL: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+#SOKNAD_KONTANTSTOTTE_API_TPS_PROXY_API_V1_INNSYN_APIKEY_USERNAME: <Ligger i vault>
+
+# Nav-truststore
+NAV_TRUSTSTORE_KEYSTOREALIAS: na
+NAV_TRUSTSTORE_PATH: /var/run/secrets/naisd.io/nav_truststore_path
+
+# Enonic
+APPRES_CMS_URL: https://appres.nav.no
+
+# Annet
+ENVIRONMENT_NAME: p
+

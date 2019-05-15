@@ -10,7 +10,7 @@ spring:
     allow-bean-definition-overriding: true
 
 UNLEASH_API_URL: http://localhost
-APP_NAME: soknad-kontantstotte-api
+NAIS_APP_NAME: soknad-kontantstotte-api
 
 SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://localhost:8082/api
 SOKNAD_HTML_GENERATOR_URL: http://localhost:9000/api

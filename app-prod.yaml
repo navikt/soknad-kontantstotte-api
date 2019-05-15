@@ -1,0 +1,36 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: soknad-kontantstotte-api
+  namespace: default
+  labels:
+    team: teamfamilie
+
+spec:
+  image: repo.adeo.no:5443/soknad-kontantstotte-api:RELEASE_VERSION
+  port: 8080
+  liveness:
+    path: /internal/status/isAlive
+    initialDelay: 60
+  readiness:
+    path: /internal/status/isAlive
+    initialDelay: 60
+  prometheus:
+    enabled: true
+    path: /internal/prometheus
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 50
+  ingresses:
+    - "https://soknad-kontantstotte-api.nav.no"
+  vault:
+    enabled: true
+  resources:
+    limits:
+      memory: 2Gi
+    requests:
+      memory: 1Gi
+  env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: default
