@@ -1,0 +1,26 @@
+no.nav.security.oidc:
+  issuers: selvbetjening
+  issuer.selvbetjening:
+    discoveryurl: https://login.microsoftonline.com/NAVtestB2C.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten_ver1
+    acceptedaudience: ${ACCEPTEDAUDIENCE} #Ligger i vault
+    cookie_name: selvbetjening-idtoken
+
+# Appdynamics
+APPDYNAMICS_AGENT_ACCOUNT_NAME: NON-PROD
+APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY: ${APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY} #Ligger i vault
+
+# Enonic
+APPRES_CMS_URL: https://appres-q0.nav.no
+
+# Loadbalancer/ingress
+LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api-q.nav.no
+
+# Api-gw/tjenester i FSS
+SOKNAD_KONTANTSTOTTE_PROXY_API_URL: https://api-gw-q0.oera.no/soknad-kontantstotte-proxy/api/
+TPS-PROXY_API_V1_INNSYN_URL: https://api-gw-q0.oera.no/tps-proxy/api/v1/innsyn/
+
+# S3
+SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME} #Ligger i vault
+
+# Annet
+ENVIRONMENT_NAME: q0
