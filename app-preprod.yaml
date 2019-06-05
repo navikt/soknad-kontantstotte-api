@@ -29,8 +29,10 @@ spec:
   resources:
     limits:
       memory: 2Gi
+      cpu: 1500m
     requests:
       memory: 1Gi
+      cpu: 1000m
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod
