@@ -18,7 +18,7 @@ public class InnsynTestConfiguration {
     @Primary
     InnsynService innsynServiceGen() {
         InnsynService innsynServiceClient = mock(InnsynService.class);
-        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("FORNAVN").slektsnavn("SLEKTSNAVN").build());
+        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("FORNAVN").slektsnavn("SLEKTSNAVN").statsborgerskap("NOR").build());
         when(innsynServiceClient.hentBarnInfo(any())).thenReturn(new ArrayList<Barn>() {{
             add(new Barn.Builder()
                     .fulltnavn("NAVNESEN TVILLING1")
