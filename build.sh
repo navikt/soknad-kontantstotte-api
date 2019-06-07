@@ -25,7 +25,7 @@ IMAGE_NAME="soknad-kontantstotte-api"
 DOCKER_REGISTRY="repo.adeo.no:5443"
 DOCKER_REPOSITORY="soknad"
 TAG="${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/${IMAGE_NAME}:${v:="unversioned"}"
-BUILDER_IMAGE="repo.adeo.no:5443/soknad/soknad-docker-builder:1.0.0"
+BUILDER_IMAGE="repo.adeo.no:5443/soknad/soknad-docker-builder:2.0.1"
 
 
 # Hent ut argumenter
