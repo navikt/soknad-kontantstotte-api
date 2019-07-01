@@ -10,6 +10,8 @@ import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.log.MDCConstants;
 import no.nav.tps.innsyn.PersoninfoDto;
 import no.nav.tps.innsyn.RelasjonDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.inject.Inject;
@@ -28,6 +30,8 @@ import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.personinf
 import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.relasjonDtoToBarn;
 
 class InnsynServiceClient implements InnsynService {
+
+    private static final Logger secureLogger = LoggerFactory.getLogger("secureLogger");
 
     private static final String CONSUMER_ID = "soknad-kontantstotte-api";
 
@@ -82,6 +86,7 @@ class InnsynServiceClient implements InnsynService {
                 .collect(Collectors.toList());
 
         if (returListe.isEmpty()) {
+            secureLogger.info("Søknad på " + fnr + " er avslått ved innhenting av barn. Personen har følgende barn: " + dtoList);
             sokerErIkkeKvalifisert.increment();
         } else {
             sokerErKvalifisert.increment();

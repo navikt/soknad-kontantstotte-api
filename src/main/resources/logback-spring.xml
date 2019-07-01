@@ -4,7 +4,7 @@
 
     <include resource="logback-default-without-abac.xml"/>
 
-    <!-- Logger for skarpe data -->
+    <!-- Logger for sensitive data -->
     <appender name="secureLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>/secure-logs/secure.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">

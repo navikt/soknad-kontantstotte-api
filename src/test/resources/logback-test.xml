@@ -18,4 +18,8 @@
     <root level="DEBUG">
     </root>
 
+    <!-- Logger for sensitive data -->
+    <logger name="secureLogger" level="INFO">
+    </logger>
+
 </configuration>
