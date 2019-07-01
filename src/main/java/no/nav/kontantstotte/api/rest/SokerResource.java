@@ -6,6 +6,8 @@ import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.security.oidc.api.ProtectedWithClaims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 @Path("soker")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class SokerResource {
+    private final Logger logger = LoggerFactory.getLogger("secureLogger");
 
     private final InnsynService innsynServiceClient;
 
@@ -39,6 +42,8 @@ public class SokerResource {
         String fnr = hentFnrFraToken();
 
         Person person = innsynServiceClient.hentPersonInfo(fnr);
+        logger.info("Henter personinfo på person med fnr: test");
+
         soknadApnet.increment();
         if ("NOR".equals(person.getStatsborgerskap())) {
             sokerErNorsk.increment();
