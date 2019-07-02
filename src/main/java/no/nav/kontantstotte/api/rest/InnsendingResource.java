@@ -6,10 +6,13 @@ import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.security.oidc.api.ProtectedWithClaims;
+import no.nav.security.oidc.api.Unprotected;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -50,5 +53,16 @@ public class InnsendingResource {
         innsendingService.sendInnSoknad(soknad);
 
         return new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString());
+    }
+
+    @Profile("dev")
+    @POST
+    @Path("postman")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Unprotected
+    public String sendInnSoknadTest(@RequestBody Soknad soknad) {
+        innsendingService.sendStrukturertSoknad(soknad);
+
+        return "OK";
     }
 }

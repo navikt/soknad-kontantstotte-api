@@ -37,11 +37,13 @@ public class InnsendingConfiguration {
     @Bean
     public InnsendingService innsendingServiceRetriever(
             @Named("kontantstotteProxyClient") Client client,
-            @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI target,
+            @Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI proxyServiceUri,
+            @Value("${SOKNAD_KONTANTSTOTTE_MOTTAK_API_URL}") URI mottakServiceUri,
             OppsummeringPdfGenerator oppsummeringPdfGenerator,
             VedleggProvider vedleggProvider) {
         return new ArkivInnsendingService(client,
-                target,
+                proxyServiceUri,
+                mottakServiceUri,
                 oppsummeringPdfGenerator,
                 vedleggProvider);
     }

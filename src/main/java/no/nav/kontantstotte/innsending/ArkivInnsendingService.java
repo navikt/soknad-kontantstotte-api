@@ -6,6 +6,8 @@ import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -21,6 +23,7 @@ class ArkivInnsendingService implements InnsendingService {
 
     private final Counter soknadSendtInnSendtProxy = Metrics.counter("soknad.kontantstotte", "innsending", "sendtproxy");
 
+    private URI mottakServiceUri;
     private URI proxyServiceUri;
 
     private final Client client;
@@ -31,9 +34,11 @@ class ArkivInnsendingService implements InnsendingService {
 
     ArkivInnsendingService(Client client,
                            URI proxyServiceUri,
+                           URI mottakServiceUri,
                            OppsummeringPdfGenerator oppsummeringPdfGenerator,
                            VedleggProvider vedleggProvider) {
         this.client = client;
+        this.mottakServiceUri = mottakServiceUri;
         this.proxyServiceUri = proxyServiceUri;
         this.oppsummeringPdfGenerator = oppsummeringPdfGenerator;
         this.vedleggProvider = vedleggProvider;
@@ -56,11 +61,23 @@ class ArkivInnsendingService implements InnsendingService {
             throw new InnsendingException("Response fra proxy: "+ response.getStatus() + ". Response.entity: " + response.readEntity(String.class));
         }
 
+        sendStrukturertSoknad(soknad);
+
         log.info("Søknad sendt til proxy for innsending til arkiv");
 
         soknadSendtInnSendtProxy.increment();
         return soknad;
     }
 
-
+    public void sendStrukturertSoknad(Soknad soknad) {
+        try {
+            client.target(mottakServiceUri)
+                    .path("soknad")
+                    .request()
+                    .buildPost(Entity.entity(soknad, MediaType.APPLICATION_JSON))
+                    .invoke();
+        } catch (ProcessingException | WebApplicationException e) {
+            log.error("Videresending av søknad til mottak feilet.", e);
+        }
+    }
 }

@@ -11,8 +11,10 @@ import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
@@ -27,7 +29,10 @@ import static org.mockito.Mockito.mock;
 public class TestLauncher {
 
     public static void main(String... args) {
-        SpringApplication.run(ApplicationConfig.class, args);
+        new SpringApplicationBuilder(ApplicationConfig.class)
+                .web(WebApplicationType.SERVLET)
+                .build()
+                .run(args);
     }
 
     /**
