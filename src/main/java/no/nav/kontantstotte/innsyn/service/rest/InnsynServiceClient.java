@@ -9,7 +9,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -34,6 +33,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Timer;
+import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.client.STSRestClient;
 import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.kontantstotte.innsyn.domain.Barn;
@@ -80,10 +80,7 @@ class InnsynServiceClient implements InnsynService {
         this.tpsInnsynServiceUri = tpsInnsynServiceUri;
         this.mapper = mapper;
         this.stsRestClient = stsRestClient;
-        this.client = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(10))
-                .version(HttpClient.Version.HTTP_1_1)
-                .build();
+        this.client = HttpClientUtil.create();
     }
 
     static boolean erIKontantstotteAlder(String fodselsdato) {
@@ -128,9 +125,8 @@ class InnsynServiceClient implements InnsynService {
 
     @Override
     public void ping() {
-        HttpRequest request = HttpRequest.newBuilder()
+        HttpRequest request = HttpClientUtil.createRequest(stsRestClient.getSystemOIDCToken())
                 .uri(tpsInnsynServiceUri.resolve("/internal/alive"))
-                .header(HttpHeader.AUTHORIZATION.asString(), stsRestClient.getSystemOIDCToken())
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword)
                 .GET()

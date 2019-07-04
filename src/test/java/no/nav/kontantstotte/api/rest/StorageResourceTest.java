@@ -152,7 +152,8 @@ public class StorageResourceTest {
     }
 
     private File readStream(InputStream inputStream) throws IOException {
-        File targetFile = new File("targetFile.tmp");
+        File targetFile = File.createTempFile("targetFile", "tmp");
+        targetFile.deleteOnExit();
         OutputStream outStream = new FileOutputStream(targetFile);
 
         byte[] buffer = new byte[8 * 1024];

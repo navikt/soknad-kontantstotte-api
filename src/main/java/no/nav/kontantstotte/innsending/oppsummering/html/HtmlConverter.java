@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.kontantstotte.innsending.InnsendingException;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
@@ -38,24 +39,19 @@ class HtmlConverter {
                          OIDCRequestContextHolder contextHolder) {
         this.mapper = mapper;
         this.contextHolder = contextHolder;
-        this.client = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(10))
-                .version(HttpClient.Version.HTTP_1_1)
-                .build();
+        this.client = HttpClientUtil.create();
         this.url = htmlGeneratorUrl;
-
     }
 
     public byte[] genererHtml(SoknadOppsummering oppsummering) {
 
         HttpResponse<byte[]> response;
         try {
-            HttpRequest request = HttpRequest.newBuilder()
+            HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
+                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
+                    .timeout(Duration.ofSeconds(10))
                     .uri(url.resolve("generateHtml"))
                     .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(oppsummering)))
-                    .header(HttpHeader.AUTHORIZATION.asString(), TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
-                    .timeout(Duration.ofMinutes(2))
                     .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
 

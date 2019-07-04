@@ -7,7 +7,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.kontantstotte.innsending.InnsendingException;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
@@ -36,21 +36,16 @@ class PdfConverter {
     public PdfConverter(@Value("${SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl,
                         OIDCRequestContextHolder contextHolder) {
         this.contextHolder = contextHolder;
-        this.client = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(10))
-                .version(HttpClient.Version.HTTP_1_1)
-                .build();
+        this.client = HttpClientUtil.create();
         this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
     }
 
     byte[] genererPdf(byte[] bytes) {
         try {
-            var request = HttpRequest.newBuilder()
+            var request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
+                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML)
                     .uri(pdfSvgSupportGeneratorUrl.resolve("v1/genpdf/html/kontantstotte"))
                     .POST(HttpRequest.BodyPublishers.ofByteArray(bytes))
-                    .header(HttpHeader.AUTHORIZATION.asString(), TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML)
-                    .timeout(Duration.ofMinutes(2))
                     .build();
 
             var response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());

@@ -32,7 +32,7 @@ public class STSRestClient {
 
     public STSRestClient(ObjectMapper objectMapper, @Value("${STS_URL}") URI stsUrl, @Value("${CREDENTIAL_USERNAME}") String stsUsername, @Value("${CREDENTIAL_PASSWORD}") String stsPassword) {
         this.mapper = objectMapper;
-        this.client = HttpClient.newHttpClient();
+        this.client = HttpClientUtil.create();
         this.stsUrl = URI.create(stsUrl + "/rest/v1/sts/token?grant_type=client_credentials&scope=openid");
         this.stsUsername = stsUsername;
         this.stsPassword = stsPassword;
@@ -58,11 +58,9 @@ public class STSRestClient {
             return cachedToken.getAccess_token();
         }
 
-        HttpRequest request = HttpRequest.newBuilder()
+        HttpRequest request = HttpClientUtil.createRequest(basicAuth(stsUsername, stsPassword))
                 .uri(stsUrl)
-                .header("Authorization", basicAuth(stsUsername, stsPassword))
                 .header("Content-Type", "application/json")
-                .timeout(Duration.ofSeconds(30))
                 .build();
 
         AccessTokenResponse accessTokenResponse;

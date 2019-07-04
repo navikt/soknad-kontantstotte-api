@@ -6,7 +6,6 @@ import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -37,6 +36,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jwt.SignedJWT;
 
+import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
@@ -116,7 +116,7 @@ public class InnsendingResourceTest {
     }
 
     private HttpResponse<String> utførRequest(Soknad soknad) {
-        HttpClient client = HttpClient.newHttpClient();
+        HttpClient client = HttpClientUtil.create();
 
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
         String boundary = new BigInteger(256, new Random()).toString();
