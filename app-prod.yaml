@@ -33,6 +33,8 @@ spec:
     requests:
       memory: 1Gi
       cpu: 1000m
+  secureLogs:
+    enabled: true
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: default

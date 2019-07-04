@@ -22,7 +22,6 @@ import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 @Path("soker")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = { "acr=Level4" })
 public class SokerResource {
-
     private final InnsynService innsynServiceClient;
 
     private final Counter soknadApnet = Metrics.counter("soknad.kontantstotte.apnet");
@@ -39,6 +38,7 @@ public class SokerResource {
         String fnr = hentFnrFraToken();
 
         Person person = innsynServiceClient.hentPersonInfo(fnr);
+
         soknadApnet.increment();
         if ("NOR".equals(person.getStatsborgerskap())) {
             sokerErNorsk.increment();
