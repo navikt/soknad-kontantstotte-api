@@ -1,9 +1,9 @@
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
-     discoveryurl: http://metadata
-     accepted_audience: aud-localhost
-     cookie_name: localhost-idtoken
+    discoveryurl: http://metadata
+    accepted_audience: aud-localhost
+    cookie_name: localhost-idtoken
 
 spring:
   main:
@@ -26,6 +26,12 @@ SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: anything
 SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_PASSWORD: anything
 
 SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_PASSWORD: anything
+
+SOKNAD_KONTANTSTOTTE_PROXY_API_URL: "http://localhost:8081/api"
+SOKNAD_PDF_GENERATOR_URL: "http://localhost:8082/api"
+STS_URL: "http://security-token-service"
+CREDENTIAL_USERNAME: "srv-soknad-kontantstotte-api"
+CREDENTIAL_PASSWORD: "skal-ikke-sjekkes-inn"
 
 logging:
   level:

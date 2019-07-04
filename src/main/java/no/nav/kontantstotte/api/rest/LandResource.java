@@ -1,25 +1,27 @@
 package no.nav.kontantstotte.api.rest;
 
-import no.nav.kontantstotte.tekst.TekstService;
-import no.nav.security.oidc.api.Unprotected;
-import org.springframework.stereotype.Component;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
-@Produces(MediaType.APPLICATION_JSON)
-@Path("land")
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import no.nav.kontantstotte.tekst.TekstService;
+import no.nav.security.oidc.api.Unprotected;
+
+@RestController
+@RequestMapping("api/land")
 @Unprotected
 public class LandResource {
 
-    private static final String[] VALID_LANGUAGES = { "nb", "nn" };
+    private static final String[] VALID_LANGUAGES = {"nb", "nn"};
 
     private final TekstService tekstService;
 
-    private Map<String, Map<String,String>> landAlleSprak;
+    private Map<String, Map<String, String>> landAlleSprak;
 
     public LandResource() {
         this.tekstService = new TekstService();
@@ -29,7 +31,7 @@ public class LandResource {
         }
     }
 
-    @GET
+    @GetMapping(produces = APPLICATION_JSON)
     public Map<String, Map<String, String>> land() {
         return landAlleSprak;
     }

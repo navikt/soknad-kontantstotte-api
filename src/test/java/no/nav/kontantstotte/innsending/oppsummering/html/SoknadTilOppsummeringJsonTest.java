@@ -76,6 +76,6 @@ public class SoknadTilOppsummeringJsonTest {
     }
 
     private String getFile(String filnavn) {
-        return getClass().getClassLoader().getResource(filnavn).getFile();
+        return "src/test/resources/" + filnavn;
     }
 }

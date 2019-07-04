@@ -22,15 +22,4 @@ public class OppsummeringConfiguration {
         return new OppsummeringPdfGenerator(oppsummeringHtmlGenerator, pdfConverter);
     }
 
-
-    @Bean
-    public PdfConverter pdfServiceRetriever(
-            @Named("client") Client client,
-            @Value("${SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl
-    ) {
-
-        return new PdfConverter(client, pdfSvgSupportGeneratorUrl);
-    }
-
-
 }

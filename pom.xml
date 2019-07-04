@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.1.RELEASE</version>
+        <version>2.1.6.RELEASE</version>
     </parent>
 
     <groupId>no.nav.kontantstotte</groupId>
@@ -17,6 +17,8 @@
 
     <properties>
         <revision>1.0</revision>
+        <sha1></sha1>
+        <changelist>-SNAPSHOT</changelist>
         <java.version>11</java.version>
         <oidc-support.version>0.2.6</oidc-support.version>
         <common-java-modules.version>2018.10.02.19.54</common-java-modules.version>
@@ -77,7 +79,7 @@
         <!-- Interne avhengigheter -->
         <dependency>
             <groupId>no.nav.security</groupId>
-            <artifactId>oidc-jersey-support</artifactId>
+            <artifactId>oidc-spring-support</artifactId>
             <version>${oidc-support.version}</version>
         </dependency>
         <dependency>
@@ -98,8 +100,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
 
         <!-- spring boot -->
         <dependency>
@@ -107,7 +112,7 @@
             <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency>
 
-        <dependency> <!-- IKKE FJERN DENNE - selv om den ser ubrukt ut, så kreves den av actuator -->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
@@ -121,17 +126,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jersey</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -208,7 +202,6 @@
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>
             <version>1.20</version>
-
         </dependency>
 
         <dependency>
@@ -224,27 +217,6 @@
         </dependency>
 
         <!-- Test -->
-
-        <dependency>
-            <groupId>org.glassfish.jersey.test-framework</groupId>
-            <artifactId>jersey-test-framework-core</artifactId>
-            <version>2.26</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-            <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
-            <version>2.26</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-multipart</artifactId>
-            <version>2.26</version>
-        </dependency>
-
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>localstack</artifactId>

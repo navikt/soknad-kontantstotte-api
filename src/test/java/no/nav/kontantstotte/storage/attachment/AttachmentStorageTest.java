@@ -1,20 +1,26 @@
 package no.nav.kontantstotte.storage.attachment;
 
-import no.nav.kontantstotte.storage.Storage;
-import org.apache.commons.io.FileUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-
-import java.io.*;
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+
+import no.nav.kontantstotte.storage.Storage;
 
 public class AttachmentStorageTest {
 
@@ -28,7 +34,7 @@ public class AttachmentStorageTest {
     @Before
     public void setUp() throws IOException {
         pdfByteArray = readStream(toStream("dummy/pdf_dummy.pdf")).toByteArray();
-        pdfByteString = readStream(toStream("dummy/pdf_dummy.pdf")).toString("UTF-8");;
+        pdfByteString = readStream(toStream("dummy/pdf_dummy.pdf")).toString(StandardCharsets.UTF_8);
         when(converter.toStorageFormat(any(byte[].class))).thenReturn(pdfByteArray);
     }
 
@@ -39,7 +45,7 @@ public class AttachmentStorageTest {
         // Fanger opp argument for å kunne sammenligne innhold fra ny ByteArrayInputStream-instans
         ArgumentCaptor<ByteArrayInputStream> streamCaptor = ArgumentCaptor.forClass(ByteArrayInputStream.class);
         verify(delegate).put(eq("directory123"), eq("UUID123"), streamCaptor.capture());
-        String capturedStream = readStream(streamCaptor.getValue()).toString("UTF-8");
+        String capturedStream = readStream(streamCaptor.getValue()).toString(StandardCharsets.UTF_8);
         assertThat(capturedStream).isEqualTo(pdfByteString);
     }
 
@@ -48,14 +54,18 @@ public class AttachmentStorageTest {
         Optional<byte[]> optionalByteArray = Optional.ofNullable(pdfByteArray);
         when(delegate.get("directory123", "UUID123")).thenReturn(optionalByteArray);
 
-        attachmentStorage.put("directory123","UUID123", toStream("dummy/pdf_dummy.pdf"));
-        assertThat(attachmentStorage.get("directory123","UUID123")).isEqualTo(optionalByteArray);
-        assertThat(attachmentStorage.get("directory123","UUID1234")).isEmpty();
-        assertThat(attachmentStorage.get("directory1234","UUID123")).isEmpty();
+        attachmentStorage.put("directory123", "UUID123", toStream("dummy/pdf_dummy.pdf"));
+        assertThat(attachmentStorage.get("directory123", "UUID123")).isEqualTo(optionalByteArray);
+        assertThat(attachmentStorage.get("directory123", "UUID1234")).isEmpty();
+        assertThat(attachmentStorage.get("directory1234", "UUID123")).isEmpty();
     }
 
     private ByteArrayInputStream toStream(String filename) throws IOException {
-        File vedleggsfil = new File(getClass().getClassLoader().getResource(filename).getFile());
+        Objects.requireNonNull(filename, "filename");
+        File vedleggsfil = new File("src/test/resources/" + filename);
+        if (!vedleggsfil.exists()) {
+            throw new IllegalArgumentException("Ikke gyldig fil " + filename);
+        }
         return new ByteArrayInputStream(FileUtils.readFileToByteArray(vedleggsfil));
     }
 

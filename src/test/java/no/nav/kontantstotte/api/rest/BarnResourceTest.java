@@ -1,6 +1,32 @@
 package no.nav.kontantstotte.api.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.logging.LoggingFeature;
+import org.junit.After;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import com.nimbusds.jwt.SignedJWT;
+
 import no.nav.kontantstotte.api.rest.dto.BarnDto;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsyn.domain.Barn;
@@ -9,29 +35,6 @@ import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
-import org.glassfish.jersey.logging.LoggingFeature;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.inject.Inject;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
 
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
@@ -43,10 +46,9 @@ public class BarnResourceTest {
     @Value("${local.server.port}")
     private int port;
 
-    @Value("${spring.jersey.application-path}")
-    private String contextPath;
+    private String contextPath = "/api";
 
-    @Inject
+    @MockBean
     private InnsynService innsynServiceMock;
 
     @After
@@ -64,7 +66,8 @@ public class BarnResourceTest {
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 
-        List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
+        List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {
+        });
         assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(barn.getFulltnavn());
         assertThat(barnDtoList.get(0).getFodselsdato()).isEqualTo(barn.getFodselsdato());
     }
@@ -81,7 +84,8 @@ public class BarnResourceTest {
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 
-        List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {});
+        List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {
+        });
         assertThat(barnDtoList.size()).isEqualTo(2);
         assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(tvilling1.getFulltnavn());
         assertThat(barnDtoList.get(0).getFodselsdato()).isEqualTo(tvilling1.getFodselsdato());

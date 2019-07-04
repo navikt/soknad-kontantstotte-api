@@ -50,7 +50,7 @@ public class AttachmentConverterTest {
     }
 
     private byte[] toByteArray(String filename) throws IOException {
-        File vedleggsfil = new File(getClass().getClassLoader().getResource(filename).getFile());
+        File vedleggsfil = new File("src/test/resources/" + filename);
         ByteArrayInputStream inputStream =  new ByteArrayInputStream(FileUtils.readFileToByteArray(vedleggsfil));
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int read;

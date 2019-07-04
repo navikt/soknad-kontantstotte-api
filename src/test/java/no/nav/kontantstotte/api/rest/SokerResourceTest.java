@@ -15,6 +15,7 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -40,10 +41,9 @@ public class SokerResourceTest {
     @Value("${local.server.port}")
     private int port;
 
-    @Value("${spring.jersey.application-path}")
-    private String contextPath;
+    private String contextPath = "/api";
 
-    @Inject
+    @MockBean
     private InnsynService innsynServiceMock;
 
     @After

@@ -30,8 +30,7 @@ public class InnloggingStatusResourceTest {
     @Value("${local.server.port}")
     private int port;
 
-    @Value("${spring.jersey.application-path}")
-    private String contextPath;
+    private String contextPath = "/api";
 
     @Test
     @Deprecated

@@ -5,10 +5,6 @@ server:
 spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
   main.banner-mode: "off"
-  jersey:
-    servlet.load-on-startup: 1
-    application-path: "/api"
-  metrics.web.server.auto-time-requests: true
 
 no.nav.security.oidc:
   issuers: selvbetjening
@@ -26,6 +22,7 @@ management:
     path-mapping:
       info: "status/isAlive"
   metrics.export.prometheus.enabled: true
+  metrics.web.server.auto-time-requests: true
 
 http.proxy: http://webproxy-nais.nav.no:8088
 

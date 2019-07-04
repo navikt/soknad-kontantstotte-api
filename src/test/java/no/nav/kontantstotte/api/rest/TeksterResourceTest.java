@@ -26,8 +26,7 @@ public class TeksterResourceTest {
     @Value("${local.server.port}")
     private int port;
 
-    @Value("${spring.jersey.application-path}")
-    private String contextPath;
+    private String contextPath = "/api";
     @Test
     public void at_tekster_hentes_korrekt() {
         Response response = kallEndepunkt();
