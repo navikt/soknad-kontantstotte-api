@@ -7,12 +7,16 @@ import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,6 +80,7 @@ class ArkivInnsendingService implements InnsendingService {
             String body = mapper.writeValueAsString(soknadDto);
             HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
+                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .uri(UriBuilder.fromUri(proxyServiceUri).path("soknad").build())
                     .POST(HttpRequest.BodyPublishers.ofString(body))
                     .build();
@@ -90,6 +95,7 @@ class ArkivInnsendingService implements InnsendingService {
                     log.info("Prøver å sende søknad til mottaket.");
                     HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
                             .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
+                            .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                             .uri(UriBuilder.fromUri(mottakServiceUri).path("soknad").build())
                             .POST(HttpRequest.BodyPublishers.ofString(body))
                             .build();
