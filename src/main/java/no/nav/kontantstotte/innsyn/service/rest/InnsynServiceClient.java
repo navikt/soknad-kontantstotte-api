@@ -34,7 +34,6 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Timer;
 import no.nav.kontantstotte.client.HttpClientUtil;
-import no.nav.kontantstotte.client.STSRestClient;
 import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.kontantstotte.innsyn.domain.Barn;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
@@ -62,7 +61,6 @@ class InnsynServiceClient implements InnsynService {
     private final HttpClient client;
     private URI tpsInnsynServiceUri;
     private ObjectMapper mapper;
-    private STSRestClient stsRestClient;
     private String tpsProxyApiKeyUsername;
     private String tpsProxyApiKeyPassword;
     private OIDCRequestContextHolder contextHolder;
@@ -72,14 +70,12 @@ class InnsynServiceClient implements InnsynService {
                         @Value("${SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}") String tpsProxyApiKeyUsername,
                         @Value("${SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}") String tpsProxyApiKeyPassword,
                         OIDCRequestContextHolder contextHolder,
-                        ObjectMapper mapper,
-                        STSRestClient stsRestClient) {
+                        ObjectMapper mapper) {
         this.tpsProxyApiKeyUsername = tpsProxyApiKeyUsername;
         this.tpsProxyApiKeyPassword = tpsProxyApiKeyPassword;
         this.contextHolder = contextHolder;
         this.tpsInnsynServiceUri = tpsInnsynServiceUri;
         this.mapper = mapper;
-        this.stsRestClient = stsRestClient;
         this.client = HttpClientUtil.create();
     }
 
@@ -125,7 +121,7 @@ class InnsynServiceClient implements InnsynService {
 
     @Override
     public void ping() {
-        HttpRequest request = HttpClientUtil.createRequest(stsRestClient.getSystemOIDCToken())
+        HttpRequest request = HttpClientUtil.createRequest()
                 .uri(tpsInnsynServiceUri.resolve("/internal/alive"))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword)

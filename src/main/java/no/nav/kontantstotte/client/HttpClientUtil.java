@@ -27,4 +27,10 @@ public final class HttpClientUtil {
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
                 .timeout(Duration.ofMinutes(2));
     }
+
+    public static HttpRequest.Builder createRequest() {
+        return HttpRequest.newBuilder()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
+                .timeout(Duration.ofMinutes(2));
+    }
 }
