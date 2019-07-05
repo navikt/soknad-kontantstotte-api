@@ -11,6 +11,7 @@ import java.time.Duration;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ class HtmlConverter {
             HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .timeout(Duration.ofSeconds(10))
-                    .uri(url.resolve("generateHtml"))
+                    .uri(UriBuilder.fromUri(url).path("generateHtml").build())
                     .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(oppsummering)))
                     .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());

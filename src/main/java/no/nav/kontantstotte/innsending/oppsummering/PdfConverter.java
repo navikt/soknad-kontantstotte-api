@@ -10,6 +10,7 @@ import java.net.http.HttpResponse;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ class PdfConverter {
         try {
             var request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML)
-                    .uri(pdfSvgSupportGeneratorUrl.resolve("v1/genpdf/html/kontantstotte"))
+                    .uri(UriBuilder.fromUri(pdfSvgSupportGeneratorUrl).path("v1/genpdf/html/kontantstotte").build())
                     .POST(HttpRequest.BodyPublishers.ofByteArray(bytes))
                     .build();
 

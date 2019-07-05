@@ -9,6 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
@@ -43,7 +44,7 @@ class ImageConversionService {
         try {
             var request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), detectedType.mimeType)
-                    .uri(imageToPdfEndpointBaseUrl.resolve("v1/genpdf/image/kontantstotte"))
+                    .uri(UriBuilder.fromUri(imageToPdfEndpointBaseUrl).path("v1/genpdf/image/kontantstotte").build())
                     .POST(HttpRequest.BodyPublishers.ofByteArray(bytes))
                     .build();
 

@@ -11,6 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,7 @@ class ArkivInnsendingService implements InnsendingService {
             String body = mapper.writeValueAsString(soknadDto);
             HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
-                    .uri(proxyServiceUri.resolve("soknad"))
+                    .uri(UriBuilder.fromUri(proxyServiceUri).path("soknad").build())
                     .POST(HttpRequest.BodyPublishers.ofString(body))
                     .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -89,7 +90,7 @@ class ArkivInnsendingService implements InnsendingService {
                     log.info("Prøver å sende søknad til mottaket.");
                     HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
                             .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
-                            .uri(mottakServiceUri.resolve("soknad"))
+                            .uri(UriBuilder.fromUri(mottakServiceUri).path("soknad").build())
                             .POST(HttpRequest.BodyPublishers.ofString(body))
                             .build();
                     HttpResponse<String> mottakresponse = client.send(mottakRequest, HttpResponse.BodyHandlers.ofString());

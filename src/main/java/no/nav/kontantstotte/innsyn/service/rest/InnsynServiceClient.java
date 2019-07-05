@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
@@ -123,7 +124,7 @@ class InnsynServiceClient implements InnsynService {
     @Override
     public void ping() {
         HttpRequest request = HttpClientUtil.createRequest()
-                .uri(tpsInnsynServiceUri.resolve("/internal/alive"))
+                .uri(UriBuilder.fromUri(tpsInnsynServiceUri).path("/internal/alive").build())
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword)
                 .GET()
@@ -171,8 +172,9 @@ class InnsynServiceClient implements InnsynService {
     }
 
     private HttpResponse<String> getInnsynResponse(String path, String fnr) {
+        URI uri = UriBuilder.fromUri(tpsInnsynServiceUri).path(path).build();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(tpsInnsynServiceUri.resolve(path))
+                .uri(uri)
                 .header(HttpHeader.AUTHORIZATION.asString(), TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
@@ -190,8 +192,8 @@ class InnsynServiceClient implements InnsynService {
                 return response;
             }
         } catch (IOException | InterruptedException e) {
-            logger.info("Ukjent feil ved oppslag mot '" + tpsInnsynServiceUri.resolve(path) + "'. " + e.getMessage());
-            throw new InnsynOppslagException("Ukjent feil ved oppslag mot '" + tpsInnsynServiceUri.resolve(path) + "'. " + e.getMessage());
+            logger.info("Ukjent feil ved oppslag mot '" + uri + "'. " + e.getMessage());
+            throw new InnsynOppslagException("Ukjent feil ved oppslag mot '" + uri + "'. " + e.getMessage());
         }
     }
 }
