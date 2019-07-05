@@ -48,7 +48,7 @@ class ArkivInnsendingService implements InnsendingService {
     private ObjectMapper mapper;
 
     ArkivInnsendingService(@Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI proxyServiceUri,
-                           @Value("${SOKNAD_KONTANTSTOTTE_MOTTAK_API_URL") URI mottakServiceUri,
+                           @Value("${SOKNAD_KONTANTSTOTTE_MOTTAK_API_URL}") URI mottakServiceUri,
                            @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME}") String kontantstotteProxyApiKeyUsername,
                            @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}") String kontantstotteProxyApiKeyPassword,
                            OppsummeringPdfGenerator oppsummeringPdfGenerator,
