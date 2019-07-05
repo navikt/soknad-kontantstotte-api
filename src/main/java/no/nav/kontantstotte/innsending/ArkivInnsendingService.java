@@ -81,7 +81,6 @@ class ArkivInnsendingService implements InnsendingService {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (!SUCCESSFUL.equals(familyOf(response.statusCode()))) {
-                log.info("Response fra proxy: " + Response.Status.fromStatusCode(response.statusCode()) + ". Response.entity: " + response.body());
                 throw new InnsendingException("Response fra proxy: " + Response.Status.fromStatusCode(response.statusCode()) + ". Response.entity: " + response.body());
             }
 
@@ -104,13 +103,10 @@ class ArkivInnsendingService implements InnsendingService {
             soknadSendtInnSendtProxy.increment();
             return soknad;
         } catch (JsonProcessingException e) {
-            log.info("Feiler under konvertering av innsending til json.", e);
             throw new InnsendingException("Feiler under konvertering av innsending til json.");
         } catch (InterruptedException e) {
-            log.info("Timer ut under innsending.", e);
             throw new InnsendingException("Timer ut under innsending.");
         } catch (IOException e) {
-            log.info("Ukjent IO feil. " + e.getMessage());
             throw new InnsendingException("Ukjent IO feil. " + e.getMessage());
         }
     }
