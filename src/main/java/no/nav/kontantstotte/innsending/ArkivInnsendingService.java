@@ -35,7 +35,6 @@ import no.nav.security.oidc.context.OIDCRequestContextHolder;
 @Component
 class ArkivInnsendingService implements InnsendingService {
 
-    public static final String DO_NOT_SEND = "donot.send";
     private static final Logger log = LoggerFactory.getLogger(ArkivInnsendingService.class);
     private final Counter soknadSendtInnSendtProxy = Metrics.counter("soknad.kontantstotte", "innsending", "sendtproxy");
     private final HttpClient client;
@@ -49,7 +48,7 @@ class ArkivInnsendingService implements InnsendingService {
     private ObjectMapper mapper;
 
     ArkivInnsendingService(@Value("${SOKNAD_KONTANTSTOTTE_PROXY_API_URL}") URI proxyServiceUri,
-                           @Value("${SOKNAD_KONTANTSTOTTE_MOTTAK_API_URL:" + DO_NOT_SEND + "}") URI mottakServiceUri,
+                           @Value("${SOKNAD_KONTANTSTOTTE_MOTTAK_API_URL") URI mottakServiceUri,
                            @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME}") String kontantstotteProxyApiKeyUsername,
                            @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}") String kontantstotteProxyApiKeyPassword,
                            OppsummeringPdfGenerator oppsummeringPdfGenerator,
@@ -90,20 +89,18 @@ class ArkivInnsendingService implements InnsendingService {
                 throw new InnsendingException("Response fra proxy: " + Response.Status.fromStatusCode(response.statusCode()) + ". Response.entity: " + response.body());
             }
 
-            if (!URI.create(DO_NOT_SEND).equals(mottakServiceUri)) {
-                try {
-                    log.info("Prøver å sende søknad til mottaket.");
-                    HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                            .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
-                            .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
-                            .uri(UriBuilder.fromUri(mottakServiceUri).path("soknad").build())
-                            .POST(HttpRequest.BodyPublishers.ofString(body))
-                            .build();
-                    HttpResponse<String> mottakresponse = client.send(mottakRequest, HttpResponse.BodyHandlers.ofString());
-                    log.info("Søknad sendt til mottaket :: response={}, body={}", mottakresponse, mottakresponse.body());
-                } catch (IOException | InterruptedException e) {
-                    log.info("Feilet under sending av søknad til mottak :: {}", e.getMessage());
-                }
+            try {
+                log.info("Prøver å sende søknad til mottaket.");
+                HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
+                        .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
+                        .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
+                        .uri(UriBuilder.fromUri(mottakServiceUri).path("soknad").build())
+                        .POST(HttpRequest.BodyPublishers.ofString(body))
+                        .build();
+                HttpResponse<String> mottakresponse = client.send(mottakRequest, HttpResponse.BodyHandlers.ofString());
+                log.info("Søknad sendt til mottaket :: response={}, body={}", mottakresponse, mottakresponse.body());
+            } catch (IOException | InterruptedException e) {
+                log.info("Feilet under sending av søknad til mottak :: {}", e.getMessage());
             }
             log.info("Søknad sendt til proxy for innsending til arkiv");
 
