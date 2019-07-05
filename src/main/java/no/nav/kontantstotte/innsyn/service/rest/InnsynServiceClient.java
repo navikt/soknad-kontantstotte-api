@@ -50,6 +50,7 @@ import no.nav.tps.innsyn.RelasjonDto;
 class InnsynServiceClient implements InnsynService {
 
     private static final Logger secureLogger = LoggerFactory.getLogger("secureLogger");
+    private static final Logger logger = LoggerFactory.getLogger(InnsynServiceClient.class);
 
     private static final String CONSUMER_ID = "soknad-kontantstotte-api";
 
@@ -187,11 +188,13 @@ class InnsynServiceClient implements InnsynService {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (!SUCCESSFUL.equals(Response.Status.Family.familyOf(response.statusCode()))) {
+                logger.info("Kall mot innsynstjeneste feilet: " + response.body());
                 throw new InnsynOppslagException(response.body());
             } else {
                 return response;
             }
         } catch (IOException | InterruptedException e) {
+            logger.info("Ukjent feil ved oppslag mot '" + tpsInnsynServiceUri.resolve(path) + "'. " + e.getMessage());
             throw new InnsynOppslagException("Ukjent feil ved oppslag mot '" + tpsInnsynServiceUri.resolve(path) + "'. " + e.getMessage());
         }
     }
