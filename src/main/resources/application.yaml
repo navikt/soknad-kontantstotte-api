@@ -74,3 +74,6 @@ APPRES_CMS_URL: https://appres.nav.no
 # Annet
 ENVIRONMENT_NAME: p
 
+# STS
+STS_URL: http://security-token-service
+
