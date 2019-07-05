@@ -44,6 +44,8 @@ import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
 
+import javax.ws.rs.core.MediaType;
+
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class})
@@ -119,17 +121,12 @@ public class InnsendingResourceTest {
         HttpClient client = HttpClientUtil.create();
 
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
-        String boundary = new BigInteger(256, new Random()).toString();
 
         try {
-            Map<Object, Object> multipart = Map.of("soknad", objectMapper.writeValueAsString(soknad) + ";type=application/json");
-
             HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + contextPath + "/sendinn"))
-                    .header(HttpHeader.CONTENT_TYPE.asString(), "multipart/form-data;boundary=" + boundary)
+                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
-                    .header("Referer", "https://soknad-kontantstotte-t.nav.no/")
-                    .header("Origin", "https://soknad-kontantstotte-t.nav.no")
-                    .POST(MultipartBodyPublisher.ofMimeMultipartData(multipart, boundary))
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(soknad)))
                     .build();
 
             return client.send(request, HttpResponse.BodyHandlers.ofString());
