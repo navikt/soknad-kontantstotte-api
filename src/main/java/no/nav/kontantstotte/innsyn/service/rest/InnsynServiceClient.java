@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import no.nav.kontantstotte.logging.TjenesteLogger;
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,7 +113,6 @@ class InnsynServiceClient implements InnsynService {
                 .collect(Collectors.toList());
 
         if (returListe.isEmpty()) {
-            secureLogger.info("Søknad på " + fnr + " er avslått ved innhenting av barn. Personen har følgende barn: " + dtoList);
             sokerErIkkeKvalifisert.increment();
         } else {
             sokerErKvalifisert.increment();
@@ -154,7 +154,10 @@ class InnsynServiceClient implements InnsynService {
     private <T> T hentInnsynsRespons(String path, String fnr, Class<T> dtoClass) {
         HttpResponse<String> response = getInnsynResponse(path, fnr);
         try {
-            return mapper.readValue(response.body(), dtoClass);
+            T data = mapper.readValue(response.body(), dtoClass);
+            TjenesteLogger.logTjenestekall(UriBuilder.fromUri(tpsInnsynServiceUri).path(path).build(), fnr, data);
+
+            return data;
         } catch (IOException e) {
             throw new InnsynOppslagException("TPS innsyn service is not up");
         }
@@ -165,7 +168,11 @@ class InnsynServiceClient implements InnsynService {
         try {
             CollectionType typeReference =
                     TypeFactory.defaultInstance().constructCollectionType(List.class, dtoClass);
-            return mapper.readValue(response.body(), typeReference);
+
+            List<T> data = mapper.readValue(response.body(), typeReference);
+            TjenesteLogger.logTjenestekall(UriBuilder.fromUri(tpsInnsynServiceUri).path(path).build(), fnr, data);
+
+            return data;
         } catch (IOException e) {
             throw new InnsynOppslagException("TPS innsyn service is not up");
         }
