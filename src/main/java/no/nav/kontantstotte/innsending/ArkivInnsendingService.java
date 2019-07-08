@@ -42,6 +42,8 @@ class ArkivInnsendingService implements InnsendingService {
     private final VedleggProvider vedleggProvider;
     private final String kontantstotteProxyApiKeyUsername;
     private final String kontantstotteProxyApiKeyPassword;
+    private final String kontantstotteMottakApiKeyUsername;
+    private final String kontantstotteMottakApiKeyPassword;
     private URI mottakServiceUri;
     private URI proxyServiceUri;
     private OIDCRequestContextHolder contextHolder;
@@ -51,6 +53,8 @@ class ArkivInnsendingService implements InnsendingService {
                            @Value("${SOKNAD_KONTANTSTOTTE_MOTTAK_API_URL}") URI mottakServiceUri,
                            @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME}") String kontantstotteProxyApiKeyUsername,
                            @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD}") String kontantstotteProxyApiKeyPassword,
+                           @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_MOTTAK_APIKEY_USERNAME}") String kontantstotteMottakApiKeyUsername,
+                           @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_MOTTAK_APIKEY_PASSWORD}") String kontantstotteMottakApiKeyPassword,
                            OppsummeringPdfGenerator oppsummeringPdfGenerator,
                            VedleggProvider vedleggProvider,
                            OIDCRequestContextHolder contextHolder,
@@ -58,6 +62,8 @@ class ArkivInnsendingService implements InnsendingService {
         this.mottakServiceUri = mottakServiceUri;
         this.kontantstotteProxyApiKeyUsername = kontantstotteProxyApiKeyUsername;
         this.kontantstotteProxyApiKeyPassword = kontantstotteProxyApiKeyPassword;
+        this.kontantstotteMottakApiKeyUsername = kontantstotteMottakApiKeyUsername;
+        this.kontantstotteMottakApiKeyPassword = kontantstotteMottakApiKeyPassword;
         this.contextHolder = contextHolder;
         this.mapper = mapper;
         this.client = HttpClientUtil.create();
@@ -92,7 +98,7 @@ class ArkivInnsendingService implements InnsendingService {
             try {
                 log.info("Prøver å sende søknad til mottaket.");
                 HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                        .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
+                        .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                         .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                         .uri(UriBuilder.fromUri(mottakServiceUri).path("soknad").build())
                         .POST(HttpRequest.BodyPublishers.ofString(body))
