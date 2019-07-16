@@ -87,7 +87,7 @@ class ArkivInnsendingService implements InnsendingService {
                     .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .uri(UriBuilder.fromUri(proxyServiceUri).path("soknad").build())
-                    .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(soknad)))
+                    .POST(HttpRequest.BodyPublishers.ofString(body))
                     .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -101,7 +101,7 @@ class ArkivInnsendingService implements InnsendingService {
                         .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                         .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                         .uri(UriBuilder.fromUri(mottakServiceUri).path("soknad").build())
-                        .POST(HttpRequest.BodyPublishers.ofString(body))
+                        .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(soknad)))
                         .build();
                 HttpResponse<String> mottakresponse = client.send(mottakRequest, HttpResponse.BodyHandlers.ofString());
                 log.info("Søknad sendt til mottaket :: response={}, body={}", mottakresponse, mottakresponse.body());
