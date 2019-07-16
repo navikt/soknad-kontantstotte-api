@@ -87,7 +87,7 @@ class ArkivInnsendingService implements InnsendingService {
                     .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .uri(UriBuilder.fromUri(proxyServiceUri).path("soknad").build())
-                    .POST(HttpRequest.BodyPublishers.ofString(body))
+                    .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(soknad)))
                     .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
