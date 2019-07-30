@@ -126,8 +126,6 @@ public class StorageResourceTest {
             HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + contextPath + "/vedlegg/"))
                     .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
                     .header(HttpHeader.CONTENT_TYPE.asString(), "multipart/form-data;boundary=" + boundary)
-                    .header("Referer", "https://soknad-kontantstotte-t.nav.no/")
-                    .header("Origin", "https://soknad-kontantstotte-t.nav.no")
                     .POST(MultipartBodyPublisher.ofMimeMultipartData(multipart, boundary))
                     .build();
 
