@@ -48,7 +48,7 @@ class HtmlConverter {
 
         HttpResponse<byte[]> response;
         try {
-            HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
+            HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .timeout(Duration.ofSeconds(10))
                     .uri(UriBuilder.fromUri(url).path("generateHtml").build())

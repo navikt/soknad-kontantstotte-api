@@ -43,7 +43,7 @@ class PdfConverter {
 
     byte[] genererPdf(byte[] bytes) {
         try {
-            var request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
+            var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML)
                     .uri(UriBuilder.fromUri(pdfSvgSupportGeneratorUrl).path("v1/genpdf/html/kontantstotte").build())
                     .POST(HttpRequest.BodyPublishers.ofByteArray(bytes))

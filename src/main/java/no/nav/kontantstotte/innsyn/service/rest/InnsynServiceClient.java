@@ -182,7 +182,7 @@ class InnsynServiceClient implements InnsynService {
         URI uri = UriBuilder.fromUri(tpsInnsynServiceUri).path(path).build();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
-                .header(HttpHeader.AUTHORIZATION.asString(), TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
+                .header(HttpHeader.AUTHORIZATION.asString(), TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword)

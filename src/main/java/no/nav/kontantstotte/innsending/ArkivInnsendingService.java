@@ -72,7 +72,7 @@ public class ArkivInnsendingService implements InnsendingService {
         HttpResponse<String> response;
         try {
             String body = mapper.writeValueAsString(soknadDto);
-            HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
+            HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .uri(UriBuilder.fromUri(proxyServiceUri).path("soknad").build())

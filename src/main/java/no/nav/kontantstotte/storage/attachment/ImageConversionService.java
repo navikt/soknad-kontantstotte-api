@@ -42,7 +42,7 @@ class ImageConversionService {
 
     byte[] convert(byte[] bytes, Format detectedType) {
         try {
-            var request = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
+            var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), detectedType.mimeType)
                     .uri(UriBuilder.fromUri(imageToPdfEndpointBaseUrl).path("v1/genpdf/image/kontantstotte").build())
                     .POST(HttpRequest.BodyPublishers.ofByteArray(bytes))

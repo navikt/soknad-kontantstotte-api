@@ -49,7 +49,7 @@ public class MottakInnsendingService implements InnsendingService {
     public Soknad sendInnSoknad(Soknad soknad) {
         LOG.info("Prøver å sende søknad til mottaket");
         try {
-            HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generatAuthorizationHeaderValueForLoggedInUser(contextHolder))
+            HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .uri(UriBuilder.fromUri(mottakServiceUri).path("soknad").build())

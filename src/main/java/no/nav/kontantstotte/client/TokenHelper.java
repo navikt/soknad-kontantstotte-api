@@ -7,7 +7,7 @@ public final class TokenHelper {
     private TokenHelper() {
     }
 
-    public static String generatAuthorizationHeaderValueForLoggedInUser(OIDCRequestContextHolder contextHolder) {
+    public static String generateAuthorizationHeaderValueForLoggedInUser(OIDCRequestContextHolder contextHolder) {
         OIDCValidationContext context = contextHolder.getOIDCValidationContext();
 
         if (context != null && context.hasValidToken()) {
