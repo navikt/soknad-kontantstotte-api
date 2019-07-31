@@ -11,14 +11,13 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Map;
-import java.util.Random;
 
+import no.nav.kontantstotte.innsending.ArkivInnsendingService;
+import no.nav.kontantstotte.innsending.MottakInnsendingService;
 import org.eclipse.jetty.http.HttpHeader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +37,6 @@ import com.nimbusds.jwt.SignedJWT;
 
 import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.config.ApplicationConfig;
-import no.nav.kontantstotte.innsending.InnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
@@ -60,7 +58,10 @@ public class InnsendingResourceTest {
     }
 
     @MockBean
-    private InnsendingService innsendingService;
+    private ArkivInnsendingService arkivInnsendingService;
+
+    @MockBean
+    private MottakInnsendingService mottakInnsendingService;
 
     @Value("${local.server.port}")
     private int port;
@@ -68,15 +69,15 @@ public class InnsendingResourceTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private String contextPath = "/api";
-
     @Test
-    public void at_innsending_av_soknad_er_ok_med_bekreftelse() throws JsonProcessingException {
+    public void at_innsending_av_soknad_er_ok_med_bekreftelse() {
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
         soknadMedBekreftelse.veiledning.bekreftelse = "JA";
 
-        when(innsendingService.sendInnSoknad(any(Soknad.class)))
+        when(arkivInnsendingService.sendInnSoknad(any(Soknad.class)))
+                .thenReturn(soknadMedBekreftelse);
+        when(mottakInnsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenReturn(soknadMedBekreftelse);
 
 
@@ -93,13 +94,15 @@ public class InnsendingResourceTest {
         soknadMedBekreftelse.veiledning.bekreftelse = "JA";
 
 
-        when(innsendingService.sendInnSoknad(any(Soknad.class)))
+        when(arkivInnsendingService.sendInnSoknad(any(Soknad.class)))
+                .thenReturn(soknadMedBekreftelse);
+        when(mottakInnsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenReturn(soknadMedBekreftelse);
 
         utførRequest(soknadMedBekreftelse);
 
         ArgumentCaptor<Soknad> captor = ArgumentCaptor.forClass(Soknad.class);
-        verify(innsendingService).sendInnSoknad(captor.capture());
+        verify(arkivInnsendingService).sendInnSoknad(captor.capture());
 
         assertThat(captor.getValue().innsendingsTidspunkt).isBefore(now());
         assertThat(captor.getValue().innsendingsTidspunkt).isAfter(now().minus(5, MINUTES));
@@ -114,7 +117,8 @@ public class InnsendingResourceTest {
 
         assertThat(response.statusCode()).isEqualTo(BAD_REQUEST.getStatusCode());
 
-        verifyNoMoreInteractions(innsendingService);
+        verifyNoMoreInteractions(arkivInnsendingService);
+        verifyNoMoreInteractions(mottakInnsendingService);
     }
 
     private HttpResponse<String> utførRequest(Soknad soknad) {
@@ -123,7 +127,7 @@ public class InnsendingResourceTest {
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
 
         try {
-            HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + contextPath + "/sendinn"))
+            HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/api/sendinn"))
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(soknad)))

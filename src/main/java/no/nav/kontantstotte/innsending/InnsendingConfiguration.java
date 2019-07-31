@@ -6,13 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import no.nav.kontantstotte.client.RestClientConfigration;
+import no.nav.kontantstotte.client.RestClientConfiguration;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringConfiguration;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.s3.S3StorageConfiguration;
 
 @Configuration
-@Import({RestClientConfigration.class,
+@Import({RestClientConfiguration.class,
         OppsummeringConfiguration.class,
         S3StorageConfiguration.class
 })

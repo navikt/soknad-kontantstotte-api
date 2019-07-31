@@ -6,12 +6,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import no.nav.kontantstotte.client.RestClientConfigration;
+import no.nav.kontantstotte.client.RestClientConfiguration;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.encryption.EncryptedStorageConfiguration;
 
 @Configuration
-@Import({RestClientConfigration.class, EncryptedStorageConfiguration.class})
+@Import({RestClientConfiguration.class, EncryptedStorageConfiguration.class})
 public class AttachmentConfiguration {
 
     @Bean

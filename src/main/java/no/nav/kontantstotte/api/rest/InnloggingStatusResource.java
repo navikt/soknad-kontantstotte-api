@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 
 @RestController
-@RequestMapping("api//")
+@RequestMapping("api/")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class InnloggingStatusResource {
 

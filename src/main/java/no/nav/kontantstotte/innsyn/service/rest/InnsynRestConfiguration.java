@@ -4,11 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import no.nav.kontantstotte.client.RestClientConfigration;
+import no.nav.kontantstotte.client.RestClientConfiguration;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 
 @Configuration
-@Import(RestClientConfigration.class)
+@Import(RestClientConfiguration.class)
 public class InnsynRestConfiguration {
 
     @Bean

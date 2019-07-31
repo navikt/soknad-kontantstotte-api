@@ -3,7 +3,8 @@ package no.nav.kontantstotte.api.rest;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
-import no.nav.kontantstotte.innsending.InnsendingService;
+import no.nav.kontantstotte.innsending.ArkivInnsendingService;
+import no.nav.kontantstotte.innsending.MottakInnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.slf4j.Logger;
@@ -18,13 +19,15 @@ import javax.ws.rs.core.MediaType;
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class InnsendingResource {
 
-    private final InnsendingService innsendingService;
+    private final ArkivInnsendingService arkivInnsendingService;
+    private final MottakInnsendingService mottakInnsendingService;
     private final Logger logger = LoggerFactory.getLogger(InnsendingResource.class);
     private final Counter soknadSendtInn = Metrics.counter("soknad.kontantstotte", "innsending", "mottatt");
     private final Counter soknadSendtInnUgyldig = Metrics.counter("soknad.kontantstotte", "innsending", "ugyldig");
 
-    public InnsendingResource(InnsendingService innsendingService) {
-        this.innsendingService = innsendingService;
+    public InnsendingResource(ArkivInnsendingService arkivInnsendingService, MottakInnsendingService mottakInnsendingService) {
+        this.arkivInnsendingService = arkivInnsendingService;
+        this.mottakInnsendingService = mottakInnsendingService;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
@@ -36,7 +39,8 @@ public class InnsendingResource {
         }
         soknad.markerInnsendingsTidspunkt();
         soknadSendtInn.increment();
-        innsendingService.sendInnSoknad(soknad);
+        arkivInnsendingService.sendInnSoknad(soknad);
+        mottakInnsendingService.sendInnSoknad(soknad);
 
         return ResponseEntity.ok(new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString()));
     }
