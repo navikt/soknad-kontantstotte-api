@@ -31,15 +31,15 @@ import no.nav.security.oidc.api.ProtectedWithClaims;
 @RestController
 @RequestMapping("api/vedlegg")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
-public class StorageResource {
+public class StorageController {
 
-    private static final Logger log = LoggerFactory.getLogger(StorageResource.class);
+    private static final Logger log = LoggerFactory.getLogger(StorageController.class);
 
     private final Storage storage;
     private final int maxFileSize;
 
-    StorageResource(@Named("attachmentStorage") Storage storage,
-                    @Value("${attachment.max.size.mb}") int maxFileSizeMB) {
+    StorageController(@Named("attachmentStorage") Storage storage,
+                      @Value("${attachment.max.size.mb}") int maxFileSizeMB) {
         this.storage = storage;
         this.maxFileSize = maxFileSizeMB * 1000 * 1000;
     }

@@ -11,9 +11,9 @@ import no.nav.security.oidc.api.ProtectedWithClaims;
 @RestController
 @RequestMapping("api/")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
-public class InnloggingStatusResource {
+public class InnloggingStatusController {
 
-    public InnloggingStatusResource() {
+    public InnloggingStatusController() {
     }
 
     /**

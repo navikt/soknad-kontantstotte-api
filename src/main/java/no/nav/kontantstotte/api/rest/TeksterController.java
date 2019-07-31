@@ -15,7 +15,7 @@ import no.nav.security.oidc.api.Unprotected;
 @RestController
 @RequestMapping("api/tekster")
 @Unprotected
-public class TeksterResource {
+public class TeksterController {
 
     private static final String[] VALID_LANGUAGES = {"nb", "nn"};
 
@@ -23,7 +23,7 @@ public class TeksterResource {
 
     private Map<String, Map<String, String>> teksterAlleSprak;
 
-    public TeksterResource() {
+    public TeksterController() {
         this.tekstService = new TekstService();
         this.teksterAlleSprak = new HashMap<>();
         for (String sprak : VALID_LANGUAGES) {

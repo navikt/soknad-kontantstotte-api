@@ -40,7 +40,7 @@ import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class BarnResourceTest {
+public class BarnControllerTest {
 
     public static final String INNLOGGET_BRUKER = "12345678911";
     @Value("${local.server.port}")

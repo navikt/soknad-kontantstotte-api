@@ -19,13 +19,13 @@ import no.nav.security.oidc.api.ProtectedWithClaims;
 @RestController
 @RequestMapping("api/barn")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
-public class BarnResource {
+public class BarnController {
 
     private static final DateTimeFormatter DATO_PATTERN_SOKNAD = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     private final InnsynService innsynServiceClient;
 
-    public BarnResource(InnsynService innsynServiceClient) {
+    public BarnController(InnsynService innsynServiceClient) {
         this.innsynServiceClient = innsynServiceClient;
     }
 

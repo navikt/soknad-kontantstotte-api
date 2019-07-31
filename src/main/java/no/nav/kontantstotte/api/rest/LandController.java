@@ -15,7 +15,7 @@ import no.nav.security.oidc.api.Unprotected;
 @RestController
 @RequestMapping("api/land")
 @Unprotected
-public class LandResource {
+public class LandController {
 
     private static final String[] VALID_LANGUAGES = {"nb", "nn"};
 
@@ -23,7 +23,7 @@ public class LandResource {
 
     private Map<String, Map<String, String>> landAlleSprak;
 
-    public LandResource() {
+    public LandController() {
         this.tekstService = new TekstService();
         this.landAlleSprak = new HashMap<>();
         for (String sprak : VALID_LANGUAGES) {

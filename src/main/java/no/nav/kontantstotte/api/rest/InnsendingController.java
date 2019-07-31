@@ -17,15 +17,15 @@ import javax.ws.rs.core.MediaType;
 @RestController
 @RequestMapping("api/sendinn")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
-public class InnsendingResource {
+public class InnsendingController {
 
     private final ArkivInnsendingService arkivInnsendingService;
     private final MottakInnsendingService mottakInnsendingService;
-    private final Logger logger = LoggerFactory.getLogger(InnsendingResource.class);
+    private final Logger logger = LoggerFactory.getLogger(InnsendingController.class);
     private final Counter soknadSendtInn = Metrics.counter("soknad.kontantstotte", "innsending", "mottatt");
     private final Counter soknadSendtInnUgyldig = Metrics.counter("soknad.kontantstotte", "innsending", "ugyldig");
 
-    public InnsendingResource(ArkivInnsendingService arkivInnsendingService, MottakInnsendingService mottakInnsendingService) {
+    public InnsendingController(ArkivInnsendingService arkivInnsendingService, MottakInnsendingService mottakInnsendingService) {
         this.arkivInnsendingService = arkivInnsendingService;
         this.mottakInnsendingService = mottakInnsendingService;
     }

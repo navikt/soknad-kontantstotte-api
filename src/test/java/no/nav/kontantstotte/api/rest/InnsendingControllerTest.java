@@ -48,7 +48,7 @@ import javax.ws.rs.core.MediaType;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class InnsendingResourceTest {
+public class InnsendingControllerTest {
 
     private static final String INNLOGGET_BRUKER = "12345678911";
 

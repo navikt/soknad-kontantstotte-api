@@ -20,7 +20,7 @@ import no.nav.security.oidc.api.ProtectedWithClaims;
 @RestController
 @RequestMapping("api/soker")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
-public class SokerResource {
+public class SokerController {
     private final InnsynService innsynServiceClient;
 
     private final Counter soknadApnet = Metrics.counter("soknad.kontantstotte.apnet");
@@ -28,7 +28,7 @@ public class SokerResource {
     private final Counter sokerErIkkeNorsk = Metrics.counter("soker.land", "land", "annet");
 
     @Inject
-    public SokerResource(InnsynService innsynServiceClient) {
+    public SokerController(InnsynService innsynServiceClient) {
         this.innsynServiceClient = innsynServiceClient;
     }
 

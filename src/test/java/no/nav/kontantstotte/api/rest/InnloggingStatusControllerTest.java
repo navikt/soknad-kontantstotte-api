@@ -25,7 +25,7 @@ import static org.hamcrest.core.Is.is;
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = { ApplicationConfig.class, TokenGeneratorConfiguration.class})
-public class InnloggingStatusResourceTest {
+public class InnloggingStatusControllerTest {
 
     @Value("${local.server.port}")
     private int port;
