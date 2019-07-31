@@ -30,9 +30,9 @@ public class MottakInnsendingService implements InnsendingService {
     private HttpClient client;
     private static final Logger LOG = LoggerFactory.getLogger(MottakInnsendingService.class);
 
-    public MottakInnsendingService(@Value("${SOKNAD_KONTANTSTOTTE_MOTTAK_API_URL}") URI mottakServiceUri,
-                            @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_MOTTAK_APIKEY_USERNAME}") String kontantstotteMottakApiKeyUsername,
-                            @Value("${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_MOTTAK_APIKEY_PASSWORD}") String kontantstotteMottakApiKeyPassword,
+    public MottakInnsendingService(@Value("${FAMILIE_KS_MOTTAK_API_URL}") URI mottakServiceUri,
+                            @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_USERNAME}") String kontantstotteMottakApiKeyUsername,
+                            @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_PASSWORD}") String kontantstotteMottakApiKeyPassword,
                             OIDCRequestContextHolder contextHolder,
                             ObjectMapper mapper) {
 
