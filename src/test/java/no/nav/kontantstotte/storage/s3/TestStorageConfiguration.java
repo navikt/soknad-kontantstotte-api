@@ -1,23 +1,27 @@
 package no.nav.kontantstotte.storage.s3;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.client.builder.AwsClientBuilder;
-import no.nav.kontantstotte.storage.Storage;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 
-import java.util.Optional;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.client.builder.AwsClientBuilder;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import no.nav.kontantstotte.storage.Storage;
 
+@Profile("dev")
 @Configuration
 public class TestStorageConfiguration {
 
-    @Bean(name = {"s3storage", "encryptedStorage", "attachmentStorage"})
     @Primary
+    @Bean(name = {"s3storage", "encryptedStorage", "attachmentStorage"})
     public Storage storage() {
         Storage storage = Mockito.mock(Storage.class);
 

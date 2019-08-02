@@ -15,6 +15,7 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -34,16 +35,15 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class SokerResourceTest {
+public class SokerControllerTest {
 
     public static final String INNLOGGET_BRUKER = "12345678911";
     @Value("${local.server.port}")
     private int port;
 
-    @Value("${spring.jersey.application-path}")
-    private String contextPath;
+    private String contextPath = "/api";
 
-    @Inject
+    @MockBean
     private InnsynService innsynServiceMock;
 
     @After

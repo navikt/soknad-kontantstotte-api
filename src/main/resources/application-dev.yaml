@@ -1,9 +1,9 @@
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
-     discoveryurl: http://metadata
-     accepted_audience: aud-localhost
-     cookie_name: localhost-idtoken
+    discoveryurl: http://metadata
+    accepted_audience: aud-localhost
+    cookie_name: localhost-idtoken
 
 spring:
   main:
@@ -19,6 +19,8 @@ TPS-PROXY_API_V1_INNSYN_URL: http://dummyTps/api
 
 SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME: anything
 SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD: anything
+SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_USERNAME: anything
+SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_PASSWORD: anything
 SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME: anything
 SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD: anything
 
@@ -26,6 +28,13 @@ SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: anything
 SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_PASSWORD: anything
 
 SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_PASSWORD: anything
+
+SOKNAD_KONTANTSTOTTE_PROXY_API_URL: "http://localhost:8081/api"
+FAMILIE_KS_MOTTAK_API_URL: "http://localhost:8084/api"
+SOKNAD_PDF_GENERATOR_URL: "http://localhost:8082/api"
+STS_URL: "http://security-token-service"
+CREDENTIAL_USERNAME: "srv-soknad-kontantstotte-api"
+CREDENTIAL_PASSWORD: "skal-ikke-sjekkes-inn"
 
 logging:
   level:

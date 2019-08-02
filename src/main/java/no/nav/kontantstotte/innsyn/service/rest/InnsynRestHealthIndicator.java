@@ -33,6 +33,7 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
         try {
             innsynServiceClient.ping();
             tpsInnysynSuccess.increment();
+            LOG.info("TPS innsyn service is UP");
             return up();
         } catch (Exception e) {
             tpsInnsynFailure.increment();

@@ -21,13 +21,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class})
-public class TeksterResourceTest {
+public class TeksterControllerTest {
 
     @Value("${local.server.port}")
     private int port;
 
-    @Value("${spring.jersey.application-path}")
-    private String contextPath;
+    private String contextPath = "/api";
     @Test
     public void at_tekster_hentes_korrekt() {
         Response response = kallEndepunkt();

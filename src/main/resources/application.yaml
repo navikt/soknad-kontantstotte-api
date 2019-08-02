@@ -5,10 +5,6 @@ server:
 spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
   main.banner-mode: "off"
-  jersey:
-    servlet.load-on-startup: 1
-    application-path: "/api"
-  metrics.web.server.auto-time-requests: true
 
 no.nav.security.oidc:
   issuers: selvbetjening
@@ -26,6 +22,7 @@ management:
     path-mapping:
       info: "status/isAlive"
   metrics.export.prometheus.enabled: true
+  metrics.web.server.auto-time-requests: true
 
 http.proxy: http://webproxy-nais.nav.no:8088
 
@@ -62,6 +59,7 @@ LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_POOLNAME: N/A
 
 # Api-gw/tjenester i FSS
 SOKNAD_KONTANTSTOTTE_PROXY_API_URL: https://api-gw.oera.no/soknad-kontantstotte-proxy/api/
+FAMILIE_KS_MOTTAK_API_URL: https://api-gw.oera.no/familie-ks-mottak/api/
 SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME}#<Ligger i vault>
 
 TPS-PROXY_API_V1_INNSYN_URL: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
@@ -76,4 +74,7 @@ APPRES_CMS_URL: https://appres.nav.no
 
 # Annet
 ENVIRONMENT_NAME: p
+
+# STS
+STS_URL: http://security-token-service
 
