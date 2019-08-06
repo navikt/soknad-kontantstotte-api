@@ -20,7 +20,7 @@
         <sha1></sha1>
         <changelist>-SNAPSHOT</changelist>
         <java.version>11</java.version>
-        <oidc-support.version>0.2.6</oidc-support.version>
+        <oidc-support.version>0.2.18</oidc-support.version>
         <common-java-modules.version>2018.10.02.19.54</common-java-modules.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <unleash.version>3.1.0</unleash.version>
