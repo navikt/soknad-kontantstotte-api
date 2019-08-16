@@ -54,7 +54,7 @@ public class FamilieforholdMappingTest {
         Familieforhold familieforhold = new Familieforhold();
         familieforhold.borForeldreneSammenMedBarnet = "JA";
         familieforhold.annenForelderNavn = "NN";
-        familieforhold.annenForelderFodselsnummer = "XXXXXX";
+        familieforhold.annenForelderFødselsnummer = "XXXXXX";
         soknad.familieforhold = familieforhold;
 
         Bolk bolk = new FamilieforholdMapping(new Tekster(TEKSTER)).map(soknad);
@@ -65,7 +65,7 @@ public class FamilieforholdMappingTest {
                 .contains(
                         tuple(SPORSMAL, JA),
                         tuple(SPORSMAL_NAVN, familieforhold.annenForelderNavn),
-                        tuple(SPORSMAL_FNR, familieforhold.annenForelderFodselsnummer)
+                        tuple(SPORSMAL_FNR, familieforhold.annenForelderFødselsnummer)
                 );
     }
 

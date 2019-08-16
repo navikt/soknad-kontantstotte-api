@@ -17,7 +17,7 @@
     "familieforhold": {
       "borForeldreneSammenMedBarnet": "JA",
       "annenForelderNavn": "Annen forelder navn",
-      "annenForelderFodselsnummer": "ZZZZZZZZZZ"
+      "annenForelderFødselsnummer": "ZZZZZZZZZZ"
     },
     "barnehageplass": {
       "barnBarnehageplassStatus": "skalSlutteIBarnehage",
