@@ -58,6 +58,7 @@
     "mineBarn": {
       "navn": "Jakob",
       "fødselsdato": "12.12.2018",
+      "fødselsnummer": "11111111111",
       "erFlerling": "NEI"
     },
     "tilknytningTilUtland": {
