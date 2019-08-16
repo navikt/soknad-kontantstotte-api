@@ -70,6 +70,7 @@ public class BarnControllerTest {
         });
         assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(barn.getFulltnavn());
         assertThat(barnDtoList.get(0).getFødselsdato()).isEqualTo(barn.getFødselsdato());
+        assertThat(barnDtoList.get(0).getFødselsnummer()).isEqualTo(barn.getFødselsnummer());
     }
 
     @Test
@@ -89,8 +90,10 @@ public class BarnControllerTest {
         assertThat(barnDtoList.size()).isEqualTo(2);
         assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(tvilling1.getFulltnavn());
         assertThat(barnDtoList.get(0).getFødselsdato()).isEqualTo(tvilling1.getFødselsdato());
+        assertThat(barnDtoList.get(0).getFødselsnummer()).isEqualTo(tvilling1.getFødselsnummer());
         assertThat(barnDtoList.get(1).getFulltnavn()).isEqualTo(tvilling2.getFulltnavn());
         assertThat(barnDtoList.get(1).getFødselsdato()).isEqualTo(tvilling2.getFødselsdato());
+        assertThat(barnDtoList.get(1).getFødselsnummer()).isEqualTo(tvilling2.getFødselsnummer());
     }
 
     @Test
@@ -122,6 +125,7 @@ public class BarnControllerTest {
     private Barn barn1() {
         return new Barn.Builder()
                 .fulltnavn("NAVNESEN JENTEBARN")
+                .fødselsnummer("11111111111")
                 .fødselsdato("01.02.2018")
                 .build();
     }
@@ -129,6 +133,7 @@ public class BarnControllerTest {
     private Barn tvilling1() {
         return new Barn.Builder()
                 .fulltnavn("NAVNESEN TVILLING1")
+                .fødselsnummer("11111111111")
                 .fødselsdato("01.01.2018")
                 .build();
     }
@@ -136,6 +141,7 @@ public class BarnControllerTest {
     private Barn tvilling2() {
         return new Barn.Builder()
                 .fulltnavn("NAVNESEN TVILLING2 MELLOMNAVN")
+                .fødselsnummer("2222222222")
                 .fødselsdato("01.01.2018")
                 .build();
     }
