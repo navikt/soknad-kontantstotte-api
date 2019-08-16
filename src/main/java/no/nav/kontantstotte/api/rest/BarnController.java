@@ -36,7 +36,7 @@ public class BarnController {
                 .stream()
                 .map(barn -> new BarnDto(
                         barn.getFulltnavn(),
-                        barn.getFodselsdato()))
+                        barn.getFødselsdato()))
                 .collect(Collectors.toList());
     }
 }

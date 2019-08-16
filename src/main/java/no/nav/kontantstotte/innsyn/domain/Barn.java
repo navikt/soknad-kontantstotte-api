@@ -3,12 +3,12 @@ package no.nav.kontantstotte.innsyn.domain;
 public class Barn {
     private final String fødselsnummer;
     private final String fulltnavn;
-    private final String fodselsdato;
+    private final String fødselsdato;
 
     public Barn(Builder builder) {
         this.fødselsnummer = builder.fødselsnummer;
         this.fulltnavn = builder.fulltnavn;
-        this.fodselsdato = builder.fodselsdato;
+        this.fødselsdato = builder.fødselsdato;
     }
 
     public String getFødselsnummer() {
@@ -19,15 +19,15 @@ public class Barn {
         return fulltnavn;
     }
 
-    public String getFodselsdato() {
-        return fodselsdato;
+    public String getFødselsdato() {
+        return fødselsdato;
     }
 
 
     public static class Builder {
         private String fødselsnummer;
         private String fulltnavn;
-        private String fodselsdato;
+        private String fødselsdato;
 
         public Builder fødselsnummer(String fødselsnummer) {
             this.fødselsnummer = fødselsnummer;
@@ -39,8 +39,8 @@ public class Barn {
             return this;
         }
 
-        public Builder fodselsdato(String fodselsdato) {
-            this.fodselsdato = fodselsdato;
+        public Builder fødselsdato(String fødselsdato) {
+            this.fødselsdato = fødselsdato;
             return this;
         }
 
@@ -56,7 +56,7 @@ public class Barn {
         sb.append("class Barn {\n");
         sb.append("    fødselsnummer: ").append(toIndentedString(fødselsnummer)).append("\n");
         sb.append("    fulltnavn: ").append(toIndentedString(fulltnavn)).append("\n");
-        sb.append("    fodselsdato: ").append(toIndentedString(fodselsdato)).append("\n");
+        sb.append("    fødselsdato: ").append(toIndentedString(fødselsdato)).append("\n");
         sb.append("}");
 
         return sb.toString();

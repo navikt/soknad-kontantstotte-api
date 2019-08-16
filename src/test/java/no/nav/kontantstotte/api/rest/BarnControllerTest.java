@@ -69,7 +69,7 @@ public class BarnControllerTest {
         List<BarnDto> barnDtoList = response.readEntity(new GenericType<List<BarnDto>>() {
         });
         assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(barn.getFulltnavn());
-        assertThat(barnDtoList.get(0).getFodselsdato()).isEqualTo(barn.getFodselsdato());
+        assertThat(barnDtoList.get(0).getFødselsdato()).isEqualTo(barn.getFødselsdato());
     }
 
     @Test
@@ -88,9 +88,9 @@ public class BarnControllerTest {
         });
         assertThat(barnDtoList.size()).isEqualTo(2);
         assertThat(barnDtoList.get(0).getFulltnavn()).isEqualTo(tvilling1.getFulltnavn());
-        assertThat(barnDtoList.get(0).getFodselsdato()).isEqualTo(tvilling1.getFodselsdato());
+        assertThat(barnDtoList.get(0).getFødselsdato()).isEqualTo(tvilling1.getFødselsdato());
         assertThat(barnDtoList.get(1).getFulltnavn()).isEqualTo(tvilling2.getFulltnavn());
-        assertThat(barnDtoList.get(1).getFodselsdato()).isEqualTo(tvilling2.getFodselsdato());
+        assertThat(barnDtoList.get(1).getFødselsdato()).isEqualTo(tvilling2.getFødselsdato());
     }
 
     @Test
@@ -122,21 +122,21 @@ public class BarnControllerTest {
     private Barn barn1() {
         return new Barn.Builder()
                 .fulltnavn("NAVNESEN JENTEBARN")
-                .fodselsdato("01.02.2018")
+                .fødselsdato("01.02.2018")
                 .build();
     }
 
     private Barn tvilling1() {
         return new Barn.Builder()
                 .fulltnavn("NAVNESEN TVILLING1")
-                .fodselsdato("01.01.2018")
+                .fødselsdato("01.01.2018")
                 .build();
     }
 
     private Barn tvilling2() {
         return new Barn.Builder()
                 .fulltnavn("NAVNESEN TVILLING2 MELLOMNAVN")
-                .fodselsdato("01.01.2018")
+                .fødselsdato("01.01.2018")
                 .build();
     }
 }

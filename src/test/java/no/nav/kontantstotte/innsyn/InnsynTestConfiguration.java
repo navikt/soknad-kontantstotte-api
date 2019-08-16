@@ -23,12 +23,12 @@ public class InnsynTestConfiguration {
             add(new Barn.Builder()
                     .fødselsnummer("11111111111")
                     .fulltnavn("NAVNESEN TVILLING1")
-                    .fodselsdato("01.01.2018")
+                    .fødselsdato("01.01.2018")
                     .build());
             add(new Barn.Builder()
                     .fødselsnummer("22222222222")
                     .fulltnavn("NAVNESEN TVILLING2")
-                    .fodselsdato("01.01.2018")
+                    .fødselsdato("01.01.2018")
                     .build());
         }});
         return innsynServiceClient;

@@ -82,8 +82,8 @@ class InnsynServiceClient implements InnsynService {
         this.client = HttpClientUtil.create();
     }
 
-    static boolean erIKontantstotteAlder(String fodselsdato) {
-        Period diff = Period.between(LocalDate.parse(fodselsdato), LocalDate.now());
+    static boolean erIKontantstotteAlder(String fødselsdato) {
+        Period diff = Period.between(LocalDate.parse(fødselsdato), LocalDate.now());
         Integer alderIManeder = diff.getYears() * 12 + diff.getMonths();
         return (alderIManeder >= MIN_ALDER_I_MANEDER) &&
                 (alderIManeder <= MAKS_ALDER_I_MANEDER) &&

@@ -23,7 +23,7 @@ public class BarnMappingTest {
     private static final String TITTEL = hentTekst(BARN_TITTEL);
     private static final String UNDERTITTEL = hentTekst(BARN_UNDERTITTEL);
     private static final String NAVN = hentTekst(BARN_NAVN);
-    private static final String FODSELSDATO = hentTekst(BARN_FODSELSDATO);
+    private static final String FØDSELSDATO = hentTekst(BARN_FØDSELSDATO);
     private static final String ADVARSEL = hentTekst(BARN_ADVARSEL);
 
     private Soknad soknad;
@@ -41,7 +41,7 @@ public class BarnMappingTest {
     @Test
     public void tilBarneBolk() {
         innsendtBarn.navn = "TEST TESTESEN";
-        innsendtBarn.fodselsdato = "01.01.2019";
+        innsendtBarn.fødselsdato = "01.01.2019";
 
         Bolk bolk = barnMapping.map(soknad);
         assertThat(bolk)
@@ -54,7 +54,7 @@ public class BarnMappingTest {
                 .extracting("sporsmal", "svar")
                 .contains(
                         tuple(NAVN, innsendtBarn.navn),
-                        tuple(FODSELSDATO, innsendtBarn.fodselsdato));
+                        tuple(FØDSELSDATO, innsendtBarn.fødselsdato));
     }
 
     @Test
@@ -67,13 +67,13 @@ public class BarnMappingTest {
         assertThat(elementer)
                 .extracting("sporsmal", "svar", "advarsel")
                 .contains(
-                        tuple(FODSELSDATO, null, ADVARSEL));
+                        tuple(FØDSELSDATO, null, ADVARSEL));
 
         innsendtBarn.erFlerling = "NEI";
         elementer = barnMapping.map(soknad).elementer;
         assertThat(elementer)
                 .extracting("sporsmal", "svar", "advarsel")
                 .contains(
-                        tuple(FODSELSDATO, null, null));
+                        tuple(FØDSELSDATO, null, null));
     }
 }
