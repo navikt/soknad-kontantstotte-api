@@ -17,7 +17,7 @@
     "familieforhold": {
       "borForeldreneSammenMedBarnet": "JA",
       "annenForelderNavn": "Annen forelder navn",
-      "annenForelderFodselsnummer": "ZZZZZZZZZZ"
+      "annenForelderFødselsnummer": "ZZZZZZZZZZ"
     },
     "barnehageplass": {
       "barnBarnehageplassStatus": "skalSlutteIBarnehage",
@@ -57,7 +57,8 @@
     },
     "mineBarn": {
       "navn": "Jakob",
-      "fodselsdato": "12.12.2018",
+      "fødselsdato": "12.12.2018",
+      "fødselsnummer": "11111111111",
       "erFlerling": "NEI"
     },
     "tilknytningTilUtland": {
@@ -349,7 +350,7 @@
     "arbeidIUtlandet.forklaring.hjelpetekst": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
     "arbeidIUtlandet.forklaring.hjelpetekst.label": "Hjelpetekst om arbeid i utlandet",
     "arbeidIUtlandet.tittel": "Arbeid i utlandet",
-    "barn.fodselsdato": "Fødselsdato (dd.mm.åååå)",
+    "barn.fødselsdato": "Fødselsdato (dd.mm.åååå)",
     "barn.navn": "Navn",
     "barn.subtittel": "Velg barn du søker kontantstøtte for",
     "barn.tittel": "Barn",
@@ -396,8 +397,8 @@
     "barnehageplass.sporsmal": "Har barnet barnehageplass?",
     "barnehageplass.sporsmal.flertall": "Har barna barnehageplass?",
     "barnehageplass.tittel": "Tildelt barnehageplass",
-    "familieforhold.annenForelder.fodselsnummer.feilmelding": "Du må oppgi fødselsnummeret til den andre forelderen.",
-    "familieforhold.annenForelder.fodselsnummer.placeholder": "Fødselsnummer",
+    "familieforhold.annenForelder.fødselsnummer.feilmelding": "Du må oppgi fødselsnummeret til den andre forelderen.",
+    "familieforhold.annenForelder.fødselsnummer.placeholder": "Fødselsnummer",
     "familieforhold.annenForelder.navn.placeholder": "Navn",
     "familieforhold.borForeldreneSammenMedBarnet.sporsmal": "Bor du sammen med den andre forelderen?",
     "familieforhold.hjelpetekst": "Når barnet bor sammen med begge foreldrene, må begge foreldrene ha vært medlemmer i folketrygden i fem år for å kunne få kontantstøtte. Trygdeperioden i et annet EØS-land regnes også med. Dette kan for eksempel være bosted eller arbeidsperioder. Du må selv innhente informasjon fra de aktuelle landene siden du kan få spørsmål om det senere.",
@@ -407,7 +408,7 @@
     "feilmelding.generell.dato": "Datoen har feil format. Gyldig format: dd.mm.åååå.",
     "feilmelding.generell.feilmelding": "Du må svare på spørsmålet.",
     "feilmelding.generell.feilmeldingCheckbox": "For å kunne gå videre må du oppfylle alle kriteriene.",
-    "feilmelding.generell.fodselsnummer": "Fødselsnummeret har feil format. Gyldig format: 11 siffer.",
+    "feilmelding.generell.fødselsnummer": "Fødselsnummeret har feil format. Gyldig format: 11 siffer.",
     "feilmelding.generell.forMangeTegn": "Du har fylt inn for mange tegn",
     "feilmelding.generell.navn": "Du må fylle inn navn",
     "feilmelding.generell.tall": "Du må fylle inn et tall",
@@ -436,9 +437,9 @@
     "oppsummering.bekreftelse.feilmelding": "Du må bekrefte at opplysningene er riktige.",
     "oppsummering.bekreftelse.label": "Opplysningene jeg har oppgitt er riktige, og jeg har ikke holdt tilbake opplysninger som har betydning for retten jeg har til kontantstøtte",
     "oppsummering.endre.svar.knapp": "Endre svar",
-    "oppsummering.familieforhold.annenForelderFodselsnummer.label": "Fødselsnummeret til den andre forelderen:",
+    "oppsummering.familieforhold.annenForelderFødselsnummer.label": "Fødselsnummeret til den andre forelderen:",
     "oppsummering.familieforhold.annenForelderNavn.label": "Navnet til den andre forelderen:",
-    "oppsummering.fodselsnummer.label": "Fødselsnummer: ",
+    "oppsummering.fødselsnummer.label": "Fødselsnummer: ",
     "oppsummering.innsendingsdato": "Sendt inn:",
     "oppsummering.kravtilsoker.tittel": "Kravene til elektronisk søknad",
     "oppsummering.sokerKontantstotteAv.label": "Det søkes kontantstøtte av",

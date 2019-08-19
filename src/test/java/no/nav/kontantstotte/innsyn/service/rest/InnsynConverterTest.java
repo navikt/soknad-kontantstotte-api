@@ -76,9 +76,9 @@ public class InnsynConverterTest {
                 .map(dto -> relasjonDtoToBarn.apply(dto))
                 .collect(Collectors.toList());
         assertThat(barnList.get(0).getFulltnavn()).isEqualTo(dtoList.get(0).getForkortetNavn());
-        assertThat(barnList.get(0).getFodselsdato()).isEqualTo("01.01.2018");
+        assertThat(barnList.get(0).getFødselsdato()).isEqualTo("01.01.2018");
         assertThat(barnList.get(1).getFulltnavn()).isEqualTo(dtoList.get(1).getForkortetNavn());
-        assertThat(barnList.get(1).getFodselsdato()).isEqualTo("02.02.2018");
+        assertThat(barnList.get(1).getFødselsdato()).isEqualTo("02.02.2018");
     }
 
     private KodeMedDatoOgKildeDto spesiellOpplysning(String kodeVerdi) {
