@@ -9,23 +9,32 @@ public class BarnDto {
     private final String fulltnavn;
 
     @JsonProperty
-    private final String fodselsdato;
+    private final String fødselsdato;
+
+    @JsonProperty
+    private final String fødselsnummer;
 
     @JsonCreator
     public BarnDto(
             @JsonProperty("fulltnavn") String fulltnavn,
-            @JsonProperty("fodselsdato") String fodselsdato) {
+            @JsonProperty("fødselsdato") String fødselsdato,
+            @JsonProperty("fødselsnummer") String fødselsnummer) {
 
         this.fulltnavn = fulltnavn;
-        this.fodselsdato = fodselsdato;
+        this.fødselsdato = fødselsdato;
+        this.fødselsnummer = fødselsnummer;
     }
 
     public String getFulltnavn() {
         return fulltnavn;
     }
 
-    public String getFodselsdato() {
-        return fodselsdato;
+    public String getFødselsdato() {
+        return fødselsdato;
+    }
+
+    public String getFødselsnummer() {
+        return fødselsnummer;
     }
 
 }

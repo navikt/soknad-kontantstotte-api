@@ -10,12 +10,12 @@ public class InnsynServiceClientTest {
 
     @Test
     public void at_evaluaring_av_kontantstottealder_er_korrekt() {
-        String forTidligFodselsdato = LocalDate.now().minusMonths(28).minusDays(1).toString();
-        String forSenFodselsdato = LocalDate.now().minusMonths(10).plusDays(1).toString();
-        String gyldigFodselsdato = LocalDate.now().minusMonths(18).toString();
+        String forTidligFødselsdato = LocalDate.now().minusMonths(28).minusDays(1).toString();
+        String forSenFødselsdato = LocalDate.now().minusMonths(10).plusDays(1).toString();
+        String gyldigFødselsdato = LocalDate.now().minusMonths(18).toString();
 
-        assertThat(erIKontantstotteAlder(forTidligFodselsdato)).isFalse();
-        assertThat(erIKontantstotteAlder(forSenFodselsdato)).isFalse();
-        assertThat(erIKontantstotteAlder(gyldigFodselsdato)).isTrue();
+        assertThat(erIKontantstotteAlder(forTidligFødselsdato)).isFalse();
+        assertThat(erIKontantstotteAlder(forSenFødselsdato)).isFalse();
+        assertThat(erIKontantstotteAlder(gyldigFødselsdato)).isTrue();
     }
 }
