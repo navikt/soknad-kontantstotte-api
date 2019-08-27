@@ -21,11 +21,11 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>11</java.version>
         <oidc-support.version>0.2.18</oidc-support.version>
-        <common-java-modules.version>2018.10.02.19.54</common-java-modules.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <unleash.version>3.1.0</unleash.version>
         <jackson.version>2.9.9</jackson.version>
         <aws-java-sdk-s3>1.11.448</aws-java-sdk-s3>
+        <felles.version>1.0_20190819103533_69f5183</felles.version>
     </properties>
 
     <build>
@@ -88,17 +88,10 @@
             <version>${oidc-support.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>no.nav.sbl</groupId>
-            <artifactId>rest</artifactId>
-            <version>${common-java-modules.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin.external.google</groupId>
-                    <artifactId>android-json</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>http-client</artifactId>
+            <version>${felles.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -158,11 +151,10 @@
             <artifactId>logstash-logback-encoder</artifactId>
             <version>5.2</version>
         </dependency>
-
         <dependency>
-            <groupId>no.nav.sbl</groupId>
+            <groupId>no.nav.familie.felles</groupId>
             <artifactId>log</artifactId>
-            <version>${common-java-modules.version}</version>
+            <version>${felles.version}</version>
         </dependency>
 
         <dependency>
