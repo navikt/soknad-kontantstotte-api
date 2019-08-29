@@ -9,10 +9,9 @@ import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.security.oidc.api.ProtectedWithClaims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.ws.rs.core.MediaType;
 
 @RestController
 @RequestMapping("api/sendinn")
@@ -30,7 +29,7 @@ public class InnsendingController {
         this.mottakInnsendingService = mottakInnsendingService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InnsendingsResponsDto> sendInnSoknad(@RequestBody Soknad soknad) {
         if (!soknad.erGyldig()) {
             logger.info("Noen har forsøkt å sende inn en ugyldig søknad.");

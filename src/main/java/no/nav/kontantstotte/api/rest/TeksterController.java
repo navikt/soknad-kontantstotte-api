@@ -1,10 +1,9 @@
 package no.nav.kontantstotte.api.rest;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +30,7 @@ public class TeksterController {
         }
     }
 
-    @GetMapping(produces = APPLICATION_JSON)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Map<String, String>> tekster() {
         return teksterAlleSprak;
     }

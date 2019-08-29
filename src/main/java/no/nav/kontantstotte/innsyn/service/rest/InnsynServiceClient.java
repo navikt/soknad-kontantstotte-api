@@ -1,6 +1,5 @@
 package no.nav.kontantstotte.innsyn.service.rest;
 
-import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.personinfoDtoToPerson;
 import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.relasjonDtoToBarn;
 
@@ -15,17 +14,17 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-
+import no.nav.familie.http.client.NavHttpHeaders;
+import no.nav.familie.log.mdc.MDCConstants;
 import no.nav.kontantstotte.logging.TjenesteLogger;
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +40,6 @@ import no.nav.kontantstotte.innsyn.domain.Barn;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
-import no.nav.log.MDCConstants;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
 import no.nav.tps.innsyn.PersoninfoDto;
 import no.nav.tps.innsyn.RelasjonDto;
@@ -68,7 +66,7 @@ class InnsynServiceClient implements InnsynService {
     private String tpsProxyApiKeyPassword;
     private OIDCRequestContextHolder contextHolder;
 
-    @Inject
+    @Autowired
     InnsynServiceClient(@Value("${TPS-PROXY_API_V1_INNSYN_URL}") URI tpsInnsynServiceUri,
                         @Value("${SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}") String tpsProxyApiKeyUsername,
                         @Value("${SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}") String tpsProxyApiKeyPassword,
@@ -124,21 +122,21 @@ class InnsynServiceClient implements InnsynService {
     @Override
     public void ping() {
         HttpRequest request = HttpClientUtil.createRequest()
-                .uri(UriBuilder.fromUri(tpsInnsynServiceUri).path("/internal/alive").build())
-                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .uri(URI.create(tpsInnsynServiceUri + "/internal/alive"))
+                .header(NavHttpHeaders.NAV_CONSUMER_ID.asString(), CONSUMER_ID)
                 .header(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword)
                 .GET()
                 .build();
 
-        Response.Status.Family status;
+        HttpStatus.Series status;
         try {
             HttpResponse<Void> response = client.send(request, HttpResponse.BodyHandlers.discarding());
-            status = Response.Status.Family.familyOf(response.statusCode());
+            status = HttpStatus.Series.resolve(response.statusCode());
         } catch (IOException | InterruptedException e) {
-            status = Response.Status.Family.SERVER_ERROR;
+            status = HttpStatus.Series.SERVER_ERROR;
         }
 
-        if (!SUCCESSFUL.equals(status)) {
+        if (!HttpStatus.Series.SUCCESSFUL.equals(status)) {
             throw new InnsynOppslagException("TPS innsyn service is not up");
         }
     }
@@ -155,7 +153,7 @@ class InnsynServiceClient implements InnsynService {
         HttpResponse<String> response = getInnsynResponse(path, fnr);
         try {
             T data = mapper.readValue(response.body(), dtoClass);
-            TjenesteLogger.logTjenestekall(UriBuilder.fromUri(tpsInnsynServiceUri).path(path).build(), fnr, data);
+            TjenesteLogger.logTjenestekall(URI.create(tpsInnsynServiceUri + path), fnr, data);
 
             return data;
         } catch (IOException e) {
@@ -170,7 +168,7 @@ class InnsynServiceClient implements InnsynService {
                     TypeFactory.defaultInstance().constructCollectionType(List.class, dtoClass);
 
             List<T> data = mapper.readValue(response.body(), typeReference);
-            TjenesteLogger.logTjenestekall(UriBuilder.fromUri(tpsInnsynServiceUri).path(path).build(), fnr, data);
+            TjenesteLogger.logTjenestekall(URI.create(tpsInnsynServiceUri + path), fnr, data);
 
             return data;
         } catch (IOException e) {
@@ -179,20 +177,20 @@ class InnsynServiceClient implements InnsynService {
     }
 
     private HttpResponse<String> getInnsynResponse(String path, String fnr) {
-        URI uri = UriBuilder.fromUri(tpsInnsynServiceUri).path(path).build();
+        URI uri = URI.create(tpsInnsynServiceUri + path);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .header(HttpHeader.AUTHORIZATION.asString(), TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDCConstants.MDC_CALL_ID))
+                .header(NavHttpHeaders.NAV_CONSUMER_ID.asString(), CONSUMER_ID)
                 .header(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword)
-                .header("Nav-Personident", fnr)
+                .header(NavHttpHeaders.NAV_PERSONIDENT.asString(), fnr)
                 .GET()
                 .build();
 
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            if (!SUCCESSFUL.equals(Response.Status.Family.familyOf(response.statusCode()))) {
+            if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(response.statusCode()))) {
                 logger.info("Kall mot innsynstjeneste feilet: " + response.body());
                 throw new InnsynOppslagException(response.body());
             } else {

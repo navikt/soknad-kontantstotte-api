@@ -21,7 +21,7 @@ import no.nav.kontantstotte.storage.Storage;
 public class TestStorageConfiguration {
 
     @Primary
-    @Bean(name = {"s3storage", "encryptedStorage", "attachmentStorage"})
+    @Bean
     public Storage storage() {
         Storage storage = Mockito.mock(Storage.class);
 

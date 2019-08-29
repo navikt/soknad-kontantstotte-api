@@ -9,10 +9,9 @@ import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -51,8 +50,8 @@ public class MottakInnsendingService implements InnsendingService {
         try {
             HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
-                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
-                    .uri(UriBuilder.fromUri(mottakServiceUri).path("soknad").build())
+                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
+                    .uri(URI.create(mottakServiceUri + "soknad"))
                     .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(soknad)))
                     .build();
 

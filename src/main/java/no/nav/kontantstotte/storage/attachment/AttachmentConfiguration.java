@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.storage.attachment;
 
-import javax.inject.Named;
-
+import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -19,9 +19,9 @@ public class AttachmentConfiguration {
         return new AttachmentToStorableFormatConverter(imageConversionService);
     }
 
-    @Bean("attachmentStorage")
+    @Bean
     public Storage attachmentStorage(
-            @Named("encryptedStorage") Storage storage,
+            @Autowired EncryptedStorage storage,
             AttachmentToStorableFormatConverter storableFormatConverter) {
         return new AttachmentStorage(storage, storableFormatConverter);
     }

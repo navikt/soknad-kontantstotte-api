@@ -55,8 +55,8 @@ public class S3StorageConfiguration {
 
 
     @Profile("!dev")
-    @Bean(name = "s3storage")
-    public Storage storage(AmazonS3 s3, @Value("${attachment.max.size.mb}") int maxFileSizeMB) {
+    @Bean
+    public S3Storage storage(AmazonS3 s3, @Value("${attachment.max.size.mb}") int maxFileSizeMB) {
         return new S3Storage(s3, maxFileSizeMB);
     }
 
