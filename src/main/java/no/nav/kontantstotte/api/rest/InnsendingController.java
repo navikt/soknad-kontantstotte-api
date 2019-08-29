@@ -6,11 +6,18 @@ import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.ArkivInnsendingService;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.api.ProtectedWithClaims;
+import no.nav.security.oidc.context.OIDCValidationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.ws.rs.core.MediaType;
 
@@ -19,6 +26,7 @@ import javax.ws.rs.core.MediaType;
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class InnsendingController {
 
+    private static final String SELVBETJENING = "selvbetjening";
     private final ArkivInnsendingService arkivInnsendingService;
     private final MottakInnsendingService mottakInnsendingService;
     private final Logger logger = LoggerFactory.getLogger(InnsendingController.class);
@@ -30,6 +38,13 @@ public class InnsendingController {
         this.mottakInnsendingService = mottakInnsendingService;
     }
 
+    private static String hentFnrFraToken() {
+        OIDCValidationContext context = (OIDCValidationContext) RequestContextHolder.currentRequestAttributes()
+                .getAttribute(OIDCConstants.OIDC_VALIDATION_CONTEXT, RequestAttributes.SCOPE_REQUEST);
+        context = context != null ? context : new OIDCValidationContext();
+        return context.getClaims(SELVBETJENING).getClaimSet().getSubject();
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<InnsendingsResponsDto> sendInnSoknad(@RequestBody Soknad soknad) {
         if (!soknad.erGyldig()) {
@@ -38,6 +53,7 @@ public class InnsendingController {
             return ResponseEntity.badRequest().build();
         }
         soknad.markerInnsendingsTidspunkt();
+        soknad.person.fnr = hentFnrFraToken();
         soknadSendtInn.increment();
         arkivInnsendingService.sendInnSoknad(soknad);
         mottakInnsendingService.sendInnSoknad(soknad);
