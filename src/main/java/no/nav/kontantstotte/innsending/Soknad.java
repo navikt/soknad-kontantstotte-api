@@ -43,4 +43,8 @@ public class Soknad {
     public void markerInnsendingsTidspunkt() {
         innsendingsTidspunkt = now();
     }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 }
