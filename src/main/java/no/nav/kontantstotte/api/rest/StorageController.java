@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
+import no.nav.kontantstotte.storage.attachment.AttachmentStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class StorageController {
     private final Storage storage;
     private final int maxFileSize;
 
-    StorageController(@Autowired Storage storage,
+    StorageController(@Autowired AttachmentStorage storage,
                       @Value("${attachment.max.size.mb}") int maxFileSizeMB) {
         this.storage = storage;
         this.maxFileSize = maxFileSizeMB * 1000 * 1000;

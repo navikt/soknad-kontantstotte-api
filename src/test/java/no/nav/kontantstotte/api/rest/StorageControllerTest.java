@@ -26,7 +26,6 @@ import java.util.Random;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.eclipse.jetty.http.HttpHeader;
 import org.junit.After;
 import org.junit.Test;
@@ -77,7 +76,7 @@ public class StorageControllerTest {
     @Test
     public void at_vedlegg_puttes_korrekt() throws IOException {
         HttpResponse response = postKall();
-        AssertionsForClassTypes.assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
 
         ArgumentCaptor<InputStream> streamCaptor = ArgumentCaptor.forClass(InputStream.class);
         verify(attachmentStorage).put(eq(INNLOGGET_BRUKER), any(String.class), streamCaptor.capture());
@@ -125,8 +124,12 @@ public class StorageControllerTest {
                     .header(HttpHeader.CONTENT_TYPE.asString(), "multipart/form-data;boundary=" + boundary)
                     .POST(MultipartBodyPublisher.ofMimeMultipartData(multipart, boundary))
                     .build();
-
-            return client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
+            System.out.println(response.statusCode());
+            System.out.println(response.uri());
+            return response;
+            //return client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
             throw new IllegalStateException(e);
         }

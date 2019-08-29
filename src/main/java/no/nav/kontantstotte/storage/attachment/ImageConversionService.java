@@ -59,7 +59,7 @@ class ImageConversionService {
         } catch (InterruptedException e) {
             throw new InnsendingException("Timer ut under innsending. " + e.getMessage());
         } catch (IOException e) {
-            throw new InnsendingException("Ukjent IO feil. " + e.getMessage());
+            throw new InnsendingException("Ukjent IO feil i " + getClass().getName() + "." + e.getMessage());
         }
     }
 }

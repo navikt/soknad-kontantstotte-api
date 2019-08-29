@@ -88,7 +88,7 @@ public class ArkivInnsendingService implements InnsendingService {
         } catch (InterruptedException e) {
             throw new InnsendingException("Timer ut under innsending.");
         } catch (IOException e) {
-            throw new InnsendingException("Ukjent IO feil. " + e.getMessage());
+            throw new InnsendingException("Ukjent IO feil i " + getClass().getName() + "." + e.getMessage());
         }
     }
 }

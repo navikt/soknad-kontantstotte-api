@@ -6,6 +6,7 @@ import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.relasjonD
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
@@ -50,7 +51,6 @@ class InnsynServiceClient implements InnsynService {
 
     private static final Logger secureLogger = LoggerFactory.getLogger("secureLogger");
     private static final Logger logger = LoggerFactory.getLogger(InnsynServiceClient.class);
-
     private static final String CONSUMER_ID = "soknad-kontantstotte-api";
 
     private static final Integer MIN_ALDER_I_MANEDER = 10;

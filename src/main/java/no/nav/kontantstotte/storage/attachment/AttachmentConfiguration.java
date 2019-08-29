@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import no.nav.kontantstotte.client.RestClientConfiguration;
-import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.encryption.EncryptedStorageConfiguration;
 
 @Configuration
@@ -20,7 +19,7 @@ public class AttachmentConfiguration {
     }
 
     @Bean
-    public Storage attachmentStorage(
+    public AttachmentStorage attachmentStorage(
             @Autowired EncryptedStorage storage,
             AttachmentToStorableFormatConverter storableFormatConverter) {
         return new AttachmentStorage(storage, storableFormatConverter);
