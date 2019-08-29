@@ -45,7 +45,6 @@ public class InnsendingController {
         }
         soknad.markerInnsendingsTidspunkt();
         final var fnr = hentFnrFraToken();
-        logger.info("Er denne satt? '{}'", fnr);
         soknad.setPerson(new Person(fnr, null, null));
         soknadSendtInn.increment();
         arkivInnsendingService.sendInnSoknad(soknad);
