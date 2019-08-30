@@ -5,7 +5,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.attachment.AttachmentStorage;
 import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 import org.mockito.Mockito;
@@ -22,8 +21,8 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 @Configuration
 public class TestStorageConfiguration {
 
-    @Primary
     @Bean
+    @Primary
     public AttachmentStorage attachmentStorage() {
         AttachmentStorage storage = Mockito.mock(AttachmentStorage.class);
 
@@ -32,9 +31,8 @@ public class TestStorageConfiguration {
         return Mockito.mock(AttachmentStorage.class);
     }
 
-
-    @Primary
     @Bean
+    @Primary
     public EncryptedStorage encryptedStorage() {
         EncryptedStorage storage = Mockito.mock(EncryptedStorage.class);
 
@@ -43,9 +41,8 @@ public class TestStorageConfiguration {
         return Mockito.mock(EncryptedStorage.class);
     }
 
-
-    @Primary
     @Bean
+    @Primary
     public S3Storage S3Storage() {
         S3Storage storage = Mockito.mock(S3Storage.class);
 
@@ -53,7 +50,6 @@ public class TestStorageConfiguration {
 
         return Mockito.mock(S3Storage.class);
     }
-
 
     @Bean
     @Primary

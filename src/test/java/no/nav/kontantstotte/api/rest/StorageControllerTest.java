@@ -25,6 +25,8 @@ import java.util.Optional;
 import java.util.Random;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.nav.kontantstotte.storage.attachment.AttachmentStorage;
+import no.nav.kontantstotte.storage.s3.TestStorageConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jetty.http.HttpHeader;
 import org.junit.After;
@@ -43,7 +45,6 @@ import com.nimbusds.jwt.SignedJWT;
 
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.InnsendingException;
-import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.StorageException;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
@@ -52,7 +53,7 @@ import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
 
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class, TestStorageConfiguration.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class StorageControllerTest {
 
@@ -66,7 +67,7 @@ public class StorageControllerTest {
     private String contextPath = "/api";
 
     @Autowired
-    private Storage attachmentStorage;
+    private AttachmentStorage attachmentStorage;
 
     @After
     public void tearDown() {
@@ -86,7 +87,6 @@ public class StorageControllerTest {
 
     @Test
     public void at_vedlegg_hentes_korrekt() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
         byte[] streamedTestData = Files.readAllBytes(readStream(new ByteArrayInputStream(TESTDATA.getBytes())).toPath());
         when(attachmentStorage.get(any(), any())).thenReturn(Optional.ofNullable(streamedTestData));
 
@@ -94,7 +94,7 @@ public class StorageControllerTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
 
         verify(attachmentStorage).get(eq(INNLOGGET_BRUKER), eq(VEDLEGGS_ID));
-        assertThat(mapper.readValue(response.body(), String.class)).isEqualTo(TESTDATA);
+        assertThat(response.body()).isEqualTo(TESTDATA);
     }
 
     @Test
@@ -124,12 +124,7 @@ public class StorageControllerTest {
                     .header(HttpHeader.CONTENT_TYPE.asString(), "multipart/form-data;boundary=" + boundary)
                     .POST(MultipartBodyPublisher.ofMimeMultipartData(multipart, boundary))
                     .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.body());
-            System.out.println(response.statusCode());
-            System.out.println(response.uri());
-            return response;
-            //return client.send(request, HttpResponse.BodyHandlers.ofString());
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
             throw new IllegalStateException(e);
         }
