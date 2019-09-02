@@ -13,12 +13,9 @@ executors:
 jobs:
   build:
     machine:
+      image: circleci/classic:201808-01
       docker_layer_caching: true
     steps:
-      - run:
-          name: Set correct Java home
-          command: |
-            echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64"
       - run:
           name: Add github to known hosts
           command: |
