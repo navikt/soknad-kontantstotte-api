@@ -12,8 +12,8 @@ executors:
 
 jobs:
   build:
-    docker:
-      - image: circleci/openjdk:11-jdk
+    machine:
+      docker_layer_caching: true
     steps:
       - run:
           name: Add github to known hosts
@@ -24,8 +24,6 @@ jobs:
           fingerprints:
             - "44:1f:a1:d4:3e:e1:47:d3:21:3a:9d:07:a0:03:42:0a"
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Generate version number and docker image tags
           command: |
