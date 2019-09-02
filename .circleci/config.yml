@@ -17,6 +17,15 @@ jobs:
       docker_layer_caching: true
     steps:
       - run:
+            name: Install java 11
+            command: |
+              wget https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.3%2B7/OpenJDK11U-jdk_x64_linux_hotspot_11.0.3_7.tar.gz -O /tmp/openjdk-11.tar.gz
+              sudo mkdir -p /usr/lib/jvm
+              sudo tar xfvz /tmp/openjdk-11.tar.gz --directory /usr/lib/jvm
+              rm -f /tmp/openjdk-11.tar.gz
+              sudo sh -c 'for bin in /usr/lib/jvm/jdk-11.0.3+7/bin/*; do update-alternatives --install /usr/bin/$(basename $bin) $(basename $bin) $bin 100; done'
+              sudo sh -c 'for bin in /usr/lib/jvm/jdk-11.0.3+7/bin/*; do update-alternatives --set $(basename $bin) $bin; done'
+      - run:
           name: Add github to known hosts
           command: |
             echo "github.com,140.82.118.3 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" >> ~/.ssh/known_hosts
