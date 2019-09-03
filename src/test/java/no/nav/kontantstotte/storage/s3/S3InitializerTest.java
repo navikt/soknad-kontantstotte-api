@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.testcontainers.containers.localstack.LocalStackContainer;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -12,7 +13,8 @@ import static org.testcontainers.containers.localstack.LocalStackContainer.Servi
 
 public class S3InitializerTest {
 
-    public static final int SIZE_MB = 20;
+    private static final int SIZE_MB = 20;
+
     @Rule
     public LocalStackContainer localStackContainer = new LocalStackContainer().withServices(S3);
 
@@ -29,6 +31,7 @@ public class S3InitializerTest {
     }
 
     @Test
+    @DisabledIfEnvironmentVariable(named="CIRCLECI", matches="true")
     public void bucketIsCreatedwhenMissing() {
         assertThat(s3.listBuckets()).hasSize(0);
 
