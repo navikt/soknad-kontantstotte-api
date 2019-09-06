@@ -1,18 +1,15 @@
 package no.nav.kontantstotte.client;
 
+import no.nav.familie.http.client.NavHttpHeaders;
+import no.nav.familie.log.mdc.MDCConstants;
+import org.slf4j.MDC;
+import org.springframework.http.HttpHeaders;
+
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.time.Duration;
 
-import org.slf4j.MDC;
-
-import no.nav.log.MDCConstants;
-
-import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
-
 public final class HttpClientUtil {
-
-    private static final String NAV_CALL_ID = "Nav-Call-Id";
 
     private HttpClientUtil() {
     }
@@ -26,14 +23,14 @@ public final class HttpClientUtil {
 
     public static HttpRequest.Builder createRequest(String authorizationHeader) {
         return HttpRequest.newBuilder()
-                .header(AUTHORIZATION, authorizationHeader)
-                .header(NAV_CALL_ID, MDC.get(MDCConstants.MDC_CORRELATION_ID))
+                .header(HttpHeaders.AUTHORIZATION, authorizationHeader)
+                .header(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDCConstants.MDC_CALL_ID))
                 .timeout(Duration.ofMinutes(2));
     }
 
     public static HttpRequest.Builder createRequest() {
         return HttpRequest.newBuilder()
-                .header(NAV_CALL_ID, MDC.get(MDCConstants.MDC_CORRELATION_ID))
+                .header(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDCConstants.MDC_CALL_ID))
                 .timeout(Duration.ofMinutes(2));
     }
 }

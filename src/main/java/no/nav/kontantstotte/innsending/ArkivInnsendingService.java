@@ -1,7 +1,5 @@
 package no.nav.kontantstotte.innsending;
 
-import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
-import static javax.ws.rs.core.Response.Status.Family.familyOf;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 import java.io.IOException;
@@ -10,14 +8,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -74,14 +70,14 @@ public class ArkivInnsendingService implements InnsendingService {
             String body = mapper.writeValueAsString(soknadDto);
             HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
-                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
-                    .uri(UriBuilder.fromUri(proxyServiceUri).path("soknad").build())
+                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
+                    .uri(URI.create(proxyServiceUri + "soknad"))
                     .POST(HttpRequest.BodyPublishers.ofString(body))
                     .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (!SUCCESSFUL.equals(familyOf(response.statusCode()))) {
-                throw new InnsendingException("Response fra proxy: " + Response.Status.fromStatusCode(response.statusCode()) + ". Response.entity: " + response.body());
+            if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(response.statusCode()))) {
+                throw new InnsendingException("Response fra proxy: " + response.statusCode() + ". Response.entity: " + response.body());
             }
             LOG.info("Søknad sendt til proxy for innsending til arkiv");
 
@@ -92,7 +88,7 @@ public class ArkivInnsendingService implements InnsendingService {
         } catch (InterruptedException e) {
             throw new InnsendingException("Timer ut under innsending.");
         } catch (IOException e) {
-            throw new InnsendingException("Ukjent IO feil. " + e.getMessage());
+            throw new InnsendingException("Ukjent IO feil i " + getClass().getName() + "." + e.getMessage());
         }
     }
 }

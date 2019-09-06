@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.storage.attachment;
 
 import no.nav.kontantstotte.storage.Storage;
+import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayInputStream;
@@ -10,10 +11,10 @@ import java.util.Optional;
 
 public class AttachmentStorage implements Storage {
 
-    private final Storage delegate;
+    private final EncryptedStorage delegate;
     private final AttachmentToStorableFormatConverter storableFormatConverter;
 
-    AttachmentStorage(Storage storage, AttachmentToStorableFormatConverter storableFormatConverter) {
+    AttachmentStorage(EncryptedStorage storage, AttachmentToStorableFormatConverter storableFormatConverter) {
         this.delegate = storage;
         this.storableFormatConverter = storableFormatConverter;
     }

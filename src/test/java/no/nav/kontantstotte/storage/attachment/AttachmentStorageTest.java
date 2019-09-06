@@ -15,16 +15,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
+import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import no.nav.kontantstotte.storage.Storage;
-
 public class AttachmentStorageTest {
 
-    private Storage delegate = mock(Storage.class);
+    private EncryptedStorage delegate = mock(EncryptedStorage.class);
     private AttachmentToStorableFormatConverter converter = mock(AttachmentToStorableFormatConverter.class);
     private AttachmentStorage attachmentStorage = new AttachmentStorage(delegate, converter);
 

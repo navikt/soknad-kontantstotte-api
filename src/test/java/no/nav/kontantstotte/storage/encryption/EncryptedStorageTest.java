@@ -2,6 +2,7 @@ package no.nav.kontantstotte.storage.encryption;
 
 import no.nav.kontantstotte.SetOidcClaimsWithSubject;
 import no.nav.kontantstotte.storage.Storage;
+import no.nav.kontantstotte.storage.s3.S3Storage;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class EncryptedStorageTest {
     @Rule
     public SetOidcClaimsWithSubject claims = new SetOidcClaimsWithSubject(FNR);
 
-    private Storage storage = mock(Storage.class);
+    private S3Storage storage = mock(S3Storage.class);
 
     private Encryptor encryptor = mock(Encryptor.class);
 

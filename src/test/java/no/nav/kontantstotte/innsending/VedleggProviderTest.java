@@ -2,7 +2,7 @@ package no.nav.kontantstotte.innsending;
 
 import no.nav.kontantstotte.SetOidcClaimsWithSubject;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
-import no.nav.kontantstotte.storage.Storage;
+import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class VedleggProviderTest {
     @Rule
     public SetOidcClaimsWithSubject setOidcClaimsWithSubject = new SetOidcClaimsWithSubject("DUMMY_FNR");
 
-    private Storage storage = mock(Storage.class);
+    private EncryptedStorage storage = mock(EncryptedStorage.class);
 
     @Test
     public void at_vedlegg_konverteres_ok_uten_vedlegg() {

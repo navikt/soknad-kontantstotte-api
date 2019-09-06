@@ -1,10 +1,10 @@
 package no.nav.kontantstotte.api.rest;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
-import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,12 +27,12 @@ public class SokerController {
     private final Counter sokerErNorsk = Metrics.counter("soker.land", "land", "NOR");
     private final Counter sokerErIkkeNorsk = Metrics.counter("soker.land", "land", "annet");
 
-    @Inject
+    @Autowired
     public SokerController(InnsynService innsynServiceClient) {
         this.innsynServiceClient = innsynServiceClient;
     }
 
-    @GetMapping(produces = APPLICATION_JSON)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public SokerDto hentPersonInfoOmSoker() {
         String fnr = hentFnrFraToken();
 

@@ -1,8 +1,5 @@
 package no.nav.kontantstotte.api.rest;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM;
-import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 import java.io.ByteArrayInputStream;
@@ -10,13 +7,13 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.inject.Named;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-
+import no.nav.kontantstotte.storage.attachment.AttachmentStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,13 +35,13 @@ public class StorageController {
     private final Storage storage;
     private final int maxFileSize;
 
-    StorageController(@Named("attachmentStorage") Storage storage,
+    StorageController(@Autowired AttachmentStorage storage,
                       @Value("${attachment.max.size.mb}") int maxFileSizeMB) {
         this.storage = storage;
         this.maxFileSize = maxFileSizeMB * 1000 * 1000;
     }
 
-    @PostMapping(consumes = MULTIPART_FORM_DATA, produces = APPLICATION_JSON)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addAttachment(@RequestParam("file") MultipartFile multipartFile) throws IOException {
 
         if (multipartFile.isEmpty()) {
@@ -55,7 +52,7 @@ public class StorageController {
         log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
 
         if (bytes.length > this.maxFileSize) {
-            throw new WebApplicationException(Response.status(Response.Status.REQUEST_ENTITY_TOO_LARGE).build());
+            throw new IllegalArgumentException(HttpStatus.PAYLOAD_TOO_LARGE.toString());
         }
 
         String directory = hentFnrFraToken();
@@ -69,7 +66,7 @@ public class StorageController {
         return Map.of("vedleggsId", uuid, "filnavn", multipartFile.getName());
     }
 
-    @GetMapping(path = "{vedleggsId}", produces = APPLICATION_OCTET_STREAM)
+    @GetMapping(path = "{vedleggsId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public byte[] getAttachment(@PathVariable("vedleggsId") String vedleggsId) {
         String directory = hentFnrFraToken();
         byte[] data = storage.get(directory, vedleggsId).orElse(null);

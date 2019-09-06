@@ -1,21 +1,17 @@
 package no.nav.kontantstotte.innsending.oppsummering;
 
-import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,15 +40,15 @@ class PdfConverter {
     byte[] genererPdf(byte[] bytes) {
         try {
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML)
-                    .uri(UriBuilder.fromUri(pdfSvgSupportGeneratorUrl).path("v1/genpdf/html/kontantstotte").build())
+                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE)
+                    .uri(URI.create(pdfSvgSupportGeneratorUrl + "v1/genpdf/html/kontantstotte"))
                     .POST(HttpRequest.BodyPublishers.ofByteArray(bytes))
                     .build();
 
             var response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
 
-            if (!SUCCESSFUL.equals(Response.Status.Family.familyOf(response.statusCode()))) {
-                throw new InnsendingException("Response fra pdf-generator: " + Response.Status.fromStatusCode(response.statusCode()) + ". Response.entity: " + new String(response.body()));
+            if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(response.statusCode()))) {
+                throw new InnsendingException("Response fra pdf-generator: " + response.statusCode() + ". Response.entity: " + new String(response.body()));
             }
 
             log.info("Konvertert søknad til pdf");

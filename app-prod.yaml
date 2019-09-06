@@ -7,14 +7,16 @@ metadata:
     team: teamfamilie
 
 spec:
-  image: repo.adeo.no:5443/soknad-kontantstotte-api:RELEASE_VERSION
+  image: navikt/soknad-kontantstotte-api:{{version}}
   port: 8080
   liveness:
     path: /internal/status/isAlive
     initialDelay: 60
+    failureThreshold: 10
   readiness:
     path: /internal/status/isAlive
     initialDelay: 60
+    failureThreshold: 10
   prometheus:
     enabled: true
     path: /internal/prometheus

@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.innsending;
 
-import no.nav.kontantstotte.storage.Storage;
+import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +10,9 @@ import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 class VedleggProvider {
 
-    private final Storage storage;
+    private final EncryptedStorage storage;
 
-    VedleggProvider(Storage storage) {
+    VedleggProvider(EncryptedStorage storage) {
         this.storage = storage;
     }
 

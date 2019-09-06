@@ -1,13 +1,13 @@
 package no.nav.kontantstotte.storage.encryption;
 
-import no.nav.kontantstotte.storage.Storage;
+import no.nav.kontantstotte.storage.s3.S3Storage;
 import no.nav.kontantstotte.storage.s3.S3StorageConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import javax.inject.Named;
 
 @Configuration
 @Import({S3StorageConfiguration.class})
@@ -24,8 +24,8 @@ public class EncryptedStorageConfiguration {
         return new SecretKeyProvider(passphrase);
     }
 
-    @Bean("encryptedStorage")
-    public Storage encryptedStorage(@Named("s3storage") Storage storage, Encryptor encryptor) {
+    @Bean
+    public EncryptedStorage encryptedStorage(@Autowired S3Storage storage, Encryptor encryptor) {
         return new EncryptedStorage(storage, encryptor);
     }
 

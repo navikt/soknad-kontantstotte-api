@@ -1,7 +1,5 @@
 package no.nav.kontantstotte.client;
 
-import javax.ws.rs.ext.ContextResolver;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,10 +18,4 @@ public class RestClientConfiguration {
                 .registerModule(new Jdk8Module())
                 .enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
-
-    @Bean
-    public ContextResolver<ObjectMapper> clientObjectMapperResolver(ObjectMapper objectMapper) {
-        return type -> objectMapper;
-    }
-
 }
