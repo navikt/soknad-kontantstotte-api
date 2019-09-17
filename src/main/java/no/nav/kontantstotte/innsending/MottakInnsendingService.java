@@ -2,6 +2,8 @@ package no.nav.kontantstotte.innsending;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
@@ -21,13 +23,15 @@ import java.net.http.HttpResponse;
 @Component
 public class MottakInnsendingService implements InnsendingService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MottakInnsendingService.class);
+
+    private final Counter soknadSendtInnTilMottak = Metrics.counter("soknad.kontantstotte", "innsending", "sendtmottak");
     private final String kontantstotteMottakApiKeyUsername;
     private final String kontantstotteMottakApiKeyPassword;
     private URI mottakServiceUri;
     private OIDCRequestContextHolder contextHolder;
     private ObjectMapper mapper;
     private HttpClient client;
-    private static final Logger LOG = LoggerFactory.getLogger(MottakInnsendingService.class);
 
     public MottakInnsendingService(@Value("${FAMILIE_KS_MOTTAK_API_URL}") URI mottakServiceUri,
                             @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_USERNAME}") String kontantstotteMottakApiKeyUsername,
@@ -57,6 +61,8 @@ public class MottakInnsendingService implements InnsendingService {
 
             try {
                 HttpResponse<String> mottakresponse = client.send(mottakRequest, HttpResponse.BodyHandlers.ofString());
+
+                soknadSendtInnTilMottak.increment();
                 LOG.info("Søknad sendt til mottaket. Response status: {}, respons: {}", mottakresponse.statusCode(), mottakresponse.body());
             } catch (IOException | InterruptedException e) {
                 LOG.warn("Feilet under sending av søknad til mottak: {}", e.getMessage());
