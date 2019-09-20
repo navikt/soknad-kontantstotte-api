@@ -6,6 +6,7 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.client.TokenHelper;
+import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
@@ -19,6 +20,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+
+import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 @Component
 public class MottakInnsendingService implements InnsendingService {
@@ -28,21 +32,27 @@ public class MottakInnsendingService implements InnsendingService {
     private final Counter soknadSendtInnTilMottak = Metrics.counter("soknad.kontantstotte", "innsending", "sendtmottak");
     private final String kontantstotteMottakApiKeyUsername;
     private final String kontantstotteMottakApiKeyPassword;
+    private final OppsummeringPdfGenerator oppsummeringPdfGenerator;
+    private final VedleggProvider vedleggProvider;
     private URI mottakServiceUri;
     private OIDCRequestContextHolder contextHolder;
     private ObjectMapper mapper;
     private HttpClient client;
 
     public MottakInnsendingService(@Value("${FAMILIE_KS_MOTTAK_API_URL}") URI mottakServiceUri,
-                            @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_USERNAME}") String kontantstotteMottakApiKeyUsername,
-                            @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_PASSWORD}") String kontantstotteMottakApiKeyPassword,
-                            OIDCRequestContextHolder contextHolder,
-                            ObjectMapper mapper) {
+                                   @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_USERNAME}") String kontantstotteMottakApiKeyUsername,
+                                   @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_PASSWORD}") String kontantstotteMottakApiKeyPassword,
+                                   OIDCRequestContextHolder contextHolder,
+                                   OppsummeringPdfGenerator oppsummeringPdfGenerator,
+                                   VedleggProvider vedleggProvider,
+                                   ObjectMapper mapper) {
 
         this.kontantstotteMottakApiKeyUsername = kontantstotteMottakApiKeyUsername;
         this.kontantstotteMottakApiKeyPassword = kontantstotteMottakApiKeyPassword;
         this.mottakServiceUri = mottakServiceUri;
         this.contextHolder = contextHolder;
+        this.oppsummeringPdfGenerator = oppsummeringPdfGenerator;
+        this.vedleggProvider = vedleggProvider;
         this.mapper = mapper;
         this.client = HttpClientUtil.create();
     }
@@ -56,7 +66,7 @@ public class MottakInnsendingService implements InnsendingService {
                     .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
                     .uri(URI.create(mottakServiceUri + "soknad"))
-                    .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(soknad)))
+                    .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDto(soknad))))
                     .build();
 
             try {
@@ -71,5 +81,12 @@ public class MottakInnsendingService implements InnsendingService {
             throw new InnsendingException("Feiler under konvertering av innsending til json.");
         }
         return soknad;
+    }
+
+    private SoknadMottakDto byggDto(Soknad soknad) {
+        VedleggDto hovedskjema = new VedleggDto(oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), "Hovedskjema");
+        List<VedleggDto> vedlegg = vedleggProvider.hentVedleggFor(soknad);
+        vedlegg.add(hovedskjema);
+        return new SoknadMottakDto(hentFnrFraToken(), soknad, vedlegg);
     }
 }
