@@ -3,7 +3,8 @@ package no.nav.kontantstotte.storage.s3;
 import com.amazonaws.services.s3.AmazonS3;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.testcontainers.containers.localstack.LocalStackContainer;
 
 import java.io.ByteArrayInputStream;
@@ -28,6 +29,7 @@ public class S3StorageTest {
     }
 
     @Test
+    @DisabledIfEnvironmentVariable(named="CIRCLECI", matches="true")
     public void testStorage() {
         storage.put("dir", "file", new ByteArrayInputStream("asdfasdf".getBytes()));
         storage.put("dir", "file2", new ByteArrayInputStream("asdfasdf2".getBytes()));
