@@ -65,7 +65,7 @@ public class MottakInnsendingService implements InnsendingService {
             HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
-                    .uri(URI.create(mottakServiceUri + "soknad"))
+                    .uri(URI.create(mottakServiceUri + "soknadmedvedlegg"))
                     .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDto(soknad))))
                     .build();
 
@@ -83,10 +83,10 @@ public class MottakInnsendingService implements InnsendingService {
         return soknad;
     }
 
-    private SoknadMottakDto byggDto(Soknad soknad) {
+    private SoknadDto byggDto(Soknad soknad) throws JsonProcessingException {
         VedleggDto hovedskjema = new VedleggDto(oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), "Hovedskjema");
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggFor(soknad);
         vedlegg.add(hovedskjema);
-        return new SoknadMottakDto(hentFnrFraToken(), soknad, vedlegg);
+        return new SoknadDto(mapper.writeValueAsString(soknad), vedlegg);
     }
 }
