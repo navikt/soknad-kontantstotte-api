@@ -87,6 +87,6 @@ public class MottakInnsendingService implements InnsendingService {
         VedleggDto hovedskjema = new VedleggDto(oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), "Hovedskjema");
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggFor(soknad);
         vedlegg.add(hovedskjema);
-        return new SoknadDto(mapper.writeValueAsString(soknad), vedlegg);
+        return new SoknadDto(hentFnrFraToken(), mapper.writeValueAsString(soknad), vedlegg);
     }
 }
