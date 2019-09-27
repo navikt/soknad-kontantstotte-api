@@ -816,7 +816,6 @@
         "jobbKilde": {
           "type": "string"
         },
-        ,
         "landkodeJobb": {
           "type": "string",
           "example": "+47",
