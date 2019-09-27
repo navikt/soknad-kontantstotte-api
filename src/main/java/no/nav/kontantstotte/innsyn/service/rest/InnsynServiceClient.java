@@ -155,7 +155,8 @@ class InnsynServiceClient implements InnsynService {
             TjenesteLogger.logTjenestekall(URI.create(tpsInnsynServiceUri + path), fnr, data);
 
             return data;
-        } catch (IOException e) {
+        } catch (Exception e) {
+            TjenesteLogger.logFeil(URI.create(tpsInnsynServiceUri + path), fnr, e);
             throw new InnsynOppslagException("TPS innsyn service is not up");
         }
     }
