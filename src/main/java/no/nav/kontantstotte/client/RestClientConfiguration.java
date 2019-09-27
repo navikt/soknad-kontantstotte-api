@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.client;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +15,7 @@ public class RestClientConfiguration {
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .registerModule(new JavaTimeModule())
                 .registerModule(new Jdk8Module())
                 .enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
