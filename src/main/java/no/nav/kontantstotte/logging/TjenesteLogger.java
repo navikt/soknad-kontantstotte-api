@@ -11,4 +11,8 @@ public class TjenesteLogger {
     public static void logTjenestekall(URI uri, String fnr, Object data) {
         secureLogger.info("[{}, {}]: {}", uri, fnr, data.toString());
     }
+
+    public static void logFeil(URI uri, String fnr, Exception error) {
+        secureLogger.error("[{}, {}]: {}", uri, fnr, error);
+    }
 }
