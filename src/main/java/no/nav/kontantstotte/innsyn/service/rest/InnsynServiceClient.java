@@ -157,6 +157,9 @@ class InnsynServiceClient implements InnsynService {
             return data;
         } catch (IOException e) {
             throw new InnsynOppslagException("TPS innsyn service is not up");
+        } catch (Exception e) {
+            TjenesteLogger.logFeil(URI.create(tpsInnsynServiceUri + path), fnr, e);
+            throw e;
         }
     }
 
@@ -172,6 +175,9 @@ class InnsynServiceClient implements InnsynService {
             return data;
         } catch (IOException e) {
             throw new InnsynOppslagException("TPS innsyn service is not up");
+        } catch (Exception e) {
+            TjenesteLogger.logFeil(URI.create(tpsInnsynServiceUri + path), fnr, e);
+            throw e;
         }
     }
 
@@ -198,6 +204,9 @@ class InnsynServiceClient implements InnsynService {
         } catch (IOException | InterruptedException e) {
             logger.info("Ukjent feil ved oppslag mot '" + uri + "'. " + e.getMessage());
             throw new InnsynOppslagException("Ukjent feil ved oppslag mot '" + uri + "'. " + e.getMessage());
+        } catch (Exception e) {
+            TjenesteLogger.logFeil(URI.create(tpsInnsynServiceUri + path), fnr, e);
+            throw e;
         }
     }
 }
