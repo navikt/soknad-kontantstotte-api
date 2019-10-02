@@ -1,5 +1,8 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
+import no.nav.familie.ks.kontrakter.søknad.AktørArbeidYtelseUtland;
+import no.nav.familie.ks.kontrakter.søknad.Standpunkt;
+import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -37,6 +40,35 @@ public class UtenlandskKontantstotteMapping extends BolkMapping {
                     ));
         }
         return bolk;
+    }
+
+    public Bolk mapNy(Søknad søknad) {
+        Bolk kontantstøtteIUtlandBolk = new Bolk();
+
+        kontantstøtteIUtlandBolk.tittel = tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel());
+        kontantstøtteIUtlandBolk.elementer = new ArrayList<>();
+
+        AktørArbeidYtelseUtland søkerKontantstøtteUtland = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet()).get(0);
+
+        if (Standpunkt.NEI.equals(søkerKontantstøtteUtland.getKontantstøtteIUtlandet())) {
+            kontantstøtteIUtlandBolk.elementer.add(
+                    Element.nyttSvar(
+                            tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()), tekster.hentTekst(SVAR_NEI.getNokkel())
+                    ));
+        }
+
+        if (Standpunkt.JA.equals(søkerKontantstøtteUtland.getKontantstøtteIUtlandet())) {
+            kontantstøtteIUtlandBolk.elementer.add(
+                    Element.nyttSvar(
+                            tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE.getNokkel()), tekster.hentTekst(SVAR_JA.getNokkel())
+                    ));
+            kontantstøtteIUtlandBolk.elementer.add(
+                    Element.nyttSvar(
+                            tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_MOTTAR_STOTTE_TILLEGGSINFO.getNokkel()), søkerKontantstøtteUtland.getKontantstøtteIUtlandetForklaring()
+                    ));
+        }
+
+        return kontantstøtteIUtlandBolk;
     }
 
 

@@ -1,5 +1,8 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
+import no.nav.familie.ks.kontrakter.søknad.AktørArbeidYtelseUtland;
+import no.nav.familie.ks.kontrakter.søknad.Standpunkt;
+import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.steg.ArbeidIUtlandet;
@@ -38,5 +41,31 @@ public class ArbeidIUtlandetMapping extends BolkMapping {
         }
 
         return arbeidIUtlandetBolk;
+    }
+
+    public Bolk mapNy(Søknad søknad) {
+        Bolk arbeidIUtlandetBolk = new Bolk();
+
+        arbeidIUtlandetBolk.tittel = tekster.hentTekst(ARBEID_I_UTLANDET_TITTEL.getNokkel());
+        arbeidIUtlandetBolk.elementer = new ArrayList<>();
+
+        AktørArbeidYtelseUtland søkerArbeidIUtlandet = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet()).get(0);
+        genererArbeidIUtlandetElement(arbeidIUtlandetBolk, søkerArbeidIUtlandet, ARBEID_I_UTLANDET_ELLER_KONTINENTALSOKKEL);
+
+        if (søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet().size() > 1) {
+            AktørArbeidYtelseUtland medForelderArbeidIUtlandet = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet()).get(1);
+            genererArbeidIUtlandetElement(arbeidIUtlandetBolk, medForelderArbeidIUtlandet, ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET);
+        }
+
+        return arbeidIUtlandetBolk;
+    }
+
+    private void genererArbeidIUtlandetElement(Bolk arbeidIUtlandetBolk, AktørArbeidYtelseUtland arbeidIUtlandet, Tekstnokkel arbeidIUtlandetTekstnøkkel) {
+        if (Standpunkt.NEI.equals(arbeidIUtlandet.getArbeidIUtlandet())) {
+            arbeidIUtlandetBolk.elementer.add(nyttElementMedTekstsvar.apply(arbeidIUtlandetTekstnøkkel, SVAR_NEI));
+        } else if (Standpunkt.JA.equals(arbeidIUtlandet.getArbeidIUtlandet())) {
+            arbeidIUtlandetBolk.elementer.add(nyttElementMedTekstsvar.apply(arbeidIUtlandetTekstnøkkel, SVAR_JA));
+            arbeidIUtlandetBolk.elementer.add(nyttElementMedVerdisvar.apply(ARBEID_I_UTLANDET_FORKLARING, arbeidIUtlandet.getArbeidIUtlandetForklaring()));
+        }
     }
 }

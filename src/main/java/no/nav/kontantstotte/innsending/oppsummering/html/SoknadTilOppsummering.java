@@ -1,12 +1,15 @@
 package no.nav.kontantstotte.innsending.oppsummering.html;
 
+import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.kontantstotte.innsending.oppsummering.SøknadOppsummering;
 import no.nav.kontantstotte.innsending.oppsummering.html.mapping.*;
 import no.nav.kontantstotte.innsending.steg.Person;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.tekst.TekstService;
 
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -16,17 +19,16 @@ import java.util.Map;
  * Klassen benyttes til generering av oppsummeringsinnhold.
  * mapBolker tar inn soeknadsobjektet og mapper til nytt
  * oppsummeringsobjekt som skal til htmlconverter og deretter til pdfconverter.
- *
+ * <p>
  * Maalet et er at SoknadOppsummering.java-objektet på sikt ikke skal inneholde soknad eller tekster,
  * men kun være bolker med spoersmal og svar og eventuell metadata tilknyttet oppsummeringen
- *
+ * <p>
  * Naar metoden nyBolk ikke er i bruk mer, kan vi slette soknadsobjektet fra SoknadOppsummering og deretter
  * gjoere en del endringer i soknad-html-generator for å slette gamle react-filer og deretter ta grep for aa
  * slette eventuelle gjenvaerende tekster som er i bruk.
- *
+ * <p>
  * Et steg i soknaden kan byttes ut med ny generering ved aa erstatte kallet til nyBolk med en ny mapper-klasse.
  * Husk aa endre i testene tilhoerende denne klassen og teste alle varianter i engen mapper
- *
  */
 class SoknadTilOppsummering {
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm")
@@ -56,6 +58,21 @@ class SoknadTilOppsummering {
                 tekster);
     }
 
+    public SøknadOppsummering map(Søknad søknad, String fnr) {
+        Map<String, String> tekster = tekstService.hentTekster(søknad.getSpråk());
+        Map<String, String> land = tekstService.hentLand(søknad.getSpråk());
+
+        Person person = new Person(fnr,
+                innsynServiceClient.hentPersonInfo(fnr).getFulltnavn(),
+                land.get(innsynServiceClient.hentPersonInfo(fnr).getStatsborgerskap()));
+
+        return new SøknadOppsummering(søknad,
+                person,
+                FORMATTER.format(søknad.getInnsendtTidspunkt().toInstant(ZoneOffset.UTC)),
+                mapBolkerNy(søknad, new Tekster(tekster)),
+                tekster);
+    }
+
     private List<Bolk> mapBolker(Soknad soknad, Tekster tekster) {
         return Arrays.asList(
                 new KravTilSokerMapping(tekster).map(soknad),
@@ -69,9 +86,16 @@ class SoknadTilOppsummering {
         );
     }
 
-    private Bolk nyBolk(String bolknavn) {
-        Bolk bolk = new Bolk();
-        bolk.bolknavn = bolknavn;
-        return bolk;
+    private List<Bolk> mapBolkerNy(Søknad søknad, Tekster tekster) {
+        return Arrays.asList(
+                new KravTilSokerMapping(tekster).mapNy(søknad),
+                new BarnMapping(tekster).mapNy(søknad),
+                new BarnehageplassMapping(tekster).mapNy(søknad),
+                new FamilieforholdMapping(tekster).mapNy(søknad),
+                new TilknytningTilUtlandMapping(tekster).mapNy(søknad),
+                new ArbeidIUtlandetMapping(tekster).mapNy(søknad),
+                new UtenlandskeYtelserMapping(tekster).mapNy(søknad),
+                new UtenlandskKontantstotteMapping(tekster).mapNy(søknad)
+        );
     }
 }

@@ -2,6 +2,7 @@ package no.nav.kontantstotte.api.rest;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
+import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.ArkivInnsendingService;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
@@ -51,4 +52,13 @@ public class InnsendingController {
 
         return ResponseEntity.ok(new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString()));
     }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, path="/medkontrakt")
+    public ResponseEntity<InnsendingsResponsDto> sendInnSoknadMedKontrakt(@RequestBody Søknad søknad) {
+        mottakInnsendingService.sendInnSøknadPåNyttFormat(søknad);
+        soknadSendtInn.increment();
+
+        return ResponseEntity.ok(new InnsendingsResponsDto(søknad.getInnsendtTidspunkt().toString()));
+    }
+
 }

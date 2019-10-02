@@ -26,6 +26,7 @@
         <jackson.version>2.10.0.pr3</jackson.version>
         <aws-java-sdk-s3>1.11.448</aws-java-sdk-s3>
         <felles.version>1.0_20190819103533_69f5183</felles.version>
+        <kontrakt.version>1.0-SNAPSHOT</kontrakt.version>
         <junit-jupiter.version>RELEASE</junit-jupiter.version>
     </properties>
 
@@ -93,6 +94,11 @@
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>http-client</artifactId>
             <version>${felles.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.familie.ks</groupId>
+            <artifactId>kontrakt</artifactId>
+            <version>${kontrakt.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>

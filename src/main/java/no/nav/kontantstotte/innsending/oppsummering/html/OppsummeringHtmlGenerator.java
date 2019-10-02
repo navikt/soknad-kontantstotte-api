@@ -1,6 +1,8 @@
 package no.nav.kontantstotte.innsending.oppsummering.html;
 
+import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.kontantstotte.innsending.Soknad;
+import no.nav.kontantstotte.innsending.oppsummering.SøknadOppsummering;
 
 public class OppsummeringHtmlGenerator {
 
@@ -15,6 +17,11 @@ public class OppsummeringHtmlGenerator {
 
     public byte[] genererHtml(Soknad soknad, String fnr) {
         SoknadOppsummering oppsummering = soknadTilOppsummering.map(soknad, fnr);
+        return htmlConverter.genererHtml(oppsummering);
+    }
+
+    public byte[] genererHtmlNy(Søknad søknad, String fnr) {
+        SøknadOppsummering oppsummering = soknadTilOppsummering.map(søknad, fnr);
         return htmlConverter.genererHtml(oppsummering);
     }
 }
