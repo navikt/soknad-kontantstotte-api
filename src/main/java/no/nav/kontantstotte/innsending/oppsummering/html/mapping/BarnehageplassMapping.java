@@ -131,6 +131,7 @@ public class BarnehageplassMapping extends BolkMapping {
         switch (barnehageplassStatus) {
             case garIkkeIBarnehage:
                 barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS, SVAR_NEI));
+                break;
             case harSluttetIBarnehage:
                 barnehageplassBolk.elementer.addAll(
                         Arrays.asList(

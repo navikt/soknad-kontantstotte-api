@@ -7,6 +7,7 @@ import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -41,6 +42,7 @@ class VedleggProvider {
         String directory = hentFnrFraToken();
 
         List<String> alleVedlegg = søknad.getOppgittFamilieforhold().getBarna().stream()
+                .filter(b -> b.getBarnehageVedlegg() != null)
                 .map(Barn::getBarnehageVedlegg)
                 .findAny().orElse(Collections.emptyList());
 
