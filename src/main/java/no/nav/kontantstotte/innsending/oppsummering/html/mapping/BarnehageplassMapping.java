@@ -74,7 +74,7 @@ public class BarnehageplassMapping extends BolkMapping {
                         antallTimer = Float.parseFloat(barnehageplass.harBarnehageplassAntallTimer);
                     } catch (NumberFormatException e) {
                         antallTimer = 0.0f;
-                        logger.warn("Klarte ikke å konvertere harBarnehageplassAntalTimer med verdi %s til et tall", barnehageplass.harBarnehageplassAntallTimer);
+                        logger.warn("Klarte ikke å konvertere harBarnehageplassAntalTimer med verdi {} til et tall", barnehageplass.harBarnehageplassAntallTimer);
                     }
                     Element harBarnehageplassAntallTimer = antallTimer > 33.0 ?
                             Element.nyttSvar(
@@ -137,7 +137,7 @@ public class BarnehageplassMapping extends BolkMapping {
                                 nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_DATO, barnehageplassVerdier.getBarnehageDato().toString()),
                                 nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_ANTALL_TIMER, barnehageplassVerdier.getBarnehageAntallTimer().toString()),
                                 nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_KOMMUNE, barnehageplassVerdier.getBarnehageKommune()),
-                                nyttElementMedListe.apply(HAR_SLUTTET_I_BARNEHAGE_VEDLEGG, Arrays.stream(barnehageplassVerdier.getBarnehageVedlegg()).map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
+                                nyttElementMedListe.apply(HAR_SLUTTET_I_BARNEHAGE_VEDLEGG, barnehageplassVerdier.getBarnehageVedlegg().stream().map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
                         )
                 );
                 break;
@@ -147,7 +147,7 @@ public class BarnehageplassMapping extends BolkMapping {
                                 nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_DATO, barnehageplassVerdier.getBarnehageDato().toString()),
                                 nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER, barnehageplassVerdier.getBarnehageAntallTimer().toString()),
                                 nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE, barnehageplassVerdier.getBarnehageKommune()),
-                                nyttElementMedListe.apply(SKAL_SLUTTE_I_BARNEHAGE_VEDLEGG, Arrays.stream(barnehageplassVerdier.getBarnehageVedlegg()).map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
+                                nyttElementMedListe.apply(SKAL_SLUTTE_I_BARNEHAGE_VEDLEGG, barnehageplassVerdier.getBarnehageVedlegg().stream().map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
                         )
                 );
                 break;

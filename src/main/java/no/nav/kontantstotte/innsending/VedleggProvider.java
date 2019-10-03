@@ -42,7 +42,6 @@ class VedleggProvider {
 
         List<String> alleVedlegg = søknad.getOppgittFamilieforhold().getBarna().stream()
                 .map(Barn::getBarnehageVedlegg)
-                .map(Arrays::asList)
                 .findAny().orElse(Collections.emptyList());
 
         List<VedleggMetadata> alleVedleggMetadata = alleVedlegg.stream()

@@ -3,6 +3,7 @@ package no.nav.kontantstotte.api.rest;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.familie.ks.kontrakter.søknad.Søknad;
+import no.nav.familie.ks.kontrakter.søknad.SøknadKt;
 import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.ArkivInnsendingService;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
@@ -31,6 +32,7 @@ public class InnsendingController {
     private final Counter soknadSendtInn = Metrics.counter("soknad.kontantstotte", "innsending", "mottatt");
     private final Counter soknadSendtInnUgyldig = Metrics.counter("soknad.kontantstotte", "innsending", "ugyldig");
 
+
     public InnsendingController(ArkivInnsendingService arkivInnsendingService, MottakInnsendingService mottakInnsendingService) {
         this.arkivInnsendingService = arkivInnsendingService;
         this.mottakInnsendingService = mottakInnsendingService;
@@ -53,8 +55,10 @@ public class InnsendingController {
         return ResponseEntity.ok(new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString()));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, path="/medkontrakt")
-    public ResponseEntity<InnsendingsResponsDto> sendInnSoknadMedKontrakt(@RequestBody Søknad søknad) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/medkontrakt")
+    public ResponseEntity<InnsendingsResponsDto> sendInnSoknadMedKontrakt(@RequestBody String jsonSøknad) {
+        Søknad søknad;
+        søknad = SøknadKt.toSøknad(jsonSøknad);
         mottakInnsendingService.sendInnSøknadPåNyttFormat(søknad);
         soknadSendtInn.increment();
 
