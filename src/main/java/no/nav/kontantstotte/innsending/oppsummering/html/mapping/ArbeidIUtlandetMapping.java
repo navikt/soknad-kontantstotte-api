@@ -49,11 +49,11 @@ public class ArbeidIUtlandetMapping extends BolkMapping {
         arbeidIUtlandetBolk.tittel = tekster.hentTekst(ARBEID_I_UTLANDET_TITTEL.getNokkel());
         arbeidIUtlandetBolk.elementer = new ArrayList<>();
 
-        AktørArbeidYtelseUtland søkerArbeidIUtlandet = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet()).get(0);
+        AktørArbeidYtelseUtland søkerArbeidIUtlandet = MappingUtils.hentArbeidYtelseUtlandForSøker(søknad);
         genererArbeidIUtlandetElement(arbeidIUtlandetBolk, søkerArbeidIUtlandet, ARBEID_I_UTLANDET_ELLER_KONTINENTALSOKKEL);
 
         if (søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet().size() > 1) {
-            AktørArbeidYtelseUtland medForelderArbeidIUtlandet = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet()).get(1);
+            AktørArbeidYtelseUtland medForelderArbeidIUtlandet = MappingUtils.hentArbeidYtelseUtlandForAnnenPart(søknad);
             genererArbeidIUtlandetElement(arbeidIUtlandetBolk, medForelderArbeidIUtlandet, ARBEID_I_UTLANDET_ARBEIDER_ANNEN_FORELDER_I_UTLANDET);
         }
 

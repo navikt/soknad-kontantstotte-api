@@ -85,10 +85,10 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
 
     public Bolk mapNy(Søknad søknad) {
         Bolk tilknytningTilUtlandBolk = new Bolk();
-
-        AktørTilknytningUtland søkerTilknytningUtland = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerTilknytningTilUtlandet()).get(0);
         tilknytningTilUtlandBolk.tittel = tekster.hentTekst(TILKNYTNING_TIL_UTLAND_TITTEL.getNokkel());
         tilknytningTilUtlandBolk.elementer = new ArrayList<>();
+
+        AktørTilknytningUtland søkerTilknytningUtland = MappingUtils.hentUtenlandsTilknytningForSøker(søknad);
 
         switch (søkerTilknytningUtland.getBoddEllerJobbetINorgeMinstFemAar()) {
             case jaINorge:
@@ -115,7 +115,7 @@ public class TilknytningTilUtlandMapping extends BolkMapping {
         }
 
         if (søknad.getOppgittUtlandsTilknytning().getAktørerTilknytningTilUtlandet().size() > 1) {
-            AktørTilknytningUtland medForelderTilknytningUtland = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerTilknytningTilUtlandet()).get(1);
+            AktørTilknytningUtland medForelderTilknytningUtland = MappingUtils.hentUtenlandsTilknytningForAnnenPart(søknad);
 
             switch (medForelderTilknytningUtland.getBoddEllerJobbetINorgeMinstFemAar()) {
                 case jaINorge:

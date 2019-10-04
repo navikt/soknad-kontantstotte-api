@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Configuration
-@Profile("mockgen-pdf")
+@Profile("mockgen-html")
 public class OppsummeringHtmlTestConfiguration {
 
     @Bean

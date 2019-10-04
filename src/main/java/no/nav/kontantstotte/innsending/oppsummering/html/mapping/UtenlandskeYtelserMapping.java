@@ -49,11 +49,11 @@ public class UtenlandskeYtelserMapping extends BolkMapping {
         utenlandskeYtelserBolk.tittel = tekster.hentTekst(UTENLANDSKE_YTELSER_TITTEL.getNokkel());
         utenlandskeYtelserBolk.elementer = new ArrayList<>();
 
-        AktørArbeidYtelseUtland søkerYtelserUtland = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet()).get(0);
+        AktørArbeidYtelseUtland søkerYtelserUtland = MappingUtils.hentArbeidYtelseUtlandForSøker(søknad);
         genererUtenlandskeYtelserElementer(utenlandskeYtelserBolk, søkerYtelserUtland, UTENLANDSKE_YTELSER_MOTTAR_YTELSER_FRA_UTLAND);
 
         if (søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet().size() > 1) {
-            AktørArbeidYtelseUtland medForelderYtelserUtland = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet()).get(1);
+            AktørArbeidYtelseUtland medForelderYtelserUtland = MappingUtils.hentArbeidYtelseUtlandForAnnenPart(søknad);
             genererUtenlandskeYtelserElementer(utenlandskeYtelserBolk, medForelderYtelserUtland, UTENLANDSKE_YTELSER_MOTTAR_ANNEN_FORELDER_YTELSER_FRA_UTLAND);
         }
 
@@ -65,7 +65,7 @@ public class UtenlandskeYtelserMapping extends BolkMapping {
             utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(ytelserUtlandTekstnøkkel, SVAR_NEI));
         } else if (Standpunkt.JA.equals(ytelserUtland.getYtelseIUtlandet())) {
             utenlandskeYtelserBolk.elementer.add(nyttElementMedTekstsvar.apply(ytelserUtlandTekstnøkkel, SVAR_JA));
-            utenlandskeYtelserBolk.elementer.add(nyttElementMedVerdisvar.apply(UTENLANDSKE_YTELSER_FORKLARING, ytelserUtland.getArbeidIUtlandetForklaring()));
+            utenlandskeYtelserBolk.elementer.add(nyttElementMedVerdisvar.apply(UTENLANDSKE_YTELSER_FORKLARING, ytelserUtland.getYtelseIUtlandetForklaring()));
         }
     }
 }

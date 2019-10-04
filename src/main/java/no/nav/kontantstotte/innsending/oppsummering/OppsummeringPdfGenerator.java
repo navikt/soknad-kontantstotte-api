@@ -19,6 +19,7 @@ public class OppsummeringPdfGenerator {
     }
     public byte[] genererNy(Søknad søknad, String fnr) {
         byte[] htmlBytes = oppsummeringHtmlGenerator.genererHtmlNy(søknad, fnr);
+        System.out.println("HTML:\n" + new String(htmlBytes));
         return pdfConverter.genererPdf(htmlBytes);
     }
 }

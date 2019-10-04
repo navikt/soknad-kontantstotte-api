@@ -48,7 +48,7 @@ public class UtenlandskKontantstotteMapping extends BolkMapping {
         kontantstøtteIUtlandBolk.tittel = tekster.hentTekst(UTENLANDSK_KONTANTSTOTTE_TITTEL.getNokkel());
         kontantstøtteIUtlandBolk.elementer = new ArrayList<>();
 
-        AktørArbeidYtelseUtland søkerKontantstøtteUtland = new ArrayList<>(søknad.getOppgittUtlandsTilknytning().getAktørerArbeidYtelseIUtlandet()).get(0);
+        AktørArbeidYtelseUtland søkerKontantstøtteUtland = MappingUtils.hentArbeidYtelseUtlandForSøker(søknad);
 
         if (Standpunkt.NEI.equals(søkerKontantstøtteUtland.getKontantstøtteIUtlandet())) {
             kontantstøtteIUtlandBolk.elementer.add(
