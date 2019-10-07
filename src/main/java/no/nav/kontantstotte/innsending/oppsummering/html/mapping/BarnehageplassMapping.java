@@ -127,11 +127,9 @@ public class BarnehageplassMapping extends BolkMapping {
         }
 
         BarnehageplassStatus barnehageplassStatus = barna.get(0).getBarnehageStatus();
+        barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(BARN_BARNEHAGEPLASS_STATUS, hentTekstNøkkelForBarnehageplassStatus(barnehageplassStatus)));
 
         switch (barnehageplassStatus) {
-            case garIkkeIBarnehage:
-                barnehageplassBolk.elementer.add(nyttElementMedTekstsvar.apply(HAR_BARNEHAGEPLASS, SVAR_NEI));
-                break;
             case harSluttetIBarnehage:
                 barnehageplassBolk.elementer.addAll(
                         Arrays.asList(
@@ -183,5 +181,22 @@ public class BarnehageplassMapping extends BolkMapping {
         }
 
         return barnehageplassBolk;
+    }
+
+    private Tekstnokkel hentTekstNøkkelForBarnehageplassStatus(BarnehageplassStatus status) {
+        switch (status) {
+            case harBarnehageplass:
+                return GAR_I_BARNEHAGE;
+            case garIkkeIBarnehage:
+                return GAR_IKKE_I_BARNEHAGE;
+            case harSluttetIBarnehage:
+                return HAR_SLUTTET_I_BARNEHAGE;
+            case skalBegynneIBarnehage:
+                return SKAL_BEGYNNE_I_BARNEHAGE;
+            case skalSlutteIBarnehage:
+                return SKAL_SLUTTE_I_BARNEHAGE;
+            default:
+                return null;
+        }
     }
 }

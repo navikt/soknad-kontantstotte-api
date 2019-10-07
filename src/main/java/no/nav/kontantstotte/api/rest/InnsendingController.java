@@ -49,7 +49,6 @@ public class InnsendingController {
         final var fnr = hentFnrFraToken();
         soknad.setPerson(new Person(fnr, null, null));
         arkivInnsendingService.sendInnSoknad(soknad);
-        mottakInnsendingService.sendInnSoknad(soknad);
         soknadSendtInn.increment();
 
         return ResponseEntity.ok(new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString()));
@@ -57,8 +56,7 @@ public class InnsendingController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/medkontrakt")
     public ResponseEntity<InnsendingsResponsDto> sendInnSoknadMedKontrakt(@RequestBody String jsonSøknad) {
-        Søknad søknad;
-        søknad = SøknadKt.toSøknad(jsonSøknad);
+        Søknad søknad = SøknadKt.toSøknad(jsonSøknad);
         mottakInnsendingService.sendInnSøknadPåNyttFormat(søknad);
         soknadSendtInn.increment();
 

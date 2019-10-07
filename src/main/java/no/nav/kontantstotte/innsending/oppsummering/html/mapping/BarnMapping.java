@@ -50,7 +50,7 @@ public class BarnMapping extends BolkMapping {
         List<String> navn = barn.stream()
                 .map(no.nav.familie.ks.kontrakter.søknad.Barn::getNavn).collect(toList());
         List<String> fødselsdatoer = barn.stream().map(no.nav.familie.ks.kontrakter.søknad.Barn::getFødselsnummer)
-                .map(fnr -> fnr.substring(0, 5))
+                .map(fnr -> fnr.substring(0, 6))
                 .collect(toList());
 
         String formatertNavn = String.join(" og ", navn);
