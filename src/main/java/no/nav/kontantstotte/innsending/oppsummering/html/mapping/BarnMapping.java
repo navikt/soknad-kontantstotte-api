@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toList;
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
 
 
@@ -46,19 +47,21 @@ public class BarnMapping extends BolkMapping {
         barneBolk.undertittel = tekster.hentTekst(BARN_UNDERTITTEL.getNokkel());
         barneBolk.elementer = new ArrayList<>();
 
-        String navn = barn.stream()
-                .map(no.nav.familie.ks.kontrakter.søknad.Barn::getNavn)
-                .reduce(" og ", String::concat);
-        String fødselsdato = barn.stream().map(no.nav.familie.ks.kontrakter.søknad.Barn::getFødselsnummer)
+        List<String> navn = barn.stream()
+                .map(no.nav.familie.ks.kontrakter.søknad.Barn::getNavn).collect(toList());
+        List<String> fødselsdatoer = barn.stream().map(no.nav.familie.ks.kontrakter.søknad.Barn::getFødselsnummer)
                 .map(fnr -> fnr.substring(0, 5))
-                .reduce(" og ", String::concat);
+                .collect(toList());
+
+        String formatertNavn = String.join(" og ", navn);
+        String formatertFdato = String.join(" og ", fødselsdatoer);
 
         Element innsendtBarn = barn.size() > 1
                 ? Element.nyttSvar(
-                tekster.hentTekst(BARN_FØDSELSDATO.getNokkel()), fødselsdato,
+                tekster.hentTekst(BARN_FØDSELSDATO.getNokkel()), formatertFdato,
                 tekster.hentTekst(BARN_ADVARSEL.getNokkel()))
-                : nyttElementMedVerdisvar.apply(BARN_FØDSELSDATO, fødselsdato);
-        barneBolk.elementer.add(nyttElementMedVerdisvar.apply(BARN_NAVN, navn));
+                : nyttElementMedVerdisvar.apply(BARN_FØDSELSDATO, formatertFdato);
+        barneBolk.elementer.add(nyttElementMedVerdisvar.apply(BARN_NAVN, formatertNavn));
         barneBolk.elementer.add(innsendtBarn);
 
         return barneBolk;

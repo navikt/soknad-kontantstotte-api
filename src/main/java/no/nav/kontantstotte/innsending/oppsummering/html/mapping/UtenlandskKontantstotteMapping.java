@@ -50,6 +50,7 @@ public class UtenlandskKontantstotteMapping extends BolkMapping {
 
         AktørArbeidYtelseUtland søkerKontantstøtteUtland = MappingUtils.hentArbeidYtelseUtlandForSøker(søknad);
 
+
         if (Standpunkt.NEI.equals(søkerKontantstøtteUtland.getKontantstøtteIUtlandet())) {
             kontantstøtteIUtlandBolk.elementer.add(
                     Element.nyttSvar(

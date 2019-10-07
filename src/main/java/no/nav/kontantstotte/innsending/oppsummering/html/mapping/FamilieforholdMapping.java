@@ -43,7 +43,7 @@ public class FamilieforholdMapping extends BolkMapping {
         bolk.tittel = tekster.hentTekst(FAMILIEFORHOLD_TITTEL.getNokkel());
         bolk.elementer = new ArrayList<>();
 
-        if (søknad.getOppgittFamilieforhold().getBorBeggeForeldreSammen()) {
+        if (!søknad.getOppgittFamilieforhold().getBorBeggeForeldreSammen()) {
             bolk.elementer.add(nyttElementMedTekstsvar.apply(FAMILIEFORHOLD_BOR_SAMMEN, SVAR_NEI));
         } else {
             bolk.elementer.add(nyttElementMedTekstsvar.apply(FAMILIEFORHOLD_BOR_SAMMEN, SVAR_JA));
