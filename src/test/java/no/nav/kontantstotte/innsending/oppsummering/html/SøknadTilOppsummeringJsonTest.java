@@ -64,6 +64,19 @@ public class SøknadTilOppsummeringJsonTest {
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
     }
 
+    @Test
+    public void skal_mappe_riktig_for_utenlandsk_familie_med_bhgplass() throws IOException {
+        when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("NAVN").slektsnavn("NAVNESEN").statsborgerskap("NOR").build());
+
+        Søknad søknad = SøknadTestdata.utenlandskFamilieMedGradertBarnehageplass();
+        List<Bolk> bolker = Arrays.asList(mapper.readValue(new File(getFile("mapping/ny/utenlandskeForeldreMedBarnehageplass.json")), Bolk[].class));
+
+        SøknadOppsummering expected = new SøknadOppsummering(søknad, lagPerson(), "02.10.2019 - 12.17", bolker, tekster);
+        SøknadOppsummering actual = søknadTilOppsummering.map(søknad, FNR);
+
+        assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
+    }
+
     private String getFile(String filnavn) {
         return "src/test/resources/" + filnavn;
     }

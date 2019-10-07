@@ -1,0 +1,220 @@
+[
+  {
+    "bolknavn": null,
+    "tittel": "Kravene til elektronisk søknad",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": null,
+        "svar": "Jeg bor i Norge sammen med barnet",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": null,
+        "svar": "Barnet er ikke adoptert, i fosterhjem eller på institusjon",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": null,
+        "svar": "Jeg og den andre forelderen har ikke avtalt delt bosted for barnet det søkes kontantstøtte for",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": null,
+        "svar": "Jeg og barnet skal ikke oppholde oss i utlandet mer enn tre måneder de neste tolv månedene",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Barn",
+    "undertittel": "Barn du søker kontantstøtte for",
+    "elementer": [
+      {
+        "sporsmal": "Navn",
+        "svar": "Jakob Jakobsen",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Fødselsdato (dd.mm.åååå)",
+        "svar": "000000",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Tildelt barnehageplass",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Har barnet barnehageplass?",
+        "svar": "Ja",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Barnet mitt",
+        "svar": "skal begynne i barnehage",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Når skal barnet starte i barnehagen? (dd.mm.åååå)",
+        "svar": "2019-01-01",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Hvor mange timer i uken har barnet fått i barnehagen?",
+        "svar": "15.0",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Hvilken kommune ligger barnehagen i?",
+        "svar": "Oslo",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Familieforhold",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Bor du sammen med den andre forelderen?",
+        "svar": "Ja",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Navnet til den andre forelderen:",
+        "svar": "Navn2 Navnesen",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Fødselsnummeret til den andre forelderen:",
+        "svar": "00000000002",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Tilknytning til andre land",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Har du bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år til sammen?",
+        "svar": "Ja, i et EØS-land",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Oppgi land, utenlandsk ID-nummer, adresse i landene og perioder",
+        "svar": "Test 6",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Har den andre forelderen bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år til sammen?",
+        "svar": "Ja, i Norge",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Arbeid i utlandet",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Arbeider du i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?",
+        "svar": "Ja",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
+        "svar": "Test 1",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Arbeider den andre forelderen i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?",
+        "svar": "Ja",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
+        "svar": "Test 4",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Utenlandske ytelser",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Mottar du ytelser fra utlandet?",
+        "svar": "Ja",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
+        "svar": "Test 3",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Mottar den andre forelderen ytelser fra utlandet?",
+        "svar": "Ja",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Oppgi land, utenlandsk id-nummer, adresse i landene og perioder",
+        "svar": "Test 5",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Kontantstøtte fra utlandet",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Får du kontantstøtte fra andre land enn Norge?",
+        "svar": "Ja",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Oppgi land, beløp du får utbetalt og periode for utbetalingen",
+        "svar": "Test 2",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  }
+]
