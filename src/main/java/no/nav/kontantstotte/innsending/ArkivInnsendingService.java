@@ -7,7 +7,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.ZoneId;
 
+import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,9 +67,25 @@ public class ArkivInnsendingService implements InnsendingService {
                 soknad.innsendingsTidspunkt,
                 vedleggProvider.hentVedleggFor(soknad));
 
+        sendDtoTilArkiv(soknadArkivDto);
+        return soknad;
+    }
+
+    public Søknad sendinnSøknadPåNyttFormat(Søknad søknad) {
+        SoknadArkivDto soknadArkivDto = new SoknadArkivDto(
+                hentFnrFraToken(),
+                oppsummeringPdfGenerator.genererNy(søknad, hentFnrFraToken()),
+                søknad.getInnsendtTidspunkt().atZone(ZoneId.systemDefault()).toInstant(),
+                vedleggProvider.hentVedleggForNy(søknad));
+
+        sendDtoTilArkiv(soknadArkivDto);
+        return søknad;
+    }
+
+    private void sendDtoTilArkiv(SoknadArkivDto dto) {
         HttpResponse<String> response;
         try {
-            String body = mapper.writeValueAsString(soknadArkivDto);
+            String body = mapper.writeValueAsString(dto);
             HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
@@ -82,7 +100,6 @@ public class ArkivInnsendingService implements InnsendingService {
             LOG.info("Søknad sendt til proxy for innsending til arkiv");
 
             soknadSendtInnSendtProxy.increment();
-            return soknad;
         } catch (JsonProcessingException e) {
             throw new InnsendingException("Feiler under konvertering av innsending til json.");
         } catch (InterruptedException e) {
