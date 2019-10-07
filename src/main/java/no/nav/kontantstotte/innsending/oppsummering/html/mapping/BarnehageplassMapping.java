@@ -11,10 +11,7 @@ import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static no.nav.kontantstotte.innsending.oppsummering.html.mapping.Tekstnokkel.*;
@@ -136,7 +133,7 @@ public class BarnehageplassMapping extends BolkMapping {
                                 nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_DATO, barnehageplassVerdier.getBarnehageDato().toString()),
                                 nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_ANTALL_TIMER, barnehageplassVerdier.getBarnehageAntallTimer().toString()),
                                 nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_KOMMUNE, barnehageplassVerdier.getBarnehageKommune()),
-                                nyttElementMedListe.apply(HAR_SLUTTET_I_BARNEHAGE_VEDLEGG, barnehageplassVerdier.getBarnehageVedlegg().stream().map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
+                                nyttElementMedListe.apply(HAR_SLUTTET_I_BARNEHAGE_VEDLEGG, hentBarnehagevedlegg(søknad).stream().map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
                         )
                 );
                 break;
@@ -146,7 +143,7 @@ public class BarnehageplassMapping extends BolkMapping {
                                 nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_DATO, barnehageplassVerdier.getBarnehageDato().toString()),
                                 nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER, barnehageplassVerdier.getBarnehageAntallTimer().toString()),
                                 nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE, barnehageplassVerdier.getBarnehageKommune()),
-                                nyttElementMedListe.apply(SKAL_SLUTTE_I_BARNEHAGE_VEDLEGG, barnehageplassVerdier.getBarnehageVedlegg().stream().map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
+                                nyttElementMedListe.apply(SKAL_SLUTTE_I_BARNEHAGE_VEDLEGG, hentBarnehagevedlegg(søknad).stream().map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
                         )
                 );
                 break;
@@ -198,5 +195,13 @@ public class BarnehageplassMapping extends BolkMapping {
             default:
                 return null;
         }
+    }
+
+    private List<String> hentBarnehagevedlegg(Søknad søknad) {
+        return søknad.getOppgittFamilieforhold().getBarna().stream()
+                .filter(barn -> barn.getBarnehageVedlegg() != null)
+                .map(Barn::getBarnehageVedlegg)
+                .findAny()
+                .orElse(Collections.emptyList());
     }
 }
