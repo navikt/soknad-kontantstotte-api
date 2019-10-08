@@ -59,14 +59,14 @@ public class MottakInnsendingService implements InnsendingService {
 
 
     @Override
-    public Soknad sendInnSoknad(Soknad soknad) {
+    public Soknad sendInnSoknad(Soknad soknad, boolean journalforSelv) {
         LOG.info("Prøver å sende søknad til mottaket");
         try {
             HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
                     .uri(URI.create(mottakServiceUri + "soknadmedvedlegg"))
-                    .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDto(soknad))))
+                    .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDto(soknad, journalforSelv))))
                     .build();
 
             try {
@@ -83,10 +83,10 @@ public class MottakInnsendingService implements InnsendingService {
         return soknad;
     }
 
-    private SoknadDto byggDto(Soknad soknad) throws JsonProcessingException {
+    private SoknadDto byggDto(Soknad soknad, boolean journalforSelv) throws JsonProcessingException {
         VedleggDto hovedskjema = new VedleggDto(oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()), "Hovedskjema");
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggFor(soknad);
         vedlegg.add(hovedskjema);
-        return new SoknadDto(hentFnrFraToken(), mapper.writeValueAsString(soknad), vedlegg);
+        return new SoknadDto(hentFnrFraToken(), mapper.writeValueAsString(soknad), vedlegg, journalforSelv);
     }
 }

@@ -15,10 +15,15 @@ public class SoknadDto {
     @JsonProperty
     private final List<VedleggDto> vedlegg;
 
-    public SoknadDto(@JsonProperty("fnr") String fnr, @JsonProperty("soknad") String soknad, @JsonProperty("vedlegg") List<VedleggDto> vedlegg) {
+    @JsonProperty
+    private boolean journalforSelv;
+
+    public SoknadDto(@JsonProperty("fnr") String fnr, @JsonProperty("soknad") String soknad,
+                     @JsonProperty("vedlegg") List<VedleggDto> vedlegg, @JsonProperty("journalforSelv") boolean journalforSelv) {
         this.fnr = fnr;
         this.soknad = soknad;
         this.vedlegg = vedlegg;
+        this.journalforSelv = journalforSelv;
     }
 
     public String getFnr() {
@@ -31,5 +36,9 @@ public class SoknadDto {
 
     public List<VedleggDto> getVedlegg() {
         return this.vedlegg;
+    }
+
+    public boolean erJournalforSelv() {
+        return this.journalforSelv;
     }
 }

@@ -58,7 +58,7 @@ public class ArkivInnsendingService implements InnsendingService {
     }
 
     @Override
-    public Soknad sendInnSoknad(Soknad soknad) {
+    public Soknad sendInnSoknad(Soknad soknad, boolean journalforSelv) {
         SoknadArkivDto soknadArkivDto = new SoknadArkivDto(
                 hentFnrFraToken(),
                 oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()),
