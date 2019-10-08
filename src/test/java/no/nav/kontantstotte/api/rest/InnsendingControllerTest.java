@@ -8,7 +8,6 @@ import static no.nav.kontantstotte.api.rest.InnsendingController.JOURNALFOR_SELV
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
 
 
 import java.io.IOException;

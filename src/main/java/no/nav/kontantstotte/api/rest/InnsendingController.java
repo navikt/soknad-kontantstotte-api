@@ -3,7 +3,6 @@ package no.nav.kontantstotte.api.rest;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
-import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.ArkivInnsendingService;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
-//import static no.nav.kontantstotte.config.toggle.UnleashProvider;
 
 @RestController
 @RequestMapping("api/sendinn")
