@@ -44,7 +44,8 @@ class VedleggProvider {
         List<String> alleVedlegg = søknad.getOppgittFamilieforhold().getBarna().stream()
                 .filter(b -> b.getBarnehageVedlegg() != null)
                 .map(Barn::getBarnehageVedlegg)
-                .findAny().orElse(Collections.emptyList());
+                .findAny()
+                .orElse(Collections.emptyList());
 
         List<VedleggMetadata> alleVedleggMetadata = alleVedlegg.stream()
                 .map(vedlegg -> new VedleggMetadata(vedlegg, "Vedlegg: Barnehageplass"))

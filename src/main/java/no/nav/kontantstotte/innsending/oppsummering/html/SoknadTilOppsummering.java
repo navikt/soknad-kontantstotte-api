@@ -9,7 +9,6 @@ import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.tekst.TekstService;
 
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -19,14 +18,14 @@ import java.util.Map;
  * Klassen benyttes til generering av oppsummeringsinnhold.
  * mapBolker tar inn soeknadsobjektet og mapper til nytt
  * oppsummeringsobjekt som skal til htmlconverter og deretter til pdfconverter.
- * <p>
+ *
  * Maalet et er at SoknadOppsummering.java-objektet på sikt ikke skal inneholde soknad eller tekster,
  * men kun være bolker med spoersmal og svar og eventuell metadata tilknyttet oppsummeringen
- * <p>
+ *
  * Naar metoden nyBolk ikke er i bruk mer, kan vi slette soknadsobjektet fra SoknadOppsummering og deretter
  * gjoere en del endringer i soknad-html-generator for å slette gamle react-filer og deretter ta grep for aa
  * slette eventuelle gjenvaerende tekster som er i bruk.
- * <p>
+ *
  * Et steg i soknaden kan byttes ut med ny generering ved aa erstatte kallet til nyBolk med en ny mapper-klasse.
  * Husk aa endre i testene tilhoerende denne klassen og teste alle varianter i engen mapper
  */
@@ -68,7 +67,7 @@ class SoknadTilOppsummering {
 
         return new SøknadOppsummering(søknad,
                 person,
-                FORMATTER.format(søknad.getInnsendtTidspunkt().toInstant(ZoneOffset.UTC)),
+                FORMATTER.format(søknad.getInnsendtTidspunkt().atZone(ZoneId.systemDefault()).toInstant()),
                 mapBolkerNy(søknad, new Tekster(tekster)),
                 tekster);
     }

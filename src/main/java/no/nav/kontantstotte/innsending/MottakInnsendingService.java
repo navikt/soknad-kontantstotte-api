@@ -113,7 +113,6 @@ public class MottakInnsendingService implements InnsendingService {
     }
 
     private SoknadDto byggDtoMedKontrakt(Søknad søknad) throws JsonProcessingException {
-        // TODO map til hovedskjema-pdf
         VedleggDto hovedskjema = new VedleggDto(oppsummeringPdfGenerator.genererNy(søknad, hentFnrFraToken()), "Hovedskjema");
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggForNy(søknad);
         vedlegg.add(hovedskjema);

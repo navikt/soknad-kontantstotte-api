@@ -45,7 +45,7 @@ public class SøknadTilOppsummeringJsonTest {
         Søknad søknad = SøknadTestdata.norskFamilieUtenAnnenPartOgUtenBarnehageplass();
         List<Bolk> bolker = Arrays.asList(mapper.readValue(new File(getFile("mapping/ny/utenAnnenPartUtenBarnehageplass.json")), Bolk[].class));
 
-        SøknadOppsummering expected = new SøknadOppsummering(søknad, lagPerson(), "02.10.2019 - 12.17", bolker, tekster);
+        SøknadOppsummering expected = new SøknadOppsummering(søknad, lagPerson(), "02.10.2019 - 10.17", bolker, tekster);
         SøknadOppsummering actual = søknadTilOppsummering.map(søknad, FNR);
 
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
@@ -58,7 +58,7 @@ public class SøknadTilOppsummeringJsonTest {
         Søknad søknad = SøknadTestdata.norskFamilieUtenBarnehageplassFlerlinger();
         List<Bolk> bolker = Arrays.asList(mapper.readValue(new File(getFile("mapping/ny/flerlingerUtenBarnehageplass.json")), Bolk[].class));
 
-        SøknadOppsummering expected = new SøknadOppsummering(søknad, lagPerson(), "02.10.2019 - 12.17", bolker, tekster);
+        SøknadOppsummering expected = new SøknadOppsummering(søknad, lagPerson(), "02.10.2019 - 10.17", bolker, tekster);
         SøknadOppsummering actual = søknadTilOppsummering.map(søknad, FNR);
 
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
@@ -71,7 +71,7 @@ public class SøknadTilOppsummeringJsonTest {
         Søknad søknad = SøknadTestdata.utenlandskFamilieMedGradertBarnehageplass();
         List<Bolk> bolker = Arrays.asList(mapper.readValue(new File(getFile("mapping/ny/utenlandskeForeldreMedBarnehageplass.json")), Bolk[].class));
 
-        SøknadOppsummering expected = new SøknadOppsummering(søknad, lagPerson(), "02.10.2019 - 12.17", bolker, tekster);
+        SøknadOppsummering expected = new SøknadOppsummering(søknad, lagPerson(), "02.10.2019 - 10.17", bolker, tekster);
         SøknadOppsummering actual = søknadTilOppsummering.map(søknad, FNR);
 
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);

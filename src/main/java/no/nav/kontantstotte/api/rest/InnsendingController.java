@@ -57,6 +57,7 @@ public class InnsendingController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/medkontrakt")
     public ResponseEntity<InnsendingsResponsDto> sendInnSoknadMedKontrakt(@RequestBody String jsonSøknad) {
         Søknad søknad = SøknadKt.toSøknad(jsonSøknad);
+        arkivInnsendingService.sendinnSøknadPåNyttFormat(søknad);
         mottakInnsendingService.sendInnSøknadPåNyttFormat(søknad);
         soknadSendtInn.increment();
 
