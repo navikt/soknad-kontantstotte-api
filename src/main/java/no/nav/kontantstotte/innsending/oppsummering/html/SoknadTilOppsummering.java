@@ -67,7 +67,7 @@ class SoknadTilOppsummering {
 
         return new SøknadOppsummering(søknad,
                 person,
-                FORMATTER.format(søknad.getInnsendtTidspunkt().atZone(ZoneId.systemDefault()).toInstant()),
+                FORMATTER.format(søknad.getInnsendtTidspunkt()),
                 mapBolkerNy(søknad, new Tekster(tekster)),
                 tekster);
     }
