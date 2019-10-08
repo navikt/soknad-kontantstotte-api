@@ -38,7 +38,7 @@ class HtmlConverter {
         this.url = htmlGeneratorUrl;
     }
 
-    public byte[] genererHtml(SoknadOppsummering oppsummering) {
+    public <T> byte[] genererHtml(T oppsummering) {
 
         HttpResponse<byte[]> response;
         try {
