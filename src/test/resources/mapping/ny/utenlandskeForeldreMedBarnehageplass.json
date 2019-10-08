@@ -62,12 +62,12 @@
       },
       {
         "sporsmal": "Barnet mitt",
-        "svar": "skal begynne i barnehage",
+        "svar": "skal slutte i barnehage",
         "advarsel": null,
         "underelementer": null
       },
       {
-        "sporsmal": "Når skal barnet starte i barnehagen? (dd.mm.åååå)",
+        "sporsmal": "Når skal barnet slutte i barnehagen? (dd.mm.åååå)",
         "svar": "2019-01-01",
         "advarsel": null,
         "underelementer": null
@@ -81,6 +81,12 @@
       {
         "sporsmal": "Hvilken kommune ligger barnehagen i?",
         "svar": "Oslo",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Bekreftelse på at barnehageplassen er sagt opp",
+        "svar": ["Vedlegg: Barnehageplass"],
         "advarsel": null,
         "underelementer": null
       }
