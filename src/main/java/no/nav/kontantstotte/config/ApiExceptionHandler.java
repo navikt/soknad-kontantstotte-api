@@ -19,29 +19,26 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger secureLogger = LoggerFactory.getLogger("secureLogger");
     private final Logger logger = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
-    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler({FortroligAdresseException.class})
-    public ResponseEntity<String> handleFortroligAdresseException(FortroligAdresseException e) {
+    public ResponseEntity<String> handleFortroligAdresseException() {
         return forbidden(HttpStatus.FORBIDDEN);
     }
 
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({OIDCUnauthorizedException.class, HttpClientErrorException.Unauthorized.class})
-    public ResponseEntity<String> handleUnauthorizedException(FortroligAdresseException e) {
+    public ResponseEntity<String> handleUnauthorizedException() {
         logger.warn("Kan ikke behandle pga. bruker ikke logget inn.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Du er ikke logget inn");
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<String> handleRunTimeException(Exception e) {
+    public ResponseEntity<String> handleException(Exception e) {
         return error(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
 
 
     private ResponseEntity<String> error(HttpStatus status, Exception e) {
-        secureLogger.error("Runtime feil : ", e);
-        logger.error("Runtime feil: ", ExceptionUtils.getStackTrace(e));
+        secureLogger.error("Exception : ", e);
+        logger.error("Exception : ", ExceptionUtils.getStackTrace(e));
         return ResponseEntity.status(status).body("Feilen er logget vi ser på problemet!");
     }
 
