@@ -67,14 +67,9 @@ public class ArkivInnsendingService implements InnsendingService {
                 soknad.innsendingsTidspunkt,
                 vedleggProvider.hentVedleggFor(soknad));
 
-        sendDtoTilArkiv(soknadArkivDto);
-        return soknad;
-    }
-
-    private void sendDtoTilArkiv(SoknadArkivDto dto) {
         HttpResponse<String> response;
         try {
-            String body = mapper.writeValueAsString(dto);
+            String body = mapper.writeValueAsString(soknadArkivDto);
             HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
@@ -89,6 +84,7 @@ public class ArkivInnsendingService implements InnsendingService {
             LOG.info("Søknad sendt til proxy for innsending til arkiv");
 
             soknadSendtInnSendtProxy.increment();
+            return soknad;
         } catch (JsonProcessingException e) {
             throw new InnsendingException("Feiler under konvertering av innsending til json.");
         } catch (InterruptedException e) {
