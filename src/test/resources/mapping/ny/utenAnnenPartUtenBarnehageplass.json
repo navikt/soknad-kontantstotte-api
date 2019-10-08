@@ -1,0 +1,136 @@
+[
+  {
+    "bolknavn": null,
+    "tittel": "Kravene til elektronisk søknad",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": null,
+        "svar": "Jeg bor i Norge sammen med barnet",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": null,
+        "svar": "Barnet er ikke adoptert, i fosterhjem eller på institusjon",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": null,
+        "svar": "Jeg og den andre forelderen har ikke avtalt delt bosted for barnet det søkes kontantstøtte for",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": null,
+        "svar": "Jeg og barnet skal ikke oppholde oss i utlandet mer enn tre måneder de neste tolv månedene",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Barn",
+    "undertittel": "Barn du søker kontantstøtte for",
+    "elementer": [
+      {
+        "sporsmal": "Navn",
+        "svar": "Jakob Jakobsen",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Fødselsdato (dd.mm.åååå)",
+        "svar": "000000",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Tildelt barnehageplass",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Har barnet barnehageplass?",
+        "svar": "Nei",
+        "advarsel": null,
+        "underelementer": null
+      },
+      {
+        "sporsmal": "Barnet mitt",
+        "svar": "går ikke i barnehage",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Familieforhold",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Bor du sammen med den andre forelderen?",
+        "svar": "Nei",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Tilknytning til andre land",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Har du bodd eller vært yrkesaktiv i Norge eller andre EØS-land i minst fem år til sammen?",
+        "svar": "Ja, i Norge",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Arbeid i utlandet",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Arbeider du i utlandet, på utenlandsk skip eller på utenlandsk kontinentalsokkel?",
+        "svar": "Nei",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Utenlandske ytelser",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Mottar du ytelser fra utlandet?",
+        "svar": "Nei",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  },
+  {
+    "bolknavn": null,
+    "tittel": "Kontantstøtte fra utlandet",
+    "undertittel": null,
+    "elementer": [
+      {
+        "sporsmal": "Får du kontantstøtte fra andre land enn Norge?",
+        "svar": "Nei",
+        "advarsel": null,
+        "underelementer": null
+      }
+    ]
+  }
+]

@@ -59,7 +59,7 @@ public class ArkivInnsendingService implements InnsendingService {
 
     @Override
     public Soknad sendInnSoknad(Soknad soknad) {
-        SoknadDto soknadDto = new SoknadDto(
+        SoknadArkivDto soknadArkivDto = new SoknadArkivDto(
                 hentFnrFraToken(),
                 oppsummeringPdfGenerator.generer(soknad, hentFnrFraToken()),
                 soknad.innsendingsTidspunkt,
@@ -67,7 +67,7 @@ public class ArkivInnsendingService implements InnsendingService {
 
         HttpResponse<String> response;
         try {
-            String body = mapper.writeValueAsString(soknadDto);
+            String body = mapper.writeValueAsString(soknadArkivDto);
             HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteProxyApiKeyUsername, kontantstotteProxyApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)

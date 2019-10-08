@@ -16,6 +16,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import no.nav.familie.ks.kontrakter.søknad.Søknad;
+import no.nav.familie.ks.kontrakter.søknad.SøknadKt;
+import no.nav.familie.ks.kontrakter.søknad.testdata.SøknadTestdata;
 import no.nav.kontantstotte.innsending.ArkivInnsendingService;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
 import org.eclipse.jetty.http.HttpHeader;
@@ -31,7 +34,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jwt.SignedJWT;
 
@@ -88,7 +90,17 @@ public class InnsendingControllerTest {
     }
 
     @Test
-    public void at_soknad_markeres_med_innsendingstidspunkt() throws JsonProcessingException {
+    public void at_innsending_av_ny_søknad_er_ok() {
+        Søknad testSøknad = SøknadTestdata.enForelderIUtlandUtenBarnehageplass();
+        when(mottakInnsendingService.sendInnSøknadPåNyttFormat(any(Søknad.class))).thenReturn(testSøknad);
+
+        HttpResponse<String> response = utførRequestPåNyttEndepunkt(testSøknad);
+
+        assertThat(response.statusCode()).isEqualTo(OK.getStatusCode());
+    }
+
+    @Test
+    public void at_soknad_markeres_med_innsendingstidspunkt() {
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
         soknadMedBekreftelse.veiledning.bekreftelse = "JA";
@@ -111,7 +123,7 @@ public class InnsendingControllerTest {
     }
 
     @Test
-    public void at_innsending_av_soknad_er_gir_400_ved_manglende_bekreftelse() throws JsonProcessingException {
+    public void at_innsending_av_soknad_er_gir_400_ved_manglende_bekreftelse() {
 
         HttpResponse<String> response = utførRequest(new Soknad());
 
@@ -131,6 +143,24 @@ public class InnsendingControllerTest {
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(soknad)))
+                    .build();
+
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private HttpResponse<String> utførRequestPåNyttEndepunkt(Søknad søknad) {
+        HttpClient client = HttpClientUtil.create();
+
+        SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
+
+        try {
+            HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/api/sendinn/medkontrakt"))
+                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
+                    .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
+                    .POST(HttpRequest.BodyPublishers.ofString(SøknadKt.toJson(søknad)))
                     .build();
 
             return client.send(request, HttpResponse.BodyHandlers.ofString());
