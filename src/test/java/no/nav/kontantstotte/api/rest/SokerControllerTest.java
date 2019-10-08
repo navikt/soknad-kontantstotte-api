@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.api.rest;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.config.ApplicationConfig;
@@ -25,6 +26,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,6 +63,13 @@ public class SokerControllerTest {
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
         SokerDto soker = response.readEntity(SokerDto.class);
         assertThat(soker.getInnloggetSom()).isEqualTo(INNLOGGET_BRUKER);
+    }
+
+    @Test
+    public void at_tps_serialiseringsfeil_gir_500() {
+        when(innsynServiceMock.hentPersonInfo(any())).thenAnswer(invocation -> { throw JsonMappingException.fromUnexpectedIOE(new IOException()); });
+        Response response = kallEndepunkt();
+        assertThat(response.getStatus()).isEqualTo(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
     }
 
     @Test
