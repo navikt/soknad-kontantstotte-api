@@ -59,12 +59,13 @@ public class MottakInnsendingService implements InnsendingService {
         this.client = HttpClientUtil.create();
     }
 
-    public Søknad sendInnSøknadPåNyttFormat(Søknad søknad) {
+    public Søknad sendInnSøknadPåNyttFormat(Søknad søknad, boolean journalførSelv) {
         LOG.info("Prøver å sende søknad til mottaket");
         try {
             HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
+                    .header("journalførSelv", Boolean.toString(journalførSelv))
                     .uri(URI.create(mottakServiceUri + "soknadmedvedlegg"))
                     .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDtoMedKontrakt(søknad))))
                     .build();
@@ -95,6 +96,7 @@ public class MottakInnsendingService implements InnsendingService {
             HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
+                    .header("journalførSelv", "false")
                     .uri(URI.create(mottakServiceUri + "soknadmedvedlegg"))
                     .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDto(soknad))))
                     .build();

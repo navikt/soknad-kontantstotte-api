@@ -4,11 +4,11 @@ import static java.time.Instant.now;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.OK;
+import static no.nav.kontantstotte.api.rest.InnsendingController.JOURNALFØR_SELV;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,9 +16,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import no.finn.unleash.FakeUnleash;
 import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.familie.ks.kontrakter.søknad.SøknadKt;
 import no.nav.familie.ks.kontrakter.søknad.testdata.SøknadTestdata;
+import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.ArkivInnsendingService;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
 import org.eclipse.jetty.http.HttpHeader;
@@ -71,6 +73,8 @@ public class InnsendingControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private FakeUnleash unleash = new FakeUnleash();
+
     @Test
     public void at_innsending_av_soknad_er_ok_med_bekreftelse() {
         Soknad soknadMedBekreftelse = new Soknad();
@@ -92,7 +96,7 @@ public class InnsendingControllerTest {
     @Test
     public void at_innsending_av_ny_søknad_er_ok() {
         Søknad testSøknad = SøknadTestdata.enForelderIUtlandUtenBarnehageplass();
-        when(mottakInnsendingService.sendInnSøknadPåNyttFormat(any(Søknad.class))).thenReturn(testSøknad);
+        when(mottakInnsendingService.sendInnSøknadPåNyttFormat(any(Søknad.class), anyBoolean())).thenReturn(testSøknad);
 
         HttpResponse<String> response = utførRequestPåNyttEndepunkt(testSøknad);
 
@@ -131,6 +135,45 @@ public class InnsendingControllerTest {
 
         verifyNoMoreInteractions(arkivInnsendingService);
         verifyNoMoreInteractions(mottakInnsendingService);
+    }
+
+    @Test
+    public void at_vi_fremdeles_journalfører_via_proxy() {
+        UnleashProvider.initialize(unleash);
+        unleash.disable(JOURNALFØR_SELV);
+
+        Soknad soknadMedBekreftelse = new Soknad();
+        soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+        soknadMedBekreftelse.veiledning.bekreftelse = "JA";
+
+        when(arkivInnsendingService.sendInnSoknad(any(Soknad.class)))
+                .thenReturn(soknadMedBekreftelse);
+
+        utførRequest(soknadMedBekreftelse);
+
+        verify(arkivInnsendingService).sendInnSoknad(any(Soknad.class));
+    }
+
+    @Test
+    public void at_vi_journalfører_selv() {
+        Soknad soknadMedBekreftelse = new Soknad();
+        soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+        soknadMedBekreftelse.veiledning.bekreftelse = "JA";
+        Søknad testSøknad = SøknadTestdata.enForelderIUtlandUtenBarnehageplass();
+
+        when(arkivInnsendingService.sendInnSoknad(any(Soknad.class)))
+                .thenReturn(soknadMedBekreftelse);
+        when(mottakInnsendingService.sendInnSøknadPåNyttFormat(any(Søknad.class), anyBoolean()))
+                .thenReturn(testSøknad);
+
+        UnleashProvider.initialize(unleash);
+        unleash.enable(JOURNALFØR_SELV);
+
+        utførRequest(soknadMedBekreftelse);
+        utførRequestPåNyttEndepunkt(testSøknad);
+
+        verifyZeroInteractions(arkivInnsendingService);
+        verify(mottakInnsendingService).sendInnSøknadPåNyttFormat(any(Søknad.class), anyBoolean());
     }
 
     private HttpResponse<String> utførRequest(Soknad soknad) {

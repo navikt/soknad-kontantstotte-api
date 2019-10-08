@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 @RestController
@@ -31,6 +32,7 @@ public class InnsendingController {
     private final Logger logger = LoggerFactory.getLogger(InnsendingController.class);
     private final Counter soknadSendtInn = Metrics.counter("soknad.kontantstotte", "innsending", "mottatt");
     private final Counter soknadSendtInnUgyldig = Metrics.counter("soknad.kontantstotte", "innsending", "ugyldig");
+    public static final String JOURNALFØR_SELV = "kontantstotte.journalfor_selv";
 
 
     public InnsendingController(ArkivInnsendingService arkivInnsendingService, MottakInnsendingService mottakInnsendingService) {
@@ -48,15 +50,17 @@ public class InnsendingController {
         soknad.markerInnsendingsTidspunkt();
         final var fnr = hentFnrFraToken();
         soknad.setPerson(new Person(fnr, null, null));
-        arkivInnsendingService.sendInnSoknad(soknad);
 
+        if (toggle(JOURNALFØR_SELV).isDisabled()) {
+            arkivInnsendingService.sendInnSoknad(soknad);
+        }
         return ResponseEntity.ok(new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString()));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/medkontrakt")
     public ResponseEntity<InnsendingsResponsDto> sendInnSoknadMedKontrakt(@RequestBody String jsonSøknad) {
         Søknad søknad = SøknadKt.toSøknad(jsonSøknad);
-        mottakInnsendingService.sendInnSøknadPåNyttFormat(søknad);
+        mottakInnsendingService.sendInnSøknadPåNyttFormat(søknad, toggle(JOURNALFØR_SELV).isEnabled());
         soknadSendtInn.increment();
 
         return ResponseEntity.ok(new InnsendingsResponsDto(søknad.getInnsendtTidspunkt().toString()));
