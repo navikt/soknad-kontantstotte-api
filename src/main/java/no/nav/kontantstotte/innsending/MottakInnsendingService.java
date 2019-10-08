@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.familie.ks.kontrakter.søknad.Søknad;
+import no.nav.familie.ks.kontrakter.søknad.SøknadKt;
 import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
@@ -112,10 +113,10 @@ public class MottakInnsendingService implements InnsendingService {
         return new SoknadDto(hentFnrFraToken(), mapper.writeValueAsString(soknad), vedlegg);
     }
 
-    private SoknadDto byggDtoMedKontrakt(Søknad søknad) throws JsonProcessingException {
+    private SoknadDto byggDtoMedKontrakt(Søknad søknad) {
         VedleggDto hovedskjema = new VedleggDto(oppsummeringPdfGenerator.genererNy(søknad, hentFnrFraToken()), "Hovedskjema");
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggForNy(søknad);
         vedlegg.add(hovedskjema);
-        return new SoknadDto(hentFnrFraToken(), mapper.writeValueAsString(søknad), vedlegg);
+        return new SoknadDto(hentFnrFraToken(), SøknadKt.toJson(søknad), vedlegg);
     }
 }
