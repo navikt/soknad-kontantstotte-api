@@ -34,6 +34,8 @@ public class InnsendingController {
     private final Counter soknadSendtInnUgyldig = Metrics.counter("soknad.kontantstotte", "innsending", "ugyldig");
     public static final String JOURNALFØR_SELV = "kontantstotte.journalfor_selv";
 
+    private static final Logger log = LoggerFactory.getLogger(InnsendingController.class);
+
 
     public InnsendingController(ArkivInnsendingService arkivInnsendingService, MottakInnsendingService mottakInnsendingService) {
         this.arkivInnsendingService = arkivInnsendingService;
@@ -51,6 +53,7 @@ public class InnsendingController {
         final var fnr = hentFnrFraToken();
         soknad.setPerson(new Person(fnr, null, null));
 
+        log.info("Journalfør selv er satt til: {}", toggle(JOURNALFØR_SELV).isEnabled());
         if (toggle(JOURNALFØR_SELV).isDisabled()) {
             arkivInnsendingService.sendInnSoknad(soknad);
         }

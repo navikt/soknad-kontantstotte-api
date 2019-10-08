@@ -65,7 +65,7 @@ public class MottakInnsendingService implements InnsendingService {
             HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
-                    .header("journalførSelv", Boolean.toString(journalførSelv))
+                    .header("journalforSelv", Boolean.toString(journalførSelv))
                     .uri(URI.create(mottakServiceUri + "soknadmedvedlegg"))
                     .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDtoMedKontrakt(søknad))))
                     .build();
@@ -96,7 +96,7 @@ public class MottakInnsendingService implements InnsendingService {
             HttpRequest mottakRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
-                    .header("journalførSelv", "false")
+                    .header("journalforSelv", "false")
                     .uri(URI.create(mottakServiceUri + "soknadmedvedlegg"))
                     .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDto(soknad))))
                     .build();
