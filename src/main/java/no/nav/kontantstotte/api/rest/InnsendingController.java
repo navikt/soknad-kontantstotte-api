@@ -49,7 +49,6 @@ public class InnsendingController {
         final var fnr = hentFnrFraToken();
         soknad.setPerson(new Person(fnr, null, null));
         arkivInnsendingService.sendInnSoknad(soknad);
-        soknadSendtInn.increment();
 
         return ResponseEntity.ok(new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString()));
     }
