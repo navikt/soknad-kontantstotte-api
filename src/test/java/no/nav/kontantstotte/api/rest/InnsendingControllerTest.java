@@ -92,8 +92,6 @@ public class InnsendingControllerTest {
     @Test
     public void at_innsending_av_ny_søknad_er_ok() {
         Søknad testSøknad = SøknadTestdata.enForelderIUtlandUtenBarnehageplass();
-
-        when(arkivInnsendingService.sendinnSøknadPåNyttFormat(any(Søknad.class))).thenReturn(testSøknad);
         when(mottakInnsendingService.sendInnSøknadPåNyttFormat(any(Søknad.class))).thenReturn(testSøknad);
 
         HttpResponse<String> response = utførRequestPåNyttEndepunkt(testSøknad);

@@ -71,17 +71,6 @@ public class ArkivInnsendingService implements InnsendingService {
         return soknad;
     }
 
-    public Søknad sendinnSøknadPåNyttFormat(Søknad søknad) {
-        SoknadArkivDto soknadArkivDto = new SoknadArkivDto(
-                hentFnrFraToken(),
-                oppsummeringPdfGenerator.genererNy(søknad, hentFnrFraToken()),
-                søknad.getInnsendtTidspunkt().atZone(ZoneId.systemDefault()).toInstant(),
-                vedleggProvider.hentVedleggForNy(søknad));
-
-        sendDtoTilArkiv(soknadArkivDto);
-        return søknad;
-    }
-
     private void sendDtoTilArkiv(SoknadArkivDto dto) {
         HttpResponse<String> response;
         try {
