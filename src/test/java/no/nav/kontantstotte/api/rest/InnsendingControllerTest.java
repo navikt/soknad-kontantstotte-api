@@ -23,6 +23,7 @@ import no.nav.familie.ks.kontrakter.søknad.testdata.SøknadTestdata;
 import no.nav.kontantstotte.config.toggle.UnleashProvider;
 import no.nav.kontantstotte.innsending.ArkivInnsendingService;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
+import no.nav.kontantstotte.innsending.SamletInnsendingDto;
 import org.eclipse.jetty.http.HttpHeader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -80,6 +81,7 @@ public class InnsendingControllerTest {
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
         soknadMedBekreftelse.veiledning.bekreftelse = "JA";
+        Søknad testSøknad = SøknadTestdata.norskFamilieUtenBarnehageplass();
 
         when(arkivInnsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenReturn(soknadMedBekreftelse);
@@ -87,7 +89,7 @@ public class InnsendingControllerTest {
                 .thenReturn(soknadMedBekreftelse);
 
 
-        HttpResponse<String> response = utførRequest(soknadMedBekreftelse);
+        HttpResponse<String> response = utførRequest(new SamletInnsendingDto(soknadMedBekreftelse, testSøknad));
 
         assertThat(response.statusCode()).isEqualTo(OK.getStatusCode());
 
@@ -95,10 +97,14 @@ public class InnsendingControllerTest {
 
     @Test
     public void at_innsending_av_ny_søknad_er_ok() {
+        Soknad soknadMedBekreftelse = new Soknad();
+        soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
+        soknadMedBekreftelse.veiledning.bekreftelse = "JA";
+
         Søknad testSøknad = SøknadTestdata.enForelderIUtlandUtenBarnehageplass();
         when(mottakInnsendingService.sendInnSøknadPåNyttFormat(any(Søknad.class), anyBoolean())).thenReturn(testSøknad);
 
-        HttpResponse<String> response = utførRequestPåNyttEndepunkt(testSøknad);
+        HttpResponse<String> response = utførRequest(new SamletInnsendingDto(soknadMedBekreftelse, testSøknad));
 
         assertThat(response.statusCode()).isEqualTo(OK.getStatusCode());
     }
@@ -108,6 +114,7 @@ public class InnsendingControllerTest {
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
         soknadMedBekreftelse.veiledning.bekreftelse = "JA";
+        Søknad testSøknad = SøknadTestdata.norskFamilieUtenBarnehageplass();
 
 
         when(arkivInnsendingService.sendInnSoknad(any(Soknad.class)))
@@ -115,21 +122,19 @@ public class InnsendingControllerTest {
         when(mottakInnsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenReturn(soknadMedBekreftelse);
 
-        utførRequest(soknadMedBekreftelse);
+        utførRequest(new SamletInnsendingDto(soknadMedBekreftelse, testSøknad));
 
         ArgumentCaptor<Soknad> captor = ArgumentCaptor.forClass(Soknad.class);
         verify(arkivInnsendingService).sendInnSoknad(captor.capture());
 
         assertThat(captor.getValue().innsendingsTidspunkt).isBefore(now());
         assertThat(captor.getValue().innsendingsTidspunkt).isAfter(now().minus(5, MINUTES));
-
-
     }
 
     @Test
     public void at_innsending_av_soknad_er_gir_400_ved_manglende_bekreftelse() {
 
-        HttpResponse<String> response = utførRequest(new Soknad());
+        HttpResponse<String> response = utførRequest(new SamletInnsendingDto(new Soknad(), SøknadTestdata.norskFamilieUtenBarnehageplass()));
 
         assertThat(response.statusCode()).isEqualTo(BAD_REQUEST.getStatusCode());
 
@@ -145,11 +150,12 @@ public class InnsendingControllerTest {
         Soknad soknadMedBekreftelse = new Soknad();
         soknadMedBekreftelse.oppsummering.bekreftelse = "JA";
         soknadMedBekreftelse.veiledning.bekreftelse = "JA";
+        Søknad testSøknad = SøknadTestdata.norskFamilieUtenBarnehageplass();
 
         when(arkivInnsendingService.sendInnSoknad(any(Soknad.class)))
                 .thenReturn(soknadMedBekreftelse);
 
-        utførRequest(soknadMedBekreftelse);
+        utførRequest(new SamletInnsendingDto(soknadMedBekreftelse, testSøknad));
 
         verify(arkivInnsendingService).sendInnSoknad(any(Soknad.class));
     }
@@ -169,14 +175,13 @@ public class InnsendingControllerTest {
         UnleashProvider.initialize(unleash);
         unleash.enable(JOURNALFØR_SELV);
 
-        utførRequest(soknadMedBekreftelse);
-        utførRequestPåNyttEndepunkt(testSøknad);
+        utførRequest(new SamletInnsendingDto(soknadMedBekreftelse, testSøknad));
 
         verifyZeroInteractions(arkivInnsendingService);
         verify(mottakInnsendingService).sendInnSøknadPåNyttFormat(any(Søknad.class), anyBoolean());
     }
 
-    private HttpResponse<String> utførRequest(Soknad soknad) {
+    private HttpResponse<String> utførRequest(SamletInnsendingDto samletInnsendingDto) {
         HttpClient client = HttpClientUtil.create();
 
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
@@ -185,7 +190,7 @@ public class InnsendingControllerTest {
             HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/api/sendinn"))
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
                     .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(soknad)))
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(samletInnsendingDto)))
                     .build();
 
             return client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -193,23 +198,4 @@ public class InnsendingControllerTest {
             throw new IllegalStateException(e);
         }
     }
-
-    private HttpResponse<String> utførRequestPåNyttEndepunkt(Søknad søknad) {
-        HttpClient client = HttpClientUtil.create();
-
-        SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
-
-        try {
-            HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/api/sendinn/medkontrakt"))
-                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
-                    .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
-                    .POST(HttpRequest.BodyPublishers.ofString(SøknadKt.toJson(søknad)))
-                    .build();
-
-            return client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
 }
