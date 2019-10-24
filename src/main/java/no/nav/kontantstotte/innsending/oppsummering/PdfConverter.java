@@ -1,11 +1,10 @@
 package no.nav.kontantstotte.innsending.oppsummering;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import no.nav.kontantstotte.client.HttpClientUtil;
+import no.nav.kontantstotte.client.TokenHelper;
+import no.nav.kontantstotte.innsending.InnsendingException;
+import no.nav.security.oidc.context.OIDCRequestContextHolder;
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import no.nav.kontantstotte.client.HttpClientUtil;
-import no.nav.kontantstotte.client.TokenHelper;
-import no.nav.kontantstotte.innsending.InnsendingException;
-import no.nav.security.oidc.context.OIDCRequestContextHolder;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 @Component
 class PdfConverter {
@@ -40,7 +38,7 @@ class PdfConverter {
     byte[] genererPdf(byte[] bytes) {
         try {
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE)
+                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
                     .uri(URI.create(pdfSvgSupportGeneratorUrl + "v1/genpdf/html/kontantstotte"))
                     .POST(HttpRequest.BodyPublishers.ofByteArray(bytes))
                     .build();
