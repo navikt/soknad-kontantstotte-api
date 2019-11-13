@@ -32,6 +32,7 @@ public class MottakInnsendingService implements InnsendingService {
     private static final Logger LOG = LoggerFactory.getLogger(MottakInnsendingService.class);
 
     private final Counter soknadSendtInnTilMottak = Metrics.counter("soknad.kontantstotte", "innsending", "sendtmottak");
+    private final Counter søknadMedVedlegg = Metrics.counter("soknad.kontantstotte.vedlegg");
     private final String kontantstotteMottakApiKeyUsername;
     private final String kontantstotteMottakApiKeyPassword;
     private final OppsummeringPdfGenerator oppsummeringPdfGenerator;
@@ -118,6 +119,9 @@ public class MottakInnsendingService implements InnsendingService {
     private SoknadDto byggDtoMedKontrakt(Søknad søknad) {
         VedleggDto hovedskjema = new VedleggDto(oppsummeringPdfGenerator.genererNy(søknad, hentFnrFraToken()), "Hovedskjema");
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggForNy(søknad);
+        if (!vedlegg.isEmpty()) {
+            søknadMedVedlegg.increment();
+        }
         vedlegg.add(hovedskjema);
         return new SoknadDto(hentFnrFraToken(), SøknadKt.toJson(søknad), vedlegg);
     }
