@@ -90,12 +90,16 @@ public class S3Storage implements Storage {
             S3Object object = s3.getObject(VEDLEGG_BUCKET, filename);
             S3GetResponstid.record(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
             log.debug("Loading file with size {}", object.getObjectMetadata().getContentLength());
-            return object.getObjectContent();
+            InputStream vedlegg = object.getObjectContent();
+            log.debug("Henter opp vedlegg: {}", vedlegg.readAllBytes());
+            return vedlegg;
         } catch (SdkClientException e) {
             feilMotS3Get.increment();
             throw new StorageException("Unable to retrieve " + filename + ", it probably doesn't exist", e);
+        } catch (IOException e) {
+            log.debug("Klarte ikke lese bytes fra vedlegg");
+            throw new StorageException("Klarte ikke hente vedlegg", e);
         }
-
     }
 
     private String fileName(String directory, String key) {
