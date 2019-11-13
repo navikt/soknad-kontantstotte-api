@@ -45,8 +45,8 @@ public class S3StorageConfiguration {
 
     @Bean
     public AWSCredentialsProvider credentialsProvider(
-            @Value("${SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME}") String accessKey,
-            @Value("${SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_PASSWORD}") String secretKey) {
+            @Value("${SOKNAD_KONTANTSTOTTE_API_S3_ACCESSKEY}") String accessKey,
+            @Value("${SOKNAD_KONTANTSTOTTE_API_S3_SECRETKEY}") String secretKey) {
 
         AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
 
