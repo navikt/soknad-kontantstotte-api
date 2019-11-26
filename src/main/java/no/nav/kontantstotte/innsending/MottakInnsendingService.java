@@ -14,6 +14,7 @@ import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +33,7 @@ public class MottakInnsendingService implements InnsendingService {
     private static final Logger LOG = LoggerFactory.getLogger(MottakInnsendingService.class);
 
     private final Counter soknadSendtInnTilMottak = Metrics.counter("soknad.kontantstotte", "innsending", "sendtmottak");
+    private final Counter soknadSendtInnTilMottakFeilet = Metrics.counter("soknad.kontantstotte", "innsending", "sendtmottakFailure");
     private final Counter søknadMedVedlegg = Metrics.counter("soknad.kontantstotte.vedlegg");
     private final String kontantstotteMottakApiKeyUsername;
     private final String kontantstotteMottakApiKeyPassword;
@@ -81,6 +83,11 @@ public class MottakInnsendingService implements InnsendingService {
     private void sendRequest(HttpRequest mottakRequest) {
         try {
             HttpResponse<String> mottakresponse = client.send(mottakRequest, HttpResponse.BodyHandlers.ofString());
+
+            if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(mottakresponse.statusCode()))) {
+                soknadSendtInnTilMottakFeilet.increment();
+                throw new InnsendingException("Response fra mottak: " + mottakresponse.statusCode() + ". Response.entity: " + mottakresponse.body());
+            }
 
             soknadSendtInnTilMottak.increment();
             LOG.info("Søknad sendt til mottaket. Response status: {}, respons: {}", mottakresponse.statusCode(), mottakresponse.body());
