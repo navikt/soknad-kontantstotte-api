@@ -42,7 +42,6 @@ http.proxy:
 
 logging:
   level:
-    no.nav.security: DEBUG
     no.finn.unleash: ERROR
     org.eclipse.jetty: INFO
     org.springframework: INFO
