@@ -1,0 +1,53 @@
+no.nav.security.oidc:
+  issuers: selvbetjening
+  issuer.selvbetjening:
+    discoveryurl: http://familie-oidc-test:8080/metadata
+    accepted_audience: aud-localhost
+    cookie_name: localhost-idtoken
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+UNLEASH_API_URL: http://localhost
+NAIS_APP_NAME: soknad-kontantstotte-api
+
+SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://localhost:8082/api/
+SOKNAD_HTML_GENERATOR_URL: http://localhost:9000/api/
+
+SOKNAD_KONTANTSTOTTE_S3_ENDPOINT: http://localstack:4572
+
+TPS-PROXY_API_V1_INNSYN_URL: http://dummyTps/api/
+
+SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME: anything
+SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_PASSWORD: anything
+SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_USERNAME: anything
+SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_PASSWORD: anything
+SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME: anything
+SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD: anything
+
+SOKNAD_KONTANTSTOTTE_API_S3_ACCESSKEY: anything
+SOKNAD_KONTANTSTOTTE_API_S3_SECRETKEY: anything
+
+SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_PASSWORD: anything
+
+SOKNAD_KONTANTSTOTTE_PROXY_API_URL: "http://localhost:8081/api/"
+FAMILIE_KS_MOTTAK_API_URL: "http://familie-ks-mottak:8084/api/"
+SOKNAD_PDF_GENERATOR_URL: "http://localhost:8082/api/"
+STS_URL: "http://security-token-service"
+CREDENTIAL_USERNAME: "srv-soknad-kontantstotte-api"
+CREDENTIAL_PASSWORD: "skal-ikke-sjekkes-inn"
+
+http.proxy:
+
+logging:
+  level:
+    no.nav.security: DEBUG
+    no.finn.unleash: ERROR
+    org.eclipse.jetty: INFO
+    org.springframework: INFO
+    org.glassfish.jersey: INFO
+    org.glassfish.jersey.logging.LoggingFeature: DEBUG
+    com.fasterxml: WARN
+  config: classpath:logback-spring.xml
+
