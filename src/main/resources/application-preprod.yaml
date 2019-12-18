@@ -10,18 +10,18 @@ APPDYNAMICS_AGENT_ACCOUNT_NAME: NON-PROD
 APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY: ${APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY} #Ligger i vault
 
 # Enonic
-APPRES_CMS_URL: https://appres-q0.nav.no
+APPRES_CMS_URL: https://appres-q2.nav.no
 
 # Loadbalancer/ingress
 LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api-q.nav.no
 
 # Api-gw/tjenester i FSS
-SOKNAD_KONTANTSTOTTE_PROXY_API_URL: https://api-gw-q0.oera.no/soknad-kontantstotte-proxy/api/
-FAMILIE_KS_MOTTAK_API_URL: https://api-gw-q0.oera.no/familie-ks-mottak/api/
-TPS-PROXY_API_V1_INNSYN_URL: https://api-gw-q0.oera.no/tps-proxy/api/v1/innsyn/
+SOKNAD_KONTANTSTOTTE_PROXY_API_URL: https://api-gw-q2.oera.no/soknad-kontantstotte-proxy/api/
+FAMILIE_KS_MOTTAK_API_URL: https://api-gw-q2.oera.no/familie-ks-mottak/api/
+TPS-PROXY_API_V1_INNSYN_URL: https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
 
 # S3
 SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME} #Ligger i vault
 
 # Annet
-ENVIRONMENT_NAME: q0
+ENVIRONMENT_NAME: q2
