@@ -18,8 +18,6 @@ import no.nav.kontantstotte.storage.s3.TestStorageConfiguration;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
 import no.nav.security.spring.oidc.api.EnableOIDCTokenValidation;
 
-import static no.nav.kontantstotte.api.rest.InnsendingController.JOURNALFØR_SELV;
-
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 @Import({ApplicationConfig.class, OppsummeringTestConfiguration.class, InnsynTestConfiguration.class, TestStorageConfiguration.class, TokenGeneratorConfiguration.class})
 @EnableOIDCTokenValidation(ignore = "org.springframework")
@@ -35,7 +33,6 @@ public class TestLauncher {
     @Bean
     Unleash fakeUnleash() {
         FakeUnleash unleash = new FakeUnleash();
-        unleash.disable(JOURNALFØR_SELV);
         return unleash;
     }
 
