@@ -1,6 +1,8 @@
 package no.nav.kontantstotte.innsending;
 
+import no.nav.familie.ks.kontrakter.søknad.Søknad;
+
 public interface InnsendingService {
 
-Soknad sendInnSoknad(Soknad soknad);
+    Søknad sendInnSøknad(Søknad søknad);
 }

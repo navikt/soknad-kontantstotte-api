@@ -9,7 +9,6 @@ import io.micrometer.core.instrument.Metrics;
 import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.familie.ks.kontrakter.søknad.SøknadKt;
 import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
-import no.nav.kontantstotte.innsending.ArkivInnsendingService;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.steg.Person;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-import static no.nav.kontantstotte.config.toggle.UnleashProvider.toggle;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 @RestController
@@ -34,20 +32,14 @@ import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class InnsendingController {
 
-    private final ArkivInnsendingService arkivInnsendingService;
     private final MottakInnsendingService mottakInnsendingService;
     private final ObjectMapper objectMapper;
     private final Logger logger = LoggerFactory.getLogger(InnsendingController.class);
     private final Counter soknadSendtInn = Metrics.counter("soknad.kontantstotte", "innsending", "mottatt");
     private final Counter soknadSendtInnUgyldig = Metrics.counter("soknad.kontantstotte", "innsending", "ugyldig");
-    public static final String JOURNALFØR_SELV = "kontantstotte.journalfor_selv";
-
-    private static final Logger log = LoggerFactory.getLogger(InnsendingController.class);
-
 
     @Autowired
-    public InnsendingController(ArkivInnsendingService arkivInnsendingService, MottakInnsendingService mottakInnsendingService, ObjectMapper objectMapper) {
-        this.arkivInnsendingService = arkivInnsendingService;
+    public InnsendingController(MottakInnsendingService mottakInnsendingService, ObjectMapper objectMapper) {
         this.mottakInnsendingService = mottakInnsendingService;
         this.objectMapper = objectMapper;
     }
@@ -55,7 +47,7 @@ public class InnsendingController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InnsendingsResponsDto> sendInn(@RequestBody String samletMottakDto) {
         Soknad soknad;
-        Søknad søknad;
+        Søknad kontraktSøknad;
 
         JsonFactory factory = objectMapper.getFactory();
         JsonParser parser;
@@ -63,28 +55,23 @@ public class InnsendingController {
             parser = factory.createParser(samletMottakDto);
             JsonNode actualObj = objectMapper.readTree(parser);
             soknad = objectMapper.treeToValue(actualObj.get("soknad"), Soknad.class);
-            søknad = SøknadKt.toSøknad(actualObj.get("kontraktSøknad").toString());
+            kontraktSøknad = SøknadKt.toSøknad(actualObj.get("kontraktSøknad").toString());
         } catch (IOException e) {
-            e.printStackTrace();
             logger.error("Klarte ikke å deserializere søknader. Noen har potensielt forsøkt å sende inn en ugyldig søknad.");
             return ResponseEntity.badRequest().build();
         }
 
-        if (soknad == null || !soknad.erGyldig()) {
+        if (soknad == null || !soknad.erGyldig()) { //TODO denne logikken bør inn i kontraktSøknad
             logger.info("Noen har forsøkt å sende inn en ugyldig søknad.");
             soknadSendtInnUgyldig.increment();
             return ResponseEntity.badRequest().build();
         }
+
         soknad.markerInnsendingsTidspunkt();
         final var fnr = hentFnrFraToken();
         soknad.setPerson(new Person(fnr, null, null));
 
-        log.info("Journalfør selv er satt til: {}", toggle(JOURNALFØR_SELV).isEnabled());
-        if (toggle(JOURNALFØR_SELV).isDisabled()) {
-            arkivInnsendingService.sendInnSoknad(soknad);
-        }
-
-        mottakInnsendingService.sendInnSøknadPåNyttFormat(søknad, toggle(JOURNALFØR_SELV).isEnabled());
+        mottakInnsendingService.sendInnSøknad(kontraktSøknad);
         soknadSendtInn.increment();
 
         return ResponseEntity.ok(new InnsendingsResponsDto(soknad.innsendingsTidspunkt.toString()));
