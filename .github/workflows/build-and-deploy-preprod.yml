@@ -1,0 +1,14 @@
+name: Build-Deploy-Preprod
+on:
+  push:
+    branches:
+      - '*'
+      - '*/*'
+env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-sak:${{ github.sha }}
+jobs:
+  deploy-to-dev:
+    name: Bygg app/image, push til github, deploy til dev-fss
+    runs-on: ubuntu-latest
+      steps:
+          - uses: actions/checkout@v2
