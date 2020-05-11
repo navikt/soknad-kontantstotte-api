@@ -1,0 +1,51 @@
+name: Build, push, and deploy
+
+on: [push]
+
+env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/soknad-kontantstotte-api:${{ github.sha }}
+
+jobs:
+  build:
+    name: Bygg app/image, push til github, deploy til dev-fss
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Bygg med maven
+        run: mvn -B --no-transfer-progress package
+      - name: Build and push Docker container
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          docker build --tag ${IMAGE} .
+          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+          docker push ${IMAGE}
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy til dev-sbs
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-sbs
+          RESOURCE: app-preprod.yaml
+      - name: Deploy til prod-sbs
+        if: github.ref == 'refs/heads/master'
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-sbs
+          RESOURCE: app-prod.yaml
