@@ -232,7 +232,7 @@
   "tekster": {
     "advarsel.barnehageplass.timerIBarnehage": "Du får ikke kontantstøtte hvis barnet har barnehageplass med mer enn 33 timer i uken. Det betyr at du ikke trenger å sende inn denne søknaden.",
     "advarsel.barnehageplass.timerIBarnehage.flertall": "Du får ikke kontantstøtte hvis barna har barnehageplass med mer enn 33 timer i uken. Det betyr at du ikke trenger å sende inn denne søknaden.",
-    "advarsel.flerebarn.medlink": "<span>Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller <a href='https://www.nav.no/no/Person/Skjemaer-for-privatpersoner/skjemaveileder/vedlegg?key=235029&veiledertype=privatperson&method=mail' target='_blank'>søke på papir</a>.</span>",
+    "advarsel.flerebarn.medlink": "<span>Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller <a href='https://www.nav.no/soknader/nb/person/familie/kontantstotte/NAV%2034-00.08/brev' target='_blank'>søke på papir</a>.</span>",
     "advarsel.flerebarn.utenlink": "Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller søke på papir.",
     "app.avbryt": "Avbryt",
     "app.avbrytmodal.avbryt": "Ja",
@@ -365,7 +365,7 @@
     "startside.krav.ikkeAvtaltDeltBosted": "Jeg og den andre forelderen har ikke avtalt delt bosted for barnet det søkes kontantstøtte for",
     "startside.krav.skalBoMedBarnetINorgeNesteTolvMaaneder": "Jeg og barnet skal ikke oppholde oss i utlandet mer enn tre måneder de neste tolv månedene",
     "startside.krav.sporsmal": "Oppfyller du kravene under?",
-    "startside.krav.veileder": "<span>For å søke elektronisk må du bekrefte at du oppfyller alle kravene under. Oppfyller du ikke disse må du <a href='https://www.nav.no/no/Person/Skjemaer-for-privatpersoner/skjemaveileder/vedlegg?key=235029&veiledertype=privatperson&method=mail' target='_blank'>søke på papir</a>.</span>",
+    "startside.krav.veileder": "<span>For å søke elektronisk må du bekrefte at du oppfyller alle kravene under. Oppfyller du ikke disse må du <a href='https://www.nav.no/soknader/nb/person/familie/kontantstotte/NAV%2034-00.08/brev' target='_blank'>søke på papir</a>.</span>",
     "svar.ja": "Ja",
     "svar.jaHarSluttet": "Ja, men har nylig sluttet",
     "svar.nei": "Nei",
