@@ -24,7 +24,7 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <unleash.version>3.3.3</unleash.version>
         <jackson.version>2.11.0</jackson.version>
-        <aws-java-sdk-s3>1.11.770</aws-java-sdk-s3>
+        <aws-java-sdk-s3>1.11.797</aws-java-sdk-s3>
         <felles.version>1.0_20190819103533_69f5183</felles.version>
         <kontrakt.version>1.0_20191007205813_e19cc21</kontrakt.version>
         <junit-jupiter.version>RELEASE</junit-jupiter.version>
@@ -187,7 +187,7 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
-            <version>1.5.0</version>
+            <version>1.6.1</version>
         </dependency>
 
         <!-- storage -->
@@ -219,14 +219,14 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>localstack</artifactId>
-            <version>1.13.0</version>
+            <version>1.14.3</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter -->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>1.14.1</version>
+            <version>1.14.3</version>
             <scope>test</scope>
         </dependency>
 
