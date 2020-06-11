@@ -78,10 +78,7 @@ public class BarnehageplassMappingTest {
     @Test
     public void skal_ha_rett_tittel_og_undertittel() {
         Bolk bolk = barnehageplassMapping.map(soknad);
-        assertThat(bolk)
-                .extracting("tittel")
-                .containsExactly(TITTEL);
-
+        assertThat(bolk.tittel).isEqualTo(TITTEL);
     }
 
     @Test
