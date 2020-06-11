@@ -26,7 +26,7 @@
         <jackson.version>2.11.0</jackson.version>
         <aws-java-sdk-s3>1.11.797</aws-java-sdk-s3>
         <felles.version>1.0_20190819103533_69f5183</felles.version>
-        <kontrakt.version>1.0_20191007205813_e19cc21</kontrakt.version>
+        <kontrakt.version>1.0_20191206133028_c678bc4</kontrakt.version>
         <junit-jupiter.version>RELEASE</junit-jupiter.version>
     </properties>
 
