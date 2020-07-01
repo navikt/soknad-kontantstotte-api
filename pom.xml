@@ -24,7 +24,7 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <unleash.version>3.3.3</unleash.version>
         <jackson.version>2.11.0</jackson.version>
-        <aws-java-sdk-s3>1.11.797</aws-java-sdk-s3>
+        <aws-java-sdk-s3>1.11.798</aws-java-sdk-s3>
         <felles.version>1.0_20191025210220_fdb266d</felles.version>
         <kontrakt.version>1.0_20191007205813_e19cc21</kontrakt.version>
         <junit-jupiter.version>RELEASE</junit-jupiter.version>
