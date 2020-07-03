@@ -11,9 +11,11 @@ import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Timer;
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.StorageException;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,7 +47,18 @@ public class S3Storage implements Storage {
 
     @Override
     public void put(String directory, String key, InputStream data) {
-        PutObjectRequest request = new PutObjectRequest(VEDLEGG_BUCKET, fileName(directory, key), data, new ObjectMetadata());
+        byte[] bytes;
+        try {
+            bytes = IOUtils.toByteArray(data);
+            log.debug("Bufret stream som gav antall bytes: " + bytes.length);
+        } catch (IOException e) {
+            throw new RuntimeException("Feil oppsto ved bufring av stream.", e);
+        }
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(bytes.length);
+        InputStream stream = new ByteArrayInputStream(bytes);
+
+        PutObjectRequest request = new PutObjectRequest(VEDLEGG_BUCKET, fileName(directory, key), stream, objectMetadata);
         request.getRequestClientOptions().setReadLimit(maxFileSizeAfterEncryption);
 
         try {
