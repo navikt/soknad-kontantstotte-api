@@ -42,7 +42,7 @@ SOKNAD_KONTANTSTOTTE_API_S3_REGION: us-east-1
 #SOKNAD_KONTANTSTOTTE_API_S3_ACCESSKEY: <Ligger i vault>
 #SOKNAD_KONTANTSTOTTE_API_S3_SECRETKEY: <Ligger i vault>
 #SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_USERNAME: <Ligger i vault>
-attachment.max.size.mb: 20
+attachment.max.size.mb: 10
 
 #Unleash
 UNLEASH_API_URL: https://unleashproxy.nais.oera.no/api/
