@@ -24,13 +24,13 @@ public final class HttpClientUtil {
     public static HttpRequest.Builder createRequest(String authorizationHeader) {
         return HttpRequest.newBuilder()
                 .header(HttpHeaders.AUTHORIZATION, authorizationHeader)
-                .header(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDCConstants.MDC_CALL_ID))
+                .header(NavHttpHeaders.NAV_CALL_ID.asString(), MDC.get(MDCConstants.MDC_CALL_ID))
                 .timeout(Duration.ofMinutes(2));
     }
 
     public static HttpRequest.Builder createRequest() {
         return HttpRequest.newBuilder()
-                .header(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDCConstants.MDC_CALL_ID))
+                .header(NavHttpHeaders.NAV_CALL_ID.asString(), MDC.get(MDCConstants.MDC_CALL_ID))
                 .timeout(Duration.ofMinutes(2));
     }
 }

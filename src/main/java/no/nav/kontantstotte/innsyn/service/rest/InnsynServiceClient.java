@@ -186,7 +186,7 @@ class InnsynServiceClient implements InnsynService {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .header(HttpHeader.AUTHORIZATION.asString(), TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                .header(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDCConstants.MDC_CALL_ID))
+                .header(NavHttpHeaders.NAV_CALL_ID.asString(), MDC.get(MDCConstants.MDC_CALL_ID))
                 .header(NavHttpHeaders.NAV_CONSUMER_ID.asString(), CONSUMER_ID)
                 .header(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword)
                 .header(NavHttpHeaders.NAV_PERSONIDENT.asString(), fnr)
