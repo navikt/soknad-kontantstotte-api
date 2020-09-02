@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import no.nav.familie.http.client.NavHttpHeaders;
+import no.nav.familie.log.NavHttpHeaders;
 import no.nav.familie.log.mdc.MDCConstants;
 import no.nav.kontantstotte.logging.TjenesteLogger;
 import org.eclipse.jetty.http.HttpHeader;

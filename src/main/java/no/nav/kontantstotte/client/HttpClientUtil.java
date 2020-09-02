@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.client;
 
-import no.nav.familie.http.client.NavHttpHeaders;
+import no.nav.familie.log.NavHttpHeaders;
 import no.nav.familie.log.mdc.MDCConstants;
 import org.slf4j.MDC;
 import org.springframework.http.HttpHeaders;
