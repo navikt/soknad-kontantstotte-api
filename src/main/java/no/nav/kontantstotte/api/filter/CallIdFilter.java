@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 
 import no.nav.familie.log.mdc.MDCConstants;
@@ -30,11 +26,19 @@ public class CallIdFilter implements Filter {
     }
 
     @Override
+    public void init(FilterConfig filterConfig) {
+    }
+
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String callid = request.getHeader("Nav-Call-Id");
         MDC.put(MDCConstants.MDC_CALL_ID, Objects.requireNonNullElseGet(callid, CallIdFilter::generateCallId));
 
         filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    @Override
+    public void destroy() {
     }
 }

@@ -94,6 +94,12 @@
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>http-client</artifactId>
             <version>${felles.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>no.nav.familie.ks</groupId>
@@ -187,7 +193,7 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
-            <version>1.6.1</version>
+            <version>1.6.2</version>
         </dependency>
 
         <!-- storage -->
@@ -249,6 +255,13 @@
 
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/navikt/familie-felles</url>
+        </repository>
+    </repositories>
 
 </project>
 
