@@ -21,6 +21,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Bygg med maven
+        env:
+          GITHUB_USERNAME: x-access-token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B --no-transfer-progress package
       - name: Build and push Docker container
         env:

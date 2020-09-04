@@ -39,6 +39,7 @@ class ImageConversionService {
 
     byte[] convert(byte[] bytes, Format detectedType) {
         try {
+            log.info("Konverterer vedlegg på {} KB til PDF", bytes.length/1000);
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), detectedType.mimeType)
                     .uri(URI.create(imageToPdfEndpointBaseUrl + "v1/genpdf/image/kontantstotte"))
