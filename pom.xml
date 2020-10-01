@@ -25,7 +25,7 @@
         <unleash.version>3.3.3</unleash.version>
         <jackson.version>2.11.2</jackson.version>
         <aws-java-sdk-s3>1.11.854</aws-java-sdk-s3>
-        <felles.version>1.20200828135055_74d787e</felles.version>
+        <felles.version>1.20200929050046_80e7cb1</felles.version>
         <kontrakt.version>1.0_20191007205813_e19cc21</kontrakt.version>
         <junit-jupiter.version>RELEASE</junit-jupiter.version>
     </properties>
