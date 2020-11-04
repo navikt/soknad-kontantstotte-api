@@ -11,6 +11,7 @@ import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,6 +25,8 @@ public class BarnehageplassMapping extends BolkMapping {
     public BarnehageplassMapping(Tekster tekster) {
         super(tekster);
     }
+
+    private static final DateTimeFormatter DATO_PATTERN_SOKNAD = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @Override
     public Bolk map(Soknad soknad) {
@@ -131,7 +134,7 @@ public class BarnehageplassMapping extends BolkMapping {
             case harSluttetIBarnehage:
                 barnehageplassBolk.elementer.addAll(
                         Arrays.asList(
-                                nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_DATO, barn.getBarnehageDato().toString()),
+                                nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_DATO, barn.getBarnehageDato().format(DATO_PATTERN_SOKNAD)),
                                 nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_ANTALL_TIMER, barn.getBarnehageAntallTimer().toString()),
                                 nyttElementMedVerdisvar.apply(HAR_SLUTTET_I_BARNEHAGE_KOMMUNE, barn.getBarnehageKommune()),
                                 nyttElementMedListe.apply(HAR_SLUTTET_I_BARNEHAGE_VEDLEGG, hentBarnehagevedlegg(søknad).map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
@@ -141,7 +144,7 @@ public class BarnehageplassMapping extends BolkMapping {
             case skalSlutteIBarnehage:
                 barnehageplassBolk.elementer.addAll(
                         Arrays.asList(
-                                nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_DATO, barn.getBarnehageDato().toString()),
+                                nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_DATO, barn.getBarnehageDato().format(DATO_PATTERN_SOKNAD)),
                                 nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_ANTALL_TIMER, barn.getBarnehageAntallTimer().toString()),
                                 nyttElementMedVerdisvar.apply(SKAL_SLUTTE_I_BARNEHAGE_KOMMUNE, barn.getBarnehageKommune()),
                                 nyttElementMedListe.apply(SKAL_SLUTTE_I_BARNEHAGE_VEDLEGG, hentBarnehagevedlegg(søknad).map(v -> "Vedlegg: Barnehageplass").collect(Collectors.toList()))
@@ -160,7 +163,7 @@ public class BarnehageplassMapping extends BolkMapping {
 
                 barnehageplassBolk.elementer.addAll(
                         Arrays.asList(
-                                nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_DATO, barn.getBarnehageDato().toString()),
+                                nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_DATO, barn.getBarnehageDato().format(DATO_PATTERN_SOKNAD)),
                                 harBarnehageplassAntallTimer,
                                 nyttElementMedVerdisvar.apply(HAR_BARNEHAGEPLASS_KOMMUNE, barn.getBarnehageKommune())
                         )
@@ -170,7 +173,7 @@ public class BarnehageplassMapping extends BolkMapping {
             case skalBegynneIBarnehage:
                 barnehageplassBolk.elementer.addAll(
                         Arrays.asList(
-                                nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_DATO, barn.getBarnehageDato().toString()),
+                                nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_DATO, barn.getBarnehageDato().format(DATO_PATTERN_SOKNAD)),
                                 nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_ANTALL_TIMER, barn.getBarnehageAntallTimer().toString()),
                                 nyttElementMedVerdisvar.apply(SKAL_BEGYNNE_I_BARNEHAGE_KOMMUNE, barn.getBarnehageKommune())
                         )
