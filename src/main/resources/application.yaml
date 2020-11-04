@@ -9,8 +9,8 @@ spring:
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
-    discoveryurl: https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten
-    acceptedaudience: ${ACCEPTEDAUDIENCE}
+    discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
+    acceptedaudience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
     cookie_name: selvbetjening-idtoken
 
 management:
