@@ -45,7 +45,7 @@ SOKNAD_KONTANTSTOTTE_API_S3_REGION: us-east-1
 attachment.max.size.mb: 10
 
 #Unleash
-UNLEASH_API_URL: https://unleashproxy.nais.oera.no/api/
+UNLEASH_API_URL: https://unleash.nais.io/api/
 
 # Appdynamics
 APPDYNAMICS_AGENT_ACCOUNT_NAME: PROD
