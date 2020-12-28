@@ -24,7 +24,7 @@
         <unleash.version>3.3.3</unleash.version>
         <aws-java-sdk-s3>1.11.924</aws-java-sdk-s3>
         <felles.version>1.20201123131335_671787f</felles.version>
-        <kontrakt.version>1.0_20191007205813_e19cc21</kontrakt.version>
+        <kontrakt.version>1.0_20191023100512_7e7ee97</kontrakt.version>
     </properties>
 
     <build>
