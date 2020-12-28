@@ -21,13 +21,10 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>11</java.version>
         <oidc-support.version>0.2.18</oidc-support.version>
-        <commons-lang3.version>3.7</commons-lang3.version>
         <unleash.version>3.3.3</unleash.version>
-        <jackson.version>2.11.3</jackson.version>
         <aws-java-sdk-s3>1.11.924</aws-java-sdk-s3>
         <felles.version>1.20201123131335_671787f</felles.version>
         <kontrakt.version>1.0_20191007205813_e19cc21</kontrakt.version>
-        <junit-jupiter.version>RELEASE</junit-jupiter.version>
     </properties>
 
     <build>
@@ -185,12 +182,6 @@
             <groupId>no.finn.unleash</groupId>
             <artifactId>unleash-client-java</artifactId>
             <version>${unleash.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
 
         <!-- Swagger annotations in generated code by swagger code-gen -->
