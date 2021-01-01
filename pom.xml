@@ -22,7 +22,7 @@
         <java.version>11</java.version>
         <oidc-support.version>0.2.18</oidc-support.version>
         <unleash.version>3.3.3</unleash.version>
-        <aws-java-sdk-s3>1.11.924</aws-java-sdk-s3>
+        <aws-java-sdk-s3>1.11.930</aws-java-sdk-s3>
         <felles.version>1.20201123131335_671787f</felles.version>
         <kontrakt.version>1.0_20191007205813_e19cc21</kontrakt.version>
     </properties>
