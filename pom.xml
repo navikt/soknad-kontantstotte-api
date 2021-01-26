@@ -21,8 +21,8 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>11</java.version>
         <oidc-support.version>0.2.18</oidc-support.version>
-        <unleash.version>3.3.3</unleash.version>
-        <aws-java-sdk-s3>1.11.924</aws-java-sdk-s3>
+        <unleash.version>3.3.4</unleash.version>
+        <aws-java-sdk-s3>1.11.942</aws-java-sdk-s3>
         <felles.version>1.20201123131335_671787f</felles.version>
         <kontrakt.version>1.0_20191023100512_7e7ee97</kontrakt.version>
     </properties>
@@ -38,7 +38,7 @@
             <plugin>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>2.4.17</version>
+                <version>2.4.18</version>
                 <executions>
                     <execution>
                         <goals>
@@ -163,7 +163,7 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>6.5</version>
+            <version>6.6</version>
         </dependency>
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
