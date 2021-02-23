@@ -17,7 +17,7 @@ LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api-q.nav.no
 
 # Api-gw/tjenester i FSS
 FAMILIE_KS_MOTTAK_API_URL: https://api-gw-q0.oera.no/familie-ks-mottak/api/
-TPS-PROXY_API_V1_INNSYN_URL: https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
+TPS-PROXY_API_V1_INNSYN_URL: https://api-gw-q0.oera.no/tps-proxy/api/v1/innsyn/
 
 # S3
 SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME} #Ligger i vault
