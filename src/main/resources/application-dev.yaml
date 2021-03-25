@@ -44,3 +44,5 @@ logging:
     com.fasterxml: WARN
   config: classpath:logback-spring-test.xml
 
+# familie-dokument i dev-GCP
+FAMILIE_DOKUMENT_API_URL: "https://familie-dokument.dev.nav.no/familie/dokument/api"

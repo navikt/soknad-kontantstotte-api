@@ -1,5 +1,7 @@
 package no.nav.kontantstotte.config;
 
+import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor;
+import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor;
 import no.nav.familie.log.filter.LogFilter;
 import no.nav.kontantstotte.api.filter.SecurityHttpHeaderFilter;
 import no.nav.kontantstotte.config.toggle.FeatureToggleConfig;
@@ -8,22 +10,31 @@ import no.nav.kontantstotte.innsyn.service.rest.InnsynRestConfiguration;
 import no.nav.kontantstotte.storage.attachment.AttachmentConfiguration;
 import no.nav.kontantstotte.storage.encryption.EncryptedStorageConfiguration;
 import no.nav.security.spring.oidc.MultiIssuerProperties;
+import no.nav.security.token.support.core.context.TokenValidationContextHolder;
+import no.nav.security.token.support.spring.SpringTokenValidationContextHolder;
+import no.nav.security.token.support.spring.validation.interceptor.BearerTokenClientHttpRequestInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.client.RestOperations;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.ServletContext;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 @SpringBootConfiguration
-@Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class, EncryptedStorageConfiguration.class, AttachmentConfiguration.class})
+@Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class, EncryptedStorageConfiguration.class, AttachmentConfiguration.class,
+         MdcValuesPropagatingClientInterceptor.class,
+         ConsumerIdClientInterceptor.class})
 @ComponentScan({"no.nav.kontantstotte"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 public class ApplicationConfig {
@@ -62,4 +73,26 @@ public class ApplicationConfig {
         return new FilterRegistrationBean<>(new SecurityHttpHeaderFilter());
     }
 
+    @Bean
+    public TokenValidationContextHolder tokenValidationRequestContextHolder() {
+        return new SpringTokenValidationContextHolder();
+    }
+
+    @Bean
+    public BearerTokenClientHttpRequestInterceptor bearerTokenClientHttpRequestInterceptor(TokenValidationContextHolder tokenValidationContextHolder) {
+        return new BearerTokenClientHttpRequestInterceptor(tokenValidationContextHolder);
+    }
+
+    @Bean("restKlientBearerToken")
+    public RestOperations restTemplate(BearerTokenClientHttpRequestInterceptor bearerTokenClientHttpRequestInterceptor,
+                                       MdcValuesPropagatingClientInterceptor mdcValuesPropagatingClientInterceptor,
+                                       ConsumerIdClientInterceptor consumerIdClientInterceptor){
+        return new RestTemplateBuilder()
+                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
+                .interceptors(bearerTokenClientHttpRequestInterceptor,
+                              mdcValuesPropagatingClientInterceptor,
+                              consumerIdClientInterceptor)
+                .build();
+    }
 }
