@@ -50,6 +50,7 @@ public class DokumentService {
             log.info("Save attachment to familie-dokument");
             return familieDokumentClient.lagreVedlegg(multipartFile);
         }catch(Throwable e){
+            log.error(e.getMessage());
             log.warn("Feil med å lagre vedlegg til familie-dokument");
             Map<String, String> savedDokument = saveToStorage(multipartFile);
             return savedDokument.get("vedleggsId");
@@ -88,6 +89,7 @@ public class DokumentService {
                 return dokument;
             }
         } catch (Throwable e) {
+            log.error(e.getMessage());
             log.warn("Feil med hent av vedlegg fra familie-dokument");
         }
         String directory = hentFnrFraToken();
