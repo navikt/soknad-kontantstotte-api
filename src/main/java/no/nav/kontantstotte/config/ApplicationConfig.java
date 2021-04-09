@@ -24,6 +24,7 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
@@ -78,6 +79,7 @@ public class ApplicationConfig {
         return new SpringTokenValidationContextHolder();
     }
 
+    @Profile("dev")
     @Bean
     public BearerTokenClientHttpRequestInterceptor bearerTokenClientHttpRequestInterceptor(TokenValidationContextHolder tokenValidationContextHolder) {
         return new BearerTokenClientHttpRequestInterceptor(tokenValidationContextHolder);
