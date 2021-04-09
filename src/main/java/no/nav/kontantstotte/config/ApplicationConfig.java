@@ -15,6 +15,7 @@ import no.nav.security.token.support.spring.SpringTokenValidationContextHolder;
 import no.nav.security.token.support.spring.validation.interceptor.BearerTokenClientHttpRequestInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -79,14 +80,13 @@ public class ApplicationConfig {
         return new SpringTokenValidationContextHolder();
     }
 
-    @Profile("dev")
-    @Bean
+    @Bean("bearerTokenInterceptor")
     public BearerTokenClientHttpRequestInterceptor bearerTokenClientHttpRequestInterceptor(TokenValidationContextHolder tokenValidationContextHolder) {
         return new BearerTokenClientHttpRequestInterceptor(tokenValidationContextHolder);
     }
 
     @Bean("restKlientBearerToken")
-    public RestOperations restTemplate(BearerTokenClientHttpRequestInterceptor bearerTokenClientHttpRequestInterceptor,
+    public RestOperations restTemplate(@Qualifier("bearerTokenInterceptor") BearerTokenClientHttpRequestInterceptor bearerTokenClientHttpRequestInterceptor,
                                        MdcValuesPropagatingClientInterceptor mdcValuesPropagatingClientInterceptor,
                                        ConsumerIdClientInterceptor consumerIdClientInterceptor){
         return new RestTemplateBuilder()
