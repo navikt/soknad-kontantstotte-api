@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import no.nav.kontantstotte.dokument.DokumentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import no.nav.security.oidc.api.ProtectedWithClaims;
 @RequestMapping("api/vedlegg")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class StorageController {
+    private Logger logger = LoggerFactory.getLogger(StorageController.class);
 
     private DokumentService dokumentService;
 
@@ -30,7 +33,10 @@ public class StorageController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addAttachment(@RequestParam("file") MultipartFile multipartFile) throws IOException {
 
+        logger.info("Save attachment");
+
         if (multipartFile.isEmpty()) {
+            logger.info("Attachment is empty");
             return Map.of();
         }
 
@@ -41,6 +47,7 @@ public class StorageController {
 
     @GetMapping(path = "{vedleggsId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public byte[] getAttachment(@PathVariable("vedleggsId") String vedleggsId) {
+        logger.info("Get attachment", vedleggsId);
         return dokumentService.hentDokument(vedleggsId);
     }
 }

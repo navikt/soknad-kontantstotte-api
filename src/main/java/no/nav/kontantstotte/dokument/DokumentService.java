@@ -37,14 +37,17 @@ public class DokumentService {
     }
 
     public String lagreDokument(MultipartFile multipartFile) throws IOException {
+        log.info("lagreDokument");
         byte[] bytes = multipartFile.getBytes();
-        log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
+        log.info("Vedlegg med lastet opp med størrelse: " + bytes.length);
 
         if (bytes.length > this.maxFileSize) {
+            log.info("bytes length exceeds allowed");
             throw new IllegalArgumentException(HttpStatus.PAYLOAD_TOO_LARGE.toString());
         }
 
         try {
+            log.info("Save attachment to familie-dokument");
             return familieDokumentClient.lagreVedlegg(multipartFile);
         }catch(Throwable e){
             log.warn("Feil med å lagre vedlegg til familie-dokument");
@@ -79,6 +82,7 @@ public class DokumentService {
 
     public byte[] hentDokument(String key) {
         try {
+            log.info("get attachment by familie-dokument");
             byte[] dokument = familieDokumentClient.hentVedlegg(key);
             if (dokument != null) {
                 return dokument;

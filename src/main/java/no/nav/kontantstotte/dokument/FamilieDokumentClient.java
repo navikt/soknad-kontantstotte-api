@@ -1,6 +1,8 @@
 package no.nav.kontantstotte.dokument;
 
 import no.nav.familie.kontrakter.felles.Ressurs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -20,6 +22,7 @@ import java.util.Map;
 @Component
 public class FamilieDokumentClient {
 
+    private Logger logger= LoggerFactory.getLogger(FamilieDokumentClient.class);
     private URI familieDokumentUri;
     private RestOperations restTemplate;
     private static String VEDLEGG_PATH = "/mapper/familievedlegg/";
@@ -39,7 +42,9 @@ public class FamilieDokumentClient {
     }
 
     public byte[] hentVedlegg(String vedleggsId) {
+        logger.info("get familie-dokument");
         ResponseEntity<Ressurs> response = restTemplate.getForEntity(genererVedleggUri(vedleggsId), Ressurs.class);
+        logger.info(response.getStatusCode().toString());
         return response.getStatusCode().is2xxSuccessful() ? (byte[]) response.getBody().getData() : null;
     }
 
@@ -50,8 +55,10 @@ public class FamilieDokumentClient {
         Map<String, Object> body = new HashMap<>();
         body.put("file", multipartFile);
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+        logger.info("post familie-dokument");
         ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri,
                                                                   entity, Map.class);
+        logger.info(response.getStatusCode().toString());
         return response.getStatusCode().is2xxSuccessful() ? (String) response.getBody().get("dokumentId") : null;
     }
 }
