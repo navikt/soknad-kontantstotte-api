@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import no.nav.kontantstotte.dokument.DokumentService;
+import no.nav.security.token.support.core.context.TokenValidationContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class StorageController {
 
     private DokumentService dokumentService;
 
+    @Autowired
+    private TokenValidationContextHolder tokenValidationContextHolder;
+
     StorageController(@Autowired DokumentService dokumentService) {
         this.dokumentService = dokumentService;
     }
@@ -34,6 +38,10 @@ public class StorageController {
     public Map<String, String> addAttachment(@RequestParam("file") MultipartFile multipartFile) throws IOException {
 
         logger.info("Save attachment");
+
+        if(tokenValidationContextHolder.getTokenValidationContext()!= null){
+            logger.info("has valid token? {}", tokenValidationContextHolder.getTokenValidationContext().hasValidToken());
+        }
 
         if (multipartFile.isEmpty()) {
             logger.info("Attachment is empty");
