@@ -5,15 +5,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,13 +52,20 @@ public class FamilieDokumentClient {
         return response.getStatusCode().is2xxSuccessful() ? (byte[]) response.getBody().getData() : null;
     }
 
-    public String lagreVedlegg(MultipartFile multipartFile) {
+    public String lagreVedlegg(MultipartFile multipartFile) throws IOException {
+        ByteArrayResource fileResource = new ByteArrayResource(multipartFile.getBytes()){
+            @Override
+            public String getFilename() {
+                return multipartFile.getOriginalFilename();
+            }
+        };
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        Map<String, Object> body = new HashMap<>();
-        body.put("file", multipartFile);
-        HttpEntity<MultipartFile> entity = new HttpEntity<>(multipartFile, headers);
+        MultiValueMap<String, Object> body
+                = new LinkedMultiValueMap<>();
+        body.add("file", fileResource);
+        HttpEntity<MultiValueMap> entity = new HttpEntity<>(body, headers);
         logger.info("post familie-dokument {}", familieDokumentVedleggUri);
         ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri,
                                                                   entity, Map.class);
