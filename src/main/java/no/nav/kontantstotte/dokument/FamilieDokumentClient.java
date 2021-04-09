@@ -54,8 +54,8 @@ public class FamilieDokumentClient {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         Map<String, Object> body = new HashMap<>();
         body.put("file", multipartFile);
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-        logger.info("post familie-dokument", familieDokumentVedleggUri);
+        HttpEntity<MultipartFile> entity = new HttpEntity<>(multipartFile, headers);
+        logger.info("post familie-dokument {}", familieDokumentVedleggUri);
         ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri,
                                                                   entity, Map.class);
         logger.info(response.getStatusCode().toString());
