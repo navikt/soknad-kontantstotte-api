@@ -2,6 +2,8 @@ package no.nav.kontantstotte.dokument;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.familie.kontrakter.felles.Ressurs;
+import no.nav.familie.log.NavHttpHeaders;
+import no.nav.familie.log.mdc.MDCConstants;
 import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.kontantstotte.innsending.InnsendingException;
@@ -9,6 +11,7 @@ import no.nav.security.oidc.context.OIDCRequestContextHolder;
 import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -77,6 +80,10 @@ public class FamilieDokumentClient {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.add(NavHttpHeaders.NAV_CALL_ID.asString(), MDC.get(MDCConstants.MDC_CALL_ID));
+        if(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder).equals("")){
+            logger.info("Token is empty");
+        }
         headers.setBearerAuth(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder));
         MultiValueMap<String, Object> body
                 = new LinkedMultiValueMap<>();
