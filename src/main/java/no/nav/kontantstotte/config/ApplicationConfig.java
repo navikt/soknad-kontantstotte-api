@@ -75,19 +75,8 @@ public class ApplicationConfig {
         return new FilterRegistrationBean<>(new SecurityHttpHeaderFilter());
     }
 
-    @Bean
-    public TokenValidationContextHolder tokenValidationRequestContextHolder() {
-        return new SpringTokenValidationContextHolder();
-    }
-
-    @Bean("bearerTokenInterceptor")
-    public BearerTokenClientHttpRequestInterceptor bearerTokenClientHttpRequestInterceptor(TokenValidationContextHolder tokenValidationContextHolder) {
-        return new BearerTokenClientHttpRequestInterceptor(tokenValidationContextHolder);
-    }
-
-    @Bean("restKlientBearerToken")
-    public RestOperations restTemplate(@Qualifier("bearerTokenInterceptor") BearerTokenClientHttpRequestInterceptor bearerTokenClientHttpRequestInterceptor,
-                                       MdcValuesPropagatingClientInterceptor mdcValuesPropagatingClientInterceptor,
+    @Bean("restTemplateForFamilieDokument")
+    public RestOperations restTemplate( MdcValuesPropagatingClientInterceptor mdcValuesPropagatingClientInterceptor,
                                        ConsumerIdClientInterceptor consumerIdClientInterceptor){
         return new RestTemplateBuilder()
                 .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))

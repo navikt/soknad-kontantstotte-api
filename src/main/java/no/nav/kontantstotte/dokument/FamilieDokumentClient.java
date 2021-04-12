@@ -47,7 +47,7 @@ public class FamilieDokumentClient {
     private ObjectMapper objectMapper;
 
     public FamilieDokumentClient(@Value("${FAMILIE_DOKUMENT_API_URL}") URI uri,
-                                 @Qualifier("restKlientBearerToken") RestOperations restTemplate,
+                                 @Qualifier("restTemplateForFamilieDokument") RestOperations restTemplate,
                                  OIDCRequestContextHolder contextHolder,
                                  ObjectMapper objectMapper) {
         this.familieDokumentUri = uri;
@@ -84,7 +84,7 @@ public class FamilieDokumentClient {
         if(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder).equals("")){
             logger.info("Token is empty");
         }
-        headers.setBearerAuth(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder));
+        headers.add(HttpHeaders.AUTHORIZATION, TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder));
         MultiValueMap<String, Object> body
                 = new LinkedMultiValueMap<>();
         body.add("file", fileResource);
