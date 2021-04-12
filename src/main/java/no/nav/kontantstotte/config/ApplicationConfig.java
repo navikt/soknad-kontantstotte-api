@@ -92,8 +92,7 @@ public class ApplicationConfig {
         return new RestTemplateBuilder()
                 .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
                 .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
-                .interceptors(bearerTokenClientHttpRequestInterceptor,
-                              mdcValuesPropagatingClientInterceptor,
+                .interceptors(mdcValuesPropagatingClientInterceptor,
                               consumerIdClientInterceptor)
                 .build();
     }
