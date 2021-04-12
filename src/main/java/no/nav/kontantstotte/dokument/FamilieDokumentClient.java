@@ -77,11 +77,15 @@ public class FamilieDokumentClient {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setBearerAuth(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder));
         MultiValueMap<String, Object> body
                 = new LinkedMultiValueMap<>();
         body.add("file", fileResource);
         HttpEntity<MultiValueMap> entity = new HttpEntity<>(body, headers);
         logger.info("post familie-dokument {}", familieDokumentVedleggUri);
+        ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri, entity, Map.class);
+        return response.getStatusCode().is2xxSuccessful()? response.getBody().get("dokumentId").toString(): null;
+        /*
         HttpRequest lagreVedleggRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                       .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.MULTIPART_FORM_DATA_VALUE)
                       .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON_VALUE)
@@ -94,6 +98,7 @@ public class FamilieDokumentClient {
 //                                                                  entity, Map.class);
 //        logger.info(response.getStatusCode().toString());
         return bodyData.get("dokumentId");
+         */
     }
 
     private HttpResponse sendRequest(HttpRequest familieDokumentRequest) {
