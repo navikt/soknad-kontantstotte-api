@@ -4,7 +4,6 @@ import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.attachment.AttachmentStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -28,29 +27,24 @@ public class DokumentService {
 
     private FamilieDokumentClient familieDokumentClient;
 
-    DokumentService(@Autowired AttachmentStorage storage,
+    DokumentService(AttachmentStorage storage,
                     @Value("${attachment.max.size.mb}") int maxFileSizeMB,
-                    @Autowired FamilieDokumentClient familieDokumentClient) {
+                    FamilieDokumentClient familieDokumentClient) {
         this.storage = storage;
         this.maxFileSize = maxFileSizeMB * 1000 * 1000;
         this.familieDokumentClient = familieDokumentClient;
     }
 
     public String lagreDokument(MultipartFile multipartFile) throws IOException {
-        log.info("lagreDokument");
         byte[] bytes = multipartFile.getBytes();
-        log.info("Vedlegg med lastet opp med størrelse: " + bytes.length);
+        log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
 
         if (bytes.length > this.maxFileSize) {
-            log.info("bytes length exceeds allowed");
             throw new IllegalArgumentException(HttpStatus.PAYLOAD_TOO_LARGE.toString());
         }
-
         try {
-            log.info("Save attachment to familie-dokument");
             return familieDokumentClient.lagreVedlegg(multipartFile);
         }catch(Throwable e){
-            log.error(e.getMessage());
             log.warn("Feil med å lagre vedlegg til familie-dokument");
             Map<String, String> savedDokument = saveToStorage(multipartFile);
             return savedDokument.get("vedleggsId");
@@ -58,11 +52,6 @@ public class DokumentService {
     }
 
     private Map<String, String> saveToStorage(MultipartFile multipartFile) throws IOException {
-
-        if (multipartFile.isEmpty()) {
-            return Map.of();
-        }
-
         byte[] bytes = multipartFile.getBytes();
         log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
 
@@ -83,13 +72,11 @@ public class DokumentService {
 
     public byte[] hentDokument(String key) {
         try {
-            log.info("get attachment by familie-dokument");
             byte[] dokument = familieDokumentClient.hentVedlegg(key);
             if (dokument != null) {
                 return dokument;
             }
         } catch (Throwable e) {
-            log.error(e.getMessage());
             log.warn("Feil med hent av vedlegg fra familie-dokument");
         }
         String directory = hentFnrFraToken();
