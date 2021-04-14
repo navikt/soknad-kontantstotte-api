@@ -29,6 +29,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +65,8 @@ public class FamilieDokumentClient {
         HttpHeaders headers = lagerHttpHeadersMedBrukerToken();
         ResponseEntity<Ressurs> response = restTemplate.exchange(genererVedleggUri(vedleggsId), HttpMethod.GET, new HttpEntity<>(headers), Ressurs.class);
         logger.info(response.getStatusCode().toString());
-        return response.getStatusCode().is2xxSuccessful() ? (byte[]) response.getBody().getData() : null;
+        return response.getStatusCode().is2xxSuccessful() ? Base64.getDecoder().decode(response.getBody().getData().toString().getBytes(
+                StandardCharsets.UTF_8)) : null;
     }
 
     public String lagreVedlegg(MultipartFile multipartFile) throws IOException {
