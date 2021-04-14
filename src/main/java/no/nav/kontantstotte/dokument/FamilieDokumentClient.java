@@ -36,27 +36,22 @@ import java.util.Map;
 @Component
 public class FamilieDokumentClient {
 
-    private Logger logger= LoggerFactory.getLogger(FamilieDokumentClient.class);
+    private Logger logger = LoggerFactory.getLogger(FamilieDokumentClient.class);
     private URI familieDokumentUri;
     private RestOperations restTemplate;
     private static String VEDLEGG_PATH = "/mapper/familievedlegg/";
 
     private URI familieDokumentVedleggUri;
     private OIDCRequestContextHolder contextHolder;
-    private HttpClient client;
-    private ObjectMapper objectMapper;
 
     public FamilieDokumentClient(@Value("${FAMILIE_DOKUMENT_API_URL}") URI uri,
-                                 @Qualifier("restTemplateForFamilieDokument") RestOperations restTemplate,
-                                 OIDCRequestContextHolder contextHolder,
-                                 ObjectMapper objectMapper) {
+                                 RestOperations restTemplate,
+                                 OIDCRequestContextHolder contextHolder) {
         this.familieDokumentUri = uri;
         this.restTemplate = restTemplate;
         this.familieDokumentVedleggUri = UriComponentsBuilder.fromUri(familieDokumentUri)
                                                              .path(VEDLEGG_PATH).build().toUri();
         this.contextHolder = contextHolder;
-        this.client = HttpClientUtil.create();
-        this.objectMapper = objectMapper;
     }
 
     private URI genererVedleggUri(String vedleggsId) {
@@ -65,63 +60,36 @@ public class FamilieDokumentClient {
 
     public byte[] hentVedlegg(String vedleggsId) {
         logger.info("get familie-dokument");
-        ResponseEntity<Ressurs> response = restTemplate.getForEntity(genererVedleggUri(vedleggsId), Ressurs.class);
+        HttpHeaders headers = lagerHttpHeadersMedBrukerToken();
+        ResponseEntity<Ressurs> response = restTemplate.exchange(genererVedleggUri(vedleggsId), HttpMethod.GET, new HttpEntity<>(headers), Ressurs.class);
         logger.info(response.getStatusCode().toString());
         return response.getStatusCode().is2xxSuccessful() ? (byte[]) response.getBody().getData() : null;
     }
 
     public String lagreVedlegg(MultipartFile multipartFile) throws IOException {
-        ByteArrayResource fileResource = new ByteArrayResource(multipartFile.getBytes()){
+        ByteArrayResource fileResource = new ByteArrayResource(multipartFile.getBytes()) {
             @Override
             public String getFilename() {
                 return multipartFile.getOriginalFilename();
             }
         };
-        HttpHeaders headers = new HttpHeaders();
+        HttpHeaders headers = lagerHttpHeadersMedBrukerToken();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.add(NavHttpHeaders.NAV_CALL_ID.asString(), MDC.get(MDCConstants.MDC_CALL_ID));
-        if(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder).equals("")){
-            logger.info("Token is empty");
-        }
-        headers.add(HttpHeaders.AUTHORIZATION, TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder));
         MultiValueMap<String, Object> body
                 = new LinkedMultiValueMap<>();
         body.add("file", fileResource);
         HttpEntity<MultiValueMap> entity = new HttpEntity<>(body, headers);
         logger.info("post familie-dokument {}", familieDokumentVedleggUri);
         ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri, entity, Map.class);
-        return response.getStatusCode().is2xxSuccessful()? response.getBody().get("dokumentId").toString(): null;
-        /*
-        HttpRequest lagreVedleggRequest = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                      .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.MULTIPART_FORM_DATA_VALUE)
-                      .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON_VALUE)
-                      .uri(familieDokumentVedleggUri)
-                      .POST(HttpRequest.BodyPublishers.ofByteArray(multipartFile.getBytes()))
-                      .build();
-        HttpResponse<String> response = sendRequest(lagreVedleggRequest);
-        Map<String, String> bodyData = objectMapper.readValue(response.body(), Map.class);
-//        ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri,
-//                                                                  entity, Map.class);
-//        logger.info(response.getStatusCode().toString());
-        return bodyData.get("dokumentId");
-         */
+        return response.getStatusCode().is2xxSuccessful() ? response.getBody().get("dokumentId").toString() : null;
     }
 
-    private HttpResponse sendRequest(HttpRequest familieDokumentRequest) {
-        try {
-            HttpResponse<String> response = client.send(familieDokumentRequest, HttpResponse.BodyHandlers.ofString());
-
-            if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(response.statusCode()))) {
-                logger.warn("Kontakt familie-dokument feil: {}", response.statusCode());
-                throw new InternalError(
-                        "Response fra familie-dokument: " + response.statusCode());
-            }
-            return response;
-        } catch (IOException | InterruptedException e) {
-            logger.warn("Feilet ved kontakt med familie-dokument: {}", e.getMessage());
-            throw new InternalError("Feilet ved kontakt med familie-dokument");
-        }
+    private HttpHeaders lagerHttpHeadersMedBrukerToken() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION,
+                    TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder));
+        return headers;
     }
 }
 

@@ -75,7 +75,7 @@ public class ApplicationConfig {
         return new FilterRegistrationBean<>(new SecurityHttpHeaderFilter());
     }
 
-    @Bean("restTemplateForFamilieDokument")
+    @Bean
     public RestOperations restTemplate( MdcValuesPropagatingClientInterceptor mdcValuesPropagatingClientInterceptor,
                                        ConsumerIdClientInterceptor consumerIdClientInterceptor){
         return new RestTemplateBuilder()
