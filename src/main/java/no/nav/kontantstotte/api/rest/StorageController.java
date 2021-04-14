@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.api.rest;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 
 import no.nav.kontantstotte.dokument.DokumentService;
@@ -22,7 +23,7 @@ import no.nav.security.oidc.api.ProtectedWithClaims;
 @RequestMapping("api/vedlegg")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = {"acr=Level4"})
 public class StorageController {
-    private Logger logger = LoggerFactory.getLogger(StorageController.class);
+    private static Logger logger = LoggerFactory.getLogger(StorageController.class);
 
     private DokumentService dokumentService;
 
@@ -42,6 +43,8 @@ public class StorageController {
 
         String uuid = dokumentService.lagreDokument(multipartFile);
 
+        verifySavedAttachment(uuid, multipartFile);
+
         return Map.of("vedleggsId", uuid, "filnavn", multipartFile.getName());
     }
 
@@ -49,5 +52,11 @@ public class StorageController {
     public byte[] getAttachment(@PathVariable("vedleggsId") String vedleggsId) {
         logger.info("Get attachment {}", vedleggsId);
         return dokumentService.hentDokument(vedleggsId);
+    }
+
+    private void verifySavedAttachment(String vedleggId, MultipartFile vedlegg) throws IOException {
+        byte[] fetched = getAttachment(vedleggId);
+        byte[] vedleggData = vedlegg.getBytes();
+        logger.info("Vedlegg consistency {}", Arrays.equals(fetched, vedleggData));
     }
 }
