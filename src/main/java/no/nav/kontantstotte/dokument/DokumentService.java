@@ -57,6 +57,7 @@ public class DokumentService {
         } else {
             log.info("Feil med hent av vedlegg fra familie-dokument");
         }
+        //TODO: fjerner å hent fra s3 når alle dokument funnes in familie-dokument
         String directory = hentFnrFraToken();
         byte[] data = storage.get(directory, key).orElse(null);
         return data;
