@@ -49,13 +49,21 @@ public class FamilieDokumentClient {
 
     public byte[] hentVedlegg(String vedleggsId) {
         HttpHeaders headers = lagerHttpHeadersMedBrukerToken();
-        ResponseEntity<Ressurs> response =
-                restTemplate.exchange(genererVedleggUri(vedleggsId), HttpMethod.GET, new HttpEntity<>(headers), Ressurs.class);
-        logger.info("Hent vedlegg fra familie-dokument: {}", response.getStatusCode().toString());
-        return response.getStatusCode().is2xxSuccessful() ?
-                Base64.getDecoder().decode(response.getBody().getData().toString().getBytes(
-                        StandardCharsets.UTF_8)) :
-                null;
+        try {
+            ResponseEntity<Ressurs> response =
+                    restTemplate.exchange(genererVedleggUri(vedleggsId),
+                                          HttpMethod.GET,
+                                          new HttpEntity<>(headers),
+                                          Ressurs.class);
+            logger.info("Hent vedlegg fra familie-dokument: {}", response.getStatusCode().toString());
+            return response.getStatusCode().is2xxSuccessful() ?
+                    Base64.getDecoder().decode(response.getBody().getData().toString().getBytes(
+                            StandardCharsets.UTF_8)) :
+                    null;
+        }catch(Exception e){
+            logger.warn("Feil med å hent vedlegg fra familie-dokument");
+            return null;
+        }
     }
 
     public String lagreVedlegg(MultipartFile multipartFile) {
