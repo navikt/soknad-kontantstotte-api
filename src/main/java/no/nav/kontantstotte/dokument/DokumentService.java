@@ -35,49 +35,27 @@ public class DokumentService {
         this.familieDokumentClient = familieDokumentClient;
     }
 
-    public String lagreDokument(MultipartFile multipartFile) throws IOException {
-        byte[] bytes = multipartFile.getBytes();
-        log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
-
-        if (bytes.length > this.maxFileSize) {
-            throw new IllegalArgumentException(HttpStatus.PAYLOAD_TOO_LARGE.toString());
-        }
+    public String lagreDokument(MultipartFile multipartFile) {
         try {
-            return familieDokumentClient.lagreVedlegg(multipartFile);
-        }catch(Throwable e){
-            log.warn("Feil med å lagre vedlegg til familie-dokument");
-            Map<String, String> savedDokument = saveToStorage(multipartFile);
-            return savedDokument.get("vedleggsId");
+            byte[] bytes = multipartFile.getBytes();
+            log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
+
+            if (bytes.length > this.maxFileSize) {
+                throw new IllegalArgumentException(HttpStatus.PAYLOAD_TOO_LARGE.toString());
+            }
+        } catch (IOException e) {
+            log.error("Ugyldige vedleggsdata");
+            throw new IllegalArgumentException("Ugyldige vedleggsdata");
         }
-    }
-
-    private Map<String, String> saveToStorage(MultipartFile multipartFile) throws IOException {
-        byte[] bytes = multipartFile.getBytes();
-        log.debug("Vedlegg med lastet opp med størrelse: " + bytes.length);
-
-        if (bytes.length > this.maxFileSize) {
-            throw new IllegalArgumentException(HttpStatus.PAYLOAD_TOO_LARGE.toString());
-        }
-
-        String directory = hentFnrFraToken();
-
-        String uuid = UUID.randomUUID().toString();
-
-        ByteArrayInputStream file = new ByteArrayInputStream(bytes);
-
-        storage.put(directory, uuid, file);
-
-        return Map.of("vedleggsId", uuid, "filnavn", multipartFile.getName());
+        return familieDokumentClient.lagreVedlegg(multipartFile);
     }
 
     public byte[] hentDokument(String key) {
-        try {
-            byte[] dokument = familieDokumentClient.hentVedlegg(key);
-            if (dokument != null) {
-                return dokument;
-            }
-        } catch (Throwable e) {
-            log.warn("Feil med hent av vedlegg fra familie-dokument");
+        byte[] dokument = familieDokumentClient.hentVedlegg(key);
+        if (dokument != null) {
+            return dokument;
+        } else {
+            log.info("Feil med hent av vedlegg fra familie-dokument");
         }
         String directory = hentFnrFraToken();
         byte[] data = storage.get(directory, key).orElse(null);

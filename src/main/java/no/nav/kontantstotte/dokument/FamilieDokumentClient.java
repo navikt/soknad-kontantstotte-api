@@ -76,7 +76,6 @@ public class FamilieDokumentClient {
             logger.error("Ugyldige vedleggsdata");
             return null;
         }
-
         HttpEntity<MultiValueMap> entity = new HttpEntity<>(body, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri, entity, Map.class);
         logger.info("POST vedlegg til familie-dokument {}: {}", familieDokumentVedleggUri, response.getStatusCode().toString());

@@ -21,12 +21,15 @@ public class StorageController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> addAttachment(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public Map<String, String> addAttachment(@RequestParam("file") MultipartFile multipartFile){
         if (multipartFile.isEmpty()) {
             return Map.of();
         }
 
         String uuid = dokumentService.lagreDokument(multipartFile);
+        if(uuid == null){
+            throw new RuntimeException("Feil med å lagre vedlegg til familie-dokument");
+        }
         return Map.of("vedleggsId", uuid, "filnavn", multipartFile.getName());
     }
 
