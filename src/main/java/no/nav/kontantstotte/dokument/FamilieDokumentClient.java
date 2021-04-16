@@ -60,34 +60,36 @@ public class FamilieDokumentClient {
                     Base64.getDecoder().decode(response.getBody().getData().toString().getBytes(
                             StandardCharsets.UTF_8)) :
                     null;
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.warn("Feil med å hent vedlegg fra familie-dokument");
             return null;
         }
     }
 
-    public String lagreVedlegg(MultipartFile multipartFile) {
+    public String lagreVedlegg(byte[] vedleggData, String filenavn) {
         HttpHeaders headers = lagerHttpHeadersMedBrukerToken();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         MultiValueMap<String, Object> body
                 = new LinkedMultiValueMap<>();
+        ByteArrayResource fileResource = new ByteArrayResource(vedleggData) {
+            @Override
+            public String getFilename() {
+                return filenavn;
+            }
+        };
+        body.add("file", fileResource);
+        HttpEntity<MultiValueMap> entity = new HttpEntity<>(body, headers);
         try {
-            ByteArrayResource fileResource = new ByteArrayResource(multipartFile.getBytes()) {
-                @Override
-                public String getFilename() {
-                    return multipartFile.getOriginalFilename();
-                }
-            };
-            body.add("file", fileResource);
-        } catch (IOException e) {
-            logger.error("Ugyldige vedleggsdata");
+            ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri, entity, Map.class);
+            logger.info("POST vedlegg til familie-dokument {}: {}",
+                        familieDokumentVedleggUri,
+                        response.getStatusCode().toString());
+            return response.getStatusCode().is2xxSuccessful() ? response.getBody().get("dokumentId").toString() : null;
+        } catch (Exception e) {
+            logger.error("Feil med å lagre vedlegg til familie-dokument");
             return null;
         }
-        HttpEntity<MultiValueMap> entity = new HttpEntity<>(body, headers);
-        ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri, entity, Map.class);
-        logger.info("POST vedlegg til familie-dokument {}: {}", familieDokumentVedleggUri, response.getStatusCode().toString());
-        return response.getStatusCode().is2xxSuccessful() ? response.getBody().get("dokumentId").toString() : null;
     }
 
     private HttpHeaders lagerHttpHeadersMedBrukerToken() {

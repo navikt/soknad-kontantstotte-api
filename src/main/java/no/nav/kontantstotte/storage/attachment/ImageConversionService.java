@@ -22,7 +22,7 @@ import no.nav.kontantstotte.innsending.InnsendingException;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
 
 @Component
-class ImageConversionService {
+public class ImageConversionService {
 
     private static final Logger log = LoggerFactory.getLogger(ImageConversionService.class);
 
@@ -37,7 +37,7 @@ class ImageConversionService {
         this.imageToPdfEndpointBaseUrl = imageToPdfEndpointBaseUrl;
     }
 
-    byte[] convert(byte[] bytes, Format detectedType) {
+    public byte[] convert(byte[] bytes, Format detectedType) {
         try {
             log.info("Konverterer vedlegg på {} KB til PDF", bytes.length/1000);
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))

@@ -8,7 +8,7 @@ import javax.crypto.spec.GCMParameterSpec;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 
-class Encryptor {
+public class Encryptor {
 
     private static final String ALGORITHM = "AES/GCM/NoPadding";
 
@@ -18,11 +18,11 @@ class Encryptor {
         this.secretKeyProvider = secretKeyProvider;
     }
 
-    InputStream encryptedStream(String fnr, InputStream inputStream) {
+    public InputStream encryptedStream(String fnr, InputStream inputStream) {
         return new CipherInputStream(inputStream, initCipher(Cipher.ENCRYPT_MODE, fnr));
     }
 
-    byte[] decrypt(String fnr, byte[] input) {
+    public byte[] decrypt(String fnr, byte[] input) {
         return transform(Cipher.DECRYPT_MODE, fnr, input);
     }
 

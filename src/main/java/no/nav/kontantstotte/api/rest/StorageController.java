@@ -35,6 +35,7 @@ public class StorageController {
 
     @GetMapping(path = "{vedleggsId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public byte[] getAttachment(@PathVariable("vedleggsId") String vedleggsId) {
-        return dokumentService.hentDokument(vedleggsId);
+        byte[] vedlegg =  dokumentService.hentDokument(vedleggsId);
+        return vedlegg;
     }
 }
