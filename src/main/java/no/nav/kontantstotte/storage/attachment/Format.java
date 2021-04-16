@@ -13,7 +13,7 @@ enum Format {
 
     private static final Logger log = LoggerFactory.getLogger(Format.class);
 
-    public static Optional<Format> fromMimeType(String mimeType) {
+    static Optional<Format> fromMimeType(String mimeType) {
         log.info("Forsøker å finne gydlig vedleggsformat fra detektert format {}", mimeType);
         return Arrays.stream(values()).filter(format -> format.mimeType.equalsIgnoreCase(mimeType)).findAny();
     }

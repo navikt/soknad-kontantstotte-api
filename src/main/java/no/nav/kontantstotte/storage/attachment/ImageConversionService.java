@@ -37,7 +37,7 @@ class ImageConversionService {
         this.imageToPdfEndpointBaseUrl = imageToPdfEndpointBaseUrl;
     }
 
-    public byte[] convert(byte[] bytes, Format detectedType) {
+    byte[] convert(byte[] bytes, Format detectedType) {
         try {
             log.info("Konverterer vedlegg på {} KB til PDF", bytes.length/1000);
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))

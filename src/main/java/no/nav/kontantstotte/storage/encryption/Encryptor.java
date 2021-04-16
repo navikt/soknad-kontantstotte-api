@@ -18,11 +18,11 @@ class Encryptor {
         this.secretKeyProvider = secretKeyProvider;
     }
 
-    public InputStream encryptedStream(String fnr, InputStream inputStream) {
+    InputStream encryptedStream(String fnr, InputStream inputStream) {
         return new CipherInputStream(inputStream, initCipher(Cipher.ENCRYPT_MODE, fnr));
     }
 
-    public byte[] decrypt(String fnr, byte[] input) {
+    byte[] decrypt(String fnr, byte[] input) {
         return transform(Cipher.DECRYPT_MODE, fnr, input);
     }
 
