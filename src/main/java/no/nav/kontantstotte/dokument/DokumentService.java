@@ -2,8 +2,6 @@ package no.nav.kontantstotte.dokument;
 
 import no.nav.kontantstotte.storage.Storage;
 import no.nav.kontantstotte.storage.attachment.AttachmentStorage;
-import no.nav.kontantstotte.storage.attachment.AttachmentToStorableFormatConverter;
-import no.nav.kontantstotte.storage.encryption.Encryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
@@ -25,25 +22,17 @@ public class DokumentService {
 
     private final int maxFileSize;
 
-    private final Encryptor encryptor;
-
-    private final AttachmentToStorableFormatConverter formatConverter;
-
     private FamilieDokumentClient familieDokumentClient;
 
     DokumentService(AttachmentStorage storage,
                     @Value("${attachment.max.size.mb}") int maxFileSizeMB,
-                    FamilieDokumentClient familieDokumentClient,
-                    Encryptor encryptor,
-                    AttachmentToStorableFormatConverter formatConverter) {
+                    FamilieDokumentClient familieDokumentClient) {
         this.storage = storage;
         this.maxFileSize = maxFileSizeMB * 1000 * 1000;
         this.familieDokumentClient = familieDokumentClient;
-        this.encryptor = encryptor;
-        this.formatConverter = formatConverter;
     }
 
-    public String lagreDokument(MultipartFile multipartFile){
+    public String lagreDokument(MultipartFile multipartFile) {
         byte[] bytes;
         try {
             bytes = multipartFile.getBytes();
@@ -56,19 +45,14 @@ public class DokumentService {
         if (bytes.length > this.maxFileSize) {
             throw new IllegalArgumentException(HttpStatus.PAYLOAD_TOO_LARGE.toString());
         }
-        try {
-            return familieDokumentClient.lagreVedlegg(encrypt(konvertererTilLagretFormat(bytes)),
-                                                      multipartFile.getOriginalFilename());
-        }catch(IOException e){
-            log.error("Feil med encrypt vedlegg");
-            return null;
-        }
+        return familieDokumentClient.lagreVedlegg(bytes,
+                                                  multipartFile.getOriginalFilename());
     }
 
     public byte[] hentDokument(String key) {
         byte[] dokument = familieDokumentClient.hentVedlegg(key);
         if (dokument != null) {
-            return decrypt(dokument);
+            return dokument;
         } else {
             log.info("Feil med hent av vedlegg fra familie-dokument");
         }
@@ -76,17 +60,5 @@ public class DokumentService {
         String directory = hentFnrFraToken();
         byte[] data = storage.get(directory, key).orElse(null);
         return data;
-    }
-
-    private byte[] encrypt(byte[] data) throws IOException {
-        return encryptor.encryptedStream(hentFnrFraToken(), new ByteArrayInputStream(data)).readAllBytes();
-    }
-
-    private byte[] decrypt(byte[] data){
-        return encryptor.decrypt(hentFnrFraToken(), data);
-    }
-
-    private byte[] konvertererTilLagretFormat(byte[] data){
-        return formatConverter.toStorageFormat(data);
     }
 }

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum Format {
+enum Format {
     PDF("application/pdf"),
     PNG("image/jpeg"),
     JPG("image/png");

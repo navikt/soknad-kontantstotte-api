@@ -8,7 +8,7 @@ import javax.crypto.spec.GCMParameterSpec;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 
-public class Encryptor {
+class Encryptor {
 
     private static final String ALGORITHM = "AES/GCM/NoPadding";
 

@@ -4,19 +4,14 @@ import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.dokument.FamilieDokumentClient;
 import no.nav.kontantstotte.storage.attachment.AttachmentStorage;
-import no.nav.kontantstotte.storage.attachment.Format;
-import no.nav.kontantstotte.storage.attachment.ImageConversionService;
-import no.nav.kontantstotte.storage.encryption.Encryptor;
 import no.nav.kontantstotte.storage.s3.TestStorageConfiguration;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
-import org.apache.tika.Tika;
 import org.eclipse.jetty.http.HttpHeader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,7 +20,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +36,8 @@ import java.util.Random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
@@ -62,67 +57,35 @@ public class StorageControllerTestV2 {
     private FamilieDokumentClient familieDokumentClient;
 
     @MockBean
-    private ImageConversionService imageConverionService;
-
-    @MockBean
     AttachmentStorage s3Storage;
 
-    @Autowired
-    private Encryptor encryptor;
-
     private static final String TEST_PDF = "pdf_dummy.pdf";
-
-    private static final String TEST_PNG = "png_dummy.png";
 
     @Test
     public void at_vedlegg_puttes_korrekt() throws IOException {
         when(familieDokumentClient.lagreVedlegg(any(), any())).thenReturn(VEDLEGGS_ID);
         byte[] pdfData = readFile(TEST_PDF);
-        when(imageConverionService.convert(any(), any())).thenReturn(pdfData);
-        byte[] pngData = readFile(TEST_PNG);
 
-        //pdf
         HttpResponse response = postKall(TEST_PDF);
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-
-        //png
-        response = postKall(TEST_PNG);
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
 
         ArgumentCaptor<byte[]> byteArrayCaptor = ArgumentCaptor.forClass(byte[].class);
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
 
-        verify(familieDokumentClient, times(2)).lagreVedlegg(byteArrayCaptor.capture(), stringCaptor.capture());
+        verify(familieDokumentClient).lagreVedlegg(byteArrayCaptor.capture(), stringCaptor.capture());
 
-        //The data from pdf file received by FamilieDokumentClient should be encrypted
-        assertThat(Arrays.equals(pdfData, byteArrayCaptor.getAllValues().get(0))).isFalse();
-        byte[] decrypted = encryptor.decrypt(INNLOGGET_BRUKER, byteArrayCaptor.getAllValues().get(0));
-        assertThat(Arrays.equals(pdfData, decrypted)).isTrue();
+        assertThat(Arrays.equals(pdfData, byteArrayCaptor.getValue())).isTrue();
         assertThat(stringCaptor.getAllValues().get(0)).isEqualTo(TEST_PDF);
-
-        //The data from png file received by FamilieDokumentClient should be encrypted and converted
-        assertThat(Arrays.equals(pngData, byteArrayCaptor.getAllValues().get(1))).isFalse();
-        decrypted = encryptor.decrypt(INNLOGGET_BRUKER, byteArrayCaptor.getAllValues().get(1));
-        assertThat(Arrays.equals(pngData, decrypted)).isFalse();
-        Format detectedType = Format.fromMimeType(new Tika().detect(decrypted)).orElse(null);
-        assertThat(detectedType).isEqualTo(Format.PDF);
-
-        assertThat(stringCaptor.getAllValues().get(1)).isEqualTo(TEST_PNG);
     }
 
     @Test
     public void at_vedlegg_hentes_korrekt() throws IOException {
-        byte[] encryptedPdf = encryptor.encryptedStream(INNLOGGET_BRUKER,
-                                                        new ByteArrayInputStream(readFile(TEST_PDF)))
-                .readAllBytes();
-
         byte[] pdfData = readFile(TEST_PDF);
-        when(familieDokumentClient.hentVedlegg(any())).thenReturn(encryptedPdf);
+        when(familieDokumentClient.hentVedlegg(any())).thenReturn(pdfData);
         HttpResponse<byte[]> response = getKall();
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
 
         verify(familieDokumentClient).hentVedlegg(eq(VEDLEGGS_ID));
-
         assertThat(response.body()).isEqualTo(pdfData);
     }
 

@@ -22,7 +22,7 @@ import no.nav.kontantstotte.innsending.InnsendingException;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
 
 @Component
-public class ImageConversionService {
+class ImageConversionService {
 
     private static final Logger log = LoggerFactory.getLogger(ImageConversionService.class);
 
