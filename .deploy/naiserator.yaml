@@ -1,0 +1,66 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: soknad-kontantstotte-api
+  namespace: teamfamilie
+  labels:
+    team: teamfamilie
+
+spec:
+  image: {{ image }}
+  team: teamfamilie
+  port: 8080
+  envFrom:
+    - secret: {{ secret }}
+    - configmap: loginservice-idporten
+  liveness:
+    path: /internal/status/isAlive
+    initialDelay: 50
+    timeout: 5
+    periodSeconds: 10     # How often (in seconds) to perform the probe. Default to 10 seconds
+    failureThreshold: 10 # when a Pod starts and the probe fails,
+  readiness:
+    path: /internal/status/isAlive
+    initialDelay: 50
+    timeout: 5
+    periodSeconds: 10
+    failureThreshold: 10
+  prometheus:
+    enabled: true
+    path: /internal/prometheus
+  vault:
+    enabled: true
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      memory: 2Gi
+      cpu: 1500m
+    requests:
+      memory: 1Gi
+      cpu: 1000m
+  ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
+  {{#each ingresses as |url|}}
+     - {{url}}
+  {{/each}}
+accessPolicy:
+  inbound:
+    rules:
+      - application: soknad-kontantstotte
+  outbound:
+    external:
+      - host: login.microsoftonline.com
+azure:
+  application:
+    enabled: true
+
+webproxy: false # Optional. Expose web proxy configuration to the application using the HTTP_PROXY, HTTPS_PROXY and NO_PROXY environment variables.
+secureLogs:
+  enabled: true
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: {{spring_profile}}
+  - name: APP_TEAM
+    value: teamfamilie
