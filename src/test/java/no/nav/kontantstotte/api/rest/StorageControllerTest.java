@@ -75,17 +75,6 @@ public class StorageControllerTest {
     }
 
     @Test
-    public void at_vedlegg_puttes_korrekt() throws IOException {
-        HttpResponse response = postKall();
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-
-        ArgumentCaptor<InputStream> streamCaptor = ArgumentCaptor.forClass(InputStream.class);
-        verify(attachmentStorage).put(eq(INNLOGGET_BRUKER), any(String.class), streamCaptor.capture());
-        File capturedFile = readStream(streamCaptor.getValue());
-        assertThat(Files.readAllBytes(capturedFile.toPath())).isEqualTo(Files.readAllBytes(new File("src/test/resources/dummy/png_dummy.png").toPath()));
-    }
-
-    @Test
     public void at_vedlegg_hentes_korrekt() throws IOException {
         byte[] streamedTestData = Files.readAllBytes(readStream(new ByteArrayInputStream(TESTDATA.getBytes())).toPath());
         when(attachmentStorage.get(any(), any())).thenReturn(Optional.ofNullable(streamedTestData));
@@ -100,13 +89,6 @@ public class StorageControllerTest {
     @Test
     public void at_pdfgen_feil_gir_500() {
         doThrow(new InnsendingException("Feil i innsending til pdfgen")).when(attachmentStorage).put(any(), any(), any());
-        HttpResponse response = postKall();
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-    @Test
-    public void at_lagringsfeil_gir_500() {
-        doThrow(new StorageException("Feil ved lagring")).when(attachmentStorage).put(any(), any(), any());
         HttpResponse response = postKall();
         assertThat(response.statusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }

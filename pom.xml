@@ -247,6 +247,11 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+        <dependency>
+            <groupId>no.nav.familie.kontrakter</groupId>
+            <artifactId>felles</artifactId>
+            <version>2.0_20210202101640_559def4</version>
+        </dependency>
 
 
     </dependencies>
