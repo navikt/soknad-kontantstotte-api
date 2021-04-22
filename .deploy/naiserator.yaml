@@ -49,6 +49,21 @@ accessPolicy:
   inbound:
     rules:
       - application: soknad-kontantstotte
+idporten:
+  enabled: true
+  # optional, default shown
+  clientURI: "https://nav.no"
+  # optional, default shown
+  redirectPath: "/oauth2/callback"
+  # optional, default shown
+  frontchannelLogoutPath: "/oauth2/logout"
+  # optional, defaults shown
+  postLogoutRedirectURIs:
+    - "https://nav.no"
+  # optional, in seconds - defaults shown (1 hour)
+  accessTokenLifetime: 3600
+  # optional, in seconds - defaults shown (2 hours)
+  sessionLifetime: 7200
 secureLogs:
   enabled: true
 env:
