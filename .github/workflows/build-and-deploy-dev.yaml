@@ -1,0 +1,48 @@
+name: Build and Deploy (dev)
+on:
+  workflow_dispatch:
+
+env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/soknad-kontantstotte-api:${{ github.sha }}
+
+jobs:
+  build-and-deploy-to-dev:
+    name: Bygg app/image, push til github, og deploy til GCP (dev)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Read/save maven cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.github/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Set up JDK 1.11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - name: Bygg med maven
+        env:
+          GITHUB_USERNAME: x-access-token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B --no-transfer-progress package --settings .m2/maven-settings.xml --file pom.xml
+      - name: Bygg Docker image
+        run: |
+          docker build -t ${IMAGE} .
+      - name: Login to Github Package Registry
+        env:
+          DOCKER_USERNAME: x-access-token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
+      - name: Push Docker image med versjonstag
+        run: docker push ${IMAGE}
+      - name: Deploy til GCP (dev)
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: .deploy/naiserator.yaml
+          VARS: .deploy/dev-gcp.json

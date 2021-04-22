@@ -1,0 +1,5 @@
+{
+  "ingresses": ["https://soknad-kontantstotte-api.dev.intern.nav.no"],
+  "spring_profile" : "preprod",
+  "secret" : "soknad-kontantstotte-api-secret-dev"
+}
