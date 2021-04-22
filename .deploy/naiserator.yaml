@@ -49,14 +49,6 @@ accessPolicy:
   inbound:
     rules:
       - application: soknad-kontantstotte
-  outbound:
-    external:
-      - host: login.microsoftonline.com
-azure:
-  application:
-    enabled: true
-
-webproxy: false # Optional. Expose web proxy configuration to the application using the HTTP_PROXY, HTTPS_PROXY and NO_PROXY environment variables.
 secureLogs:
   enabled: true
 env:
