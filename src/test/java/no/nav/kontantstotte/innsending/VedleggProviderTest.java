@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.innsending;
 
 import no.nav.kontantstotte.SetOidcClaimsWithSubject;
+import no.nav.kontantstotte.dokument.DokumentService;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
 import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 import org.junit.Rule;
@@ -20,14 +21,14 @@ public class VedleggProviderTest {
     @Rule
     public SetOidcClaimsWithSubject setOidcClaimsWithSubject = new SetOidcClaimsWithSubject("DUMMY_FNR");
 
-    private EncryptedStorage storage = mock(EncryptedStorage.class);
+    private DokumentService dokumentService = mock(DokumentService.class);
 
     @Test
     public void at_vedlegg_konverteres_ok_uten_vedlegg() {
 
         Soknad soknad = new Soknad();
 
-        VedleggProvider vedleggProvider = new VedleggProvider(storage);
+        VedleggProvider vedleggProvider = new VedleggProvider(dokumentService);
 
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggFor(soknad);
 
@@ -46,9 +47,9 @@ public class VedleggProviderTest {
                 new VedleggMetadata("5678-5678-5678", "fil2.pdf")
         );
 
-        when(storage.get(any(), any())).thenReturn(Optional.of("test".getBytes()));
+        when(dokumentService.hentDokument(any())).thenReturn("test".getBytes());
 
-        VedleggProvider vedleggProvider = new VedleggProvider(storage);
+        VedleggProvider vedleggProvider = new VedleggProvider(dokumentService);
 
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggFor(soknad);
 
@@ -67,9 +68,9 @@ public class VedleggProviderTest {
                 new VedleggMetadata("5678-5678-5678", "fil2.pdf")
         );
 
-        when(storage.get(any(), any())).thenReturn(Optional.of("test".getBytes()));
+        when(dokumentService.hentDokument(any())).thenReturn("test".getBytes());
 
-        VedleggProvider vedleggProvider = new VedleggProvider(storage);
+        VedleggProvider vedleggProvider = new VedleggProvider(dokumentService);
 
         List<VedleggDto> vedlegg = vedleggProvider.hentVedleggFor(soknad);
 
