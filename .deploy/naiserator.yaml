@@ -32,14 +32,14 @@ spec:
   replicas:
     min: 2
     max: 4
-    cpuThresholdPercentage: 50
+    cpuThresholdPercentage: 80
   resources:
     limits:
-      memory: 2Gi
+      memory: 4Gi
       cpu: "1"
     requests:
-      memory: 1Gi
-      cpu: 1000m
+      memory: 2Gi
+      cpu: 500m
   ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
   {{#each ingresses as |url|}}
      - {{url}}
