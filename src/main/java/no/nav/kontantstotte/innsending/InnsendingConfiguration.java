@@ -1,6 +1,7 @@
 package no.nav.kontantstotte.innsending;
 
 
+import no.nav.kontantstotte.dokument.DokumentService;
 import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +20,8 @@ import no.nav.kontantstotte.storage.s3.S3StorageConfiguration;
 public class InnsendingConfiguration {
 
     @Bean
-    public VedleggProvider vedleggProvider(@Autowired EncryptedStorage storage) {
-        return new VedleggProvider(storage);
+    public VedleggProvider vedleggProvider(@Autowired DokumentService dokumentService) {
+        return new VedleggProvider(dokumentService);
     }
 
 }
