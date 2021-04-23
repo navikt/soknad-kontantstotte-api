@@ -16,7 +16,6 @@ import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 class VedleggProvider {
 
-    //private final EncryptedStorage storage;
     private final DokumentService dokumentService;
 
     VedleggProvider(DokumentService dokumentService) {
@@ -24,7 +23,6 @@ class VedleggProvider {
     }
 
     List<VedleggDto> hentVedleggFor(Soknad soknad) {
-
         List<List<VedleggMetadata>> alleVedlegg = Arrays.asList(
                 soknad.barnehageplass.getRelevanteVedlegg()
         );
@@ -44,8 +42,6 @@ class VedleggProvider {
     }
 
     List<VedleggDto> hentVedleggForNy(Søknad søknad) {
-        String directory = hentFnrFraToken();
-
         List<String> alleVedlegg = søknad.getOppgittFamilieforhold().getBarna().stream()
                                          .filter(b -> b.getBarnehageVedlegg() != null)
                                          .map(Barn::getBarnehageVedlegg)
