@@ -31,9 +31,10 @@ http.proxy: http://webproxy-nais.nav.no:8088
 
 logging:
   level:
+    org.eclipse.jetty: DEBUG
     org.springframework: DEBUG
-    org.glassfish: INFO
-    no.nav: INFO
+    org.glassfish: DEBUG
+    no.nav: DEBUG
 
 # Pdf-generator
 SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://pdf-gen.default/api/
