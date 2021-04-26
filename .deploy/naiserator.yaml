@@ -33,6 +33,8 @@ spec:
     min: 2
     max: 4
     cpuThresholdPercentage: 80
+  secureLogs:
+    enabled: true
   resources:
     limits:
       memory: 4Gi
