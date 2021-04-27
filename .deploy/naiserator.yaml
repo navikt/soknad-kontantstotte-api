@@ -48,6 +48,9 @@ spec:
     inbound:
       rules:
         - application: soknad-kontantstotte
+    outbound:
+      external:
+        - host: navtestb2c.b2clogin.com
   idporten:
     enabled: true
     # optional, default shown
