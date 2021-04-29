@@ -74,3 +74,5 @@ spec:
       value: {{spring_profile}}
     - name: APP_TEAM
       value: teamfamilie
+    - name: SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME
+      value: not-a-real-username
