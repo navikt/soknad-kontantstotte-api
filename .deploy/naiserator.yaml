@@ -82,3 +82,7 @@ spec:
       value: not-a-real-key
     - name: SOKNAD_KONTANTSTOTTE_API_S3_SECRETKEY
       value: not-a-real-key
+    - name: SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME
+      value: not-a-real-username
+    - name: SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD
+      value: not-a-real-password
