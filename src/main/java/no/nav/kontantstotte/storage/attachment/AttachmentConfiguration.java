@@ -25,7 +25,6 @@ public class AttachmentConfiguration {
     }
 
     @Profile("gcp")
-    @Primary
     @Bean
     public AttachmentStorage nonAttachmentStorage() {
         return null;
