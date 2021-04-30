@@ -86,3 +86,5 @@ spec:
       value: not-a-real-username
     - name: SOKNAD_KONTANTSTOTTE_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD
       value: not-a-real-password
+    - name: SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_PASSWORD
+      value: not-a-real-password
