@@ -30,10 +30,10 @@ management:
 logging:
   level:
     root: INFO
-    org.eclipse.jetty: DEBUG
-    org.springframework: DEBUG
+    org.eclipse.jetty: INFO
+    org.springframework: INFO
     org.glassfish: WARN
-    no.nav: INFO
+    no.nav: DEBUG
 
 # Pdf-generator
 SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://pdf-gen.default/api/
