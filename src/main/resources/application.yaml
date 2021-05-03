@@ -29,9 +29,10 @@ management:
 
 logging:
   level:
-    org.eclipse.jetty: DEBUG
-    org.springframework: DEBUG
-    org.glassfish: DEBUG
+    root: INFO
+    org.eclipse.jetty: WARN
+    org.springframework: INFO
+    org.glassfish: WARN
     no.nav: DEBUG
 
 # Pdf-generator
