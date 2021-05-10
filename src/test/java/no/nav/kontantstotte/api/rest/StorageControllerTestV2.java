@@ -3,8 +3,6 @@ package no.nav.kontantstotte.api.rest;
 import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.dokument.FamilieDokumentClient;
-import no.nav.kontantstotte.storage.attachment.AttachmentStorage;
-import no.nav.kontantstotte.storage.s3.TestStorageConfiguration;
 import no.nav.security.oidc.OIDCConstants;
 import no.nav.security.oidc.test.support.JwtTokenGenerator;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
@@ -42,7 +40,7 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-                classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class, TestStorageConfiguration.class})
+                classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class StorageControllerTestV2 {
     public static final String INNLOGGET_BRUKER = "12345678911";
@@ -55,9 +53,6 @@ public class StorageControllerTestV2 {
 
     @MockBean
     private FamilieDokumentClient familieDokumentClient;
-
-    @MockBean
-    AttachmentStorage s3Storage;
 
     private static final String TEST_PDF = "pdf_dummy.pdf";
 
@@ -94,16 +89,6 @@ public class StorageControllerTestV2 {
         when(familieDokumentClient.lagreVedlegg(any(), any())).thenReturn(null);
         HttpResponse response = postKall(TEST_PDF);
         assertThat(response.statusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-    @Test
-    public void at_bruke_s3_hvis_vedlegg_ikke_funnes_i_familie_dokument(){
-        when(familieDokumentClient.hentVedlegg(any())).thenReturn(null);
-        when(s3Storage.get(any(), any())).thenReturn(Optional.of("s3 brukes".getBytes()));
-        HttpResponse response = getKall();
-
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.body()).isEqualTo("s3 brukes".getBytes());
     }
 
     private HttpResponse<String> postKall(String filnavn) {

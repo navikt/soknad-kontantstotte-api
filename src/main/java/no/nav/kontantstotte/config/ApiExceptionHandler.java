@@ -1,7 +1,6 @@
 package no.nav.kontantstotte.config;
 
 import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
-import no.nav.kontantstotte.storage.attachment.AttachmentConversionException;
 import no.nav.security.spring.oidc.validation.interceptor.OIDCUnauthorizedException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -28,12 +27,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handleUnauthorizedException() {
         logger.warn("Kan ikke behandle pga. bruker ikke logget inn.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Du er ikke logget inn");
-    }
-
-    @ExceptionHandler({AttachmentConversionException.class})
-    public ResponseEntity<String> handleAttachmentConversionException(AttachmentConversionException e) {
-        logger.error("Kan ikke konvertere vedlegg : {}", ExceptionUtils.getStackTrace(e));
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Feil ved mottak av vedlegg");
     }
 
     @ExceptionHandler({Exception.class})

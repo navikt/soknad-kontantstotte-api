@@ -14,12 +14,14 @@ import no.finn.unleash.Unleash;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringTestConfiguration;
 import no.nav.kontantstotte.innsyn.InnsynTestConfiguration;
-import no.nav.kontantstotte.storage.s3.TestStorageConfiguration;
 import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
 import no.nav.security.spring.oidc.api.EnableOIDCTokenValidation;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
-@Import({ApplicationConfig.class, OppsummeringTestConfiguration.class, InnsynTestConfiguration.class, TestStorageConfiguration.class, TokenGeneratorConfiguration.class})
+@Import({ApplicationConfig.class,
+         OppsummeringTestConfiguration.class,
+         InnsynTestConfiguration.class,
+         TokenGeneratorConfiguration.class})
 @EnableOIDCTokenValidation(ignore = "org.springframework")
 public class TestLauncher {
 
