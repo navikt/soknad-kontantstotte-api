@@ -39,12 +39,6 @@ logging:
 SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://pdf-gen.default/api/
 SOKNAD_HTML_GENERATOR_URL: http://soknad-html-generator/api/
 
-# S3
-SOKNAD_KONTANTSTOTTE_S3_ENDPOINT: http://objectstore.rook-ceph
-SOKNAD_KONTANTSTOTTE_API_S3_REGION: us-east-1
-#SOKNAD_KONTANTSTOTTE_API_S3_ACCESSKEY: <Ligger i vault>
-#SOKNAD_KONTANTSTOTTE_API_S3_SECRETKEY: <Ligger i vault>
-#SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_USERNAME: <Ligger i vault>
 attachment.max.size.mb: 10
 
 #Unleash
