@@ -37,6 +37,8 @@ class PdfConverter {
     }
 
     byte[] genererPdf(byte[] bytes) {
+        URI dokumentUri = URI.create(pdfSvgSupportGeneratorUrl + "/html-til-pdf");
+        log.info("post "+ dokumentUri);
         try {
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
