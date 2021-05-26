@@ -41,6 +41,8 @@ class HtmlConverter {
     public <T> byte[] genererHtml(T oppsummering) {
 
         HttpResponse<byte[]> response;
+        URI generatorUri = URI.create(url + "generateHtml");
+        log.info("generator uri "+ generatorUri);
         try {
             HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
