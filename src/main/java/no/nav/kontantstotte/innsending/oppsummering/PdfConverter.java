@@ -40,7 +40,7 @@ class PdfConverter {
         try {
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
-                    .uri(URI.create(pdfSvgSupportGeneratorUrl + "api/html-til-pdf"))
+                    .uri(URI.create(pdfSvgSupportGeneratorUrl + "/html-til-pdf"))
                     .POST(HttpRequest.BodyPublishers.ofString(new String(bytes, StandardCharsets.UTF_8)))
                     .build();
 
