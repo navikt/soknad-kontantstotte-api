@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 
 @Component
 class PdfConverter {
@@ -28,7 +29,7 @@ class PdfConverter {
     private OIDCRequestContextHolder contextHolder;
 
 
-    public PdfConverter(@Value("${SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL}") URI pdfSvgSupportGeneratorUrl,
+    public PdfConverter(@Value("${FAMILIE_DOKUMENT_API_URL}") URI pdfSvgSupportGeneratorUrl,
                         OIDCRequestContextHolder contextHolder) {
         this.contextHolder = contextHolder;
         this.client = HttpClientUtil.create();
@@ -39,8 +40,8 @@ class PdfConverter {
         try {
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                     .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
-                    .uri(URI.create(pdfSvgSupportGeneratorUrl + "v1/genpdf/html/kontantstotte"))
-                    .POST(HttpRequest.BodyPublishers.ofByteArray(bytes))
+                    .uri(URI.create(pdfSvgSupportGeneratorUrl + "api/html-til-pdf"))
+                    .POST(HttpRequest.BodyPublishers.ofString(new String(bytes, StandardCharsets.UTF_8)))
                     .build();
 
             var response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
