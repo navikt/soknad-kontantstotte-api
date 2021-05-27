@@ -80,6 +80,7 @@ public class FamilieDokumentClient {
         };
         body.add("file", fileResource);
         HttpEntity<MultiValueMap> entity = new HttpEntity<>(body, headers);
+        logger.info("post {}", familieDokumentVedleggUri);
         try {
             ResponseEntity<Map> response = restTemplate.postForEntity(familieDokumentVedleggUri, entity, Map.class);
             logger.info("POST vedlegg til familie-dokument {}: {}",
