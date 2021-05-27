@@ -29,4 +29,4 @@ SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_S3_C
 ENVIRONMENT_NAME: q
 
 # familie-dokument i dev-GCP
-FAMILIE_DOKUMENT_API_URL: "https://familie-dokument.dev.intern.nav.no/api"
+FAMILIE_DOKUMENT_API_URL: "https://familie-dokument.dev.intern.nav.no/api/"

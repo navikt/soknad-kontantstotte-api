@@ -37,16 +37,16 @@ class PdfConverter {
     }
 
     byte[] genererPdf(byte[] bytes) {
-        URI dokumentUri = URI.create(pdfSvgSupportGeneratorUrl + "/html-til-pdf");
+        URI dokumentUri = URI.create(pdfSvgSupportGeneratorUrl + "html-til-pdf");
         log.info("post " + dokumentUri);
         try {
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                                         .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
-                                        .header(HttpHeader.HOST.asString(), "familie-dokument.dev.intern.nav.no")
-                                        .uri(URI.create(pdfSvgSupportGeneratorUrl + "/html-til-pdf"))
+                                        .uri(URI.create(pdfSvgSupportGeneratorUrl + "html-til-pdf"))
                                         .POST(HttpRequest.BodyPublishers.ofString(new String(bytes, StandardCharsets.UTF_8)))
                                         .build();
             log.info("host "+ request.headers().map().get("Host").get(0));
+            log.info("uri "+ request.uri());
             var response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
 
             if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(response.statusCode()))) {
