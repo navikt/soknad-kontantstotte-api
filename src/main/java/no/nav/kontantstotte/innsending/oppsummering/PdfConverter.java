@@ -46,7 +46,7 @@ class PdfConverter {
                                         .uri(URI.create(pdfSvgSupportGeneratorUrl + "/html-til-pdf"))
                                         .POST(HttpRequest.BodyPublishers.ofString(new String(bytes, StandardCharsets.UTF_8)))
                                         .build();
-
+            log.info("host "+ request.headers().map().get("Host").get(0));
             var response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
 
             if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(response.statusCode()))) {
