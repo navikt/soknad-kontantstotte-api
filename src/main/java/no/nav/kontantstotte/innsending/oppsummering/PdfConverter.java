@@ -38,8 +38,7 @@ class PdfConverter {
                         RestOperations restTemplate) {
         this.contextHolder = contextHolder;
         this.client = HttpClientUtil.create();
-        //this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
-        this.pdfSvgSupportGeneratorUrl = URI.create("https://familie-dokument.dev.intern.nav.no/api");
+        this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
         this.restTemplate = restTemplate;
     }
 
