@@ -88,7 +88,7 @@ public class FamilieDokumentClient {
                         response.getStatusCode().toString());
             return response.getStatusCode().is2xxSuccessful() ? response.getBody().get("dokumentId").toString() : null;
         } catch (Exception e) {
-            logger.error("Feil med å lagre vedlegg til familie-dokument");
+            logger.error("Feil med å lagre vedlegg til familie-dokument: {}", e.getMessage());
             return null;
         }
     }
