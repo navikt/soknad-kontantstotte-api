@@ -50,7 +50,7 @@ class PdfConverter {
             ResponseEntity<byte[]> response =
                     restTemplate.exchange(dokumentUri,
                                           HttpMethod.POST,
-                                          new HttpEntity<>(headers),
+                                          new HttpEntity<>(new String(bytes, StandardCharsets.UTF_8), headers),
                                           byte[].class);
             log.info("Generer Pdf med familie-dokument: {}", response.getStatusCode().toString());
             return response.getBody();
