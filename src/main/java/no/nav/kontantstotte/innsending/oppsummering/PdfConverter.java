@@ -38,18 +38,20 @@ class PdfConverter {
 
     byte[] genererPdf(byte[] bytes) {
         URI dokumentUri = URI.create(pdfSvgSupportGeneratorUrl + "/html-til-pdf");
-        log.info("post "+ dokumentUri);
+        log.info("post " + dokumentUri);
         try {
             var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                    .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
-                    .uri(URI.create(pdfSvgSupportGeneratorUrl + "/html-til-pdf"))
-                    .POST(HttpRequest.BodyPublishers.ofString(new String(bytes, StandardCharsets.UTF_8)))
-                    .build();
+                                        .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
+                                        .header(HttpHeader.HOST.asString(), "familie-dokument.dev.intern.nav.no")
+                                        .uri(URI.create(pdfSvgSupportGeneratorUrl + "/html-til-pdf"))
+                                        .POST(HttpRequest.BodyPublishers.ofString(new String(bytes, StandardCharsets.UTF_8)))
+                                        .build();
 
             var response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
 
             if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(response.statusCode()))) {
-                throw new InnsendingException("Response fra pdf-generator: " + response.statusCode() + ". Response.entity: " + new String(response.body()));
+                throw new InnsendingException("Response fra pdf-generator: " + response.statusCode() + ". Response.entity: " +
+                                              new String(response.body()));
             }
 
             log.info("Konvertert søknad til pdf");
