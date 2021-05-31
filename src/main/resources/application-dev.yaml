@@ -45,4 +45,4 @@ logging:
   config: classpath:logback-spring-test.xml
 
 # familie-dokument i dev-GCP
-FAMILIE_DOKUMENT_API_URL: "https://familie-dokument.dev.intern.nav.no/api"
+FAMILIE_DOKUMENT_API_URL: "http://familie-dokument/api"
