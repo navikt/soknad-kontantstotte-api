@@ -50,6 +50,8 @@ spec:
       rules:
         - application: soknad-kontantstotte
     outbound:
+      rules:
+        - application: familie-dokument
       external:
         - host: navtestb2c.b2clogin.com
         - host: webproxy-nais.nav.no
