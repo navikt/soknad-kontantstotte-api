@@ -52,6 +52,7 @@ spec:
     outbound:
       rules:
         - application: familie-dokument
+        - application: soknad-html-generator
       external:
         - host: navtestb2c.b2clogin.com
         - host: webproxy-nais.nav.no

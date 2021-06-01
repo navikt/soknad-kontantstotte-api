@@ -16,7 +16,6 @@ APPRES_CMS_URL: https://appres-q2.nav.no
 LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api-q.nav.no
 
 # Pdf-generator
-# SOKNAD_HTML_GENERATOR_URL: https://soknad-html-generator.intern.dev.nav.no/api/
 SOKNAD_HTML_GENERATOR_URL: http://soknad-html-generator/api/
 
 # Api-gw/tjenester i FSS
