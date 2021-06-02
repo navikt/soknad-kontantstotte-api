@@ -29,9 +29,9 @@ import java.time.temporal.ChronoUnit;
 @SpringBootConfiguration
 @Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class,
          MdcValuesPropagatingClientInterceptor.class,
-         ConsumerIdClientInterceptor.class})
+         ConsumerIdClientInterceptor.class, WebConfig.class})
 @ComponentScan({"no.nav.kontantstotte"})
-@EnableConfigurationProperties(MultiIssuerProperties.class)
+@EnableConfigurationProperties({MultiIssuerProperties.class})
 public class ApplicationConfig {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
