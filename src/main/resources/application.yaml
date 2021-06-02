@@ -5,6 +5,10 @@ server:
   servlet:
     context-path: /
 
+cors:
+  allowed_origins:
+    - "https://soknad-kontantstotte.nav.no"
+
 spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
   main.banner-mode: "off"

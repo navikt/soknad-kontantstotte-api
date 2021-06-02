@@ -5,6 +5,10 @@ no.nav.security.oidc:
     acceptedaudience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
     cookie_name: selvbetjening-idtoken
 
+cors:
+  allowed_origins:
+    - "https://soknad-kontantstotte.dev.nav.no"
+
 # Appdynamics
 APPDYNAMICS_AGENT_ACCOUNT_NAME: NON-PROD
 APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY: ${APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY} #Ligger i vault
