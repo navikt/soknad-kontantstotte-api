@@ -29,7 +29,7 @@ import java.time.temporal.ChronoUnit;
 @SpringBootConfiguration
 @Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class,
          MdcValuesPropagatingClientInterceptor.class,
-         ConsumerIdClientInterceptor.class, WebConfig.class})
+         ConsumerIdClientInterceptor.class})
 @ComponentScan({"no.nav.kontantstotte"})
 @EnableConfigurationProperties({MultiIssuerProperties.class})
 public class ApplicationConfig {

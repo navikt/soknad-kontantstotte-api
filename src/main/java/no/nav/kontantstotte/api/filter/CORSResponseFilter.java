@@ -20,7 +20,9 @@ public class CORSResponseFilter implements Filter {
             "https://soknad-kontantstotte-t.nav.no",
             "https://soknad-kontantstotte-q.nav.no",
             "https://soknad-kontantstotte-dev-sbs.dev.nav.no",
-            "https://soknad-kontantstotte.nav.no");
+            "https://soknad-kontantstotte.nav.no",
+            "https://soknad-kontantstotte.dev.nav.no"
+            );
 
     @Override
     public void init(FilterConfig filterConfig) {
