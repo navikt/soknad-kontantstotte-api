@@ -14,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableConfigurationProperties(CorsProperties.class)
 public class WebConfig implements WebMvcConfigurer {
 
-    static Logger LOG = LoggerFactory.getLogger(WebConfig.class);
     CorsProperties corsProperties;
 
     WebConfig(CorsProperties corsProperties){
@@ -23,7 +22,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        LOG.info("Allow origins: {}", corsProperties.getAllowedOrigins());
         registry.addMapping("/api/**").allowedOrigins(corsProperties.getAllowedOrigins());
+        registry.addMapping("/api/status/*").allowedOrigins(corsProperties.getAllowedOrigins());
+        registry.addMapping("/api/verify/*").allowedOrigins(corsProperties.getAllowedOrigins());
     }
 }
