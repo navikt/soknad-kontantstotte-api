@@ -27,7 +27,7 @@ public class TestLauncher {
 
     public static void main(String... args) {
         SpringApplication app = new SpringApplicationBuilder(ApplicationConfig.class)
-                //.profiles("dev", "mockgen-tps", "mockgen-pdf")
+                .profiles("dev", "mockgen-tps", "mockgen-pdf")
                 .build();
         app.run(args);
     }

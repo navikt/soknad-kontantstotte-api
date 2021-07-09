@@ -19,9 +19,6 @@ APPRES_CMS_URL: https://appres-q2.nav.no
 # Loadbalancer/ingress
 LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api-q.nav.no
 
-# Pdf-generator
-SOKNAD_HTML_GENERATOR_URL: http://soknad-html-generator/api/
-
 # Api-gw/tjenester i FSS
 FAMILIE_KS_MOTTAK_API_URL: https://api-gw-q0.oera.no/familie-ks-mottak/api/
 TPS-PROXY_API_V1_INNSYN_URL: https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
@@ -31,6 +28,3 @@ SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_S3_C
 
 # Annet
 ENVIRONMENT_NAME: q
-
-# familie-dokument i dev-GCP
-FAMILIE_DOKUMENT_API_URL: "http://familie-dokument/api"

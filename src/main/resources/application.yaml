@@ -36,8 +36,8 @@ logging:
     root: INFO
     org.eclipse.jetty: INFO
     org.springframework: INFO
-    org.glassfish: WARN
-    no.nav: DEBUG
+    org.glassfish: INFO
+    no.nav: INFO
 
 # Pdf-generator
 SOKNAD_HTML_GENERATOR_URL: http://soknad-html-generator/api/

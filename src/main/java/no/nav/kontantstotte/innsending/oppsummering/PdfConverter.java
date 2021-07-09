@@ -42,7 +42,7 @@ class PdfConverter {
         this.restTemplate = restTemplate;
     }
 
-    byte[] genererPdfMedRestTemplate(byte[] bytes) {
+    byte[] genererPdf(byte[] bytes) {
         HttpHeaders headers = new HttpHeaders();
         URI dokumentUri = UriComponentsBuilder.fromUri(pdfSvgSupportGeneratorUrl).path("/html-til-pdf").build().toUri();
         log.info("post uri {}", dokumentUri);
@@ -58,36 +58,5 @@ class PdfConverter {
             throw new InnsendingException("Feil med å genere Pdf med familie-dokument: "+ e.getMessage());
         }
     }
-
-    byte[] genererPdf(byte[] bytes) {
-        URI dokumentUri = URI.create(pdfSvgSupportGeneratorUrl + "html-til-pdf");
-        log.info("post " + dokumentUri);
-        try {
-            var request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                                        .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
-                                        .uri(URI.create(pdfSvgSupportGeneratorUrl + "html-til-pdf"))
-                                        .POST(HttpRequest.BodyPublishers.ofString(new String(bytes, StandardCharsets.UTF_8)))
-                                        .build();
-            log.info("host "+ request.headers().map().get("Host").get(0));
-            log.info("uri "+ request.uri());
-            var response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
-
-            if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(response.statusCode()))) {
-                throw new InnsendingException("Response fra pdf-generator: " + response.statusCode() + ". Response.entity: " +
-                                              new String(response.body()));
-            }
-
-            log.info("Konvertert søknad til pdf");
-
-            return response.body();
-        } catch (JsonProcessingException e) {
-            throw new InnsendingException("Feiler under konvertering av innsending til json. " + e.getMessage());
-        } catch (InterruptedException e) {
-            throw new InnsendingException("Timer ut under innsending. " + e.getMessage());
-        } catch (IOException e) {
-            throw new InnsendingException("Ukjent IO feil. " + e.getMessage());
-        }
-    }
-
 }
 

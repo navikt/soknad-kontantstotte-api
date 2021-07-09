@@ -17,10 +17,10 @@ public class OppsummeringPdfGenerator {
 
     public byte[] generer(Soknad soknad, String fnr) {
         byte[] htmlBytes = oppsummeringHtmlGenerator.genererHtml(soknad, fnr);
-        return pdfConverter.genererPdfMedRestTemplate(htmlBytes);
+        return pdfConverter.genererPdf(htmlBytes);
     }
     public byte[] genererNy(Søknad søknad, String fnr) {
         byte[] htmlBytes = oppsummeringHtmlGenerator.genererHtmlNy(søknad, fnr);
-        return pdfConverter.genererPdfMedRestTemplate(htmlBytes);
+        return pdfConverter.genererPdf(htmlBytes);
     }
 }

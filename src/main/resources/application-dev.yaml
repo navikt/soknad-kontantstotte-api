@@ -42,6 +42,3 @@ logging:
     org.glassfish.jersey.logging.LoggingFeature: DEBUG
     com.fasterxml: WARN
   config: classpath:logback-spring-test.xml
-
-# familie-dokument i dev-GCP
-FAMILIE_DOKUMENT_API_URL: "http://familie-dokument/api"
