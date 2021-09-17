@@ -20,7 +20,7 @@ APPRES_CMS_URL: https://appres-q2.nav.no
 LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api-q.nav.no
 
 # Api-gw/tjenester i FSS
-FAMILIE_KS_MOTTAK_API_URL: https://api-gw-q0.oera.no/familie-ks-mottak/api/
+FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.dev-fss-pub.nais.io/api/
 TPS-PROXY_API_V1_INNSYN_URL: https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
 
 # S3
