@@ -3,7 +3,6 @@ package no.nav.kontantstotte.innsending;
 import no.nav.familie.ks.kontrakter.søknad.Barn;
 import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.kontantstotte.dokument.DokumentService;
-import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 
 import java.util.Arrays;
 import java.util.Collections;

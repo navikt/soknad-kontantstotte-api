@@ -7,15 +7,9 @@ import no.nav.kontantstotte.api.filter.SecurityHttpHeaderFilter;
 import no.nav.kontantstotte.config.toggle.FeatureToggleConfig;
 import no.nav.kontantstotte.innsending.InnsendingConfiguration;
 import no.nav.kontantstotte.innsyn.service.rest.InnsynRestConfiguration;
-import no.nav.kontantstotte.storage.attachment.AttachmentConfiguration;
-import no.nav.kontantstotte.storage.encryption.EncryptedStorageConfiguration;
 import no.nav.security.spring.oidc.MultiIssuerProperties;
-import no.nav.security.token.support.core.context.TokenValidationContextHolder;
-import no.nav.security.token.support.spring.SpringTokenValidationContextHolder;
-import no.nav.security.token.support.spring.validation.interceptor.BearerTokenClientHttpRequestInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -25,7 +19,6 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
@@ -34,7 +27,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 @SpringBootConfiguration
-@Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class, EncryptedStorageConfiguration.class, AttachmentConfiguration.class,
+@Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class,
          MdcValuesPropagatingClientInterceptor.class,
          ConsumerIdClientInterceptor.class})
 @ComponentScan({"no.nav.kontantstotte"})
