@@ -56,6 +56,7 @@ spec:
       external:
         - host: navtestb2c.b2clogin.com
         - host: webproxy-nais.nav.no
+        - host: {{ks_mottak_host_url}}
   idporten:
     enabled: true
     # optional, default shown

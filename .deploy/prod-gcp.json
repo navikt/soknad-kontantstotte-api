@@ -1,5 +1,6 @@
 {
   "ingresses": ["https://soknad-kontantstotte-api-gcp.nav.no"],
   "spring_profile" : "default",
-  "secret" : "soknad-kontantstotte-api-secret"
+  "secret" : "soknad-kontantstotte-api-secret",
+  "ks_mottak_host_url": "https://familie-ks-mottak.prod-fss-pub.nais.io" 
 }
