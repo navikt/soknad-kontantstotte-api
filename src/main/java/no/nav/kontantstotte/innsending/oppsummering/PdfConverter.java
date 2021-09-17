@@ -50,6 +50,7 @@ class PdfConverter {
             log.info("Generer Pdf med familie-dokument: {}", response.getStatusCode().toString());
             return response.getBody();
         } catch (Exception e) {
+            log.error("Generate pdf exception", e);
             throw new InnsendingException("Feil med å genere Pdf med familie-dokument: "+ e.getMessage());
         }
     }
