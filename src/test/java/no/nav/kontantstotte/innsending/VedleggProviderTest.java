@@ -3,7 +3,6 @@ package no.nav.kontantstotte.innsending;
 import no.nav.kontantstotte.SetOidcClaimsWithSubject;
 import no.nav.kontantstotte.dokument.DokumentService;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
-import no.nav.kontantstotte.storage.encryption.EncryptedStorage;
 import org.junit.Rule;
 import org.junit.Test;
 
