@@ -27,3 +27,5 @@ ENVIRONMENT_NAME: q
 
 # familie-dokument i dev-GCP
 FAMILIE_DOKUMENT_API_URL: "https://familie-dokument.dev.nav.no/familie/dokument/api"
+
+FAMILIE_DOKUMENT_PDF_CONVERTOR_API_URL: "https://familie-dokument.dev.nav.no/api"

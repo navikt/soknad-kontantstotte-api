@@ -28,7 +28,7 @@ class PdfConverter {
     private RestOperations restTemplate;
 
 
-    public PdfConverter(@Value("${FAMILIE_DOKUMENT_API_URL}") URI pdfSvgSupportGeneratorUrl,
+    public PdfConverter(@Value("${FAMILIE_DOKUMENT_PDF_CONVERTOR_API_URL}") URI pdfSvgSupportGeneratorUrl,
                         OIDCRequestContextHolder contextHolder,
                         RestOperations restTemplate) {
         this.contextHolder = contextHolder;
