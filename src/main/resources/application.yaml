@@ -81,4 +81,4 @@ ENVIRONMENT_NAME: p
 STS_URL: http://security-token-service
 
 # familie-dokument i GCP
-FAMILIE_DOKUMENT_API_URL: "https://familie-dokument.intern.nav.no/api"
+FAMILIE_DOKUMENT_API_URL: "https://www.nav.no/familie/dokument/api"

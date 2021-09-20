@@ -93,7 +93,6 @@ public class StorageControllerTest {
 
     private HttpResponse<String> postKall(String filnavn) {
         HttpClient client = HttpClient.newHttpClient();
-
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
         String boundary = new BigInteger(256, new Random()).toString();
 
