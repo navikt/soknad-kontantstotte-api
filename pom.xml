@@ -252,8 +252,6 @@
             <artifactId>felles</artifactId>
             <version>2.0_20210202101640_559def4</version>
         </dependency>
-
-
     </dependencies>
 
     <repositories>
