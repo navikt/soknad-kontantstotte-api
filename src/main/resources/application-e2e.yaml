@@ -12,7 +12,6 @@ spring:
 UNLEASH_API_URL: http://localhost
 NAIS_APP_NAME: soknad-kontantstotte-api
 
-SOKNAD_PDF_SVG_SUPPORT_GENERATOR_URL: http://localhost:8082/api/
 SOKNAD_HTML_GENERATOR_URL: http://localhost:9000/api/
 
 SOKNAD_KONTANTSTOTTE_S3_ENDPOINT: http://localstack:4572
@@ -32,7 +31,6 @@ SOKNAD_KONTANTSTOTTE_API_S3_SECRETKEY: anything
 SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_PASSWORD: anything
 
 FAMILIE_KS_MOTTAK_API_URL: "http://familie-ks-mottak:8084/api/"
-SOKNAD_PDF_GENERATOR_URL: "http://localhost:8082/api/"
 STS_URL: "http://security-token-service"
 CREDENTIAL_USERNAME: "srv-soknad-kontantstotte-api"
 CREDENTIAL_PASSWORD: "skal-ikke-sjekkes-inn"
@@ -49,3 +47,4 @@ logging:
     com.fasterxml: WARN
   config: classpath:logback-spring.xml
 
+FAMILIE_DOKUMENT_API_URL: "http://localhost:8082/api/"

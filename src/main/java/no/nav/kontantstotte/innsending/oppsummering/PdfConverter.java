@@ -3,10 +3,8 @@ package no.nav.kontantstotte.innsending.oppsummering;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import no.nav.familie.kontrakter.felles.Ressurs;
 import no.nav.kontantstotte.client.HttpClientUtil;
-import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.kontantstotte.innsending.InnsendingException;
 import no.nav.security.oidc.context.OIDCRequestContextHolder;
-import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,13 +13,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.nio.charset.StandardCharsets;
 
 @Component
 class PdfConverter {
