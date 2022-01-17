@@ -78,8 +78,5 @@ APPRES_CMS_URL: https://appres.nav.no
 # Annet
 ENVIRONMENT_NAME: p
 
-# STS
-STS_URL: http://security-token-service
-
 # familie-dokument i GCP
 FAMILIE_DOKUMENT_API_URL: "http://familie-dokument/api"

@@ -26,6 +26,8 @@ import java.util.Map;
 public class FamilieDokumentClient {
 
     private Logger logger = LoggerFactory.getLogger(FamilieDokumentClient.class);
+    private static final Logger secureLogger = LoggerFactory.getLogger("secureLogger");
+
     private URI familieDokumentUri;
     private RestOperations restTemplate;
     private static String VEDLEGG_PATH = "/mapper/familievedlegg/";
@@ -88,7 +90,8 @@ public class FamilieDokumentClient {
                         response.getStatusCode().toString());
             return response.getStatusCode().is2xxSuccessful() ? response.getBody().get("dokumentId").toString() : null;
         } catch (Exception e) {
-            logger.error("Feil med å lagre vedlegg til familie-dokument: {}", e.getMessage());
+            logger.error("Feil med å lagre vedlegg til familie-dokument");
+            secureLogger.error("Feil med å lagre vedlegg til familie-dokument", e);
             return null;
         }
     }
