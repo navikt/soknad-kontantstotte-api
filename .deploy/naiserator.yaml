@@ -30,6 +30,9 @@ spec:
     path: /internal/prometheus
   vault:
     enabled: false
+  azure:
+    application:
+      enabled: true
   replicas:
     min: 2
     max: 4
