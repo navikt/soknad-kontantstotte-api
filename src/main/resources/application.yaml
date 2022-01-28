@@ -11,7 +11,9 @@ cors:
 
 spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
-  main.banner-mode: "off"
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: off
 
 no.nav.security.jwt:
   issuer.selvbetjening:
