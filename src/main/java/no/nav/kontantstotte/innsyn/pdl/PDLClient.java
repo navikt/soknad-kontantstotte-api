@@ -150,8 +150,7 @@ public class PDLClient extends AbstractPingableRestClient {
     private static String graphqlQuery(String pdlResource) {
         String query = "";
         try {
-            query = graphqlCompatible(new String(Objects.requireNonNull(
-                                                                PDLConfig.class.getResource("/pdl/" + pdlResource + ".graphql"))
+            query = graphqlCompatible(new String(Objects.requireNonNull(PDLClient.class.getResource("/pdl/" + pdlResource + ".graphql"))
                                                         .openStream().readAllBytes(), StandardCharsets.UTF_8));
         } catch (IOException e) {
             logger.warn("Fikk feil til å konverte respons ", e);
