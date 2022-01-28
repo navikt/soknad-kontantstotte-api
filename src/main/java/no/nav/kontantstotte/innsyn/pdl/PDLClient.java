@@ -12,13 +12,12 @@ import no.nav.kontantstotte.innsyn.pdl.domene.PdlPerson;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlPersonData;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlPersonRequest;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlPersonRequestVariables;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -26,11 +25,13 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class PDLClient extends AbstractPingableRestClient {
@@ -71,7 +72,7 @@ public class PDLClient extends AbstractPingableRestClient {
     public void ping() {
         try {
             getOperations().optionsForAllow(getPingUri());
-        }catch (RestClientException e){
+        } catch (RestClientException e) {
             logger.warn("Kan ikke oppnå PDL, feilMelding=", e);
             throw new InnsynOppslagException(e.getMessage());
         }
@@ -83,9 +84,9 @@ public class PDLClient extends AbstractPingableRestClient {
 
         try {
             var responseEntity = restTemplate.postForEntity(getPingUrl(),
-                                                           request,
-                                                           PdlHentPersonResponse.class,
-                                                           httpHeaders());
+                                                            request,
+                                                            PdlHentPersonResponse.class,
+                                                            httpHeaders());
             var respons = Objects.requireNonNull(responseEntity.getBody(), "Fikk null respons fra PDL");
             if (!respons.harFeil()) {
                 return ((PdlPerson) respons.getData()).getPerson();
@@ -149,16 +150,25 @@ public class PDLClient extends AbstractPingableRestClient {
 
     private static String graphqlQuery(String pdlResource) {
         String query = "";
-        try {
+        /*try {
             query = graphqlCompatible(new String(Objects.requireNonNull(PDLClient.class.getResource("/pdl/" + pdlResource + ".graphql"))
                                                         .openStream().readAllBytes(), StandardCharsets.UTF_8));
         } catch (IOException e) {
             logger.warn("Fikk feil til å konverte respons ", e);
+        }*/
+        ClassPathResource resource = new ClassPathResource("/pdL/" + pdlResource + ".graphql");
+        try (InputStreamReader inputStreamReader = new InputStreamReader(resource.getInputStream());
+             BufferedReader reader = new BufferedReader(inputStreamReader)) {
+            query = reader.lines()
+                          .map(String::strip)
+                          .collect(Collectors.joining(" "));
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't read file: " + pdlResource, e);
         }
         return query;
     }
 
-    private static String graphqlCompatible(String text) {
+    /*private static String graphqlCompatible(String text) {
         return StringUtils.normalizeSpace(text.replace("\n", ""));
-    }
+    }*/
 }
