@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -49,7 +50,7 @@ public class PDLClient extends AbstractPingableRestClient {
 
     @Autowired
     public PDLClient(@Value("${PDL_URL}") URI pdlUrl,
-                     RestOperations restTemplate,
+                     @Qualifier("azureClientCredential") RestOperations restTemplate,
                      ObjectMapper mapper) {
         super(restTemplate, "pdl.personInfo");
         this.pdlUrl = UriComponentsBuilder.fromUri(pdlUrl).path(PATH_GRAPHQL).build().toUri();

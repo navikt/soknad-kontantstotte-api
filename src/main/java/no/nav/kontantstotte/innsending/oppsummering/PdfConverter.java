@@ -4,6 +4,7 @@ import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.innsending.InnsendingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +28,7 @@ class PdfConverter {
 
 
     public PdfConverter(@Value("${FAMILIE_DOKUMENT_API_URL}") URI pdfSvgSupportGeneratorUrl,
-                        RestOperations restTemplate) {
+                        @Qualifier("tokenExchange") RestOperations restTemplate) {
         this.client = HttpClientUtil.create();
         this.pdfSvgSupportGeneratorUrl = pdfSvgSupportGeneratorUrl;
         this.restTemplate = restTemplate;

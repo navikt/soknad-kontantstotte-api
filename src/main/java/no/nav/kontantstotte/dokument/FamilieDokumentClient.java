@@ -5,6 +5,7 @@ import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.security.token.support.core.context.TokenValidationContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
@@ -40,7 +41,7 @@ public class FamilieDokumentClient {
 
     public FamilieDokumentClient(@Value("${FAMILIE_DOKUMENT_API_URL}") URI uri,
                                  TokenValidationContextHolder contextHolder,
-                                 RestOperations restTemplate) {
+                                 @Qualifier("tokenExchange") RestOperations restTemplate) {
         this.familieDokumentUri = uri;
         this.contextHolder = contextHolder;
         this.restTemplate = restTemplate;
