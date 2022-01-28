@@ -156,7 +156,7 @@ public class PDLClient extends AbstractPingableRestClient {
         } catch (IOException e) {
             logger.warn("Fikk feil til å konverte respons ", e);
         }*/
-        ClassPathResource resource = new ClassPathResource("/pdL/" + pdlResource + ".graphql");
+        ClassPathResource resource = new ClassPathResource("/pdl/" + pdlResource + ".graphql");
         try (InputStreamReader inputStreamReader = new InputStreamReader(resource.getInputStream());
              BufferedReader reader = new BufferedReader(inputStreamReader)) {
             query = reader.lines()
