@@ -1,5 +1,6 @@
 package no.nav.kontantstotte.config;
 
+import no.nav.familie.http.config.RestTemplateAzure;
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor;
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor;
 import no.nav.familie.log.filter.LogFilter;
@@ -7,11 +8,11 @@ import no.nav.kontantstotte.api.filter.SecurityHttpHeaderFilter;
 import no.nav.kontantstotte.config.toggle.FeatureToggleConfig;
 import no.nav.kontantstotte.innsending.InnsendingConfiguration;
 import no.nav.kontantstotte.innsyn.service.rest.InnsynRestConfiguration;
-import no.nav.security.spring.oidc.MultiIssuerProperties;
+import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client;
+import no.nav.security.token.support.spring.api.EnableJwtTokenValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -27,11 +28,13 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 @SpringBootConfiguration
+@ComponentScan({"no.nav.kontantstotte", "no.nav.familie.sikkerhet"})
 @Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class,
          MdcValuesPropagatingClientInterceptor.class,
-         ConsumerIdClientInterceptor.class})
-@ComponentScan({"no.nav.kontantstotte"})
-@EnableConfigurationProperties({MultiIssuerProperties.class})
+         ConsumerIdClientInterceptor.class,
+         RestTemplateAzure.class})
+@EnableOAuth2Client(cacheEnabled = true)
+@EnableJwtTokenValidation(ignore = {"org.springframework", "org.springdoc"})
 public class ApplicationConfig {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
@@ -69,8 +72,8 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public RestOperations restTemplate( MdcValuesPropagatingClientInterceptor mdcValuesPropagatingClientInterceptor,
-                                       ConsumerIdClientInterceptor consumerIdClientInterceptor){
+    public RestOperations restTemplate(MdcValuesPropagatingClientInterceptor mdcValuesPropagatingClientInterceptor,
+                                       ConsumerIdClientInterceptor consumerIdClientInterceptor) {
         return new RestTemplateBuilder()
                 .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
                 .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))

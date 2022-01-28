@@ -3,13 +3,13 @@ package no.nav.kontantstotte.api.rest;
 import java.util.HashMap;
 import java.util.Map;
 
+import no.nav.security.token.support.core.api.Unprotected;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import no.nav.kontantstotte.tekst.TekstService;
-import no.nav.security.oidc.api.Unprotected;
 
 @RestController
 @RequestMapping("api/tekster")

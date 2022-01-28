@@ -3,9 +3,7 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.kontantstotte.client.HttpClientUtil;
-import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.kontantstotte.innsending.InnsendingException;
-import no.nav.security.oidc.context.OIDCRequestContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,18 +20,16 @@ import java.time.Duration;
 
 @Component
 class HtmlConverter {
+
     private static final Logger log = LoggerFactory.getLogger(HtmlConverter.class);
     private final String CONTENT_TYPE = "Content-Type";
     private final HttpClient client;
     private URI url;
     private ObjectMapper mapper;
-    private OIDCRequestContextHolder contextHolder;
 
     public HtmlConverter(@Value("${SOKNAD_HTML_GENERATOR_URL}") URI htmlGeneratorUrl,
-                         ObjectMapper mapper,
-                         OIDCRequestContextHolder contextHolder) {
+                         ObjectMapper mapper) {
         this.mapper = mapper;
-        this.contextHolder = contextHolder;
         this.client = HttpClientUtil.create();
         this.url = htmlGeneratorUrl;
     }
@@ -42,14 +38,14 @@ class HtmlConverter {
 
         HttpResponse<byte[]> response;
         URI generatorUri = URI.create(url + "generateHtml");
-        log.info("generator uri "+ generatorUri);
+        log.info("generator uri " + generatorUri);
         try {
-            HttpRequest request = HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                    .header(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .timeout(Duration.ofSeconds(10))
-                    .uri(URI.create(url + "generateHtml"))
-                    .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(oppsummering)))
-                    .build();
+            HttpRequest request = HttpClientUtil.createRequest()
+                                                .header(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                                .timeout(Duration.ofSeconds(10))
+                                                .uri(URI.create(url + "generateHtml"))
+                                                .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(oppsummering)))
+                                                .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
 
         } catch (JsonProcessingException e) {
@@ -61,7 +57,8 @@ class HtmlConverter {
         }
 
         if (response.statusCode() != HttpStatus.OK.value()) {
-            throw new InnsendingException("Response fra html-generator: " + response.statusCode() + ". Response.entity: " + new String(response.body()));
+            throw new InnsendingException("Response fra html-generator: " + response.statusCode() + ". Response.entity: " +
+                                          new String(response.body()));
         }
 
         log.info("Konvertert søknad til html");

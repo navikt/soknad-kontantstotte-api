@@ -43,7 +43,7 @@
       },
       {
         "sporsmal": "Fødselsdato (dd.mm.åååå)",
-        "svar": "000000 og 000000",
+        "svar": "000000 og 011018",
         "advarsel": "Vi ser at du søker for mer enn et barn. Vi forutsetter at opplysningene du oppgir om barna er like, om ikke må du søke for hvert av barna eller søke på papir.",
         "underelementer": null
       }
@@ -87,7 +87,7 @@
       },
       {
         "sporsmal": "Fødselsnummeret til den andre forelderen:",
-        "svar": "00000000002",
+        "svar": "12345678911",
         "advarsel": null,
         "underelementer": null
       }

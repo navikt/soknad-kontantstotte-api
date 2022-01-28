@@ -1,21 +1,16 @@
 package no.nav.kontantstotte.innsending;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.familie.ks.kontrakter.søknad.SøknadKt;
 import no.nav.kontantstotte.client.HttpClientUtil;
-import no.nav.kontantstotte.client.TokenHelper;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
-import no.nav.security.oidc.context.OIDCRequestContextHolder;
-import org.eclipse.jetty.http.HttpHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -41,7 +36,6 @@ public class MottakInnsendingService implements InnsendingService {
     private final OppsummeringPdfGenerator oppsummeringPdfGenerator;
     private final VedleggProvider vedleggProvider;
     private URI mottakServiceUri;
-    private OIDCRequestContextHolder contextHolder;
     private ObjectMapper mapper;
     private HttpClient client;
 
@@ -50,7 +44,6 @@ public class MottakInnsendingService implements InnsendingService {
                                            String kontantstotteMottakApiKeyUsername,
                                    @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_PASSWORD}")
                                            String kontantstotteMottakApiKeyPassword,
-                                   OIDCRequestContextHolder contextHolder,
                                    OppsummeringPdfGenerator oppsummeringPdfGenerator,
                                    VedleggProvider vedleggProvider,
                                    ObjectMapper mapper) {
@@ -58,7 +51,6 @@ public class MottakInnsendingService implements InnsendingService {
         this.kontantstotteMottakApiKeyUsername = kontantstotteMottakApiKeyUsername;
         this.kontantstotteMottakApiKeyPassword = kontantstotteMottakApiKeyPassword;
         this.mottakServiceUri = mottakServiceUri;
-        this.contextHolder = contextHolder;
         this.oppsummeringPdfGenerator = oppsummeringPdfGenerator;
         this.vedleggProvider = vedleggProvider;
         this.mapper = mapper;
@@ -68,7 +60,7 @@ public class MottakInnsendingService implements InnsendingService {
     @Override
     public Søknad sendInnSøknad(Søknad søknad) {
         LOG.info("Prøver å sende søknad til mottaket");
-        try {
+        /*try {
             HttpRequest mottakRequest =
                     HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
                                   .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
@@ -80,7 +72,7 @@ public class MottakInnsendingService implements InnsendingService {
             sendRequest(mottakRequest);
         } catch (JsonProcessingException e) {
             throw new InnsendingException("Feiler under konvertering av innsending til json.");
-        }
+        }*/
         return søknad;
     }
 

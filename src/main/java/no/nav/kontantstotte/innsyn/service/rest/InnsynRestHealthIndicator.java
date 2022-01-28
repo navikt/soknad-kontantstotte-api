@@ -29,15 +29,15 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
     @Override
     public Health health() {
 
-        LOG.info("Pinging TPS innsyn service");
+        LOG.info("Pinging PDL innsyn service");
         try {
             innsynServiceClient.ping();
             tpsInnysynSuccess.increment();
-            LOG.info("TPS innsyn service is UP");
+            LOG.info("PDL innsyn service is UP");
             return up();
         } catch (Exception e) {
             tpsInnsynFailure.increment();
-            LOG.warn("Could not verify health of TPS innsyn service ", e);
+            LOG.warn("Could not verify health of PDL innsyn service ", e);
             return isPreprod() ? downWithDetails(e) : down();
         }
     }
@@ -47,7 +47,7 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
     }
 
     private Health downWithDetails(Exception e) {
-        return Health.down().withDetail("TPS innsyn service", innsynServiceClient.toString()).withException(e).build();
+        return Health.down().withDetail("PDL innsyn service", innsynServiceClient.toString()).withException(e).build();
     }
 
     private boolean isPreprod() {
@@ -63,7 +63,7 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
     }
 
     private Health upWithDetails() {
-        return Health.up().withDetail("TPS innsyn service", innsynServiceClient.toString()).build();
+        return Health.up().withDetail("PDL innsyn service", innsynServiceClient.toString()).build();
     }
 
     @Override

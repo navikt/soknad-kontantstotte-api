@@ -47,3 +47,4 @@ logging:
   config: classpath:logback-spring.xml
 
 FAMILIE_DOKUMENT_API_URL: "http://localhost:8082/api/"
+PDL_URL: http://familie-mock-server:1337/rest/api/pdl/

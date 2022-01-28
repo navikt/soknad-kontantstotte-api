@@ -1,9 +1,23 @@
-no.nav.security.oidc:
-  issuers: selvbetjening
+no.nav.security.jwt:
   issuer.selvbetjening:
     discoveryurl: http://metadata
     accepted_audience: aud-localhost
     cookie_name: localhost-idtoken
+    proxyurl:
+  client.registration:
+    pdl:
+      token-endpoint-url: http://metadata
+    pdl-clientcredentials:
+      token-endpoint-url: http://metadata
+
+TOKEN_X_WELL_KNOWN_URL: http://localhost
+TOKEN_X_PRIVATE_JWK: '{
+    "kty" : "RSA",
+    "e" : "AQAB",
+    "use" : "sig",
+    "kid" : "mock-oauth2-server-key",
+    "n" : ""
+  }'
 
 spring:
   main:

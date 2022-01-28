@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import no.nav.security.token.support.core.api.ProtectedWithClaims;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import no.nav.kontantstotte.api.rest.dto.BarnDto;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
-import no.nav.security.oidc.api.ProtectedWithClaims;
 
 
 @RestController

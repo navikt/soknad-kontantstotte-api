@@ -19,10 +19,6 @@ public class SøknadOppsummering {
     private List<Bolk> bolker;
     private Map<String, String> tekster;
 
-    public SøknadOppsummering() {
-
-    }
-
     public SøknadOppsummering(Søknad søknad, Person person, String innsendingsTidspunkt, List<Bolk> bolker, Map<String, String> tekster) {
         MetaDataElement metaDataInnsendingsTidspunkt = new MetaDataElement(tekster.get(INNSENDING_LABEL.getNokkel()), innsendingsTidspunkt);
         String samletBekreftelse = tekster.get(BEKREFTELSE_OPPLYSNINGER.getNokkel()) + "<br><br>" + tekster.get(BEKREFTELSE_PLIKTER.getNokkel());

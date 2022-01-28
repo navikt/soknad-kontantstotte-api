@@ -1,9 +1,7 @@
 package no.nav.kontantstotte.innsending;
 
-import no.nav.kontantstotte.SetOidcClaimsWithSubject;
 import no.nav.kontantstotte.dokument.DokumentService;
 import no.nav.kontantstotte.innsending.steg.Barnehageplass;
-import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -15,9 +13,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class VedleggProviderTest {
-
-    @Rule
-    public SetOidcClaimsWithSubject setOidcClaimsWithSubject = new SetOidcClaimsWithSubject("DUMMY_FNR");
 
     private DokumentService dokumentService = mock(DokumentService.class);
 
