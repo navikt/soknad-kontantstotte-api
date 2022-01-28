@@ -33,6 +33,8 @@ spec:
   azure:
     application:
       enabled: true
+  tokenx:
+    enabled: true
   replicas:
     min: 2
     max: 4

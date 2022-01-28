@@ -150,12 +150,6 @@ public class PDLClient extends AbstractPingableRestClient {
 
     private static String graphqlQuery(String pdlResource) {
         String query = "";
-        /*try {
-            query = graphqlCompatible(new String(Objects.requireNonNull(PDLClient.class.getResource("/pdl/" + pdlResource + ".graphql"))
-                                                        .openStream().readAllBytes(), StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            logger.warn("Fikk feil til å konverte respons ", e);
-        }*/
         ClassPathResource resource = new ClassPathResource("/pdl/" + pdlResource + ".graphql");
         try (InputStreamReader inputStreamReader = new InputStreamReader(resource.getInputStream());
              BufferedReader reader = new BufferedReader(inputStreamReader)) {
@@ -163,12 +157,9 @@ public class PDLClient extends AbstractPingableRestClient {
                           .map(String::strip)
                           .collect(Collectors.joining(" "));
         } catch (IOException e) {
-            throw new RuntimeException("Couldn't read file: " + pdlResource, e);
+            throw new RuntimeException("Fil " + pdlResource + " kan ikke leses. Fikk feilmelding ", e);
         }
         return query;
     }
 
-    /*private static String graphqlCompatible(String text) {
-        return StringUtils.normalizeSpace(text.replace("\n", ""));
-    }*/
 }
