@@ -3,6 +3,7 @@ package no.nav.kontantstotte.innsyn.pdl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.familie.http.client.AbstractPingableRestClient;
+import no.nav.familie.kontrakter.felles.Tema;
 import no.nav.familie.kontrakter.felles.personopplysning.ForelderBarnRelasjon;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersonBolk;
@@ -146,6 +147,7 @@ public class PDLClient extends AbstractPingableRestClient {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+        httpHeaders.add("Tema", Tema.KON.getFagsaksystem());
         return httpHeaders;
     }
 
