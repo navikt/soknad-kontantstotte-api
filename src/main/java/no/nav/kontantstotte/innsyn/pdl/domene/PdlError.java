@@ -7,6 +7,10 @@ public class PdlError {
     private String message;
     private List<PdlExtensions> pdlExtensions;
 
+    PdlError(){
+        // for Jackson mapping
+    }
+
     public PdlError(String message, List<PdlExtensions> pdlExtensions) {
         this.message = message;
         this.pdlExtensions = pdlExtensions;

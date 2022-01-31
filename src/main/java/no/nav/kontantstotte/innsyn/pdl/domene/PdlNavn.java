@@ -8,6 +8,10 @@ public class PdlNavn {
     private String mellomnavn;
     private String etternavn;
 
+    PdlNavn() {
+        // for Jackson mapping
+    }
+
     public PdlNavn(String fornavn, String mellomnavn, String etternavn) {
         Objects.requireNonNull(fornavn);
         Objects.requireNonNull(etternavn);

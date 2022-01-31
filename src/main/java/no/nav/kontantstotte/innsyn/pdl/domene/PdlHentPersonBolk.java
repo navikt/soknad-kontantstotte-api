@@ -5,6 +5,10 @@ public class PdlHentPersonBolk {
     private String ident;
     private PdlPersonData person;
 
+    PdlHentPersonBolk() {
+        // for Jackson mapping
+    }
+
     public PdlHentPersonBolk(String ident, PdlPersonData person) {
         this.ident = ident;
         this.person = person;

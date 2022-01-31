@@ -4,6 +4,10 @@ public class PdlPerson {
 
     private PdlPersonData person;
 
+    PdlPerson() {
+        // for Jackson mapping
+    }
+
     public PdlPerson(PdlPersonData person) {
         this.person = person;
     }

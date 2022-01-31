@@ -7,6 +7,10 @@ public class PdlFødselsdato {
     @JsonProperty("foedselsdato")
     private String fødselsdato;
 
+    PdlFødselsdato() {
+        // for Jackson mapping
+    }
+
     public PdlFødselsdato(String fødselsdato) {
         this.fødselsdato = fødselsdato;
     }

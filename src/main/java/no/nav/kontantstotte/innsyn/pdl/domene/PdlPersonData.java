@@ -16,6 +16,10 @@ public class PdlPersonData {
     private List<Statsborgerskap> statsborgerskap;
     private List<ForelderBarnRelasjon> forelderBarnRelasjon;
 
+    PdlPersonData() {
+        // for Jackson mapping
+    }
+
     public PdlPersonData(List<PdlFødselsdato> fødsel,
                          List<PdlNavn> navn,
                          List<PdlKjønn> kjønn,

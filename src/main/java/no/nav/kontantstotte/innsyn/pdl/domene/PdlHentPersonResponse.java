@@ -8,6 +8,10 @@ public class PdlHentPersonResponse<T> {
     private T data;
     private List<PdlError> errors;
 
+    PdlHentPersonResponse() {
+        // for jackson mapping
+    }
+
     public PdlHentPersonResponse(T data, List<PdlError> errors) {
         this.data = data;
         this.errors = errors;

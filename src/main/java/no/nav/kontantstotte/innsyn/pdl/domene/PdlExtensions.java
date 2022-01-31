@@ -4,6 +4,10 @@ public class PdlExtensions {
 
     private String code;
 
+    PdlExtensions() {
+        // for Jackson mapping
+    }
+
     public PdlExtensions(String code) {
         this.code = code;
     }

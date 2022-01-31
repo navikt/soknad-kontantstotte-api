@@ -4,7 +4,11 @@ import java.util.List;
 
 public class PdlHentPersoner {
 
-    private final List<PdlHentPersonBolk> hentPersonBolk;
+    private List<PdlHentPersonBolk> hentPersonBolk;
+
+    PdlHentPersoner() {
+        // for Jackson mapping
+    }
 
     public PdlHentPersoner(List<PdlHentPersonBolk> hentPersonBolk) {
         this.hentPersonBolk = hentPersonBolk;

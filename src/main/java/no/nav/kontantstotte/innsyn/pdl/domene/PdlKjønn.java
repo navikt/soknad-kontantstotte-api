@@ -7,6 +7,10 @@ public class PdlKjønn {
     @JsonProperty("kjoenn")
     private Kjønn kjønn;
 
+    PdlKjønn() {
+        // for Jackson mapping
+    }
+
     public PdlKjønn(Kjønn kjønn) {
         this.kjønn = kjønn;
     }
