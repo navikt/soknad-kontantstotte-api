@@ -147,7 +147,7 @@ public class PDLClient extends AbstractPingableRestClient {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-        httpHeaders.add("Tema", Tema.KON.getFagsaksystem());
+        httpHeaders.add("Tema", Tema.KON.name());
         return httpHeaders;
     }
 
