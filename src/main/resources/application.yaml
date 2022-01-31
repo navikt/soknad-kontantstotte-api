@@ -103,6 +103,6 @@ ENVIRONMENT_NAME: p
 # familie-dokument i GCP
 FAMILIE_DOKUMENT_API_URL: "http://familie-dokument/api"
 
-PDL_URL: https://pdl-api-q1.dev-fss-pub.nais.io
-PDL_SCOPE: api://dev-fss.pdl.pdl-api-q1/.default
-PDL_AUDIENCE: dev-fss:pdl:pdl-api-q1
+PDL_URL: https://pdl-api.dev-fss-pub.nais.io
+PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
+PDL_AUDIENCE: dev-fss:pdl:pdl-api
