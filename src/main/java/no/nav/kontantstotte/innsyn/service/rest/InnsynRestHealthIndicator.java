@@ -16,8 +16,8 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
 
     private static final Logger LOG = LoggerFactory.getLogger(InnsynRestHealthIndicator.class);
 
-    private final Counter tpsInnysynSuccess = Metrics.counter("tps.innsyn.health", "response", "success");
-    private final Counter tpsInnsynFailure = Metrics.counter("tps.innsyn.health", "response", "failure");
+    private final Counter tpsInnysynSuccess = Metrics.counter("pdl.innsyn.health", "response", "success");
+    private final Counter tpsInnsynFailure = Metrics.counter("pdl.innsyn.health", "response", "failure");
     private final InnsynService innsynServiceClient;
 
     private Environment env;

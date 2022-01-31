@@ -41,6 +41,16 @@ no.nav.security.jwt:
           client-id: ${AZURE_APP_CLIENT_ID}
           client-secret: ${AZURE_APP_CLIENT_SECRET}
           client-auth-method: client_secret_basic
+      mottak:
+        resource-url: ${FAMILIE_KS_MOTTAK_API_URL}
+        well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
+        grant-type: urn:ietf:params:oauth:grant-type:token-exchange
+        token-exchange:
+          audience: ${FAMILIE_KS_MOTTAK_AUDIENCE}
+        authentication:
+          client-id: ${TOKEN_X_CLIENT_ID}
+          client-auth-method: private_key_jwt
+          client-jwk: ${TOKEN_X_PRIVATE_JWK}
 
 management:
   endpoint:
@@ -81,7 +91,6 @@ LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api.nav.no
 LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_POOLNAME: N/A
 
 # Api-gw/tjenester i FSS
-FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.prod-fss-pub.nais.io/api/
 SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME} #<Ligger i vault>
 
 TPS-PROXY_API_V1_INNSYN_URL: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
@@ -106,3 +115,6 @@ FAMILIE_DOKUMENT_API_URL: "http://familie-dokument/api"
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io
 PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
 PDL_AUDIENCE: dev-fss:pdl:pdl-api
+
+FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.dev-fss-pub.nais.io/api/
+FAMILIE_KS_MOTTAK_AUDIENCE: dev-fss:teamfamilie:familie-ks-mottak

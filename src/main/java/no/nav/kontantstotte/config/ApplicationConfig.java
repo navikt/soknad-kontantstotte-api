@@ -32,7 +32,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 @SpringBootConfiguration
-@ComponentScan({"no.nav.kontantstotte", "no.nav.familie.sikkerhet"})
+@ComponentScan({"no.nav.kontantstotte"})
 @Import({FeatureToggleConfig.class, InnsendingConfiguration.class, InnsynRestConfiguration.class,
          MdcValuesPropagatingClientInterceptor.class,
          ConsumerIdClientInterceptor.class,
