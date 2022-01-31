@@ -1,10 +1,3 @@
-no.nav.security.oidc:
-  issuers: selvbetjening
-  issuer.selvbetjening:
-    discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
-    acceptedaudience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
-    cookie_name: selvbetjening-idtoken
-
 cors:
   allowed_origins:
     - "https://soknad-kontantstotte.dev.nav.no"
