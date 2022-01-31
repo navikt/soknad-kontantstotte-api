@@ -92,7 +92,7 @@
             <groupId>no.nav.security</groupId>
             <artifactId>token-validation-test-support</artifactId>
             <version>${token-validation-spring.version}</version>
-            <scope>test</scope>
+            <!--<scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
