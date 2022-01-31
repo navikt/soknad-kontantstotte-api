@@ -51,7 +51,7 @@ public class PDLClient extends AbstractPingableRestClient {
 
     @Autowired
     public PDLClient(@Value("${PDL_URL}") URI pdlUrl,
-                     @Qualifier("azureClientCredential") RestOperations restTemplate,
+                     @Qualifier("tokenExchange") RestOperations restTemplate,
                      ObjectMapper mapper) {
         super(restTemplate, "pdl.personInfo");
         this.pdlUrl = UriComponentsBuilder.fromUri(pdlUrl).path(PATH_GRAPHQL).build().toUri();
