@@ -104,11 +104,10 @@ public class PdlClient extends AbstractPingableRestClient {
 
         try {
             var respons = getRespons(request);
-            //TODO midlertidig endringer,logg må flyttes til linje 120
-            logger.warn("Respons fra PDL:{}", mapper.writeValueAsString(respons));
             if (!respons.harFeil()) {
                 return respons.getData().getPerson().getForelderBarnRelasjon();
             }
+            logger.warn("Respons fra PDL:{}", mapper.writeValueAsString(respons));
             throw new InnsynOppslagException("Feil ved oppslag på person:" + respons.errorMessages());
         } catch (RestClientException | JsonProcessingException e) {
             logger.warn("Fikk exception ved henting av person med relasjoner ", e);
@@ -127,7 +126,6 @@ public class PdlClient extends AbstractPingableRestClient {
                                                        httpEntity,
                                                        PdlHentPersonBolkResponse.class);
             var respons = Objects.requireNonNull(responseEntity.getBody(), "Fikk null respons fra PDL");
-            ;
             if (!respons.harFeil()) {
                 return respons.getData().getHentPersonBolk();
             }
