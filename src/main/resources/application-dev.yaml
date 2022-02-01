@@ -45,8 +45,6 @@ SOKNAD_KONTANTSTOTTE_API_S3_SECRETKEY: anything
 SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_PASSWORD: anything
 
 FAMILIE_KS_MOTTAK_API_URL: "http://localhost:8084/api/"
-CREDENTIAL_USERNAME: "srv-soknad-kontantstotte-api"
-CREDENTIAL_PASSWORD: "skal-ikke-sjekkes-inn"
 
 logging:
   level:

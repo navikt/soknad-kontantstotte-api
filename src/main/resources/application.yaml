@@ -118,3 +118,5 @@ PDL_AUDIENCE: dev-fss:pdl:pdl-api
 
 FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.dev-fss-pub.nais.io/api/
 FAMILIE_KS_MOTTAK_AUDIENCE: dev-fss:teamfamilie:familie-ks-mottak
+
+CREDENTIAL_USERNAME: "srvfam-soknad-ks-api"
