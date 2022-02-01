@@ -1,11 +1,13 @@
 package no.nav.kontantstotte.innsyn.pdl.domene;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import no.nav.familie.kontrakter.felles.personopplysning.ForelderBarnRelasjon;
 import no.nav.familie.kontrakter.felles.personopplysning.Statsborgerskap;
 
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PdlPersonData {
 
     @JsonProperty("foedsel")

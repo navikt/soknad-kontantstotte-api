@@ -1,7 +1,10 @@
 package no.nav.kontantstotte.innsyn.pdl.domene;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Objects;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PdlNavn {
 
     private String fornavn;
