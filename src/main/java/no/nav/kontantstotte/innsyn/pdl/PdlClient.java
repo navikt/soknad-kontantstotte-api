@@ -4,12 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.familie.http.client.AbstractPingableRestClient;
 import no.nav.familie.kontrakter.felles.Tema;
-import no.nav.familie.kontrakter.felles.personopplysning.ForelderBarnRelasjon;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
+import no.nav.kontantstotte.innsyn.pdl.domene.PdlForelderBarnRelasjon;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersonBolk;
+import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersonBolkResponse;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersonResponse;
-import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersoner;
-import no.nav.kontantstotte.innsyn.pdl.domene.PdlPerson;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlPersonData;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlPersonRequest;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlPersonRequestVariables;
@@ -38,9 +37,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class PDLClient extends AbstractPingableRestClient {
+public class PdlClient extends AbstractPingableRestClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(PDLClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(PdlClient.class);
 
     private static final String PATH_GRAPHQL = "graphql";
     public static final String HENT_ENKEL_PERSON_QUERY = graphqlQuery("hentperson-enkel");
@@ -52,7 +51,7 @@ public class PDLClient extends AbstractPingableRestClient {
     private ObjectMapper mapper;
 
     @Autowired
-    public PDLClient(@Value("${PDL_URL}") URI pdlUrl,
+    public PdlClient(@Value("${PDL_URL}") URI pdlUrl,
                      @Qualifier("tokenExchange") RestOperations restTemplate,
                      ObjectMapper mapper) {
         super(restTemplate, "pdl.personInfo");
@@ -87,13 +86,9 @@ public class PDLClient extends AbstractPingableRestClient {
         PdlPersonRequest request = new PdlPersonRequest(requestVariables, HENT_ENKEL_PERSON_QUERY);
 
         try {
-            var responseEntity = restTemplate.postForEntity(getPingUrl(),
-                                                            request,
-                                                            PdlHentPersonResponse.class,
-                                                            httpHeaders());
-            var respons = Objects.requireNonNull(responseEntity.getBody(), "Fikk null respons fra PDL");
+            var respons = getRespons(request);
             if (!respons.harFeil()) {
-                return ((PdlPerson) respons.getData()).getPerson();
+                return respons.getData().getPerson();
             }
             logger.warn("Respons fra PDL:{}", mapper.writeValueAsString(respons));
             throw new InnsynOppslagException("Feil ved oppslag på person:" + respons.errorMessages());
@@ -103,19 +98,16 @@ public class PDLClient extends AbstractPingableRestClient {
         }
     }
 
-    public List<ForelderBarnRelasjon> hentPersoninfoMedRelasjoner(String ident) {
+    public List<PdlForelderBarnRelasjon> hentPersoninfoMedRelasjoner(String ident) {
         PdlPersonRequestVariables<String> requestVariables = new PdlPersonRequestVariables<>(ident);
         PdlPersonRequest request = new PdlPersonRequest(requestVariables, HENT_PERSON_MED_RELASJONER_QUERY);
 
         try {
-            var responseEntity = restTemplate.exchange(getPingUrl(), HttpMethod.POST,
-                                                       new HttpEntity<>(request, httpHeaders()),
-                                                       PdlHentPersonResponse.class);
-            var respons = Objects.requireNonNull(responseEntity.getBody(), "Fikk null respons fra PDL");
+            var respons = getRespons(request);
             //TODO midlertidig endringer,logg må flyttes til linje 120
             logger.warn("Respons fra PDL:{}", mapper.writeValueAsString(respons));
             if (!respons.harFeil()) {
-                return ((PdlPerson) respons.getData()).getPerson().getForelderBarnRelasjon();
+                return respons.getData().getPerson().getForelderBarnRelasjon();
             }
             throw new InnsynOppslagException("Feil ved oppslag på person:" + respons.errorMessages());
         } catch (RestClientException | JsonProcessingException e) {
@@ -125,17 +117,19 @@ public class PDLClient extends AbstractPingableRestClient {
     }
 
     public List<PdlHentPersonBolk> hentPersonerMedBolk(List<String> ident) {
-        PdlPersonRequestVariables<List<String>> requestVariables = new PdlPersonRequestVariables(ident);
+        PdlPersonRequestVariables<List<String>> requestVariables = new PdlPersonRequestVariables<>(ident);
         PdlPersonRequest request = new PdlPersonRequest(requestVariables, HENT_PERSON_MED_BOLK_QUERY);
 
         try {
-            var responseEntity = restTemplate.postForEntity(getPingUrl(),
-                                                            request,
-                                                            PdlHentPersonResponse.class,
-                                                            httpHeaders());
+            HttpEntity<PdlPersonRequest> httpEntity = new HttpEntity<>(request, httpHeaders());
+            var responseEntity = restTemplate.exchange(getPingUrl(),
+                                                       HttpMethod.POST,
+                                                       httpEntity,
+                                                       PdlHentPersonBolkResponse.class);
             var respons = Objects.requireNonNull(responseEntity.getBody(), "Fikk null respons fra PDL");
+            ;
             if (!respons.harFeil()) {
-                return ((PdlHentPersoner) respons.getData()).getHentPersonBolk();
+                return respons.getData().getHentPersonBolk();
             }
             logger.warn("Respons fra PDL:{}", mapper.writeValueAsString(respons));
             throw new InnsynOppslagException("Feil ved oppslag på person:" + respons.errorMessages());
@@ -165,6 +159,15 @@ public class PDLClient extends AbstractPingableRestClient {
             throw new RuntimeException("Fil " + pdlResource + " kan ikke leses. Fikk feilmelding ", e);
         }
         return query;
+    }
+
+    private PdlHentPersonResponse getRespons(PdlPersonRequest request) {
+        HttpEntity<PdlPersonRequest> httpEntity = new HttpEntity<>(request, httpHeaders());
+        var responseEntity = restTemplate.exchange(getPingUrl(),
+                                                   HttpMethod.POST,
+                                                   httpEntity,
+                                                   PdlHentPersonResponse.class);
+        return Objects.requireNonNull(responseEntity.getBody(), "Fikk null respons fra PDL");
     }
 
 }

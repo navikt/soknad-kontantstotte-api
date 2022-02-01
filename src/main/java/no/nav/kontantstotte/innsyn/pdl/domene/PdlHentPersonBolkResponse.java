@@ -3,21 +3,21 @@ package no.nav.kontantstotte.innsyn.pdl.domene;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PdlHentPersonResponse {
+public class PdlHentPersonBolkResponse {
 
-    private PdlPerson data;
+    private PdlHentPersoner data;
     private List<PdlError> errors;
 
-    PdlHentPersonResponse() {
+    PdlHentPersonBolkResponse() {
         // for jackson mapping
     }
 
-    public PdlHentPersonResponse(PdlPerson data, List<PdlError> errors) {
+    public PdlHentPersonBolkResponse(PdlHentPersoner data, List<PdlError> errors) {
         this.data = data;
         this.errors = errors;
     }
 
-    public PdlPerson getData() {
+    public PdlHentPersoner getData() {
         return data;
     }
 

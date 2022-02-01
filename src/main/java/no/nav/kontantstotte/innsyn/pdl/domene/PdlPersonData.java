@@ -15,8 +15,8 @@ public class PdlPersonData {
     private List<PdlNavn> navn;
     @JsonProperty("kjoenn")
     private List<PdlKjønn> kjønn;
-    private List<Statsborgerskap> statsborgerskap;
-    private List<ForelderBarnRelasjon> forelderBarnRelasjon;
+    private List<PdlStatsborgerskap> statsborgerskap;
+    private List<PdlForelderBarnRelasjon> forelderBarnRelasjon;
 
     PdlPersonData() {
         // for Jackson mapping
@@ -25,8 +25,8 @@ public class PdlPersonData {
     public PdlPersonData(List<PdlFødselsdato> fødsel,
                          List<PdlNavn> navn,
                          List<PdlKjønn> kjønn,
-                         List<Statsborgerskap> statsborgerskap,
-                         List<ForelderBarnRelasjon> forelderBarnRelasjon
+                         List<PdlStatsborgerskap> statsborgerskap,
+                         List<PdlForelderBarnRelasjon> forelderBarnRelasjon
     ) {
         this.fødsel = fødsel;
         this.navn = navn;
@@ -47,11 +47,11 @@ public class PdlPersonData {
         return kjønn;
     }
 
-    public List<Statsborgerskap> getStatsborgerskap() {
+    public List<PdlStatsborgerskap> getStatsborgerskap() {
         return statsborgerskap;
     }
 
-    public List<ForelderBarnRelasjon> getForelderBarnRelasjon() {
+    public List<PdlForelderBarnRelasjon> getForelderBarnRelasjon() {
         return forelderBarnRelasjon;
     }
 }
