@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -106,10 +108,9 @@ public class PDLClient extends AbstractPingableRestClient {
         PdlPersonRequest request = new PdlPersonRequest(requestVariables, HENT_PERSON_MED_RELASJONER_QUERY);
 
         try {
-            var responseEntity = restTemplate.postForEntity(getPingUrl(),
-                                                            request,
-                                                            PdlHentPersonResponse.class,
-                                                            httpHeaders());
+            var responseEntity = restTemplate.exchange(getPingUrl(), HttpMethod.POST,
+                                                       new HttpEntity<>(request, httpHeaders()),
+                                                       PdlHentPersonResponse.class);
             var respons = Objects.requireNonNull(responseEntity.getBody(), "Fikk null respons fra PDL");
             if (!respons.harFeil()) {
                 return ((PdlPerson) respons.getData()).getPerson().getForelderBarnRelasjon();
