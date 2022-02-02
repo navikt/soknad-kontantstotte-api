@@ -7,6 +7,7 @@ import no.nav.kontantstotte.innsyn.domain.Barn;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
+import no.nav.kontantstotte.innsyn.pdl.PdlApp2AppClient;
 import no.nav.kontantstotte.innsyn.pdl.PdlClient;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlForelderBarnRelasjon;
 import org.slf4j.Logger;
@@ -38,10 +39,12 @@ class InnsynServiceClient implements InnsynService {
     private final Counter sokerErIkkeKvalifisert = Metrics.counter("soknad.kontantstotte.kvalifisert", "status", "NEI");
     private final Counter sokerErKvalifisert = Metrics.counter("soknad.kontantstotte.kvalifisert", "status", "JA");
     private final PdlClient pdlClient;
+    private final PdlApp2AppClient pdlSystemClient;
 
     @Autowired
-    InnsynServiceClient(PdlClient pdlClient) {
+    InnsynServiceClient(PdlClient pdlClient,PdlApp2AppClient pdlSystemClient) {
         this.pdlClient = pdlClient;
+        this.pdlSystemClient = pdlSystemClient;
     }
 
     static boolean erIKontantstotteAlder(String fødselsdato) {
@@ -67,7 +70,7 @@ class InnsynServiceClient implements InnsynService {
         if (barnIdenter.isEmpty()) {
             throw new InnsynOppslagException("Finnes ikke noe barn for søker");
         }
-        List<Barn> barna = pdlClient.hentPersonerMedBolk(barnIdenter)
+        List<Barn> barna = pdlSystemClient.hentPersonerMedBolk(barnIdenter)
                                     .stream()
                                     .map(pdlHentPersonBolk -> pdlHentPersonBolkToBarn.apply(pdlHentPersonBolk))
                                     .collect(Collectors.toList());
