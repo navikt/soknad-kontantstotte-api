@@ -7,6 +7,8 @@ import no.nav.familie.kontrakter.felles.Tema;
 import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlForelderBarnRelasjon;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersonBolk;
+import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersonBolkRequest;
+import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersonBolkRequestVariables;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersonBolkResponse;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlHentPersonResponse;
 import no.nav.kontantstotte.innsyn.pdl.domene.PdlPersonData;
@@ -82,7 +84,7 @@ public class PdlClient extends AbstractPingableRestClient {
     }
 
     public PdlPersonData hentPersoninfo(String ident) {
-        PdlPersonRequestVariables<String> requestVariables = new PdlPersonRequestVariables<>(ident);
+        PdlPersonRequestVariables requestVariables = new PdlPersonRequestVariables(ident);
         PdlPersonRequest request = new PdlPersonRequest(requestVariables, HENT_ENKEL_PERSON_QUERY);
 
         try {
@@ -99,7 +101,7 @@ public class PdlClient extends AbstractPingableRestClient {
     }
 
     public List<PdlForelderBarnRelasjon> hentPersoninfoMedRelasjoner(String ident) {
-        PdlPersonRequestVariables<String> requestVariables = new PdlPersonRequestVariables<>(ident);
+        PdlPersonRequestVariables requestVariables = new PdlPersonRequestVariables(ident);
         PdlPersonRequest request = new PdlPersonRequest(requestVariables, HENT_PERSON_MED_RELASJONER_QUERY);
 
         try {
@@ -115,12 +117,12 @@ public class PdlClient extends AbstractPingableRestClient {
         }
     }
 
-    public List<PdlHentPersonBolk> hentPersonerMedBolk(List<String> ident) {
-        PdlPersonRequestVariables<List<String>> requestVariables = new PdlPersonRequestVariables<>(ident);
-        PdlPersonRequest request = new PdlPersonRequest(requestVariables, HENT_PERSON_MED_BOLK_QUERY);
+    public List<PdlHentPersonBolk> hentPersonerMedBolk(List<String> identer) {
+        PdlHentPersonBolkRequestVariables requestVariables = new PdlHentPersonBolkRequestVariables(identer);
+        PdlHentPersonBolkRequest request = new PdlHentPersonBolkRequest(requestVariables, HENT_PERSON_MED_BOLK_QUERY);
 
         try {
-            HttpEntity<PdlPersonRequest> httpEntity = new HttpEntity<>(request, httpHeaders());
+            HttpEntity<PdlHentPersonBolkRequest> httpEntity = new HttpEntity<>(request, httpHeaders());
             var responseEntity = restTemplate.exchange(getPingUrl(),
                                                        HttpMethod.POST,
                                                        httpEntity,

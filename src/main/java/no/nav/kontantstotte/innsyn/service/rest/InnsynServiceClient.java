@@ -4,6 +4,7 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.familie.kontrakter.felles.personopplysning.FORELDERBARNRELASJONROLLE;
 import no.nav.kontantstotte.innsyn.domain.Barn;
+import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.kontantstotte.innsyn.pdl.PdlClient;
@@ -58,13 +59,14 @@ class InnsynServiceClient implements InnsynService {
 
     @Override
     public List<Barn> hentBarnInfo(String fnr) {
-        secureLogger.info("Henter barnInfo for fnr={}", fnr);
         List<String> barnIdenter = pdlClient.hentPersoninfoMedRelasjoner(fnr).stream()
                                             .filter(relasjon -> Objects.equals(relasjon.getRelatertPersonsRolle(),
                                                                                FORELDERBARNRELASJONROLLE.BARN.name()))
                                             .map(PdlForelderBarnRelasjon::getRelatertPersonsIdent)
                                             .collect(Collectors.toList());
-        logger.info("Hentet barnInfo={}", barnIdenter);
+        if (barnIdenter.isEmpty()) {
+            throw new InnsynOppslagException("Finnes ikke noe barn for søker");
+        }
         List<Barn> barna = pdlClient.hentPersonerMedBolk(barnIdenter)
                                     .stream()
                                     .map(pdlHentPersonBolk -> pdlHentPersonBolkToBarn.apply(pdlHentPersonBolk))

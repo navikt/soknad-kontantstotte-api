@@ -1,5 +1,5 @@
-query($ident: [ID!]!) {
-    hentPersonBolk(ident: $ident) {
+query($identer: [ID!]!) {
+    hentPersonBolk(identer: $identer) {
         ident,
         person {
             foedsel {

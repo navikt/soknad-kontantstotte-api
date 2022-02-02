@@ -1,18 +1,18 @@
 package no.nav.kontantstotte.innsyn.pdl.domene;
 
-public class PdlPersonRequestVariables<T> {
+public class PdlPersonRequestVariables {
 
-    private T ident;
+    private String ident;
 
     PdlPersonRequestVariables() {
         // for Jackson mapping
     }
 
-    public PdlPersonRequestVariables(T ident) {
+    public PdlPersonRequestVariables(String ident) {
         this.ident = ident;
     }
 
-    public T getIdent() {
+    public String getIdent() {
         return ident;
     }
 }
