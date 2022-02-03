@@ -1,5 +1,5 @@
 {
-  "ingresses": ["https://soknad-kontantstotte-api.dev.intern.nav.no"],
+  "ingresses": ["https://soknad-kontantstotte-api.dev.intern.nav.no", "https://soknad-kontantstotte-api.dev.nav.no"],
   "spring_profile" : "preprod,gcp",
   "secret" : "soknad-kontantstotte-api-secret-dev",
   "ks_mottak_host_url": "familie-ks-mottak.dev-fss-pub.nais.io" 

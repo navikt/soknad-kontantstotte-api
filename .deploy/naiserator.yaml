@@ -54,6 +54,9 @@ spec:
     inbound:
       rules:
         - application: soknad-kontantstotte
+          cluster: dev-sbs
+        - application: soknad-kontantstotte
+          cluster: dev-gcp
     outbound:
       rules:
         - application: familie-dokument

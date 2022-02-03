@@ -1,8 +1,9 @@
 name: Build, og deploy (dev og prod)
 
 on:
-  workflow_dispatch:
-
+  push:
+    branches:
+      - 'master'
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/soknad-kontantstotte-api:${{ github.sha }}
   IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}/soknad-kontantstotte-api:latest

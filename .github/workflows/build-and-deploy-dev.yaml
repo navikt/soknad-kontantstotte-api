@@ -1,5 +1,7 @@
 name: Build and Deploy (dev)
 on:
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
   workflow_dispatch:
 
 env:
@@ -40,6 +42,7 @@ jobs:
       - name: Push Docker image med versjonstag
         run: docker push ${IMAGE}
       - name: Deploy til GCP (dev)
+        if: github.event.pull_request.draft == false
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
