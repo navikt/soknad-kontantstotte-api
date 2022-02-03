@@ -3,6 +3,7 @@ package no.nav.kontantstotte.api.rest;
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 
+import no.nav.security.token.support.core.api.ProtectedWithClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
-import no.nav.security.oidc.api.ProtectedWithClaims;
 
 
 @RestController

@@ -5,16 +5,52 @@ server:
   servlet:
     context-path: /
 
+cors:
+  allowed_origins:
+    - "https://soknad-kontantstotte.nav.no"
+
 spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
-  main.banner-mode: "off"
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: off
 
-no.nav.security.oidc:
-  issuers: selvbetjening
+no.nav.security.jwt:
   issuer.selvbetjening:
     discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
-    acceptedaudience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
+    accepted_audience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
     cookie_name: selvbetjening-idtoken
+  client:
+    registration:
+      pdl:
+        resource-url: ${PDL_URL}
+        well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
+        grant-type: urn:ietf:params:oauth:grant-type:token-exchange
+        token-exchange:
+          audience: ${PDL_AUDIENCE}
+        authentication:
+          client-id: ${TOKEN_X_CLIENT_ID}
+          client-auth-method: private_key_jwt
+          client-jwk: ${TOKEN_X_PRIVATE_JWK}
+      pdl-clientcredentials:
+        resource-url: ${PDL_URL}
+        token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
+        grant-type: client_credentials
+        scope: ${PDL_SCOPE}
+        authentication:
+          client-id: ${AZURE_APP_CLIENT_ID}
+          client-secret: ${AZURE_APP_CLIENT_SECRET}
+          client-auth-method: client_secret_basic
+      mottak:
+        resource-url: ${FAMILIE_KS_MOTTAK_API_URL}
+        well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
+        grant-type: urn:ietf:params:oauth:grant-type:token-exchange
+        token-exchange:
+          audience: ${FAMILIE_KS_MOTTAK_AUDIENCE}
+        authentication:
+          client-id: ${TOKEN_X_CLIENT_ID}
+          client-auth-method: private_key_jwt
+          client-jwk: ${TOKEN_X_PRIVATE_JWK}
 
 management:
   endpoint:
@@ -27,10 +63,10 @@ management:
   metrics.export.prometheus.enabled: true
   metrics.web.server.auto-time-requests: true
 
-http.proxy: http://webproxy-nais.nav.no:8088
-
 logging:
   level:
+    root: INFO
+    org.eclipse.jetty: INFO
     org.springframework: INFO
     org.glassfish: INFO
     no.nav: INFO
@@ -38,12 +74,6 @@ logging:
 # Pdf-generator
 SOKNAD_HTML_GENERATOR_URL: http://soknad-html-generator/api/
 
-# S3
-SOKNAD_KONTANTSTOTTE_S3_ENDPOINT: http://objectstore.rook-ceph
-SOKNAD_KONTANTSTOTTE_API_S3_REGION: us-east-1
-#SOKNAD_KONTANTSTOTTE_API_S3_ACCESSKEY: <Ligger i vault>
-#SOKNAD_KONTANTSTOTTE_API_S3_SECRETKEY: <Ligger i vault>
-#SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_USERNAME: <Ligger i vault>
 attachment.max.size.mb: 10
 
 #Unleash
@@ -61,11 +91,13 @@ LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api.nav.no
 LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_POOLNAME: N/A
 
 # Api-gw/tjenester i FSS
-FAMILIE_KS_MOTTAK_API_URL: https://api-gw.oera.no/familie-ks-mottak/api/
 SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_SOKNAD_KONTANTSTOTTE_PROXY_API_APIKEY_USERNAME} #<Ligger i vault>
 
 TPS-PROXY_API_V1_INNSYN_URL: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
 #SOKNAD_KONTANTSTOTTE_API_TPS_PROXY_API_V1_INNSYN_APIKEY_USERNAME: <Ligger i vault>
+
+SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_TPS_PROXY_API_V1_INNSYN_APIKEY_USERNAME}
+SOKNAD-KONTANTSTOTTE-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD: ${SOKNAD_KONTANTSTOTTE_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD}
 
 # Nav-truststore
 NAV_TRUSTSTORE_KEYSTOREALIAS: na
@@ -77,8 +109,14 @@ APPRES_CMS_URL: https://appres.nav.no
 # Annet
 ENVIRONMENT_NAME: p
 
-# STS
-STS_URL: http://security-token-service
-
 # familie-dokument i GCP
-FAMILIE_DOKUMENT_API_URL: "https://www.nav.no/familie/dokument/api"
+FAMILIE_DOKUMENT_API_URL: "http://familie-dokument/api"
+
+PDL_URL: https://pdl-api.dev-fss-pub.nais.io
+PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
+PDL_AUDIENCE: dev-fss:pdl:pdl-api
+
+FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.dev-fss-pub.nais.io/api/
+FAMILIE_KS_MOTTAK_AUDIENCE: dev-fss:teamfamilie:familie-ks-mottak
+
+CREDENTIAL_USERNAME: "srvfam-soknad-ks-api"

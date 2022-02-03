@@ -51,7 +51,7 @@ public class InnsynConverterTest {
 
         assertThat(p.getFornavn()).isEqualTo(dto.getNavn().getFornavn());
         assertThat(p.getMellomnavn()).isEqualTo(dto.getNavn().getMellomnavn());
-        assertThat(p.getSlektsnavn()).isEqualTo(dto.getNavn().getSlektsnavn());
+        assertThat(p.getEtternavn()).isEqualTo(dto.getNavn().getSlektsnavn());
         assertThat(p.getStatsborgerskap()).isEqualTo(dto.getStatsborgerskap().getKode().getVerdi());
 
     }
@@ -64,7 +64,7 @@ public class InnsynConverterTest {
 
         assertThat(p.getFornavn()).isEqualTo(dto.getNavn().getFornavn());
         assertThat(p.getMellomnavn()).isEqualTo(dto.getNavn().getMellomnavn());
-        assertThat(p.getSlektsnavn()).isEqualTo(dto.getNavn().getSlektsnavn());
+        assertThat(p.getEtternavn()).isEqualTo(dto.getNavn().getSlektsnavn());
         assertThat(p.getStatsborgerskap()).isEqualTo(dto.getStatsborgerskap().getKode().getVerdi());
     }
 

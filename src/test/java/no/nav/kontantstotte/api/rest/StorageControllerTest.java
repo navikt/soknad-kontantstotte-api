@@ -3,9 +3,9 @@ package no.nav.kontantstotte.api.rest;
 import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.dokument.FamilieDokumentClient;
-import no.nav.security.oidc.OIDCConstants;
-import no.nav.security.oidc.test.support.JwtTokenGenerator;
-import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
+import no.nav.security.token.support.core.JwtTokenConstants;
+import no.nav.security.token.support.test.JwtTokenGenerator;
+import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration;
 import org.eclipse.jetty.http.HttpHeader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +28,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,6 +43,7 @@ import static org.mockito.Mockito.when;
                 classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class StorageControllerTest {
+
     public static final String INNLOGGET_BRUKER = "12345678911";
     private static final String VEDLEGGS_ID = "UUID321";
 
@@ -59,7 +60,7 @@ public class StorageControllerTest {
     @Test
     public void at_vedlegg_puttes_korrekt() throws IOException {
         when(familieDokumentClient.lagreVedlegg(any(), any())).thenReturn(VEDLEGGS_ID);
-        byte[] pdfData = readFile(TEST_PDF);
+        byte[] pdfData = readFile();
 
         HttpResponse response = postKall(TEST_PDF);
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
@@ -75,7 +76,7 @@ public class StorageControllerTest {
 
     @Test
     public void at_vedlegg_hentes_korrekt() throws IOException {
-        byte[] pdfData = readFile(TEST_PDF);
+        byte[] pdfData = readFile();
         when(familieDokumentClient.hentVedlegg(any())).thenReturn(pdfData);
         HttpResponse<byte[]> response = getKall();
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
@@ -96,12 +97,13 @@ public class StorageControllerTest {
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
         String boundary = new BigInteger(256, new Random()).toString();
 
-        Map<Object, Object> multipart = Map.of("file", new File("src/test/resources/dummy/"+ filnavn).toPath());
+        Map<Object, Object> multipart = Map.of("file", new File("src/test/resources/dummy/" + filnavn).toPath());
 
         try {
             HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + contextPath + "/vedlegg/"))
-                                             .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
-                                             .header(HttpHeader.CONTENT_TYPE.asString(), "multipart/form-data;boundary=" + boundary)
+                                             .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
+                                             .header(HttpHeader.CONTENT_TYPE.asString(),
+                                                     "multipart/form-data;boundary=" + boundary)
                                              .POST(MultipartBodyPublisher.ofMimeMultipartData(multipart, boundary))
                                              .build();
             return client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -115,21 +117,20 @@ public class StorageControllerTest {
         HttpClient client = HttpClient.newHttpClient();
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
         try {
-            HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + contextPath + "/vedlegg/" + VEDLEGGS_ID))
-                                             .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
-                                             .header("Referer", "https://soknad-kontantstotte-q.nav.no/")
-                                             .header("Origin", "https://soknad-kontantstotte-q.nav.no")
-                                             .GET()
-                                             .build();
+            HttpRequest request =
+                    HttpRequest.newBuilder(URI.create("http://localhost:" + port + contextPath + "/vedlegg/" + VEDLEGGS_ID))
+                               .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
+                               .GET()
+                               .build();
             return client.send(request, HttpResponse.BodyHandlers.ofByteArray());
         } catch (IOException | InterruptedException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    private byte[] readFile(String filename) throws IOException {
+    private byte[] readFile() throws IOException {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream fileInput = classloader.getResourceAsStream("dummy/"+ filename);
-        return fileInput.readAllBytes();
+        InputStream fileInput = classloader.getResourceAsStream("dummy/" + StorageControllerTest.TEST_PDF);
+        return Objects.requireNonNull(fileInput).readAllBytes();
     }
 }

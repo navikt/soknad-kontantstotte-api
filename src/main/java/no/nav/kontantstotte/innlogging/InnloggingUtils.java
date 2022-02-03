@@ -1,19 +1,26 @@
 package no.nav.kontantstotte.innlogging;
 
-import org.springframework.web.context.request.RequestAttributes;
+import com.nimbusds.jwt.JWT;
+import com.nimbusds.jwt.JWTParser;
+import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import no.nav.security.oidc.OIDCConstants;
-import no.nav.security.oidc.context.OIDCValidationContext;
+import java.text.ParseException;
+import java.util.Objects;
 
 public class InnloggingUtils {
 
-    private static final String SELVBETJENING = "selvbetjening";
-
     public static String hentFnrFraToken() {
-        OIDCValidationContext context = (OIDCValidationContext) RequestContextHolder.currentRequestAttributes().getAttribute(OIDCConstants.OIDC_VALIDATION_CONTEXT, RequestAttributes.SCOPE_REQUEST);
-        context = context != null ? context : new OIDCValidationContext();
-        return context.getClaims(SELVBETJENING).getClaimSet().getSubject();
+        String bearerToken = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
+                .getRequest().getHeader("Authorization");
+        String jwtToken = bearerToken.replace("Bearer ", "");
+        try {
+            JWT jwt = JWTParser.parse(jwtToken);
+            return jwt.getJWTClaimsSet().getSubject();
+        } catch (ParseException e) {
+            throw new InnsynOppslagException("Kan ikke hente fnr fra token " + e);
+        }
     }
 
 }

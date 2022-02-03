@@ -7,14 +7,14 @@ import java.util.stream.Stream;
 public class Person {
     private final String fornavn;
     private final String mellomnavn;
-    private final String slektsnavn;
+    private final String etternavn;
     private final String statsborgerskap;
 
     public Person(Builder builder) {
 
         this.fornavn = builder.fornavn;
         this.mellomnavn = builder.mellomnavn;
-        this.slektsnavn = builder.slektsnavn;
+        this.etternavn = builder.etternavn;
         this.statsborgerskap = builder.statsborgerskap;
 
     }
@@ -27,13 +27,13 @@ public class Person {
         return mellomnavn;
     }
 
-    public String getSlektsnavn() {
-        return slektsnavn;
+    public String getEtternavn() {
+        return etternavn;
     }
 
     public String getFulltnavn() {
 
-        return Stream.of(fornavn, mellomnavn, slektsnavn)
+        return Stream.of(fornavn, mellomnavn, etternavn)
                 .filter(Objects::nonNull)
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.joining(" "));
@@ -44,7 +44,7 @@ public class Person {
     public static class Builder {
         private String fornavn;
         private String mellomnavn;
-        private String slektsnavn;
+        private String etternavn;
         private String statsborgerskap;
 
         public Builder fornavn(String fornavn) {
@@ -57,8 +57,8 @@ public class Person {
             return this;
         }
 
-        public Builder slektsnavn(String slektsnavn) {
-            this.slektsnavn = slektsnavn;
+        public Builder etternavn(String etternavn) {
+            this.etternavn = etternavn;
             return this;
         }
 

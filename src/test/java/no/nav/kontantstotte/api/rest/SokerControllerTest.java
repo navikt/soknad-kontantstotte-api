@@ -4,15 +4,16 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.nimbusds.jwt.SignedJWT;
 import no.nav.kontantstotte.api.rest.dto.SokerDto;
 import no.nav.kontantstotte.config.ApplicationConfig;
+import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
+import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
-import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
-import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
-import no.nav.security.oidc.OIDCConstants;
-import no.nav.security.oidc.test.support.JwtTokenGenerator;
-import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
+import no.nav.security.token.support.core.JwtTokenConstants;
+import no.nav.security.token.support.test.JwtTokenGenerator;
+import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration;
 import org.glassfish.jersey.logging.LoggingFeature;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,12 +22,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.inject.Inject;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,7 +35,8 @@ import static org.mockito.Mockito.when;
 
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class, TokenGeneratorConfiguration.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ApplicationConfig.class,
+                                                                                       TokenGeneratorConfiguration.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class SokerControllerTest {
 
@@ -67,7 +67,9 @@ public class SokerControllerTest {
 
     @Test
     public void at_tps_serialiseringsfeil_gir_500() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenAnswer(invocation -> { throw JsonMappingException.fromUnexpectedIOE(new IOException()); });
+        when(innsynServiceMock.hentPersonInfo(any())).thenAnswer(invocation -> {
+            throw JsonMappingException.fromUnexpectedIOE(new IOException());
+        });
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
     }
@@ -102,15 +104,16 @@ public class SokerControllerTest {
 
     private Response kallEndepunkt() {
 
-        WebTarget target = ClientBuilder.newClient().register(LoggingFeature.class).target("http://localhost:" + port + contextPath);
+        WebTarget target =
+                ClientBuilder.newClient().register(LoggingFeature.class).target("http://localhost:" + port + contextPath);
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
         return target.path("/soker")
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
-                .header("Referer", "https://soknad-kontantstotte-t.nav.no/")
-                .header("Origin", "https://soknad-kontantstotte-t.nav.no")
-                .get();
+                     .request(MediaType.APPLICATION_JSON_TYPE)
+                     .accept(MediaType.APPLICATION_JSON_TYPE)
+                     .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
+                     .header("Referer", "https://soknad-kontantstotte-t.nav.no/")
+                     .header("Origin", "https://soknad-kontantstotte-t.nav.no")
+                     .get();
     }
 }
 

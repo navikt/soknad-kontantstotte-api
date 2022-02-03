@@ -1,9 +1,25 @@
-no.nav.security.oidc:
-  issuers: selvbetjening
+no.nav.security.jwt:
   issuer.selvbetjening:
     discoveryurl: http://metadata
     accepted_audience: aud-localhost
     cookie_name: localhost-idtoken
+    proxyurl:
+  client.registration:
+    pdl:
+      token-endpoint-url: http://metadata
+    pdl-clientcredentials:
+      token-endpoint-url: http://metadata
+    mottak:
+      token-endpoint-url: http://metadata
+
+TOKEN_X_WELL_KNOWN_URL: http://localhost
+TOKEN_X_PRIVATE_JWK: '{
+    "kty" : "RSA",
+    "e" : "AQAB",
+    "use" : "sig",
+    "kid" : "mock-oauth2-server-key",
+    "n" : ""
+  }'
 
 spring:
   main:
@@ -29,9 +45,6 @@ SOKNAD_KONTANTSTOTTE_API_S3_SECRETKEY: anything
 SOKNAD_KONTANTSTOTTE_STORAGE_ENCRYPTION_PASSWORD: anything
 
 FAMILIE_KS_MOTTAK_API_URL: "http://localhost:8084/api/"
-STS_URL: "http://security-token-service"
-CREDENTIAL_USERNAME: "srv-soknad-kontantstotte-api"
-CREDENTIAL_PASSWORD: "skal-ikke-sjekkes-inn"
 
 logging:
   level:

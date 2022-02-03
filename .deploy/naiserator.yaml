@@ -12,6 +12,7 @@ spec:
   port: 8080
   envFrom:
     - configmap: loginservice-idporten
+    - secret: {{secret}}
   liveness:
     path: /internal/status/isAlive
     initialDelay: 50
@@ -29,6 +30,11 @@ spec:
     path: /internal/prometheus
   vault:
     enabled: false
+  azure:
+    application:
+      enabled: true
+  tokenx:
+    enabled: true
   replicas:
     min: 2
     max: 4
@@ -44,29 +50,36 @@ spec:
   {{#each ingresses as |url|}}
      - {{url}}
   {{/each}}
-accessPolicy:
-  inbound:
-    rules:
-      - application: soknad-kontantstotte
-idporten:
-  enabled: true
-  # optional, default shown
-  clientURI: "https://nav.no"
-  # optional, default shown
-  redirectPath: "/oauth2/callback"
-  # optional, default shown
-  frontchannelLogoutPath: "/oauth2/logout"
-  # optional, defaults shown
-  postLogoutRedirectURIs:
-    - "https://nav.no"
-  # optional, in seconds - defaults shown (1 hour)
-  accessTokenLifetime: 3600
-  # optional, in seconds - defaults shown (2 hours)
-  sessionLifetime: 7200
-secureLogs:
-  enabled: true
-env:
-  - name: SPRING_PROFILES_ACTIVE
-    value: {{spring_profile}}
-  - name: APP_TEAM
-    value: teamfamilie
+  accessPolicy:
+    inbound:
+      rules:
+        - application: soknad-kontantstotte
+    outbound:
+      rules:
+        - application: familie-dokument
+        - application: soknad-html-generator
+      external:
+        - host: navtestb2c.b2clogin.com
+        - host: {{ks_mottak_host_url}}
+  idporten:
+    enabled: true
+    # optional, default shown
+    clientURI: "https://nav.no"
+    # optional, default shown
+    redirectPath: "/oauth2/callback"
+    # optional, default shown
+    frontchannelLogoutPath: "/oauth2/logout"
+    # optional, defaults shown
+    postLogoutRedirectURIs:
+      - "https://nav.no"
+    # optional, in seconds - defaults shown (1 hour)
+    accessTokenLifetime: 3600
+    # optional, in seconds - defaults shown (2 hours)
+    sessionLifetime: 7200
+  secureLogs:
+    enabled: true
+  env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: {{spring_profile}}
+    - name: APP_TEAM
+      value: teamfamilie

@@ -9,9 +9,9 @@ import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
 import no.nav.kontantstotte.innsending.SamletInnsendingDto;
 import no.nav.kontantstotte.innsending.Soknad;
-import no.nav.security.oidc.OIDCConstants;
-import no.nav.security.oidc.test.support.JwtTokenGenerator;
-import no.nav.security.oidc.test.support.spring.TokenGeneratorConfiguration;
+import no.nav.security.token.support.core.JwtTokenConstants;
+import no.nav.security.token.support.test.JwtTokenGenerator;
+import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration;
 import org.eclipse.jetty.http.HttpHeader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +34,10 @@ import java.net.http.HttpResponse;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @ActiveProfiles("dev")
 @RunWith(SpringRunner.class)
@@ -104,12 +107,12 @@ public class InnsendingControllerTest {
     private HttpResponse<String> utførRequest(SamletInnsendingDto samletInnsendingDto) {
         HttpClient client = HttpClientUtil.create();
 
-        SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER);
+        String signedJWT = JwtTokenGenerator.createSignedJWT(INNLOGGET_BRUKER).serialize();
 
         try {
             HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/api/sendinn"))
                                              .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON)
-                                             .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
+                                             .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT)
                                              .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(
                                                      samletInnsendingDto)))
                                              .build();

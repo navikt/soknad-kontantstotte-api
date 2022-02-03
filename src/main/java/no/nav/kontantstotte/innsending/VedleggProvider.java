@@ -7,11 +7,8 @@ import no.nav.kontantstotte.dokument.DokumentService;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
-import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
 class VedleggProvider {
 

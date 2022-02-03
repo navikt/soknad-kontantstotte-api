@@ -47,6 +47,6 @@ public class PersonTest {
     }
 
     private Person personMedNavn(String fornavn, String mellonmavn, String slektsnavn) {
-        return new Person.Builder().fornavn(fornavn).mellomnavn(mellonmavn).slektsnavn(slektsnavn).build();
+        return new Person.Builder().fornavn(fornavn).mellomnavn(mellonmavn).etternavn(slektsnavn).build();
     }
 }

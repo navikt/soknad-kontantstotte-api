@@ -12,7 +12,7 @@ import no.nav.kontantstotte.api.rest.dto.InnsendingsResponsDto;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.steg.Person;
-import no.nav.security.oidc.api.ProtectedWithClaims;
+import no.nav.security.token.support.core.api.ProtectedWithClaims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

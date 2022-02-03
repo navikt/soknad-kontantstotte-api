@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.config;
 
 import no.nav.kontantstotte.innsyn.domain.FortroligAdresseException;
-import no.nav.security.spring.oidc.validation.interceptor.OIDCUnauthorizedException;
+import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return forbidden(HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler({OIDCUnauthorizedException.class, HttpClientErrorException.Unauthorized.class})
+    @ExceptionHandler(value = {JwtTokenUnauthorizedException.class, HttpClientErrorException.Unauthorized.class})
     public ResponseEntity<String> handleUnauthorizedException() {
         logger.warn("Kan ikke behandle pga. bruker ikke logget inn.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Du er ikke logget inn");
