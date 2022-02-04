@@ -1,6 +1,8 @@
 cors:
   allowed_origins:
     - "https://soknad-kontantstotte.dev.nav.no"
+    - "https://soknad-kontantstotte-q.nav.no"
+    - "https://soknad-kontantstotte-dev-sbs.dev.nav.no"
 
 # Enonic
 APPRES_CMS_URL: https://appres-q2.nav.no
