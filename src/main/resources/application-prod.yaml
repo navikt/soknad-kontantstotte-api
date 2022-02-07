@@ -1,0 +1,15 @@
+cors:
+  allowed_origins:
+    - "https://soknad-kontantstotte.nav.no"
+
+# Api-gw/tjenester i FSS
+FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.prod-fss-pub.nais.io/api/
+
+# S3
+SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME} #Ligger i vault
+
+# Annet
+ENVIRONMENT_NAME: p
+
+# familie-dokument i dev-GCP
+FAMILIE_DOKUMENT_API_URL: "https://familie-dokument.nav.no/familie/dokument/api"

@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -25,34 +23,20 @@ import java.util.stream.Collectors;
 import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.pdlHentPersonBolkToBarn;
 import static no.nav.kontantstotte.innsyn.service.rest.InnsynConverter.pdlPersonDataToPerson;
 
-@Profile("!mockgen-tps")
+@Profile("!mockgen-pdl")
 @Component
 class InnsynServiceClient implements InnsynService {
 
     private static final Logger secureLogger = LoggerFactory.getLogger("secureLogger");
-    private static final Logger logger = LoggerFactory.getLogger(InnsynServiceClient.class);
-    private static final String CONSUMER_ID = "soknad-kontantstotte-api";
-
-    private static final Integer MIN_ALDER_I_MANEDER = 10;
-
-    private static final Integer MAKS_ALDER_I_MANEDER = 28;
     private final Counter sokerErIkkeKvalifisert = Metrics.counter("soknad.kontantstotte.kvalifisert", "status", "NEI");
     private final Counter sokerErKvalifisert = Metrics.counter("soknad.kontantstotte.kvalifisert", "status", "JA");
     private final PdlClient pdlClient;
     private final PdlApp2AppClient pdlSystemClient;
 
     @Autowired
-    InnsynServiceClient(PdlClient pdlClient,PdlApp2AppClient pdlSystemClient) {
+    InnsynServiceClient(PdlClient pdlClient, PdlApp2AppClient pdlSystemClient) {
         this.pdlClient = pdlClient;
         this.pdlSystemClient = pdlSystemClient;
-    }
-
-    static boolean erIKontantstotteAlder(String fødselsdato) {
-        Period diff = Period.between(LocalDate.parse(fødselsdato), LocalDate.now());
-        Integer alderIManeder = diff.getYears() * 12 + diff.getMonths();
-        return (alderIManeder >= MIN_ALDER_I_MANEDER) &&
-               (alderIManeder <= MAKS_ALDER_I_MANEDER) &&
-               !(alderIManeder.equals(MAKS_ALDER_I_MANEDER) && diff.getDays() > 0);
     }
 
     @Override
@@ -68,12 +52,13 @@ class InnsynServiceClient implements InnsynService {
                                             .map(PdlForelderBarnRelasjon::getRelatertPersonsIdent)
                                             .collect(Collectors.toList());
         if (barnIdenter.isEmpty()) {
-            throw new InnsynOppslagException("Finnes ikke noe barn for søker");
+            secureLogger.warn("Finnes ikke barn for søker med fnr={}",fnr);
+            throw new InnsynOppslagException("Finnes ikke barn for søker");
         }
         List<Barn> barna = pdlSystemClient.hentPersonerMedBolk(barnIdenter)
-                                    .stream()
-                                    .map(pdlHentPersonBolk -> pdlHentPersonBolkToBarn.apply(pdlHentPersonBolk))
-                                    .collect(Collectors.toList());
+                                          .stream()
+                                          .map(pdlHentPersonBolk -> pdlHentPersonBolkToBarn.apply(pdlHentPersonBolk))
+                                          .collect(Collectors.toList());
         if (barna.isEmpty()) {
             sokerErIkkeKvalifisert.increment();
         } else {
