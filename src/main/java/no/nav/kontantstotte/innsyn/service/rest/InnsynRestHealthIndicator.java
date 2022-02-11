@@ -3,6 +3,7 @@ package no.nav.kontantstotte.innsyn.service.rest;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
@@ -16,8 +17,8 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
 
     private static final Logger LOG = LoggerFactory.getLogger(InnsynRestHealthIndicator.class);
 
-    private final Counter tpsInnysynSuccess = Metrics.counter("pdl.innsyn.health", "response", "success");
-    private final Counter tpsInnsynFailure = Metrics.counter("pdl.innsyn.health", "response", "failure");
+    private final Counter pdlInnysynSuccess = Metrics.counter("pdl.innsyn.health", "response", "success");
+    private final Counter pdlInnsynFailure = Metrics.counter("pdl.innsyn.health", "response", "failure");
     private final InnsynService innsynServiceClient;
 
     private Environment env;
@@ -32,13 +33,13 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
         LOG.info("Pinging PDL innsyn service");
         try {
             innsynServiceClient.ping();
-            tpsInnysynSuccess.increment();
+            pdlInnysynSuccess.increment();
             LOG.info("PDL innsyn service is UP");
             return up();
         } catch (Exception e) {
-            tpsInnsynFailure.increment();
+            pdlInnsynFailure.increment();
             LOG.warn("Could not verify health of PDL innsyn service ", e);
-            return isPreprod() ? downWithDetails(e) : down();
+            return isPreprod() || isProd() ? downWithDetails(e) : down();
         }
     }
 
@@ -51,11 +52,15 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
     }
 
     private boolean isPreprod() {
-        return env.acceptsProfiles("preprod");
+        return Arrays.asList(env.getActiveProfiles()).contains("preprod");
+    }
+
+    private boolean isProd() {
+        return Arrays.asList(env.getActiveProfiles()).contains("prod");
     }
 
     private boolean isDev() {
-        return env.acceptsProfiles("dev");
+        return Arrays.asList(env.getActiveProfiles()).contains("dev");
     }
 
     private static Health up() {
@@ -69,11 +74,11 @@ class InnsynRestHealthIndicator implements HealthIndicator, EnvironmentAware {
     @Override
     public String toString() {
         return getClass().getSimpleName() + " [pinger=" + innsynServiceClient.toString() + ", activeProfiles "
-                + Arrays.toString(env.getActiveProfiles()) + "]";
+               + Arrays.toString(env.getActiveProfiles()) + "]";
     }
 
     @Override
-    public void setEnvironment(Environment env) {
+    public void setEnvironment(@NotNull Environment env) {
         this.env = env;
     }
 }

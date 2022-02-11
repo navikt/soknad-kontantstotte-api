@@ -19,17 +19,17 @@ public class InnsynTestConfiguration {
     InnsynService innsynServiceGen() {
         InnsynService innsynServiceClient = mock(InnsynService.class);
         when(innsynServiceClient.hentPersonInfo(any())).thenReturn(new Person.Builder().fornavn("FORNAVN").etternavn("SLEKTSNAVN").statsborgerskap("NOR").build());
-        when(innsynServiceClient.hentBarnInfo(any())).thenReturn(new ArrayList<Barn>() {{
+        when(innsynServiceClient.hentBarnInfo(any())).thenReturn(new ArrayList<>() {{
             add(new Barn.Builder()
-                    .fødselsnummer("11111111111")
-                    .fulltnavn("NAVNESEN TVILLING1")
-                    .fødselsdato("01.01.2018")
-                    .build());
+                        .fødselsnummer("11111111111")
+                        .fulltnavn("NAVNESEN TVILLING1")
+                        .fødselsdato("01.01.2018")
+                        .build());
             add(new Barn.Builder()
-                    .fødselsnummer("22222222222")
-                    .fulltnavn("NAVNESEN TVILLING2")
-                    .fødselsdato("01.01.2018")
-                    .build());
+                        .fødselsnummer("22222222222")
+                        .fulltnavn("NAVNESEN TVILLING2")
+                        .fødselsdato("01.01.2018")
+                        .build());
         }});
         return innsynServiceClient;
     }

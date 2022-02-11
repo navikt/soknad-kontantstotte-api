@@ -75,8 +75,8 @@ public class SokerControllerTest {
     }
 
     @Test
-    public void at_tps_feil_gir_500() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
+    public void at_pdl_feil_gir_500() {
+        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new InnsynOppslagException("Feil i pdl"));
         Response response = kallEndepunkt();
         assertThat(response.getStatus()).isEqualTo(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
     }
@@ -89,8 +89,8 @@ public class SokerControllerTest {
     }
 
     @Test
-    public void at_tps_feil_legger_pa_cors_filter() {
-        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new InnsynOppslagException("Feil i tps"));
+    public void at_pdl_feil_legger_pa_cors_filter() {
+        when(innsynServiceMock.hentPersonInfo(any())).thenThrow(new InnsynOppslagException("Feil i pdl"));
         Response response = kallEndepunkt();
         assertThat(response.getHeaders()).containsKey("Access-Control-Allow-Origin");
     }
