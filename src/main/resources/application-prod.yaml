@@ -6,9 +6,6 @@ cors:
 FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.prod-fss-pub.nais.io/api/
 FAMILIE_KS_MOTTAK_AUDIENCE: prod-fss:teamfamilie:familie-ks-mottak
 
-# S3
-SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME} #Ligger i vault
-
 # Annet
 ENVIRONMENT_NAME: p
 

@@ -13,9 +13,6 @@ LOADBALANCER_SOKNAD_KONTANTSTOTTE_API_URL: soknad-kontantstotte-api-q.nav.no
 # Api-gw/tjenester i FSS
 FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.dev-fss-pub.nais.io/api/
 
-# S3
-SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME: ${SOKNAD_KONTANTSTOTTE_API_S3_CREDENTIAL_USERNAME} #Ligger i vault
-
 # Annet
 ENVIRONMENT_NAME: q
 
