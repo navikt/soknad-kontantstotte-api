@@ -18,8 +18,7 @@ public class CORSResponseFilter implements Filter {
 
     private static final List<String> ALLOWED_ORIGINS = asList(
             "https://soknad-kontantstotte.nav.no",
-            "https://soknad-kontantstotte.dev.nav.no",
-            "https://soknad-kontantstotte-gcp.intern.nav.no"
+            "https://soknad-kontantstotte.dev.nav.no"
             );
 
     @Override

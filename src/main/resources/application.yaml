@@ -8,8 +8,6 @@ server:
 cors:
   allowed_origins:
     - "https://soknad-kontantstotte.nav.no"
-    - "https://soknad-kontantstotte-gcp.intern.nav.no"
-
 
 spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
