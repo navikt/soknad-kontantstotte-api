@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.util.Lists.emptyList;
@@ -33,7 +34,7 @@ public class InnsynServiceClientTest {
     public static final String BARN1_ETTERNAVN = "barn1Etternavn";
     public static final String BARN2_FORNAVN = "barn2Fornavn";
     public static final String BARN2_ETTERNAVN = "barn2Etternavn";
-    public static final String TESTFØDSELSDATO = "testfødselsdato";
+    public static final String TESTFØDSELSDATO = LocalDate.now().minusMonths(15).toString();
     private final PdlClient mockPdlClient = mock(PdlClient.class);
     private final PdlApp2AppClient mockPdlSystemClient = mock(PdlApp2AppClient.class);
     private final InnsynServiceClient innsynServiceClient = new InnsynServiceClient(mockPdlClient, mockPdlSystemClient);
