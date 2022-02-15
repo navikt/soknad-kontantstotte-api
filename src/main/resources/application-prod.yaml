@@ -1,7 +1,6 @@
 cors:
   allowed_origins:
     - "https://soknad-kontantstotte.nav.no"
-    - "https://soknad-kontantstotte-gcp.intern.nav.no"
 
 # Api-gw/tjenester i FSS
 FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.prod-fss-pub.nais.io/api/
