@@ -113,8 +113,8 @@ public class BarnControllerTest {
                           .request(MediaType.APPLICATION_JSON_TYPE)
                           .accept(MediaType.APPLICATION_JSON_TYPE)
                           .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer " + jwtToken)
-                          .header("Referer", "https://soknad-kontantstotte-t.nav.no/")
-                          .header("Origin", "https://soknad-kontantstotte-t.nav.no")
+                          .header("Referer", "https://soknad-kontantstotte.dev.nav.no/")
+                          .header("Origin", "https://soknad-kontantstotte.dev.nav.no")
                           .get();
     }
 
