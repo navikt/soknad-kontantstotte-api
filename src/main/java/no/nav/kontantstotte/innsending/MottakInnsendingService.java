@@ -96,10 +96,18 @@ public class MottakInnsendingService implements InnsendingService {
                                               HttpMethod.POST,
                                               httpEntity,
                                               Søknad.class);
+            if (respons.getStatusCode() != HttpStatus.OK){
+                soknadSendtInnTilMottakFeilet.increment();
+                throw new InnsendingException(
+                        "Response fra mottak: " + respons.getStatusCode() + ". Response.entity: " + respons.getBody());
+            }
+            LOG.info("Søknad sendt til mottaket. Response status: {}, respons: {}",
+                     respons.getStatusCode(),
+                     respons.getBody());
             return Objects.requireNonNull(respons.getBody(), "Fikk null respons fra mottak tjeneste");
         }catch (RestClientException e) {
             LOG.warn("Kan ikke sendes søknad, feiler med ",e);
-            throw e;
+            throw new InnsendingException(e.getMessage());
         }
     }
 

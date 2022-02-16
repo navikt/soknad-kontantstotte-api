@@ -51,6 +51,16 @@ no.nav.security.jwt:
           client-id: ${TOKEN_X_CLIENT_ID}
           client-auth-method: private_key_jwt
           client-jwk: ${TOKEN_X_PRIVATE_JWK}
+      dokument:
+        resource-url: ${FAMILIE_DOKUMENT_API_URL}
+        well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
+        grant-type: urn:ietf:params:oauth:grant-type:token-exchange
+        token-exchange:
+          audience: ${FAMILIE_DOKUMENT_AUDIENCE}
+        authentication:
+          client-id: ${TOKEN_X_CLIENT_ID}
+          client-auth-method: private_key_jwt
+          client-jwk: ${TOKEN_X_PRIVATE_JWK}
 
 management:
   endpoint:
@@ -102,5 +112,7 @@ PDL_AUDIENCE: dev-fss:pdl:pdl-api
 
 FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.dev-fss-pub.nais.io/api/
 FAMILIE_KS_MOTTAK_AUDIENCE: dev-fss:teamfamilie:familie-ks-mottak
+
+FAMILIE_DOKUMENT_AUDIENCE: dev-gcp:teamfamilie:familie-dokument
 
 CREDENTIAL_USERNAME: "srvfam-soknad-ks-api"

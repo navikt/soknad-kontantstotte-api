@@ -44,7 +44,7 @@ class PdfConverter {
                                           HttpMethod.POST,
                                           new HttpEntity<>(new String(bytes, StandardCharsets.UTF_8), headers),
                                           byte[].class);
-            log.info("Generer Pdf med familie-dokument: {}", response.getStatusCode().toString());
+            log.info("Generer Pdf med familie-dokument: {}", response.getStatusCode());
             return response.getBody();
         } catch (Exception e) {
             throw new InnsendingException("Feil med å genere Pdf med familie-dokument: " + e.getMessage());
