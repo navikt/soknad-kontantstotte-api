@@ -3,15 +3,24 @@ package no.nav.kontantstotte.innsending;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
+import no.nav.familie.kontrakter.felles.Tema;
 import no.nav.familie.ks.kontrakter.søknad.Søknad;
 import no.nav.familie.ks.kontrakter.søknad.SøknadKt;
 import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
+import no.nav.kontantstotte.innsyn.pdl.domene.PdlPersonRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestOperations;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,8 +28,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Objects;
 
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
+import static no.nav.kontantstotte.innsyn.pdl.PdlUtils.httpHeaders;
 
 @Component
 public class MottakInnsendingService implements InnsendingService {
@@ -38,6 +49,7 @@ public class MottakInnsendingService implements InnsendingService {
     private URI mottakServiceUri;
     private ObjectMapper mapper;
     private HttpClient client;
+    private RestOperations restClient;
 
     public MottakInnsendingService(@Value("${FAMILIE_KS_MOTTAK_API_URL}") URI mottakServiceUri,
                                    @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_USERNAME}")
@@ -46,7 +58,8 @@ public class MottakInnsendingService implements InnsendingService {
                                            String kontantstotteMottakApiKeyPassword,
                                    OppsummeringPdfGenerator oppsummeringPdfGenerator,
                                    VedleggProvider vedleggProvider,
-                                   ObjectMapper mapper) {
+                                   ObjectMapper mapper,
+                                   @Qualifier("tokenExchange") RestOperations restClient) {
 
         this.kontantstotteMottakApiKeyUsername = kontantstotteMottakApiKeyUsername;
         this.kontantstotteMottakApiKeyPassword = kontantstotteMottakApiKeyPassword;
@@ -55,6 +68,7 @@ public class MottakInnsendingService implements InnsendingService {
         this.vedleggProvider = vedleggProvider;
         this.mapper = mapper;
         this.client = HttpClientUtil.create();
+        this.restClient = restClient;
     }
 
     @Override
@@ -69,11 +83,31 @@ public class MottakInnsendingService implements InnsendingService {
                                   .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDtoMedKontrakt(søknad))))
                                   .build();
 
+
+
             sendRequest(mottakRequest);
         } catch (JsonProcessingException e) {
             throw new InnsendingException("Feiler under konvertering av innsending til json.");
         }*/
-        return søknad;
+
+        try {
+            HttpEntity<SoknadDto> httpEntity = new HttpEntity<>(byggDtoMedKontrakt(søknad), httpHeaders());
+            var respons = restClient.exchange(mottakServiceUri + "soknadmedvedlegg",
+                                              HttpMethod.POST,
+                                              httpEntity,
+                                              Søknad.class);
+            return Objects.requireNonNull(respons.getBody(), "Fikk null respons fra mottak tjeneste");
+        }catch (RestClientException e) {
+            LOG.warn("Kan ikke sendes søknad, feiler med ",e);
+            throw e;
+        }
+    }
+
+    public static HttpHeaders httpHeaders() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+        return httpHeaders;
     }
 
     private void sendRequest(HttpRequest mottakRequest) {
