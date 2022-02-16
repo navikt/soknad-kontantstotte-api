@@ -104,6 +104,7 @@ public class MottakInnsendingService implements InnsendingService {
             LOG.info("Søknad sendt til mottaket. Response status: {}, respons: {}",
                      respons.getStatusCode(),
                      respons.getBody());
+            soknadSendtInnTilMottak.increment();
             return Objects.requireNonNull(respons.getBody(), "Fikk null respons fra mottak tjeneste");
         }catch (RestClientException e) {
             LOG.warn("Kan ikke sendes søknad, feiler med ",e);
