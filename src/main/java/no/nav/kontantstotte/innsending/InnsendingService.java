@@ -5,4 +5,6 @@ import no.nav.familie.ks.kontrakter.søknad.Søknad;
 public interface InnsendingService {
 
     Søknad sendInnSøknad(Søknad søknad);
+
+    String ping();
 }
