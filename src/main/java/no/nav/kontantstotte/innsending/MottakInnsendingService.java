@@ -9,16 +9,21 @@ import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.innsending.oppsummering.OppsummeringPdfGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestOperations;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Objects;
 
 import static no.nav.kontantstotte.innlogging.InnloggingUtils.hentFnrFraToken;
 
@@ -38,6 +43,7 @@ public class MottakInnsendingService implements InnsendingService {
     private URI mottakServiceUri;
     private ObjectMapper mapper;
     private HttpClient client;
+    private RestOperations restClient;
 
     public MottakInnsendingService(@Value("${FAMILIE_KS_MOTTAK_API_URL}") URI mottakServiceUri,
                                    @Value("${SOKNAD_KONTANTSTOTTE_API_FAMILIE_KS_MOTTAK_APIKEY_USERNAME}")
@@ -46,7 +52,8 @@ public class MottakInnsendingService implements InnsendingService {
                                            String kontantstotteMottakApiKeyPassword,
                                    OppsummeringPdfGenerator oppsummeringPdfGenerator,
                                    VedleggProvider vedleggProvider,
-                                   ObjectMapper mapper) {
+                                   ObjectMapper mapper,
+                                   @Qualifier("tokenExchange") RestOperations restClient) {
 
         this.kontantstotteMottakApiKeyUsername = kontantstotteMottakApiKeyUsername;
         this.kontantstotteMottakApiKeyPassword = kontantstotteMottakApiKeyPassword;
@@ -55,44 +62,56 @@ public class MottakInnsendingService implements InnsendingService {
         this.vedleggProvider = vedleggProvider;
         this.mapper = mapper;
         this.client = HttpClientUtil.create();
+        this.restClient = restClient;
     }
 
     @Override
     public Søknad sendInnSøknad(Søknad søknad) {
         LOG.info("Prøver å sende søknad til mottaket");
-        /*try {
-            HttpRequest mottakRequest =
-                    HttpClientUtil.createRequest(TokenHelper.generateAuthorizationHeaderValueForLoggedInUser(contextHolder))
-                                  .header(kontantstotteMottakApiKeyUsername, kontantstotteMottakApiKeyPassword)
-                                  .header(HttpHeader.CONTENT_TYPE.asString(), MediaType.APPLICATION_JSON_VALUE)
-                                  .uri(URI.create(mottakServiceUri + "soknadmedvedlegg"))
-                                  .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(byggDtoMedKontrakt(søknad))))
-                                  .build();
-
-            sendRequest(mottakRequest);
-        } catch (JsonProcessingException e) {
-            throw new InnsendingException("Feiler under konvertering av innsending til json.");
-        }*/
-        return søknad;
-    }
-
-    private void sendRequest(HttpRequest mottakRequest) {
         try {
-            HttpResponse<String> mottakresponse = client.send(mottakRequest, HttpResponse.BodyHandlers.ofString());
-
-            if (!HttpStatus.Series.SUCCESSFUL.equals(HttpStatus.Series.resolve(mottakresponse.statusCode()))) {
+            HttpEntity<SoknadDto> httpEntity = new HttpEntity<>(byggDtoMedKontrakt(søknad), httpHeaders());
+            var respons = restClient.exchange(mottakServiceUri + "soknadmedvedlegg",
+                                              HttpMethod.POST,
+                                              httpEntity,
+                                              Søknad.class);
+            if (respons.getStatusCode() != HttpStatus.OK) {
                 soknadSendtInnTilMottakFeilet.increment();
                 throw new InnsendingException(
-                        "Response fra mottak: " + mottakresponse.statusCode() + ". Response.entity: " + mottakresponse.body());
+                        "Response fra mottak: " + respons.getStatusCode() + ". Response.entity: " + respons.getBody());
             }
-
-            soknadSendtInnTilMottak.increment();
             LOG.info("Søknad sendt til mottaket. Response status: {}, respons: {}",
-                     mottakresponse.statusCode(),
-                     mottakresponse.body());
-        } catch (IOException | InterruptedException e) {
-            LOG.warn("Feilet under sending av søknad til mottak: {}", e.getMessage());
+                     respons.getStatusCode(),
+                     respons.getBody());
+            soknadSendtInnTilMottak.increment();
+            return søknad;
+        } catch (RestClientException e) {
+            LOG.warn("Kan ikke sendes søknad, feiler med ", e);
+            throw new InnsendingException(e.getMessage());
         }
+    }
+
+    @Override
+    public String ping() {
+        LOG.info("Ping familie-ks-mottak");
+        HttpEntity<SoknadDto> httpEntity = new HttpEntity<>(httpHeaders());
+        try {
+            var respons = restClient.exchange(mottakServiceUri + "ping",
+                                              HttpMethod.GET,
+                                              httpEntity,
+                                              String.class);
+            LOG.info("Response status: {}, respons: {}", respons.getStatusCode(), respons.getBody());
+            return respons.getBody();
+        } catch (RestClientException e) {
+            LOG.warn("Kan ikke oppnå familie-ks-mottak ", e);
+            throw new InnsendingException(e.getMessage());
+        }
+    }
+
+    public static HttpHeaders httpHeaders() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+        return httpHeaders;
     }
 
     private SoknadDto byggDtoMedKontrakt(Søknad søknad) {
