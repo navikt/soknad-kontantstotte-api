@@ -3,7 +3,7 @@ cors:
     - "https://soknad-kontantstotte.nav.no"
 
 # Api-gw/tjenester i FSS
-FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.prod-fss-pub.nais.io/api/
+FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak-teamfamilie.prod-fss-pub.nais.io/api/
 FAMILIE_KS_MOTTAK_AUDIENCE: prod-fss:teamfamilie:familie-ks-mottak
 
 FAMILIE_DOKUMENT_AUDIENCE: prod-gcp:teamfamilie:familie-dokument
