@@ -111,7 +111,7 @@ PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
 PDL_AUDIENCE: dev-fss:pdl:pdl-api
 
 FAMILIE_KS_MOTTAK_API_URL: https://familie-ks-mottak.dev-fss-pub.nais.io/api/
-FAMILIE_KS_MOTTAK_AUDIENCE: dev-fss:default:familie-ks-mottak
+FAMILIE_KS_MOTTAK_AUDIENCE: dev-fss:teamfamilie:familie-ks-mottak
 
 FAMILIE_DOKUMENT_AUDIENCE: dev-gcp:teamfamilie:familie-dokument
 
