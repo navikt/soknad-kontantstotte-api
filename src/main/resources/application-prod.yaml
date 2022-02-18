@@ -11,7 +11,7 @@ FAMILIE_DOKUMENT_AUDIENCE: prod-gcp:teamfamilie:familie-dokument
 ENVIRONMENT_NAME: p
 
 # familie-dokument i GCP
-FAMILIE_DOKUMENT_API_URL: "https://www.nav.no/familie/dokument/api"
+FAMILIE_DOKUMENT_API_URL: "http://familie-dokument/api"
 
 #PDL
 PDL_URL: https://pdl-api.prod-fss-pub.nais.io
