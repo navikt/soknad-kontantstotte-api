@@ -21,7 +21,7 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>11</java.version>
         <unleash.version>4.4.1</unleash.version>
-        <aws-java-sdk-s3>1.11.946</aws-java-sdk-s3>
+        <aws-java-sdk-s3>1.12.165</aws-java-sdk-s3>
         <felles.version>1.20211008153542_d279663</felles.version>
         <kontrakt.version>1.0_20191024145448_d452ee4</kontrakt.version>
         <felles-kontrakter.version>2.0_20220120144339_cc21190</felles-kontrakter.version>
