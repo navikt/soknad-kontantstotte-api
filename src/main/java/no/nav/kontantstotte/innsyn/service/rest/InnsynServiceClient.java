@@ -4,7 +4,6 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import no.nav.familie.kontrakter.felles.personopplysning.FORELDERBARNRELASJONROLLE;
 import no.nav.kontantstotte.innsyn.domain.Barn;
-import no.nav.kontantstotte.innsyn.domain.InnsynOppslagException;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;
 import no.nav.kontantstotte.innsyn.pdl.PdlApp2AppClient;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -57,15 +57,13 @@ class InnsynServiceClient implements InnsynService {
                                                                                FORELDERBARNRELASJONROLLE.BARN.name()))
                                             .map(PdlForelderBarnRelasjon::getRelatertPersonsIdent)
                                             .collect(Collectors.toList());
-        if (barnIdenter.isEmpty()) {
-            secureLogger.warn("Finnes ikke barn for søker med fnr={}",fnr);
-            throw new InnsynOppslagException("Finnes ikke barn for søker");
-        }
-        List<Barn> barna = pdlSystemClient.hentPersonerMedBolk(barnIdenter)
-                                          .stream()
-                                          .map(pdlHentPersonBolk -> pdlHentPersonBolkToBarn.apply(pdlHentPersonBolk))
-                                          .filter(barn -> erIKontantstotteAlder(barn.getFødselsdato()))
-                                          .collect(Collectors.toList());
+        List<Barn> barna = barnIdenter.isEmpty() ?
+                Collections.emptyList() :
+                pdlSystemClient.hentPersonerMedBolk(barnIdenter)
+                               .stream()
+                               .map(pdlHentPersonBolk -> pdlHentPersonBolkToBarn.apply(pdlHentPersonBolk))
+                               .filter(barn -> erIKontantstotteAlder(barn.getFødselsdato()))
+                               .collect(Collectors.toList());
         if (barna.isEmpty()) {
             sokerErIkkeKvalifisert.increment();
         } else {

@@ -43,11 +43,7 @@ public class InnsynServiceClientTest {
     public void kan_ikke_hente_barninfo_når_det_ikke_finnes_barn() {
         when(mockPdlClient.hentPersoninfoMedRelasjoner(anyString())).thenReturn(Lists.emptyList());
 
-        InnsynOppslagException exception = Assertions.assertThrows(InnsynOppslagException.class,
-                                                                   () -> {
-                                                                       innsynServiceClient.hentBarnInfo(TESTFNR);
-                                                                   });
-        assertEquals("Finnes ikke barn for søker", exception.getMessage());
+        assertEquals(Lists.emptyList(), innsynServiceClient.hentBarnInfo(TESTFNR));
     }
 
     @Test
