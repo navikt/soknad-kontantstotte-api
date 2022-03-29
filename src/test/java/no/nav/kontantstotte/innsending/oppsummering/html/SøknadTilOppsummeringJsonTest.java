@@ -2,8 +2,8 @@ package no.nav.kontantstotte.innsending.oppsummering.html;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.nav.familie.ks.kontrakter.søknad.Søknad;
-import no.nav.familie.ks.kontrakter.søknad.testdata.SøknadTestdata;
+import no.nav.familie.kontrakter.ks.søknad.Søknad;
+import no.nav.familie.kontrakter.ks.søknad.testdata.SøknadTestdata;
 import no.nav.kontantstotte.innsending.oppsummering.SøknadOppsummering;
 import no.nav.kontantstotte.innsyn.domain.InnsynService;
 import no.nav.kontantstotte.innsyn.domain.Person;

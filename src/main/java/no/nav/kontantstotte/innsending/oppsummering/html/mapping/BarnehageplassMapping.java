@@ -1,8 +1,8 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.nav.familie.ks.kontrakter.søknad.Barn;
-import no.nav.familie.ks.kontrakter.søknad.BarnehageplassStatus;
-import no.nav.familie.ks.kontrakter.søknad.Søknad;
+import no.nav.familie.kontrakter.ks.søknad.Barn;
+import no.nav.familie.kontrakter.ks.søknad.BarnehageplassStatus;
+import no.nav.familie.kontrakter.ks.søknad.Søknad;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.VedleggMetadata;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;

@@ -1,7 +1,7 @@
 package no.nav.kontantstotte.innsending;
 
-import no.nav.familie.ks.kontrakter.søknad.Barn;
-import no.nav.familie.ks.kontrakter.søknad.Søknad;
+import no.nav.familie.kontrakter.ks.søknad.Barn;
+import no.nav.familie.kontrakter.ks.søknad.Søknad;
 import no.nav.kontantstotte.dokument.DokumentService;
 
 import java.util.Arrays;

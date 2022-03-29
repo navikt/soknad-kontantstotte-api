@@ -23,7 +23,7 @@
         <unleash.version>4.4.1</unleash.version>
         <aws-java-sdk-s3>1.12.180</aws-java-sdk-s3>
         <felles.version>1.20211008153542_d279663</felles.version>
-        <kontrakt.version>1.0_20191024145448_d452ee4</kontrakt.version>
+        <kontrakt.version>2.0_20220329091512_1a3e695</kontrakt.version>
         <felles-kontrakter.version>2.0_20220120144339_cc21190</felles-kontrakter.version>
         <token-validation-spring.version>1.3.10</token-validation-spring.version>
         <springdoc.version>1.6.5</springdoc.version>
@@ -76,8 +76,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>no.nav.familie.ks</groupId>
-            <artifactId>kontrakt</artifactId>
+            <groupId>no.nav.familie.kontrakter</groupId>
+            <artifactId>kontantstotte</artifactId>
             <version>${kontrakt.version}</version>
         </dependency>
         <dependency>
@@ -174,18 +174,14 @@
         </dependency>
 
         <!-- storage -->
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-            <version>${aws-java-sdk-s3}</version>
-        </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>
-            <version>1.25</version>
+            <version>1.28.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-parsers -->
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-parsers</artifactId>

@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.nav.familie.ks.kontrakter.søknad.Søknad;
+import no.nav.familie.kontrakter.ks.søknad.Søknad;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.steg.Familieforhold;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;

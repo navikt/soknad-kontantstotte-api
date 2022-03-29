@@ -1,8 +1,8 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.nav.familie.ks.kontrakter.søknad.AktørArbeidYtelseUtland;
-import no.nav.familie.ks.kontrakter.søknad.Standpunkt;
-import no.nav.familie.ks.kontrakter.søknad.Søknad;
+import no.nav.familie.kontrakter.ks.søknad.AktørArbeidYtelseUtland;
+import no.nav.familie.kontrakter.ks.søknad.Standpunkt;
+import no.nav.familie.kontrakter.ks.søknad.Søknad;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.steg.UtenlandskeYtelser;
