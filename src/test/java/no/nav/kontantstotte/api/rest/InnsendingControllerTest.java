@@ -2,8 +2,8 @@ package no.nav.kontantstotte.api.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jwt.SignedJWT;
-import no.nav.familie.ks.kontrakter.søknad.Søknad;
-import no.nav.familie.ks.kontrakter.søknad.testdata.SøknadTestdata;
+import no.nav.familie.kontrakter.ks.søknad.Søknad;
+import no.nav.familie.kontrakter.ks.søknad.testdata.SøknadTestdata;
 import no.nav.kontantstotte.client.HttpClientUtil;
 import no.nav.kontantstotte.config.ApplicationConfig;
 import no.nav.kontantstotte.innsending.MottakInnsendingService;

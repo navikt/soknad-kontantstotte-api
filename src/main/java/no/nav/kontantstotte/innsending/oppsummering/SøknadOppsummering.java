@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.innsending.oppsummering;
 
-import no.nav.familie.ks.kontrakter.søknad.Søknad;
+import no.nav.familie.kontrakter.ks.søknad.Søknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.MetaData;
 import no.nav.kontantstotte.innsending.oppsummering.html.MetaDataElement;

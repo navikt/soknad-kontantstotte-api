@@ -1,6 +1,6 @@
 package no.nav.kontantstotte.innsending.oppsummering.html.mapping;
 
-import no.nav.familie.ks.kontrakter.søknad.Søknad;
+import no.nav.familie.kontrakter.ks.søknad.Søknad;
 import no.nav.kontantstotte.innsending.Soknad;
 import no.nav.kontantstotte.innsending.oppsummering.html.Bolk;
 import no.nav.kontantstotte.innsending.oppsummering.html.Element;
@@ -41,15 +41,15 @@ public class BarnMapping extends BolkMapping {
 
     public Bolk mapNy(Søknad søknad) {
         Bolk barneBolk = new Bolk();
-        Set<no.nav.familie.ks.kontrakter.søknad.Barn> barn = søknad.getOppgittFamilieforhold().getBarna();
+        Set<no.nav.familie.kontrakter.ks.søknad.Barn> barn = søknad.getOppgittFamilieforhold().getBarna();
 
         barneBolk.tittel = tekster.hentTekst(BARN_TITTEL.getNokkel());
         barneBolk.undertittel = tekster.hentTekst(BARN_UNDERTITTEL.getNokkel());
         barneBolk.elementer = new ArrayList<>();
 
         List<String> navn = barn.stream()
-                .map(no.nav.familie.ks.kontrakter.søknad.Barn::getNavn).collect(toList());
-        List<String> fødselsdatoer = barn.stream().map(no.nav.familie.ks.kontrakter.søknad.Barn::getFødselsnummer)
+                .map(no.nav.familie.kontrakter.ks.søknad.Barn::getNavn).collect(toList());
+        List<String> fødselsdatoer = barn.stream().map(no.nav.familie.kontrakter.ks.søknad.Barn::getFødselsnummer)
                 .map(fnr -> fnr.substring(0, 6)).sorted()
                 .collect(toList());
 
