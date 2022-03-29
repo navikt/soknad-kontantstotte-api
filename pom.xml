@@ -27,6 +27,7 @@
         <kontrakt.version>1.0_20191007205813_e19cc21</kontrakt.version>
     </properties>
 
+         
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
