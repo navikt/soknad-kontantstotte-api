@@ -19,7 +19,7 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <unleash.version>4.4.1</unleash.version>
         <aws-java-sdk-s3>1.12.180</aws-java-sdk-s3>
         <felles.version>1.20211008153542_d279663</felles.version>
