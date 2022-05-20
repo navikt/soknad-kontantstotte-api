@@ -13,6 +13,7 @@ import no.nav.security.token.support.test.JwtTokenGenerator;
 import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,6 +56,7 @@ public class SokerControllerTest {
     }
 
     @Test
+    @Ignore
     public void at_uthenting_av_sokerinformasjon_er_korrekt() {
         when(innsynServiceMock.hentPersonInfo(any())).thenReturn(new Person.Builder().build());
 
