@@ -7,7 +7,7 @@ public class InnloggingUtils {
     public static String hentFnrFraToken() {
         return new SpringTokenValidationContextHolder().getTokenValidationContext()
                                                        .getClaims("selvbetjening")
-                                                       .getSubject();
+                                                       .getStringClaim("pid");
     }
 
 }
